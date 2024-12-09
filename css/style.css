@@ -1657,8 +1657,8 @@ h2 {
   margin-left: 0;
 }
 .hide-list {
-  width: 20px;
-  height: 40px;
+  width: 0px;
+  height: 0px;
   position: absolute;
   z-index: 30;
   left: auto;
