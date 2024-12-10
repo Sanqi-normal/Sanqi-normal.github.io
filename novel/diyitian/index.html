@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>叁七のblog</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="叁七のblog">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="千笑介绍：这是一个基于LLAMA3.2的我的本地AI大模型，它还有点笨，而且有点懒，如果不巧它还没起床，就没法回答你的问题   发送        body {         font-family: Arial, sans-serif;         background-color: #f4f4f4;         margin: 0;         padding: 0px;">
+<meta property="og:type" content="website">
+<meta property="og:title" content="叁七のblog">
+<meta property="og:url" content="http://example.com/AI/index.html">
+<meta property="og:site_name" content="叁七のblog">
+<meta property="og:description" content="千笑介绍：这是一个基于LLAMA3.2的我的本地AI大模型，它还有点笨，而且有点懒，如果不巧它还没起床，就没法回答你的问题   发送        body {         font-family: Arial, sans-serif;         background-color: #f4f4f4;         margin: 0;         padding: 0px;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-12-10T12:20:13.599Z">
+<meta property="article:modified_time" content="2024-12-10T12:20:13.599Z">
+<meta property="article:author" content="叁七">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="icon" href="/img/top.jpg">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-light.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+  <input id="theme_highlight_on" value="true" />
+  <input id="theme_code_copy" value="true" />
+</div>
+
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/"
+   class="avatar_target">
+    <img class="avatar"
+         src="/img/avatar.gif"/>
+</a>
+<div class="author">
+    <span>叁七</span>
+</div>
+
+<div class="icon">
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+</div>
+
+
+
+    <a class="more-menus">更多菜单</a>
+
+
+
+<ul>
+    <li>
+        <div class="all active" data-rel="All">All
+            
+                <small>(5)</small>
+            
+        </div>
+    </li>
+    
+        
+            
+                
+    <li>
+        <div data-rel="日志">
+            
+            日志
+            <small>(2)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="生活">
+            <i class="fold iconfont icon-right"></i>
+            生活
+            <small>(1)</small>
+        </div>
+        
+            <ul class="sub hide">
+                
+                    
+    <li>
+        <div data-rel="生活&lt;---&gt;记录">
+            
+            记录
+            <small>(1)</small>
+        </div>
+        
+    </li>
+
+                
+            </ul>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="游戏">
+            <i class="fold iconfont icon-right"></i>
+            游戏
+            <small>(1)</small>
+        </div>
+        
+            <ul class="sub hide">
+                
+                    
+    <li>
+        <div data-rel="游戏&lt;---&gt;创作">
+            
+            创作
+            <small>(1)</small>
+        </div>
+        
+    </li>
+
+                
+            </ul>
+        
+    </li>
+
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+        
+            
+                <a class="dynamic-menu site_url"
+                   
+                   href="/photo">相册</a>
+        
+            
+                <a class="dynamic-menu site_url"
+                   
+                   href="/novel">小说</a>
+        
+            
+                <a class="dynamic-menu site_url"
+                   
+                   href="/AI">Ai</a>
+        
+            
+    </div>
+    <div>
+        
+            <a class="about  site_url"
+               
+               href="/about">About</a>
+        
+        
+    </div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="5">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        Links
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="search shortcut key i"></i>
+            <div class="right-title">All</div>
+            <i class="iconfont icon-file-tree" data-title="switch to outline view shortcut key w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="return"></i>
+            <input id="local-search-input" autocomplete="off"/>
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="case sensitive"></i>
+            <i class="iconfont icon-tag" data-title="label"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">outline</div>
+            <i class="iconfont icon-list" data-title="switch to article list"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>博客</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>测试</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>游戏</a>
+            </li>
+        
+    </div>
+
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        
+        <a  class="All 游戏 创作 "
+           href="/2024/12/10/%E5%88%86%E4%BA%AB%E6%88%91%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%AE%8C%E6%88%90%E5%88%9B%E4%BD%9C%E7%9A%84%E6%B8%B8%E6%88%8F/"
+           data-tag="游戏"
+           data-author="" >
+            <span class="post-title" title="分享我第一个完成创作的游戏">分享我第一个完成创作的游戏</span>
+            <span class="post-date" title="2024-12-10 18:31:38">2024/12/10</span>
+        </a>
+        
+        
+        <a  class="All 日志 "
+           href="/2024/12/10/%E5%8D%9A%E5%AE%A2%E6%97%A5%E5%BF%970/"
+           data-tag="测试"
+           data-author="" >
+            <span class="post-title" title="日志（0）">日志（0）</span>
+            <span class="post-date" title="2024-12-10 09:09:00">2024/12/10</span>
+        </a>
+        
+        
+        <a  class="All 日志 "
+           href="/2024/12/10/%E5%8D%9A%E5%AE%A2%E6%97%A5%E5%BF%97/"
+           data-tag="博客"
+           data-author="" >
+            <span class="post-title" title="日志（1）">日志（1）</span>
+            <span class="post-date" title="2024-12-10 09:02:02">2024/12/10</span>
+        </a>
+        
+        
+        <a  class="All 生活 记录 "
+           href="/2024/12/09/%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/"
+           data-tag="博客"
+           data-author="" >
+            <span class="post-title" title="第一篇文章">第一篇文章</span>
+            <span class="post-date" title="2024-12-09 22:10:00">2024/12/09</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2024/12/09/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/"
+           data-tag="测试"
+           data-author="" >
+            <span class="post-title" title="叁七的测试博客">叁七的测试博客</span>
+            <span class="post-date" title="2024-12-09 16:50:50">2024/12/09</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="Toggle full screen shortcut key s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="page-" class="article article-type-page" itemscope itemprop="blogPost">
+    
+    <div class="article-meta">
+        
+        
+        
+        
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2024-12-10 17:47:28'>2024-12-10 17:47</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E5%A4%A9"><span class="toc-text">第一天</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%9C%E5%93%81%E7%9B%B8%E5%85%B3"><span class="toc-text">作品相关</span></a></li></ol></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="第一天"><a href="#第一天" class="headerlink" title="第一天"></a>第一天</h1><h2 id="作品相关"><a href="#作品相关" class="headerlink" title="作品相关"></a>作品相关</h2><pre><code>创意写作课期中作业
+为什么放这里？
+因为这是一个创意写作课的作业，所以放这里比较合适。
+以上回答来自ai
+</code></pre>
+<p>事情是这样的，那个早上我正睡的好好的，忽然房间里冲进来一堆人，一把把我从被窝里揪出来，我迷迷糊糊地看见领头的是个乌鸡脑袋，两只眼睛像没睡过觉一样通红，它一把拎起我，一脸肃穆地朝我左边脸来了几巴掌。<br>我被打傻了，愣愣地看着它。<br>它以为我还没睡醒，又换了右手拎我，准备给我右脸又来几下。<br>“别打了，别打了，好汉们饶命，你们真是来错地方了，我是个穷光蛋，虽然且算是个白领，但一直被领导当受气包用，家里什么值钱的东西都没有啊！”我哭着说。<br>“什么？这是什么话，我们怎么敢劫领导的钱？”床旁边那个扛着大刀的野猪脑袋哼哧着说。<br>领导？谁是领导？什么领导？就好像看出我的疑问，乌鸡脑袋把我丢在床上，鞠了个躬：“抱歉让领导受惊了，我们是来接领导上任的，我叫乌拉斯基，是领导的贴身秘书。喂，快给领导穿衣服，领导的时间很宝贵你们不知道吗？”<br>一群人又忙活起来，几双手不顾我的阻拦扒下了我的裤衩，紧接着一件硕大的雨衣披到了我光溜溜的身上，雨衣和皮肤的间隙被他们使劲塞了一堆棉花。忽然我的脚痛得让我叫起来，低头一看，我的脚上被他们用钢丝紧紧地绑了两块砖。还没完，一顶雕花的瓷帽子扣在了我的头上。<br>我被他们推到镜子面前，忽然火冒三丈，镜子里不就是我的领导吗？！<br>“您怎么来了，我去给您倒茶。”我愤怒地低下头，抑制住要跟镜子打一顿的冲动，一想到领导是因为我早上迟到专门来的，我膝盖一软几乎跪下来，几个人又忙把我扶起来——<br>“领导您看仔细，这是领导您自己啊！”<br>呦呵！还真是我！<br>我连连鞠躬，镜子里的领导也连连鞠躬。我做鬼脸，镜子里的领导也做鬼脸。我怒目圆睁，镜子里的领导也怒目圆睁。我被这怒目圆睁吓了一哆嗦。<br>“还真不习惯呢。”我说。<br>“扶着帽子不好鞠躬，您像我一样头顶光秃秃的啥也没有，鞠起躬来也利索了。”乌拉斯基说。<br>“我是说当领导不习惯。”<br>“这是您当领导的第一天，当然不习惯了，您得习惯。”乌拉斯基说。<br>“那我是哪儿的领导呢？”<br>“您不是‘哪儿’的领导，您是‘谁’的领导。”<br>“那，我是谁的领导呢？”<br>“领导说了算。”<br>“那，我负责领导什么呢？”<br>“领导说了算。”<br> “你这样不对，小同志。领导怎么了，领导就能搞独裁吗？要多吸收下面的人的意见。”<br>“领导说的是，那要我说，我们就该去巡视我们的成果。”乌拉斯基说。<br>“我们什么都没做，哪来的成果？”<br>“瞧您说的，不是没做就没成果，只要您坐上这个位置，那都是您的成果。”<br>我大悦：“好，就这么一路巡视到我的公司。”</p>
+<p>我带着头，一群人背着手，在人行路上大摇大摆地走，迎面的人无不鞠躬问好。<br>“那是个什么人？”我听到走过的人如此问伙伴。<br>“不知道，那是个领导，那还有差？”<br>“这是有名的大领导！”乌拉斯基朝身后扯着嗓子喊。</p>
+<p>“哎呦！”<br>拐角撞倒一个年轻人，也许是棉花弹性太好，年轻人倒在地上撞翻了水果摊。我马上认出来了，那是我楼上的邻居，天天半夜不睡觉请朋友来家里开派对，有时候鬼哭狼嚎地一唱唱到天亮，害的我上班迟到扣工资，又不敢找他谈。<br>这畜生。<br>“你这畜生！”野猪脑袋大吼一声，大刀就要往年轻人头上招呼。<br>“哎，哎？！”我皱眉，一招手，刀在空中停住，“什么畜生？谁是畜生？我看你像畜生！就因为这位同志挡路你就这么羞辱他？退一万步说，我们拐弯没有吼一嗓子提醒难道就没有错？这个同志，你没事吧？”<br>我僵着笑脸允许了他亲吻我的手，随即放他离开了。<br>“您是第一天当领导呢。”路旁水果店的老板一边用毛巾擦手一边说。<br>“我要做没有特权的领导。”我说。<br>我几乎能看到我的带领下诞生一个没有欺压和矛盾的优秀团队。<br>“我几乎能看到您第二天当领导的样子了。” 路旁水果店的老板一边用毛巾擦手一边说。<br>不，他怎么会理解，一个曾淋过雨的小职员要给所有受到不公正待遇的人一把伞。<br>看这高楼，看这街道，看这洋溢着笑脸的人们——<br>“您多伟大啊！”乌拉斯基诚恳地说。<br>我指着路旁堆得满满的垃圾桶说：“那不行，你看这儿还挺脏的，又脏又乱。”</p>
+<p>“领导好！”员工们一齐鞠躬。我定睛一看，我领导正像个落水鸭子一样瑟瑟发抖地坐在我原来的工位上。<br>“哟，这不领导呐。”我背着手走近他。<br>“没，没有，不敢当。我，我错了领导。”他惊恐地一哆嗦。<br>“嗨，紧张啥，虽然你以前动不动就骂我废物，老让我背黑锅，处处针对我，喜欢看我笑话，但我现在不一样了，我是领导，我不是那种小肚鸡肠的人。我就发现你特别有领导能力，之后你还担任领导工作。”<br>在他睁大双眼还在无法相信自己的耳朵的时候，野猪头一步跨上前去，将一张纸条贴在他背后。<br>纸条上写着：“已重用。”<br>“真的！真的！啊哈哈哈哈！”身旁的人把纸条上的字读给他听后，他难以自抑地大笑起来，然后跳到桌子上开始跳街舞。<br>“领导，领导你看，我还会街舞。”<br>“好啊，好啊。”我一边赞叹，一边微笑着鼓掌，眼神去瞥那些本来还在一声不吭低头工作，现在开始骚动的员工们。<br>“真的！领导重用了之前的对头！”<br>“领导用人一点也不狭隘啊！”<br>“那，领导，领导，我也很有能力啊。”<br>“领导，我之前让你抄过代码啊！还有，我跟你一块儿值过日啊！”<br>正当我打算再收拢一波人心的时候，余光瞥到有一个身影走出了电梯。这人披的雨衣要比我宽上一倍，头上带的镶了钻石的遮天蔽日的大帽子，尤其引人注目的，是他脚上绑了两个活生生的人，每走一步，这俩人就发出哀嚎。<br>我惊惧地发现我身后的这群人居然低下头不敢说话。<br>“什么事这么吵啊？”他说。<br>人群立刻安静下来，只有我的那个可怜的前领导因为太激动而疯掉了，依旧不知疲倦地在桌子上大笑着跳舞。<br>“你来办公室一趟。”他皱着眉对桌子上的舞者说道。<br>忽然我身边的野猪头几步越过我来到那个前领导的跟前，将一张纸条贴在他背后。几个胆子大的员工凑近了看，读出声来：“被辞退。”<br>房间里的所有人都抖了一抖，包括我。<br>前领导抽搐着倒在桌子上，身体迅速瘪下来，瘪成薄薄一张纸，无力地摊在桌子上。<br>“这，这是怎么回事？野猪头怎么听他的？”我问乌拉斯基。<br>“这是领导的领导，他说了算的事情，领导说了不算。”乌拉斯基低着头回答。<br>“为什么我会有领导？”我感觉上当受骗了，气愤但小声地质问。<br>“这事领导说了不算。”乌鸡头回答。<br>“啊，你就是我新任用的那谁。”男人开口了，他小而锐利的眼神像盯上尸体的秃鹫一般盯上了我，“看着，你不怎么擅长管人啊，不会是我看人没看准吧。”<br>我挤出微笑。<br>我的心扑通扑通跳。<br>我想到了我今早做出的承诺。<br>桌子上纸一样薄的前领导还在视线范围内。<br>我仿佛看见野猪头正盯着我的后背，时时刻刻给我贴一张纸条。<br>我忽地转身，手里甩着一条看不见的大长鞭，像野猪一样激烈地跳脚，朝着张大嘴巴看热闹的员工们吼道：“看什么看！有你们什么事！现在，马上，都给我把键盘像弹钢琴一样弹起来！弹起来！重用？一群废物！不能给公司带来利益，你们有什么资格被重用？！快！弹起来！”<br>在我怒吼的声音和哀求的眼神里，员工们都坐回了原位，密密麻麻的键盘敲打声逐渐抚平了我内心的不安。那个男人伴着脚底的哀嚎声走上前来，拍了拍我出了一身冷汗的后背，略带了些温慈的口吻说道：“第一天嘛，不习惯很正常，但我看，你有这个能力。”<br>“哪有的事，都是领导扶持。”我来不及扶帽子就慌忙低下头。<br>“不是谁都一开始就有这个魄力当领导的，我第一天的时候也还许了一堆任人唯贤，身体力行的诺言，我认为这跟后来的实事求是不矛盾。”<br>“真不愧是领导，眼界和思想不是一般人能比的，就像我就从来没想过什么改革什么的，领导让我干什么我就干什么。”<br>瓷做的帽子摔在地上啪嗒一声碎了，我仍低着头，装作没听见这让我心脏漏一拍的声音。<br>“只要吸取教训，不要把你当领导的每一天都当成第一天，你迟早会进步的。”<br>哀嚎声渐行渐远，我知道他已离开，依旧低着头大声说道——<br>“金玉良言，金玉良言，能在第一天就听到这么让我受益匪浅的话，真是下属的荣幸啊！”<br>房间里的回音逐渐又尖又哑，我忽然从干净得像镜子一样的地板上看到自己的脑袋已然变成乌鸡头，尖尖的嘴巴一张一合，两只眼睛像没睡过觉一样通红。</p>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 此方悬停 </span>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    ©2017 叁七
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="Toggle full screen shortcut key s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+
+        /*访问数量*/
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #000000;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #EE2C2C;
+    }
+    
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+    .nav-right:before {
+        content: ' ';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.8;
+        background: url("/img/list.jpg");
+        background-repeat: no-repeat;
+        background-position: 50% 0;
+        -ms-background-size: cover;
+        -o-background-size: cover;
+        -moz-background-size: cover;
+        -webkit-background-size: cover;
+        background-size: cover;
+    }
+    
+
+    
+</style>
+
+
+
+
+
+
+<div class="mobile-menus-out" >
+
+</div>
+<div class="mobile-menus">
+    
+    
+    <a class="dynamic-menu site_url"   href="/photo">相册</a>
+    
+    
+    <a class="dynamic-menu site_url"   href="/novel">小说</a>
+    
+    
+    <a class="dynamic-menu site_url"   href="/AI">Ai</a>
+    
+    
+</div>
+
+
+</html>

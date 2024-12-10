@@ -173,7 +173,7 @@ if (shortcutKey) {
             if (e.which === 83) { /* S - 显示/隐藏文章列表 */
                 $fullBtn.trigger("click");
             } else if ((e.which === 73 || e.which === 105) && ($(".nav").css('margin-left')==='0px') && !$('.title-list').hasClass('friend')) { /* I */
-                inputChange()
+                // inputChange() //这里禁用了i快捷键
             } else if (e.which === 87) { /* W - 切换大纲视图 */
                 if ($outlineList.is(':visible')) {
                     $('#outline-panel > .icon-list').trigger('click')

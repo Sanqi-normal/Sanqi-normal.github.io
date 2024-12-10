@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>叁七のblog</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="叁七のblog">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="千笑介绍：这是一个基于LLAMA3.2的我的本地AI大模型，它还有点笨，而且有点懒，如果不巧它还没起床，就没法回答你的问题   发送        body {         font-family: Arial, sans-serif;         background-color: #f4f4f4;         margin: 0;         padding: 0px;">
+<meta property="og:type" content="website">
+<meta property="og:title" content="叁七のblog">
+<meta property="og:url" content="http://example.com/AI/index.html">
+<meta property="og:site_name" content="叁七のblog">
+<meta property="og:description" content="千笑介绍：这是一个基于LLAMA3.2的我的本地AI大模型，它还有点笨，而且有点懒，如果不巧它还没起床，就没法回答你的问题   发送        body {         font-family: Arial, sans-serif;         background-color: #f4f4f4;         margin: 0;         padding: 0px;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-12-10T12:20:13.599Z">
+<meta property="article:modified_time" content="2024-12-10T12:20:13.599Z">
+<meta property="article:author" content="叁七">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="icon" href="/img/top.jpg">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-light.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+  <input id="theme_highlight_on" value="true" />
+  <input id="theme_code_copy" value="true" />
+</div>
+
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/"
+   class="avatar_target">
+    <img class="avatar"
+         src="/img/avatar.gif"/>
+</a>
+<div class="author">
+    <span>叁七</span>
+</div>
+
+<div class="icon">
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+</div>
+
+
+
+    <a class="more-menus">更多菜单</a>
+
+
+
+<ul>
+    <li>
+        <div class="all active" data-rel="All">All
+            
+                <small>(5)</small>
+            
+        </div>
+    </li>
+    
+        
+            
+                
+    <li>
+        <div data-rel="日志">
+            
+            日志
+            <small>(2)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="生活">
+            <i class="fold iconfont icon-right"></i>
+            生活
+            <small>(1)</small>
+        </div>
+        
+            <ul class="sub hide">
+                
+                    
+    <li>
+        <div data-rel="生活&lt;---&gt;记录">
+            
+            记录
+            <small>(1)</small>
+        </div>
+        
+    </li>
+
+                
+            </ul>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="游戏">
+            <i class="fold iconfont icon-right"></i>
+            游戏
+            <small>(1)</small>
+        </div>
+        
+            <ul class="sub hide">
+                
+                    
+    <li>
+        <div data-rel="游戏&lt;---&gt;创作">
+            
+            创作
+            <small>(1)</small>
+        </div>
+        
+    </li>
+
+                
+            </ul>
+        
+    </li>
+
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+        
+            
+                <a class="dynamic-menu site_url"
+                   
+                   href="/photo">相册</a>
+        
+            
+                <a class="dynamic-menu site_url"
+                   
+                   href="/novel">小说</a>
+        
+            
+                <a class="dynamic-menu site_url"
+                   
+                   href="/AI">Ai</a>
+        
+            
+    </div>
+    <div>
+        
+            <a class="about  site_url"
+               
+               href="/about">About</a>
+        
+        
+    </div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="5">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        Links
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="search shortcut key i"></i>
+            <div class="right-title">All</div>
+            <i class="iconfont icon-file-tree" data-title="switch to outline view shortcut key w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="return"></i>
+            <input id="local-search-input" autocomplete="off"/>
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="case sensitive"></i>
+            <i class="iconfont icon-tag" data-title="label"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">outline</div>
+            <i class="iconfont icon-list" data-title="switch to article list"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>博客</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>测试</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>游戏</a>
+            </li>
+        
+    </div>
+
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        
+        <a  class="All 游戏 创作 "
+           href="/2024/12/10/%E5%88%86%E4%BA%AB%E6%88%91%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%AE%8C%E6%88%90%E5%88%9B%E4%BD%9C%E7%9A%84%E6%B8%B8%E6%88%8F/"
+           data-tag="游戏"
+           data-author="" >
+            <span class="post-title" title="分享我第一个完成创作的游戏">分享我第一个完成创作的游戏</span>
+            <span class="post-date" title="2024-12-10 18:31:38">2024/12/10</span>
+        </a>
+        
+        
+        <a  class="All 日志 "
+           href="/2024/12/10/%E5%8D%9A%E5%AE%A2%E6%97%A5%E5%BF%970/"
+           data-tag="测试"
+           data-author="" >
+            <span class="post-title" title="日志（0）">日志（0）</span>
+            <span class="post-date" title="2024-12-10 09:09:00">2024/12/10</span>
+        </a>
+        
+        
+        <a  class="All 日志 "
+           href="/2024/12/10/%E5%8D%9A%E5%AE%A2%E6%97%A5%E5%BF%97/"
+           data-tag="博客"
+           data-author="" >
+            <span class="post-title" title="日志（1）">日志（1）</span>
+            <span class="post-date" title="2024-12-10 09:02:02">2024/12/10</span>
+        </a>
+        
+        
+        <a  class="All 生活 记录 "
+           href="/2024/12/09/%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/"
+           data-tag="博客"
+           data-author="" >
+            <span class="post-title" title="第一篇文章">第一篇文章</span>
+            <span class="post-date" title="2024-12-09 22:10:00">2024/12/09</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2024/12/09/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/"
+           data-tag="测试"
+           data-author="" >
+            <span class="post-title" title="叁七的测试博客">叁七的测试博客</span>
+            <span class="post-date" title="2024-12-09 16:50:50">2024/12/09</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="Toggle full screen shortcut key s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="page-" class="article article-type-page" itemscope itemprop="blogPost">
+    
+    <div class="article-meta">
+        
+        
+        
+        
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2024-12-10 18:17:51'>2024-12-10 18:17</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%99%BD%E7%84%B6%E6%88%91%E4%B9%9F%E5%BE%88%E6%83%B3%E5%B1%95%E7%A4%BA%EF%BC%8C%E4%BD%86%E6%98%AFgithub%E5%9B%BE%E7%89%87%E5%B1%95%E7%A4%BA%E5%A4%AA%E6%85%A2%E4%BA%86%EF%BC%8C%E4%B9%8B%E5%90%8E%E6%8D%A2%E4%BA%86%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%86%8D%E6%9D%A5%E5%85%89%E4%B8%B4%E5%90%A7"><span class="toc-text">虽然我也很想展示，但是github图片展示太慢了，之后换了服务器再来光临吧</span></a></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="虽然我也很想展示，但是github图片展示太慢了，之后换了服务器再来光临吧"><a href="#虽然我也很想展示，但是github图片展示太慢了，之后换了服务器再来光临吧" class="headerlink" title="虽然我也很想展示，但是github图片展示太慢了，之后换了服务器再来光临吧"></a>虽然我也很想展示，但是github图片展示太慢了，之后换了服务器再来光临吧</h2>
+      
+       <hr><span style="font-style: italic;color: gray;"> 此方悬停 </span>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    ©2017 叁七
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="Toggle full screen shortcut key s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+
+        /*访问数量*/
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #000000;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #EE2C2C;
+    }
+    
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+    .nav-right:before {
+        content: ' ';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.8;
+        background: url("/img/list.jpg");
+        background-repeat: no-repeat;
+        background-position: 50% 0;
+        -ms-background-size: cover;
+        -o-background-size: cover;
+        -moz-background-size: cover;
+        -webkit-background-size: cover;
+        background-size: cover;
+    }
+    
+
+    
+</style>
+
+
+
+
+
+
+<div class="mobile-menus-out" >
+
+</div>
+<div class="mobile-menus">
+    
+    
+    <a class="dynamic-menu site_url"   href="/photo">相册</a>
+    
+    
+    <a class="dynamic-menu site_url"   href="/novel">小说</a>
+    
+    
+    <a class="dynamic-menu site_url"   href="/AI">Ai</a>
+    
+    
+</div>
+
+
+</html>
