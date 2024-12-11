@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>叁七のblog</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="叁七のblog">
+  <title>通过内网dns欺骗进行流量劫持 | 叁七のblog</title>
+  <meta name="keywords" content=" 渗透笔记 ">
+  <meta name="description" content="通过内网dns欺骗进行流量劫持 | 叁七のblog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="只是在尝试活着 很高兴与你相遇    了解我快捷键说明qq：2817152925qq邮箱：&#50;&#x38;&#49;&#55;&#x31;&#53;&#x32;&#x39;&#x32;&#x35;&#x40;&#x71;&#113;&#46;&#x63;&#x6f;&#109;微信：Guoyikai222bilibli如有侵权请联系我">
 <meta property="og:type" content="website">
@@ -550,17 +550,36 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="page-" class="article article-type-page" itemscope itemprop="blogPost">
+        <article id="post-通过内网dns欺骗进行流量劫持" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">通过内网dns欺骗进行流量劫持</h1>
     
     <div class="article-meta">
         
         
         
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="计算机">计算机</a> > 
+            
+            <a  data-rel="计算机&lt;---&gt;渗透">渗透</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color5">渗透笔记</a>
+            
+        </span>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-12-10 17:08:10'>2024-12-10 17:08</time>
+            Created At : <time class="date" title='Updated At: 2024-12-11 20:24:02'>2024-12-11 16:47</time>
         
     </div>
     <div class="article-meta">
@@ -571,7 +590,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E7%BD%91%E8%99%9A%E6%8B%9F%E6%9C%BAwindowsXp%E7%B3%BB%E7%BB%9F%E6%B8%97%E9%80%8F%E5%B0%9D%E8%AF%95"><span class="toc-text">内网虚拟机windowsXp系统渗透尝试:</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8E%B0%E5%9C%A8%E5%B0%9D%E8%AF%95DNS%E6%AC%BA%E9%AA%97"><span class="toc-text">现在尝试DNS欺骗</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -587,8 +606,30 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><a href="./Preport.docx">那么，我视你为我的挚友</a></p>
-
+        <h2 id="内网虚拟机windowsXp系统渗透尝试"><a href="#内网虚拟机windowsXp系统渗透尝试" class="headerlink" title="内网虚拟机windowsXp系统渗透尝试:"></a>内网虚拟机windowsXp系统渗透尝试:</h2><p>   使用Nessus查询发现存在 <code>IP Forwarding Enabled </code>漏洞</p>
+<p>   使用ettercap  添加网关和ip为<code>target1</code> 和<code>target2</code> 执行ARP欺骗(虚拟机必须和网关在同一网段下) </p>
+<p>   WireShark筛选条件选arp可以看到握手后攻击者主机mac地址成功成为中间人</p>
+<h3 id="现在尝试DNS欺骗"><a href="#现在尝试DNS欺骗" class="headerlink" title="现在尝试DNS欺骗"></a>现在尝试DNS欺骗</h3><pre><code>vim /etc/ettercap/etter.dns  #添加*A &lt;攻击者主机ip&gt;
+</code></pre>
+<p>打开apache服务 将电脑转为服务器</p>
+<pre><code>/etc/init.d/apache2 start
+</code></pre>
+<p>制作钓鱼页面内容</p>
+<pre><code>cd /var/www/html
+vim index.html
+</code></pre>
+<p>设置ip转发以尽量隐藏自己</p>
+<pre><code>echo &quot;1&quot; &gt; /proc/sys/net/ipv4/ip_forward #为0时取消转发
+</code></pre>
+<p>靶机没能成功打开页面可能是没清除缓存<br>清除dns缓存 </p>
+<pre><code>ipconfig /flushdns
+</code></pre>
+<blockquote>
+<p>相关<br>setookit 社会工程学 伪造页面收集登陆者信息</p>
+</blockquote>
+<span style="color: gray; font-size:;">
+笔记内容摘自网络，仅供记录与学习
+</span>
       
        <hr><span style="font-style: italic;color: gray;"> 此方悬停 </span>
     </div>
