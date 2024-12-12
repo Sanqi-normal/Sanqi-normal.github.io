@@ -103,12 +103,12 @@
   }
   .nav-left .more-menus {
     position: absolute;
-    color: #ffa500;
+    color: #fff;
     display: block;
     z-index: 100;
     bottom: 32px;
     right: 0;
-    border: solid 4px;
+    border: solid 2px;
     border-right: none;
     border-radius: 15px 0 0 15px;
     line-height: 20px;
