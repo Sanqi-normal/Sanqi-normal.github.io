@@ -108,9 +108,9 @@
     z-index: 100;
     bottom: 32px;
     right: 0;
-    border: solid 1px;
+    border: solid 4px;
     border-right: none;
-    border-radius: 10px 0 0 10px;
+    border-radius: 15px 0 0 15px;
     line-height: 20px;
   }
   .nav-left .left-bottom {
