@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>叁七のblog</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="叁七のblog">
+  <title>blog_theme | 叁七のblog</title>
+  <meta name="keywords" content=" 笔记 , 前端 ">
+  <meta name="description" content="blog_theme | 叁七のblog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="只是在尝试活着 很高兴与你相遇    了解我快捷键说明qq：2817152925qq邮箱：&#50;&#x38;&#49;&#55;&#x31;&#53;&#x32;&#x39;&#x32;&#x35;&#x40;&#x71;&#113;&#46;&#x63;&#x6f;&#109;微信：Guoyikai222bilibli如有侵权请联系我">
 <meta property="og:type" content="website">
@@ -613,17 +613,28 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="page-" class="article article-type-page" itemscope itemprop="blogPost">
+        <article id="post-blog-theme" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">blog_theme</h1>
     
     <div class="article-meta">
         
         
         
         
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color3">笔记</a>
+            
+            <a class="color3">前端</a>
+            
+        </span>
+        
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-12-11 12:54:46'>2024-12-11 12:54</time>
+            Created At : <time class="date" title='Updated At: 2024-12-12 14:28:04'>2024-12-12 11:11</time>
         
     </div>
     <div class="article-meta">
@@ -634,7 +645,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-hexo%E4%B8%BB%E9%A2%98%E4%BB%A3%E7%A0%81%E8%A7%A3%E6%9E%90"><span class="toc-text">3-hexo主题代码解析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%A4%B9%E7%BB%93%E6%9E%84"><span class="toc-text">文件夹结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#script"><span class="toc-text">script</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E8%84%9A%E6%9C%AC"><span class="toc-text">其他脚本</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#gitalk-js-Gitalk%E8%AF%84%E8%AE%BA%E6%8F%92%E4%BB%B6"><span class="toc-text">gitalk.js Gitalk评论插件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gitment-js-Gitment%E8%AF%84%E8%AE%BA%E6%8F%92%E4%BB%B6"><span class="toc-text">gitment.js Gitment评论插件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#iconfont-js-%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87%E5%BA%93"><span class="toc-text">iconfont.js 字体图标库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#jquery-pjax-js-%E9%A1%B5%E9%9D%A2%E5%8A%A0%E8%BD%BD%E6%8F%92%E4%BB%B6"><span class="toc-text">jquery.pjax.js 页面加载插件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mathjax-js-%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F%E6%B8%B2%E6%9F%93%E6%8F%92%E4%BB%B6"><span class="toc-text">mathjax.js 数学公式渲染插件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#config"><span class="toc-text">config</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#style"><span class="toc-text">style</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mobile"><span class="toc-text">mobile</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#stylepart"><span class="toc-text">stylepart</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#comment-styl-%E8%AF%84%E8%AE%BA%E6%A0%B7%E5%BC%8F"><span class="toc-text">comment.styl 评论样式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#font-styl-%E5%AD%97%E4%BD%93%E6%A0%B7%E5%BC%8F"><span class="toc-text">font.styl 字体样式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fade-styl-%E6%B7%A1%E5%85%A5%E6%B7%A1%E5%87%BA%E5%8A%A8%E7%94%BB%E6%95%88%E6%9E%9C"><span class="toc-text">fade.styl 淡入淡出动画效果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#full-toc-styl-%E5%9B%9E%E5%88%B0%E9%A1%B6%E9%83%A8%E5%92%8C%E5%85%A8%E5%B1%8F%E4%B8%A4%E4%B8%AA%E6%8C%89%E9%92%AE"><span class="toc-text">full-toc.styl 回到顶部和全屏两个按钮</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nav-left-styl-%E5%B7%A6%E4%BE%A7%E5%AF%BC%E8%88%AA%E6%A0%8F%E6%A0%B7%E5%BC%8F"><span class="toc-text">nav-left.styl 左侧导航栏样式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nav-right-styl-%E5%8F%B3%E4%BE%A7%E5%AF%BC%E8%88%AA%E6%A0%8F%E6%A0%B7%E5%BC%8F"><span class="toc-text">nav-right.styl 右侧导航栏样式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#post-styl-%E6%96%87%E7%AB%A0%E6%A0%B7%E5%BC%8F"><span class="toc-text">post.styl 文章样式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nprogress-styl-%E9%A1%B5%E9%9D%A2%E5%8A%A0%E8%BD%BD%E8%BF%9B%E5%BA%A6%E6%9D%A1%E6%A0%B7%E5%BC%8F"><span class="toc-text">nprogress.styl 页面加载进度条样式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#num-load-styl-%E5%8A%A0%E8%BD%BD%E5%8A%A8%E7%94%BB"><span class="toc-text">num-load.styl 加载动画</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -650,9 +661,54 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>S 折叠列表   W展开大纲</p>
-<p>J 页面下移   K页面上移</p>
-
+        <h2 id="3-hexo主题代码解析"><a href="#3-hexo主题代码解析" class="headerlink" title="3-hexo主题代码解析"></a>3-hexo主题代码解析</h2><p>在这里记录下3-hexo主题代码的解析，以便之后更改和添加配置</p>
+<p>开始之前</p>
+<pre><code>.git 包含了 Git 仓库的所有元数据和对象数据库，用于跟踪和管理项目的版本历史
+.gitkeep 防止Git忽略空文件夹
+.gitignore 存放应当忽略的文件类型
+.yml (非)标记语言YAML
+.md 标记语言Markdown
+.css 样式语言CSS
+.styl 样式语言Stylus 编写CSS
+.ejs 前端嵌入式模板语言Embedded JavaScript 一般来说调整参数不应该来这里 不过也许可以借此改变页面结构
+</code></pre>
+<h2 id="文件夹结构"><a href="#文件夹结构" class="headerlink" title="文件夹结构"></a>文件夹结构</h2><p> —— &emsp;  .github 存放Bug报告<br> —— &emsp;  layout 布局<br> —— &emsp;  —— &emsp;  _partial<br> —— &emsp;  —— &emsp;  —— &emsp; comments.ejs 评论模板<br> —— &emsp;  —— &emsp;  —— &emsp; 其他模板 </p>
+<p> —— &emsp;  —— &emsp;  post.ejs 文章页面结构 不可调参<br> —— &emsp;  —— &emsp;  index.ejs 主页页面模板 不可调参<br> —— &emsp;  —— &emsp;  indexs.md 主页面</p>
+<p> —— &emsp;  source<br> —— &emsp;  —— &emsp;  css<br> —— &emsp; —— &emsp; —— &emsp;_partial<br> —— &emsp; —— &emsp; —— &emsp; —— &emsp;<a href="#stylepart">styl局部样式文件</a><br> —— &emsp; —— &emsp; —— &emsp;fonts 字体和图标文件<br> —— &emsp; —— &emsp; —— &emsp;hl_themes 代码高亮主题<br> —— &emsp; —— &emsp; —— &emsp;gitalk.css Gitalk评论插件样式文件<br> —— &emsp; —— &emsp; —— &emsp;<a href="#mobile">mobile.styl</a> 移动端样式文件<br> —— &emsp; —— &emsp; —— &emsp;<a href="#style">style.styl</a> 文章样式文件<br> —— &emsp;  —— &emsp;  js<br> —— &emsp; —— &emsp; —— &emsp;js<a href="#script">全局</a>和<a href="#%E5%85%B6%E4%BB%96%E8%84%9A%E6%9C%AC">局部</a>脚本文件<br> —— &emsp;  —— &emsp;  img 图片存放</p>
+<p> —— &emsp;  <a href="#config">_config.yml 配置文件</a></p>
+<h2 id="script"><a href="#script" class="headerlink" title="script"></a>script</h2><p>自定义 jQuery 选择器方法<br>博客路径处理<br>PJAX 页面加载<br>根据当前路径设置文章背景。<br>渲染 MathJax 数学公式。<br>新内容淡入，绑定事件，获取评论数。<br>切换文章分类：清空搜索框，显示当前分类面板，隐藏大纲列表。<br>展开子类：点击折叠按钮时，展开或收起子类，并调整子类列表的高度。<br>鼠标移出文章列表后去掉 hover 样式：<br>快捷键处理<br>搜索框输入事件处理<br>隐藏&#x2F;显示文章列表：点击按钮时，切换文章列表的显示与隐藏状态。<br>同步大纲位置：根据页面滚动位置，同步大纲列表的激活项。<br>页面初始化：绑定事件，渲染高亮代码块，初始化文章相关内容。<br>监测滚动事件，同步大纲位置。<br>标签面板处理：切换标签面板的显示与隐藏,根据输入的标签过滤标签列表。<br>点击按钮时，回到默认面板，隐藏其他面板。<br>点击按钮时，切换到大纲视图，显示文章的大纲结构。<br>绑定文章内标签、分类、作者的点击事件，实现搜索功能。<br>初始化文章的目录结构，并绑定目录项的点击事件。<br>图片处理：点击图片时，放大图片并支持点击关闭。<br>复制代码功能：点击“复制代码”按钮时，将代码复制到剪贴板，并显示复制成功的提示。</p>
+<h2 id="其他脚本"><a href="#其他脚本" class="headerlink" title="其他脚本"></a>其他脚本</h2><h3 id="gitalk-js-Gitalk评论插件"><a href="#gitalk-js-Gitalk评论插件" class="headerlink" title="gitalk.js Gitalk评论插件"></a>gitalk.js Gitalk评论插件</h3><h3 id="gitment-js-Gitment评论插件"><a href="#gitment-js-Gitment评论插件" class="headerlink" title="gitment.js Gitment评论插件"></a>gitment.js Gitment评论插件</h3><h3 id="iconfont-js-字体图标库"><a href="#iconfont-js-字体图标库" class="headerlink" title="iconfont.js 字体图标库"></a>iconfont.js 字体图标库</h3><h3 id="jquery-pjax-js-页面加载插件"><a href="#jquery-pjax-js-页面加载插件" class="headerlink" title="jquery.pjax.js 页面加载插件"></a>jquery.pjax.js 页面加载插件</h3><h3 id="mathjax-js-数学公式渲染插件"><a href="#mathjax-js-数学公式渲染插件" class="headerlink" title="mathjax.js 数学公式渲染插件"></a>mathjax.js 数学公式渲染插件</h3><h2 id="config"><a href="#config" class="headerlink" title="config"></a>config</h2><p>版本号<br>头像和图标<br>博客路径<br>链接图标<br>是否在分类中显示文章数量。<br>是否开启多级分类。<br>配置分类的层级结构。<br>设置不同屏幕宽度下的分类宽度。<br>是否启用快捷键功能<br>自定义菜单：<br>文末声明<br>底部版权信息<br>底部备案号<br>字数统计<br>是否开启字数统计功能。<br>网站计数<br>设置文章目录的最大级数。<br>设置文章列表标题的颜色。<br>设置文章发布日期的颜色。<br>设置鼠标悬停时的背景色和文字颜色。<br>是否开启文章列表背景图。<br>设置背景图的路径。<br>设置背景图的透明度。<br>设置文章列表的样式<br>设置引用块的样式<br>设置表格的样式<br>设置首页背景图<br>设置其他页面背景图。<br>设置点击图片放大的样式<br>代码高亮<br>数学公式渲染<br>图表渲染<br>评论设置：<br>是否开启评论功能。<br>选择评论系统<br>是否在文章标题下方显示评论数。<br>配置各评论系统参数<br>配置各库CDN 地址</p>
+<h2 id="style"><a href="#style" class="headerlink" title="style"></a>style</h2><p>全局样式设置：</p>
+<blockquote>
+<p>设置 html 和 body 的宽度、高度、字体、颜色等基本样式。<br>禁用页面滚动，确保页面内容不会溢出。</p>
+</blockquote>
+<p>链接样式：</p>
+<blockquote>
+<p>设置链接的颜色继承父元素，去除下划线，添加鼠标悬停时的颜色过渡效果。</p>
+</blockquote>
+<p>标题样式：</p>
+<blockquote>
+<p>设置 h1 到 h6 标题的颜色、行高、上下边距等样式。<br>为 h1 和 h2 添加特定的字体大小和底部边框。</p>
+</blockquote>
+<p>导航栏样式：</p>
+<blockquote>
+<p>设置导航栏的宽度、高度、背景色等基本样式。<br>添加导航栏在全屏模式下的隐藏效果，并设置鼠标悬停时的过渡效果。</p>
+</blockquote>
+<p>隐藏列表样式：</p>
+<blockquote>
+<p>设置隐藏列表的初始状态为隐藏，并添加全屏模式下的样式变化。<br>设置半圆形的按钮样式，用于显示或隐藏列表。</p>
+</blockquote>
+<p>图片放大效果：</p>
+<blockquote>
+<p>设置图片放大时的固定位置和过渡效果，确保图片在放大时能够居中显示。</p>
+</blockquote>
+<p>移动端菜单样式：</p>
+<blockquote>
+<p>设置移动端菜单的初始状态为隐藏，并添加显示时的过渡效果。<br>设置菜单按钮的样式，确保在移动设备上能够正确显示和隐藏。</p>
+</blockquote>
+<p>导入移动端样式文件 mobile.styl，以确保在不同设备上显示一致。</p>
+<h2 id="mobile"><a href="#mobile" class="headerlink" title="mobile"></a>mobile</h2><p>对style做了调整</p>
+<h2 id="stylepart"><a href="#stylepart" class="headerlink" title="stylepart"></a>stylepart</h2><h3 id="comment-styl-评论样式"><a href="#comment-styl-评论样式" class="headerlink" title="comment.styl 评论样式"></a>comment.styl 评论样式</h3><h3 id="font-styl-字体样式"><a href="#font-styl-字体样式" class="headerlink" title="font.styl 字体样式"></a>font.styl 字体样式</h3><h3 id="fade-styl-淡入淡出动画效果"><a href="#fade-styl-淡入淡出动画效果" class="headerlink" title="fade.styl 淡入淡出动画效果"></a>fade.styl 淡入淡出动画效果</h3><h3 id="full-toc-styl-回到顶部和全屏两个按钮"><a href="#full-toc-styl-回到顶部和全屏两个按钮" class="headerlink" title="full-toc.styl 回到顶部和全屏两个按钮"></a>full-toc.styl 回到顶部和全屏两个按钮</h3><h3 id="nav-left-styl-左侧导航栏样式"><a href="#nav-left-styl-左侧导航栏样式" class="headerlink" title="nav-left.styl 左侧导航栏样式"></a>nav-left.styl 左侧导航栏样式</h3><h3 id="nav-right-styl-右侧导航栏样式"><a href="#nav-right-styl-右侧导航栏样式" class="headerlink" title="nav-right.styl 右侧导航栏样式"></a>nav-right.styl 右侧导航栏样式</h3><h3 id="post-styl-文章样式"><a href="#post-styl-文章样式" class="headerlink" title="post.styl 文章样式"></a>post.styl 文章样式</h3><h3 id="nprogress-styl-页面加载进度条样式"><a href="#nprogress-styl-页面加载进度条样式" class="headerlink" title="nprogress.styl 页面加载进度条样式"></a>nprogress.styl 页面加载进度条样式</h3><h3 id="num-load-styl-加载动画"><a href="#num-load-styl-加载动画" class="headerlink" title="num-load.styl 加载动画"></a>num-load.styl 加载动画</h3>
       
        <hr><span style="font-style: italic;color: gray;"> 此方悬停 </span>
     </div>

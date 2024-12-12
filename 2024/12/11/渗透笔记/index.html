@@ -117,7 +117,7 @@
     <li>
         <div class="all active" data-rel="All">All
             
-                <small>(15)</small>
+                <small>(19)</small>
             
         </div>
     </li>
@@ -163,7 +163,7 @@
         <div data-rel="计算机">
             <i class="fold iconfont icon-right"></i>
             计算机
-            <small>(3)</small>
+            <small>(5)</small>
         </div>
         
             <ul class="sub hide">
@@ -174,6 +174,17 @@
             
             渗透
             <small>(3)</small>
+        </div>
+        
+    </li>
+
+                
+                    
+    <li>
+        <div data-rel="计算机&lt;---&gt;硬件">
+            
+            硬件
+            <small>(1)</small>
         </div>
         
     </li>
@@ -236,6 +247,10 @@
         
     </li>
 
+            
+        
+    
+        
             
         
     
@@ -314,7 +329,7 @@
         
     </div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="15">
+<input type="hidden" id="yelog_site_posts_number" value="19">
 
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
@@ -371,6 +386,18 @@
             </li>
         
             <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>端口</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>扩展</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>前端</a>
+            </li>
+        
+            <li class="article-tag-list-item">
                 <i class="iconfont icon-tag"></i><a>日志</a>
             </li>
         
@@ -396,6 +423,42 @@
 
     
     <nav id="title-list-nav">
+        
+        
+        <a  class="All "
+           href="/2024/12/12/%E6%97%A5%E5%BF%97%EF%BC%884%EF%BC%89/"
+           data-tag="博客,测试"
+           data-author="" >
+            <span class="post-title" title="日志（4）">日志（4）</span>
+            <span class="post-date" title="2024-12-12 14:36:06">2024/12/12</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2024/12/12/blog-theme/"
+           data-tag="笔记,前端"
+           data-author="" >
+            <span class="post-title" title="blog_theme">blog_theme</span>
+            <span class="post-date" title="2024-12-12 11:11:09">2024/12/12</span>
+        </a>
+        
+        
+        <a  class="All 计算机 "
+           href="/2024/12/12/%E6%89%A9%E5%B1%95/"
+           data-tag="扩展"
+           data-author="" >
+            <span class="post-title" title="扩展工具">扩展工具</span>
+            <span class="post-date" title="2024-12-12 10:43:31">2024/12/12</span>
+        </a>
+        
+        
+        <a  class="All 计算机 硬件 "
+           href="/2024/12/12/%E7%AB%AF%E5%8F%A3/"
+           data-tag="端口"
+           data-author="" >
+            <span class="post-title" title="端口笔记">端口笔记</span>
+            <span class="post-date" title="2024-12-12 10:18:56">2024/12/12</span>
+        </a>
         
         
         <a  class="All 计算机 渗透 "
@@ -579,7 +642,7 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-12-11 22:00:49'>2024-12-11 16:32</time>
+            Created At : <time class="date" title='Updated At: 2024-12-12 11:00:00'>2024-12-11 16:32</time>
         
     </div>
     <div class="article-meta">
@@ -611,7 +674,7 @@
 <p>以下内容就是总结自此书，所以直接看书就行，不用往下翻了</p>
 </blockquote>
 <p>靶场<a target="_blank" rel="noopener" href="https://www.vulnhub.com/">https://www.vulnhub.com/</a> 注意靶机适配的虚拟机软件<br>靶场详解 推荐观看<a target="_blank" rel="noopener" href="https://space.bilibili.com/491748397">红队笔记</a></p>
-<h3 id="也许你在找别的"><a href="#也许你在找别的" class="headerlink" title="也许你在找别的"></a>也许你在找别的</h3><p><a href="../webst">Web渗透</a></p>
+<h3 id="也许你在找别的"><a href="#也许你在找别的" class="headerlink" title="也许你在找别的"></a>也许你在找别的</h3><p><a href="../webst">Web渗透</a>  &emsp;  <a href="../../12/%E7%AB%AF%E5%8F%A3">端口笔记</a> &emsp; <a href="../../12/%E6%89%A9%E5%B1%95">扩展工具</a></p>
 <h2 id="序、一些入门了解尝试"><a href="#序、一些入门了解尝试" class="headerlink" title="序、一些入门了解尝试"></a>序、一些入门了解尝试</h2><p>  linux kali安装(我用Hyper-V安的但是非常后悔，推荐Vmware)</p>
 <p>  <a target="_blank" rel="noopener" href="https://blog.csdn.net/wzk4869/article/details/132855372">linux bash基础命令</a></p>
 <p>  apt命令    <a target="_blank" rel="noopener" href="https://www.runoob.com/linux/linux-comm-apt.html">本命令具有超级牛力，moo~</a></p>
@@ -656,10 +719,7 @@ snmpcheck   -t &lt;ip&gt;
 </blockquote>
 <h3 id="主动收集信息"><a href="#主动收集信息" class="headerlink" title="主动收集信息"></a>主动收集信息</h3><p>  具有攻击性 留下痕迹</p>
 <blockquote>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/2302_82189125/article/details/135961736">Nmap</a>查询在线，端口，嗅探服务器<br>查看tcp端口  <code>-sP</code> 查看是否在线 <code>Nping</code>（套具）获取详细信息<br>查找指定端口范围 <code>-p ?-??? &lt;ip&gt;</code>    输出文件<code>-oG 路径</code> </p>
-</blockquote>
-<blockquote>
-<p>Zenmap GUI化工具 扫描大型网络和主机</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/2302_82189125/article/details/135961736">Nmap</a>查询在线，端口，嗅探服务器<br>查看tcp端口  <code>-sP</code> 查看是否在线 <code>Nping</code>（套具）获取详细信息<br>查找指定端口范围 <code>-p ?-??? &lt;ip&gt;</code>    输出文件<code>-oG 路径</code>  指纹识别 <code>-A</code><br>详细输出 <code>-v</code><br>Zenmap GUI化工具 扫描大型网络和主机</p>
 </blockquote>
 <h3 id="APR欺骗"><a href="#APR欺骗" class="headerlink" title="APR欺骗"></a>APR欺骗</h3><p>Netdiscover ARP侦查工具 攻击扫描局域网内主机   </p>
 <pre><code>arpspoof -i eth0 -t &lt;ip&gt; -r &lt;默认网关&gt; #断网指令 条件:网卡正确 处于同一网段    
