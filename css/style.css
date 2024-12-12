@@ -1638,6 +1638,7 @@ h1 {
   margin: 0.67em 0;
 }
 h2 {
+  color: #696969;
   padding-bottom: 12px;
   font-size: 24px;
   border-bottom: 1px solid #ececec;
@@ -1773,7 +1774,7 @@ img.pswp__img {
     font-size: 16px;
   }
   .nav-right {
-    width: 390px;
+    width: 300px;
   }
   .nav-right .title-list form span #tagswitch:checked +#tagsWitchIcon:after {
     top: 9px;
@@ -1856,7 +1857,7 @@ img.pswp__img {
   }
   .nav-left .more-menus {
     position: absolute;
-    color: #fff;
+    color: #ffa500;
     display: block;
     z-index: 100;
     bottom: 32px;
