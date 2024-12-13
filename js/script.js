@@ -33,6 +33,7 @@ var $localSearchResult = $("#local-search-result")
 var isFullScreen = $(window).width() <= 1024
 var isFriend = false
 var shortcutKey = $('#theme_shortcut').val() !== 'false'
+var pageshortcut = $('#page_shortcut').val() !== 'true' /*为了让某些页面禁用快捷键而单独增加了变量*/
 $(document).pjax('.nav-right nav a,.nav-left .avatar_target,.site_url', '.pjax', {fragment: '.pjax', timeout: 8000});
 $(document).on({
     /*点击链接后触发的事件*/
@@ -147,7 +148,7 @@ $(".nav-right nav a").mouseleave(function (e) {
 
 /*快捷键/组合键*/
 var publickey = {"shift": false, "ctrl": false, "alt": false, "last": 0};
-if (shortcutKey) {
+if (shortcutKey && pageshortcut) {
     $(document).keydown(function (e) {
         var tobottom = container.prop("scrollHeight") - container.scrollTop() - container.height();
         var totop = container.scrollTop();

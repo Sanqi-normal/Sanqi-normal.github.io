@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>叁七的测试博客 | 叁七のblog</title>
-  <meta name="keywords" content=" 测试 ">
-  <meta name="description" content="叁七的测试博客 | 叁七のblog">
+  <title>日志（6） | 叁七のblog</title>
+  <meta name="keywords" content=" 博客 ">
+  <meta name="description" content="日志（6） | 叁七のblog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="千笑此页面禁用了快捷键，如导航到新页面无法使用快捷键，请重新刷新界面介绍：这是一个基于LLAMA3.2的我的本地AI大模型，它还有点笨，而且有点懒，如果不巧它还没起床，就没法回答你的问题   发送        body {         font-family: Arial, sans-serif;         background-color: #f4f4f4;         marg">
 <meta property="og:type" content="website">
@@ -690,31 +690,39 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-测试文章" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-日志（6）" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">叁七的测试博客</h1>
+        <h1 class="article-title">日志（6）</h1>
     
     <div class="article-meta">
         
         
         
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="日志">日志</a>
+            
+        </span>
+        
         
         <span class="tag">
             <i class="iconfont icon-tag"></i>
             
-            <a class="color3">测试</a>
+            <a class="color3">博客</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-12-10 09:11:30'>2024-12-09 16:50</time>
+            Created At : <time class="date" title='Updated At: 2024-12-13 20:53:04'>2024-12-13 20:21</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:4</span>
+        <span>Count:315</span>
         
         
         
@@ -749,7 +757,17 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>测试内容</p>
+        <p>更改</p>
+<blockquote>
+<p>Ai界面输入框禁用快捷键</p>
+</blockquote>
+<p>一无所知的我翻看了几天才熟悉这个主题的逻辑，然后琢磨着怎么把输入这个问题改改。</p>
+<p>‘顺藤摸瓜’不大对，‘挨个翻找’才更准确，总之找到了相关逻辑的代码的位置。</p>
+<p>最初尝试在一个隐藏的input中定义一个shortcutkey项，用来获取page的元素并提交一个布尔值给最终处理快捷键逻辑的地方，尝试失败，调试发现虽然页面源代码更新了，输入框内容没有更新。</p>
+<p>查找资料并多次尝试，发现问题出在页面的跳转方式上——页面是异步跳转，更快，不需要完全重载浏览器，但这就导致有些参数值没能更新。</p>
+<p>于是改跳转为当前页面跳转，会完全重载一次，发现奏效，于是修改完善。</p>
+<p>目前离开ai界面没有重载，快捷键是禁用的，需要刷新一下界面。当然，最好的处理方式应该是在输入框聚焦时禁用快捷键，在不输入时启用。但是我貌似浪费太多时间了，学艺不精是这样的。</p>
+<p><img src="https://ts1.cn.mm.bing.net/th/id/R-C.2a05596eb480cadf9b57ac4033f9f006?rik=kjDB6pmvIpO8qg&riu=http://n.sinaimg.cn/front/63/w563h300/20181002/XnBI-hkrzyam6189734.jpg&ehk=igKQLmIlfYXlgZ1BMKZbrGNQnDGoTYSVdSUmXouEwEQ=&risl=&pid=ImgRaw&r=0"></p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 此方悬停 </span>
