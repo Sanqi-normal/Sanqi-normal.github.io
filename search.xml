@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>网站中的图片显示问题</title>
+      <link href="/2024/12/15/%E7%BD%91%E7%AB%99%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E6%98%BE%E7%A4%BA%E9%97%AE%E9%A2%98/"/>
+      <url>/2024/12/15/%E7%BD%91%E7%AB%99%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E6%98%BE%E7%A4%BA%E9%97%AE%E9%A2%98/</url>
+      
+        <content type="html"><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>先前网站目录列表包含了一个动图和一张高清图片，每次打开加载的很慢，动图甚至会卡得只剩几帧。</p><h2 id="图片加载除网速外，还跟图片自身质量和托管图片的服务器有关。"><a href="#图片加载除网速外，还跟图片自身质量和托管图片的服务器有关。" class="headerlink" title="图片加载除网速外，还跟图片自身质量和托管图片的服务器有关。"></a>图片加载除网速外，还跟图片自身质量和托管图片的服务器有关。</h2><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/Performance/How_browsers_work">渲染页面：浏览器的工作原理</a></p><p>首先我尝试压缩高清图片的质量，但效果并不显著，反而图片模糊得看不清了，原因可能是动图加载在加载过程中占了大部分线程。</p><h3 id="图片压缩"><a href="#图片压缩" class="headerlink" title="图片压缩"></a>图片压缩</h3><p>Photoshop压缩： 文件&gt;导出&gt;存储为web所用的格式 在这里你可以选择压缩大小和颜色数量，并通过预览查看压缩后的大小。<br>Asprite压缩： 小体积图片或动图格式的文件快速压缩，选择导出处的比例，或者添加脚本自定义压缩。</p><p>但是本站引用网络上的高清图片加载的却很快，猜想如果把图片上传到国内服务器，然后引用该图片链接，可以加快页面和图片加载速度。</p><h3 id="图床"><a href="#图床" class="headerlink" title="图床"></a>图床</h3><p>不同图床试验并没有发现明显速度差异，但图床还有被封，丢失的风险，因此在这里放图片做比较<br>免费图床无需登录：<br>    <a href="https://www.helloimg.com/?lang=zh-CN">hello图床</a> 每张最大上传5MB，测速良好<br>    <img src="https://www.helloimg.com/i/2024/12/15/675e621bf16e9.jpg" alt="hello"><br>    <a href="https://picui.cn/">picui图床</a>每张最大上传10MB，一次最多5张<br>    <img src="https://img.picui.cn/free/2024/12/15/675e61c397289.jpg" alt="picui"><br><span style='color:grey;font-size:smaller'><br>其他图床有的需要注册，有的服务器在国外，就不试了。<br></span><br>图片上传后再引用生成的链接，网页就快很多了。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 计算机 </category>
+          
+          <category> Web </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 博客 </tag>
+            
+            <tag> Web </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>日志（6）</title>
       <link href="/2024/12/13/%E6%97%A5%E5%BF%97%EF%BC%886%EF%BC%89/"/>
       <url>/2024/12/13/%E6%97%A5%E5%BF%97%EF%BC%886%EF%BC%89/</url>
