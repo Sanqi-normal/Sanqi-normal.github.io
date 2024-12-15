@@ -349,7 +349,7 @@
     </div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="26">
-<input type="hidden" id="yelog_site_word_count" value="28.5k">
+<input type="hidden" id="yelog_site_word_count" value="28.6k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -525,7 +525,7 @@
         
         <a  class="All 日志 "
            href="/2024/12/12/%E6%97%A5%E5%BF%97%EF%BC%884%EF%BC%89/"
-           data-tag="博客,测试"
+           data-tag="测试,博客"
            data-author="" >
             <span class="post-title" title="日志（4）">日志（4）</span>
             <span class="post-date" title="2024-12-12 14:36:06">2024/12/12</span>
@@ -721,12 +721,12 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-12-13 20:42:33'>2024-12-13 20:42</time>
+            Created At : <time class="date" title='Updated At: 2024-12-15 22:12:59'>2024-12-15 22:12</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:230</span>
+        <span>Count:322</span>
         
         
         
@@ -745,7 +745,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8D%83%E7%AC%91"><span class="toc-text">千笑</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Aichat"><span class="toc-text">Aichat</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -761,11 +761,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="千笑"><a href="#千笑" class="headerlink" title="千笑"></a>千笑</h1><p><span style='color:grey;font-size:smaller;'>此页面禁用了快捷键，如导航到新页面无法使用快捷键，请重新刷新界面</span><br>介绍：这是一个基于LLAMA3.2的我的本地AI大模型，它还有点笨，而且有点懒，如果不巧它还没起床，就没法回答你的问题</p>
+        <h1 id="Aichat"><a href="#Aichat" class="headerlink" title="Aichat"></a>Aichat</h1><p><span style='color:grey;font-size:smaller;'>此页面禁用了快捷键，如导航到新页面无法使用快捷键，请重新刷新界面</span><br>介绍：这是借用fittencode的api的ai，我的睡死了，起不来</p>
 <div id="chatBox"></div>
 <input type="text" id="userInput" placeholder="输入内容..." />
 <button id="sendButton">发送</button>
-
 
 <style>
     body {
@@ -812,7 +811,7 @@
         if (message) {
             appendMessage(`你: ${message}`);
             userInput.value = '';
-            simulateAIResponse(message);
+            sendRequest(message);
         }
     }
 
@@ -822,16 +821,50 @@
         chatBox.appendChild(messageElement);
         chatBox.scrollTop = chatBox.scrollHeight; // 滚动到底部
     }
+    async function sendRequest(message) {
+        const url = 'https://fc.fittenlab.cn/codeapi/chat';
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+    "inputs":"<|system|>\n请完全使用中文回答。\n<|end|>\n<|user|>\n"+message+"\n<|end|>\n<|assistant|>",
+    "ft_token":""
+   
+})
+        };
 
-    function simulateAIResponse(userMessage) {
-        setTimeout(() => {
-            const aiMessage = `AI正在睡觉.zZ`;
-            appendMessage(aiMessage);
-        }, 1000); // 1秒后回复
+        try {
+            const response = await fetch(url, options);
+            if (!response.ok) {
+                throw new Error('网络响应不是ok');
+            }
+            const text = await response.text();
+            const lines = text.split('\n').filter(line => line.trim() !== '');
+            const jsonArray = lines.map(line => JSON.parse(line));
+
+            // 解析JSON对象并输出文本
+            function parseJsonObjects(jsonArray) {
+                let outputText = '';
+                jsonArray.forEach(obj => {
+                    if (obj.delta) {
+                        outputText += obj.delta;
+                    }
+                });
+                return outputText;
+            }
+
+            // 获取AI回复并显示
+            const aiResponse = parseJsonObjects(jsonArray);
+            appendMessage(`AI: ${aiResponse}`);
+        } catch (error) {
+            console.error('请求出错:', error);
+            appendMessage('AI: AI正在睡觉.zZ');
+        }
     }
-    
-    
 </script>
+
       
        <hr><span style="font-style: italic;color: gray;"> 此方悬停 </span>
     </div>
