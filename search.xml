@@ -8,7 +8,7 @@
       <link href="/2024/12/16/%E6%97%A5%E5%BF%97%EF%BC%888%EF%BC%89/"/>
       <url>/2024/12/16/%E6%97%A5%E5%BF%97%EF%BC%888%EF%BC%89/</url>
       
-        <content type="html"><![CDATA[<blockquote><p>更改</p></blockquote><p><a href="/Ai/">Ai</a>现在可以交流了<br>&emsp;<span style='font-size:smaller;'>AI借用了fittenCode的api，没有增加任何提示词。</span></p><p>添加了上下文联系功能<br>更改了消息css<br>修复了换行符无法在页面上展示的问题</p><blockquote><p>此问题源于html界面无法直接展示换行符，因此需要将换行符替换为html标签。<br> 但如果直接替换为&lt;br&gt;又会只展示字符，这里用的方法是更改css样式，添加white-space: pre-wrap; &#x2F;* 允许换行 *&#x2F;</p></blockquote><p>更改使允许英文对话</p><blockquote></blockquote><p>有关逐字展示的功能，由于等待时间都在请求和返回上，猜想动态展示并不能让ai回复更快些，因此没有更改</p>]]></content>
+        <content type="html"><![CDATA[<blockquote><p>更改</p></blockquote><p><a href="/AI/">Ai</a>现在可以交流了<br>&emsp;<span style='font-size:smaller;'>AI借用了fittenCode的api，没有增加任何提示词。</span></p><p>添加了上下文联系功能<br>更改了消息css<br>修复了换行符无法在页面上展示的问题</p><blockquote><p>此问题源于html界面无法直接展示换行符，因此需要将换行符替换为html标签。<br> 但如果直接替换为&lt;br&gt;又会只展示字符，这里用的方法是更改css样式，添加white-space: pre-wrap; &#x2F;* 允许换行 *&#x2F;</p></blockquote><p>更改使允许英文对话</p><blockquote></blockquote><p>有关逐字展示的功能，由于等待时间都在请求和返回上，猜想动态展示并不能让ai回复更快些，因此没有更改</p>]]></content>
       
       
       <categories>
