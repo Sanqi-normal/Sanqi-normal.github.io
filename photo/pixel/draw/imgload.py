@@ -11,7 +11,7 @@ def generate_image_markdown(folder_path, output_file):
             # 检查文件是否是图片
             if any(filename.lower().endswith(ext) for ext in image_extensions):
                 # 写入Markdown格式的图片引用
-                outfile.write(f"![](https://cdn.jsdelivr.net/gh/Sanqi-normal/Sanqi-normal.github.io/photo/pixel/draw/{filename})\n")
+                outfile.write(f"![](https://fastly.jsdelivr.net/gh/Sanqi-normal/Sanqi-normal.github.io/photo/pixel/draw/{filename})\n")
 
 def replace_content_in_post(img_md_file, post_md_file, start_marker, end_marker):
     # 读取img.md的内容
