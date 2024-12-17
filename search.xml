@@ -4,11 +4,36 @@
   
     
     <entry>
+      <title>日志（9）</title>
+      <link href="/2024/12/17/%E6%97%A5%E5%BF%97%EF%BC%889%EF%BC%89/"/>
+      <url>/2024/12/17/%E6%97%A5%E5%BF%97%EF%BC%889%EF%BC%89/</url>
+      
+        <content type="html"><![CDATA[<h2 id="更改"><a href="#更改" class="headerlink" title="更改"></a>更改</h2><p>音乐插件在移动端的拖动问题修复</p><blockquote><p>问题出在没有绑定touch事件<br>附修改后插件拖动代码</p></blockquote><pre><code class="javascript">var $DOC = $(document);// 拖动逻辑的封装function handleDrag(e) &#123;    e.preventDefault();    e.stopPropagation();    // 阻止文本选中    $DOC.bind(&quot;selectstart&quot;, function () &#123;        return false;    &#125;);    var $moveTarget = $(&#39;#musicMouseDrag&#39;);    $moveTarget.css(&#39;border&#39;, &#39;1px dashed grey&#39;);    // 计算初始坐标偏移量    var pageX = e.type === &#39;touchstart&#39; ? e.originalEvent.touches[0].pageX : e.pageX;    var pageY = e.type === &#39;touchstart&#39; ? e.originalEvent.touches[0].pageY : e.pageY;    var div_x = pageX - $moveTarget.offset().left;    var div_y = pageY - $moveTarget.offset().top;    // 绑定移动事件    $DOC.on(&#39;mousemove touchmove&#39;, function (e) &#123;        e.preventDefault();//阻止默认事件        e.stopPropagation();//阻止事件冒泡        // 更新坐标        pageX = e.type === &#39;touchmove&#39; ? e.originalEvent.touches[0].pageX : e.pageX;        pageY = e.type === &#39;touchmove&#39; ? e.originalEvent.touches[0].pageY : e.pageY;        var targetX = pageX - div_x;        var targetY = pageY - div_y;        // 限制在屏幕内        targetX = Math.max(0, Math.min(targetX, window.innerWidth - $moveTarget.outerWidth()));        targetY = Math.max(0, Math.min(targetY, window.innerHeight - $moveTarget.outerHeight()));        $moveTarget.css(&#123;&#39;left&#39;: targetX + &#39;px&#39;, &#39;top&#39;: targetY + &#39;px&#39;, &#39;bottom&#39;: &#39;auto&#39;, &#39;right&#39;: &#39;auto&#39;&#125;);    &#125;).on(&#39;mouseup touchend&#39;, function () &#123;        $DOC.unbind(&quot;selectstart&quot;);        $DOC.off(&#39;mousemove touchmove&#39;);        $DOC.off(&#39;mouseup touchend&#39;);        $moveTarget.css(&#39;border&#39;, &#39;none&#39;);    &#125;);&#125;// 通过设备判断绑定不同拖动事件if (!(&#39;ontouchstart&#39; in window)) &#123;    $(&#39;.musicDragArea&#39;).on(&#39;mousedown&#39;, handleDrag);&#125; else &#123;    $(&#39;.musicDragArea&#39;).on(&#39;touchstart&#39;, handleDrag);&#125;</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 日志 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 博客 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>日志（8）</title>
       <link href="/2024/12/16/%E6%97%A5%E5%BF%97%EF%BC%888%EF%BC%89/"/>
       <url>/2024/12/16/%E6%97%A5%E5%BF%97%EF%BC%888%EF%BC%89/</url>
       
-        <content type="html"><![CDATA[<blockquote><p>更改</p></blockquote><p><a href="/AI/">Ai</a>现在可以交流了<br>&emsp;<span style='font-size:smaller;'>AI借用了fittenCode的api，没有增加任何提示词。</span></p><p>添加了上下文联系功能<br>更改了消息css<br>修复了换行符无法在页面上展示的问题</p><blockquote><p>此问题源于html界面无法直接展示换行符，因此需要将换行符替换为html标签。<br> 但如果直接替换为&lt;br&gt;又会只展示字符，这里用的方法是更改css样式，添加white-space: pre-wrap; &#x2F;* 允许换行 *&#x2F;</p></blockquote><p>更改使允许英文对话</p><blockquote></blockquote><p>有关逐字展示的功能，由于等待时间都在请求和返回上，猜想动态展示并不能让ai回复更快些，因此没有更改</p>]]></content>
+        <content type="html"><![CDATA[<blockquote><p>更改</p></blockquote><p><a href="/AI/">Ai</a>现在可以交流了<br>&emsp;<span style='font-size:smaller;'>AI借用了fittenCode的api。</span></p><p>添加了上下文联系功能<br>更改了消息css<br>修复了换行符无法在页面上展示的问题</p><blockquote><p>此问题源于html界面无法直接展示换行符，因此需要将换行符替换为html标签。<br> 但如果直接替换为&lt;br&gt;又会只展示字符，这里用的方法是更改css样式，添加white-space: pre-wrap; &#x2F;* 允许换行 *&#x2F;</p></blockquote><p>更改使允许英文对话</p><blockquote></blockquote><p>有关逐字展示的功能，由于等待时间都在请求和返回上，猜想动态展示并不能让ai回复更快些，因此没有更改</p>]]></content>
       
       
       <categories>
@@ -232,9 +257,9 @@
       
         <tags>
             
-            <tag> 测试 </tag>
-            
             <tag> 博客 </tag>
+            
+            <tag> 测试 </tag>
             
         </tags>
       
