@@ -1611,7 +1611,7 @@ pkill -u $USER（linux）
         $DOC.bind("selectstart", function () {
             return false;
         });
-
+        if (!('ontouchstart' in window)) {
         var $moveTarget = $('#musicMouseDrag');
         $moveTarget.css('border', '1px dashed grey');
 
@@ -1637,7 +1637,7 @@ pkill -u $USER（linux）
             $DOC.off('mousemove touchmove');
             $DOC.off('mouseup touchend');
             $moveTarget.css('border', 'none');
-        });
+        });}
     });
 </script>
 
