@@ -6,15 +6,15 @@
   <meta name="keywords" content="">
   <meta name="description" content="叁七のblog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="小说 虽然写了不少，留存下来并且尚可一看的居然少得可怜，无怪乎水平不精却自视甚高了    网文  众神之谕  短篇  第一天 最后的告别  中篇  临渊    但是翻源代码肯定不如页面展示舒服吧，我正在寻找一种行之有效的隐藏方法，如果你知道或者有想法也可以私信我   [临渊信步]子域名：(&#x2F;novel&#x2F;linyuan)   以下内容对访客隐藏">
+<meta name="description" content="此页面禁用了快捷键，如导航到新页面无法使用快捷键，请重新刷新界面如发送按钮无效，也请等待或刷新页面介绍：这是借用fittencode的api的ai   发送       body {         font-family: Arial, sans-serif;         background-color: #f4f4f4;         margin: 0;         paddin">
 <meta property="og:type" content="website">
 <meta property="og:title" content="叁七のblog">
-<meta property="og:url" content="http://example.com/novel/index.html">
+<meta property="og:url" content="http://example.com/AI/index.html">
 <meta property="og:site_name" content="叁七のblog">
-<meta property="og:description" content="小说 虽然写了不少，留存下来并且尚可一看的居然少得可怜，无怪乎水平不精却自视甚高了    网文  众神之谕  短篇  第一天 最后的告别  中篇  临渊    但是翻源代码肯定不如页面展示舒服吧，我正在寻找一种行之有效的隐藏方法，如果你知道或者有想法也可以私信我   [临渊信步]子域名：(&#x2F;novel&#x2F;linyuan)   以下内容对访客隐藏">
+<meta property="og:description" content="此页面禁用了快捷键，如导航到新页面无法使用快捷键，请重新刷新界面如发送按钮无效，也请等待或刷新页面介绍：这是借用fittencode的api的ai   发送       body {         font-family: Arial, sans-serif;         background-color: #f4f4f4;         margin: 0;         paddin">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2024-12-11T07:20:50.585Z">
-<meta property="article:modified_time" content="2024-12-11T07:20:50.585Z">
+<meta property="article:published_time" content="2024-12-16T06:18:08.109Z">
+<meta property="article:modified_time" content="2024-12-16T06:18:08.109Z">
 <meta property="article:author" content="叁七">
 <meta name="twitter:card" content="summary">
 
@@ -777,68 +777,7 @@
     }
 </style>
 </div>
-            <h1 id="你从何处-来此驻足"><a href="#你从何处-来此驻足" class="headerlink" title="你从何处  来此驻足"></a>你从何处  来此驻足</h1><script defer>
-async function getFileSHA() {
-    const response = await fetch('https://api.github.com/repos/sanqiData/DataSave/contents/ipset');
-    const fileData = await response.json();
-    return fileData.sha; 
-}
-
-async function updateFile(newContent, sha) {
-    const base64Content = btoa(unescape(encodeURIComponent(newContent)));
-    const updateResponse = await fetch('https://api.github.com/repos/sanqiData/DataSave/contents/ipset', {
-        method: 'PUT',
-        headers: {
-            'Authorization': `Bearer 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`, 
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            message: 'Update ipset.md to add new IP',
-            content: base64Content, 
-            sha: sha 
-        })
-    });
-
-    if (updateResponse.ok) {
-        //console.log('ip writedown');
-    } else {
-        console.error('fail to wirte:', await updateResponse.json());
-    }
-}
-
-async function getUserIP() {
-    const ipAddresses = ['https://2024.ipchaxun.com/', 'https://api.ipify.org?format=json','https://www.ip.cn/api/index?ip&type=0']; 
-    for (const ipAddress of ipAddresses) {
-        try {
-            const response = await fetch(ipAddress);
-            const data = await response.json();
-            return data.ip; 
-        } catch (error) {
-            console.error(`fail to get ip `, error);
-        }
-    }
-    return null; 
-}
-
-async function checkAndUpdateIP() {
-    
-    const ip = await getUserIP();
-    const response = await fetch('https://raw.githubusercontent.com/sanqiData/DataSave/master/ipset');
-    let fileContent = await response.text();
-const existingIPs = fileContent.split('\n');
-
-
-if (existingIPs.some(existingIP => existingIP.trim() === ip)) {
-    //console.log('IP has already in');
-    return;
-}
-fileContent += `\n${ip}`; 
-const fileSHA = await getFileSHA();
-await updateFile(fileContent, fileSHA); 
-}
-checkAndUpdateIP();
-</script>
-
+            <h1 id="你从何处-来此驻足"><a href="#你从何处-来此驻足" class="headerlink" title="你从何处  来此驻足"></a>你从何处  来此驻足</h1><script src="/JS/ipsave.js" defer></script>
 <!--
 <br/><br/><br/><br/><br/>
 <span style='color:grey;font-size:smaller'>
