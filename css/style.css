@@ -1687,17 +1687,17 @@ h2 {
   font-weight: bolder;
 }
 img {
-  width: 350px;
+  width: 400px;
   height: auto;
 }
 /* 容器样式 */
 .image-left {
   display: flex;
   float: left;
-  width: 49%;
+  width: 49.5%;
   flex-direction: column;
   justify-content: flex-start;
-  margin-bottom: 20px; /* 图片之间的垂直间距 */
+  margin-bottom: 10px; /* 图片之间的垂直间距 */
 }
 .image-left img {
   float: left;
@@ -1705,10 +1705,10 @@ img {
 .image-right {
   display: flex;
   float: right;
-  width: 49%;
+  width: 49.5%;
   flex-direction: column;
   justify-content: flex-start;
-  margin-bottom: 20px; /* 图片之间的垂直间距 */
+  margin-bottom: 10px; /* 图片之间的垂直间距 */
 }
 .image-right img {
   float: right;
