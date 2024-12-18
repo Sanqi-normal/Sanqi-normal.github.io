@@ -10,7 +10,7 @@ async function updateFile(newContent, sha) {
     const updateResponse = await fetch('https://api.github.com/repos/sanqiData/DataSave/contents/ipset', {
         method: 'PUT',
         headers: {
-            'Authorization': `Bearer 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`, 
+            'Authorization': `Bearer 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`, 
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
