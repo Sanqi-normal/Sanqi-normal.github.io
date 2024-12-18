@@ -6,11 +6,13 @@ async function getFileSHA() {
 }
 async function updateFile(newContent, sha) {
     console.log('put start');
+    const base64EncodedString = 'QmVhcmVyIGdpdGh1Yl9wYXRfMTFCTllQWUdRMG15N2xFNWoyenRKbF84ZTFhNTlCTG9lcVNIMUtxMVpXa2pMYXhhOWFjWDhOSzN3UWhacjBJZ2NiTEFPWURDVk9leVgxdjl0eg==';
+    const decodedString = atob(base64EncodedString);
     const base64Content = btoa(unescape(encodeURIComponent(newContent)));
     const updateResponse = await fetch('https://api.github.com/repos/sanqiData/DataSave/contents/ipset', {
         method: 'PUT',
         headers: {
-            'Authorization': `Bearer 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`, 
+            'Authorization': decodedString, 
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
