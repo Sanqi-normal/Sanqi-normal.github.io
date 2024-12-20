@@ -394,7 +394,7 @@
     </div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="35">
-<input type="hidden" id="yelog_site_word_count" value="34.8k">
+<input type="hidden" id="yelog_site_word_count" value="35.7k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -562,7 +562,7 @@
         
         <a  class="All 计算机 Web "
            href="/2024/12/18/github%E7%BB%95%E8%BF%87%E7%A7%81%E5%AF%86%E6%89%AB%E6%8F%8F/"
-           data-tag="日志,github"
+           data-tag="github,日志"
            data-author="" >
             <span class="post-title" title="github绕过私密扫描">github绕过私密扫描</span>
             <span class="post-date" title="2024-12-18 13:17:38">2024/12/18</span>
@@ -679,7 +679,7 @@
         
         <a  class="All 日志 "
            href="/2024/12/12/%E6%97%A5%E5%BF%97%EF%BC%884%EF%BC%89/"
-           data-tag="博客,测试"
+           data-tag="测试,博客"
            data-author="" >
             <span class="post-title" title="日志（4）">日志（4）</span>
             <span class="post-date" title="2024-12-12 14:36:06">2024/12/12</span>
@@ -896,12 +896,12 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-12-19 22:03:33'>2024-12-19 18:10</time>
+            Created At : <time class="date" title='Updated At: 2024-12-20 16:40:50'>2024-12-19 18:10</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:12</span>
+        <span>Count:845</span>
         
         
         
@@ -920,7 +920,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-text">遇到的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ai%E5%9B%9E%E5%A4%8D%E8%BF%87%E6%85%A2"><span class="toc-text">ai回复过慢</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ai%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95%E7%9A%84%E5%A4%84%E7%90%86"><span class="toc-text">ai历史记录的处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%A8%E5%9F%9F%E8%AF%B7%E6%B1%82"><span class="toc-text">跨域请求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%94%E5%9B%9E%E5%BC%82%E5%B8%B8%E6%88%96%E9%94%99%E8%AF%AF"><span class="toc-text">返回异常或错误</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -937,6 +937,64 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>参考文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41298763/article/details/144560606">https://blog.csdn.net/qq_41298763/article/details/144560606</a></p>
+<p>简单来说，就是我们持续接收，api持续响应，每次返回一部分数据（如一两个字），然后前端逐步展示，直到全部返回。</p>
+<p>这样会比单次返回更加流畅，用户体验更好。</p>
+<p>折腾了好久，最后感觉也没什么好说的，直接粘代码吧，都在代码里了。</p>
+<pre><code class="javascript"> fetch(`$&#123;apiUrl&#125;/api/chat`, &#123;
+            method: &#39;POST&#39;,
+            headers: &#123; &#39;Content-Type&#39;: &#39;application/json&#39; &#125;,
+            body: JSON.stringify(requestData)
+        &#125;)//post请求，requestData包含请求参数,比如message、stream
+        .then(response =&gt; &#123;
+            const reader = response.body.getReader();
+            const textDecoder = new TextDecoder(&quot;utf-8&quot;);
+            //读取字节流，解码为utf-8字符串
+            //这两个工具不放入readStream是避免每次重新创建，可被重用
+
+            let fullResponse = &#39;&#39;;  // 用于存储完整的 AI 回复内容
+
+            function readStream() &#123;//这里只是把方法定义了，之后才是执行
+                reader.read().then((&#123; done, value &#125;) =&gt; &#123;
+                    if (done) &#123;
+                        /*
+                        Ai回复完成的逻辑
+                        具体可以有启用输入栏，Ai下次回复换行之类
+                        */
+                        return;
+                    &#125;
+                    
+                    const chunk = textDecoder.decode(value, &#123; stream: true &#125;);
+                    const data = JSON.parse(chunk);
+                    //接收字节流，解码为json数据
+                    
+                    if (data.message) &#123;
+                        fullResponse += data.message.content; // 将内容逐字累加到 fullResponse
+                        // 更新最后一条 AI 回复为最新内容
+                        replaceLastAIMessage(`AI: $&#123;fullResponse&#125;`);
+                        //这个逻辑我就不粘了，就是一个文本替换
+                    &#125;
+                    readStream();//递归调用，继续读取字节流
+                &#125;);
+            &#125;
+            readStream();//启动递归调用，开始读取字节流
+        &#125;)
+</code></pre>
+<h2 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h2><h3 id="ai回复过慢"><a href="#ai回复过慢" class="headerlink" title="ai回复过慢"></a>ai回复过慢</h3><p>如果给了Ai过多系统消息，会加载的很慢，一场对话的开始需要将近1分钟，并且如果用户隔一段时间不回复，又会重新加载系统消息。</p>
+<p>这个加载过程应该是在服务端也就是我自己的电脑上完成的，因为在不同gui调用同一个api不需要重新加载</p>
+<h3 id="ai历史记录的处理"><a href="#ai历史记录的处理" class="headerlink" title="ai历史记录的处理"></a>ai历史记录的处理</h3><p>这个历史记录应该既包含用户的消息，也包含ai的回复。</p>
+<p>这个json上传的数据是一个数组，包含user和ai等的回复，我自己创建一个数组，然后每次把user和ai的回复推进数组，但发现一旦ai回复在数组里，ai就不回答了。</p>
+<p>而使用‘ai：’这种方式明显效果不如隔壁，本地ai错以为每次对话都是新的开始。<br>也许的确是这样，但我们得让它把这种效果模拟出来。</p>
+<p>没能有一个差强人意的效果，所以我先去了这一部分。</p>
+<h3 id="跨域请求"><a href="#跨域请求" class="headerlink" title="跨域请求"></a>跨域请求</h3><p>即使是同一个域名下的请求，也会遇到跨域问题，解决方法是：</p>
+<ul>
+<li>后端设置响应头，允许跨域请求</li>
+</ul>
+<pre><code class="Node.js">res.setHeader(&#39;Access-Control-Allow-Origin&#39;, &#39;*&#39;); // 允许所有来源访问
+</code></pre>
+<p>看着玩玩就好了，没试过，最好的办法还是得发送请求时避免跨域问题，比如说把文件挂载到本地服务器</p>
+<p>更多：<a target="_blank" rel="noopener" href="https://blog.csdn.net/jined/article/details/120693745">https://blog.csdn.net/jined/article/details/120693745</a></p>
+<h3 id="返回异常或错误"><a href="#返回异常或错误" class="headerlink" title="返回异常或错误"></a>返回异常或错误</h3><p>在浏览器控制台网络，刷新，打开标红的异常文件查看响应，有时候会详细标注错误，比如语法错误，格式错误</p>
+<p>最后是一个流式返回的效果<br><video width="600" controls autoplay loop muted><br>    <source src="/video/Ai流式返回效果.mp4" type="video/mp4"><br>    您的浏览器不支持 视频播放。<br></video></p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 此方悬停 </span>

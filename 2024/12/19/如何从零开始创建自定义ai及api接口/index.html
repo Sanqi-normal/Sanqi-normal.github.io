@@ -394,7 +394,7 @@
     </div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="35">
-<input type="hidden" id="yelog_site_word_count" value="34.8k">
+<input type="hidden" id="yelog_site_word_count" value="35.7k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -562,7 +562,7 @@
         
         <a  class="All 计算机 Web "
            href="/2024/12/18/github%E7%BB%95%E8%BF%87%E7%A7%81%E5%AF%86%E6%89%AB%E6%8F%8F/"
-           data-tag="日志,github"
+           data-tag="github,日志"
            data-author="" >
             <span class="post-title" title="github绕过私密扫描">github绕过私密扫描</span>
             <span class="post-date" title="2024-12-18 13:17:38">2024/12/18</span>
@@ -679,7 +679,7 @@
         
         <a  class="All 日志 "
            href="/2024/12/12/%E6%97%A5%E5%BF%97%EF%BC%884%EF%BC%89/"
-           data-tag="博客,测试"
+           data-tag="测试,博客"
            data-author="" >
             <span class="post-title" title="日志（4）">日志（4）</span>
             <span class="post-date" title="2024-12-12 14:36:06">2024/12/12</span>
@@ -898,7 +898,7 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-12-19 21:55:43'>2024-12-19 18:09</time>
+            Created At : <time class="date" title='Updated At: 2024-12-20 16:13:01'>2024-12-19 18:09</time>
         
     </div>
     <div class="article-meta">
@@ -941,7 +941,7 @@
         <style>
 .大纲 {
     letter-spacing: 0.5px; /* 调整字间距，适当增加或减少 */
-    line-height: 0.5; /* 调整行间距，适当增加或减少 */
+    line-height: 0.8; /* 调整行间距，适当增加或减少 */
     margin-bottom: 1px; /* 调整列表项之间的间距 */
 }
 </style>
@@ -956,7 +956,7 @@
 </li>
 <li><p><a href="#%E6%9C%AC%E5%9C%B0AI%E7%9A%84%E9%85%8D%E7%BD%AE">本地AI的配置</a></p>
 <ul>
-<li><a href="#gui%E9%85%8D%E7%BD%AE">GUI配置</a></li>
+<li><a href="#GUI%E9%85%8D%E7%BD%AE">GUI配置</a></li>
 <li><a href="#modelfile%E6%96%87%E4%BB%B6%E9%85%8D%E7%BD%AE">modelfile文件配置</a></li>
 </ul>
 </li>
@@ -999,6 +999,7 @@
 <p>但是图形化界面很方便添加后续功能。</p>
 <p>gui没有附带在ollama中，需要单独搜索下载安装</p>
 <p>ollama-gui画面简洁，且脚本开源，非常推荐。不过也许你懒得自己写功能，那么还有其他功能已经完备的适用于ollama的软件。</p>
+<p>或者你可以试试我的网页版，<a href="/AI/localAi/">传送门</a><br>前提是你有一个本地ai，并了解过了有关<a href="#ollama%E5%BC%80%E6%94%BE%E7%AB%AF%E5%8F%A3">端口服务</a></p>
 <h3 id="modelfile文件配置"><a href="#modelfile文件配置" class="headerlink" title="modelfile文件配置"></a>modelfile文件配置</h3><p>详细内容直接移步：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Chaos_Happy/article/details/138276172">https://blog.csdn.net/Chaos_Happy/article/details/138276172</a></p>
 <p><code>ollama create &lt;新模型名&gt; -f &lt;modelfile文件路径&gt;</code></p>
 <p>modelfile文件格式：</p>
@@ -1020,7 +1021,7 @@
 <p>如果你资金充足，可以购买一个公网ip，甚至将ai上传到云服务器上，这样就可以让所有人24小时在公网上访问了。</p>
 <p>所以你明白了什么叫梦想版。</p>
 <p>抛开资金细节，我们已经拥有了一个域名，这个域名不是用来打开的，我们上传端口后，就获得了一个可以访问的api</p>
-<p>api格式：<br>廉政版：<code>http://你的域名/api/chat</code><br>小康版：<code>http://127.0.0.1:端口号/api/chat</code></p>
+<p>api格式：<br>廉政版：<code>http://127.0.0.1:端口号/api/chat</code><br>小康版：<code>http://你的域名/api/chat</code></p>
 <p>127.0.0.1就是你自己，仅供自己访问的意思，可以换成内网ip，就能让局域网内访问</p>
 <p>如果你是小康版，且没有做任何限制，那么这个api是可以被任意访问的，访问的这个过程就是对api做出请求。</p>
 <h3 id="访问请求"><a href="#访问请求" class="headerlink" title="访问请求"></a>访问请求</h3><p>我们假设我们奔小康了。</p>

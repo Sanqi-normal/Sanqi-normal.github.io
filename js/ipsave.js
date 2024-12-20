@@ -53,9 +53,12 @@ const existingIPs = fileContent.split('\n');
 
 if (existingIPs.some(existingIP => existingIP.trim() === ip)) {
   //  console.log('IP has already in');
-    return;
+  const existingIndex = existingIPs.findIndex(existingIP => existingIP.trim() === ip);
+  const countLineIndex = existingIndex + 1;
+  const count = parseInt(fileContent.split('\n')[countLineIndex]) || 0;
+  fileContent = fileContent.replace(`\n${count}\n`, `\n${count + 1}\n`); 
 }
-fileContent += `\n${ip}`; 
+else{fileContent += `\n${ip}\n1`; }
 const fileSHA = await getFileSHA();
 await updateFile(fileContent, fileSHA); 
 }

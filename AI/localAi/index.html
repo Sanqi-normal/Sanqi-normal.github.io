@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>日志（7） | 叁七のblog</title>
-  <meta name="keywords" content=" 博客 ">
-  <meta name="description" content="日志（7） | 叁七のblog">
+  <title>叁七のblog</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="叁七のblog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="你是怎么找到这里的？修改url还是目录爆破？">
 <meta property="og:type" content="website">
@@ -50,7 +50,7 @@
   <input class="theme_preload_comment" value="">
   <input class="theme_blog_path" value="">
   <input id="theme_shortcut" value="true" />
-  <input id="page_shortcut" value="false" /><!--我自己加的变量用来使某些页面禁用快捷键，传递到script的pageshortcut-->
+  <input id="page_shortcut" value="true" /><!--我自己加的变量用来使某些页面禁用快捷键，传递到script的pageshortcut-->
   <input id="theme_highlight_on" value="true" />
   <input id="theme_code_copy" value="true" />
 </div>
@@ -865,39 +865,22 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-日志（7）" class="article article-type-post" itemscope itemprop="blogPost">
-    
-        <h1 class="article-title">日志（7）</h1>
+        <article id="page-" class="article article-type-page" itemscope itemprop="blogPost">
     
     <div class="article-meta">
         
         
         
-        <span class="book">
-            <i class="iconfont icon-category"></i>
-            
-            
-            <a  data-rel="日志">日志</a>
-            
-        </span>
-        
-        
-        <span class="tag">
-            <i class="iconfont icon-tag"></i>
-            
-            <a class="color3">博客</a>
-            
-        </span>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-12-16 12:07:23'>2024-12-15 13:38</time>
+            Created At : <time class="date" title='Updated At: 2024-12-20 16:14:51'>2024-12-20 16:14</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:151</span>
+        <span>Count:46</span>
         
         
         
@@ -916,7 +899,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">Ollama GUI Web版</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -932,19 +915,38 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>更改</p>
-</blockquote>
-<p>上传部分图片到图床<br>开放photo<br>调整图片显示格式，使宽度一致且并排显示</p>
-<p><a href="/photo/collection">自制基础交错式瀑布流</a><br>布局还不是很完善，图片数量多，且均未上传图床，<del>点击需谨慎</del><br>(图片加载的问题又得到了新的解决，点<a href="../%E7%BD%91%E7%AB%99%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E6%98%BE%E7%A4%BA%E9%97%AE%E9%A2%98">上一篇文章</a>查看)</p>
-<blockquote>
-<p>追加</p>
-</blockquote>
-<p>很遗憾，新方法连接并不稳定，依旧不如国内的服务器，有时候觉得这堵墙真的好麻烦</p>
-<blockquote>
-<p>再追加</p>
-</blockquote>
-<p>关于连接方式的问题和调整详见上一篇文章末尾</p>
+        <!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ollama GUI - Web Version</title>
+    <link rel="stylesheet" href="ai.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Ollama GUI Web版</h1>
+             <div>
+                <label for="apiUrl">API地址:</label>
+                <input type="text" id="apiUrl" placeholder="输入可用的url..."value="http://localhost:7322" />
+                <span style="font-size: 12px; color: gray;">这是我自己的，你应当替换为你自己的端口号</span>
+            </div>
+            <div>
+                <label for="modelSelect">选择模型:</label>
+                <select id="modelSelect"></select>
+                <span style="font-size: 12px; color: gray;">没有加载成功？刷新一下</span>
+            </div>
+        </header>
+        <main>
+            <div id="chatBox"></div>
+            <textarea id="userInput" placeholder="输入消息..."></textarea>
+            <button id="sendBtn">发送</button>
+        </main>
+    </div>
+    <script src="ai.js"></script>
+</body>
+</html>
 
       
        <hr><span style="font-style: italic;color: gray;"> 此方悬停 </span>
@@ -953,32 +955,6 @@
 
 
 
-
-
-    
-<div id="comments">
-    <!-- 来必力City版安装代码 -->
-    <div id="lv-container" data-id="city" data-uid="MTAyMC82MDI5Ni8zNjc2NA==">
-        <script type="text/javascript">
-			(function(d, s) {
-				var j, e = d.getElementsByTagName(s)[0];
-
-				if (typeof LivereTower === 'function') { return; }
-
-				j = d.createElement(s);
-				window.livereOptions = {
-					eagerLoading: true,
-					scrollEventTargetSelector: '#post'
-                }
-				j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-				j.async = true;
-				e.parentNode.insertBefore(j, e);
-			})(document, 'script');
-        </script>
-        <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
-    </div>
-    <!-- City版安装代码已完成 -->
-</div>
 
 
 <!--我可能把主页index元素误删了，所以添加了页面comments元素为false时不展示评论的功能-->
