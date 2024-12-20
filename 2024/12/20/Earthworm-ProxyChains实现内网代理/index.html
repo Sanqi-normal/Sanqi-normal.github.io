@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>网站中的图片显示问题 | 叁七のblog</title>
-  <meta name="keywords" content=" Web , 博客 ">
-  <meta name="description" content="网站中的图片显示问题 | 叁七のblog">
+  <title>Earthworm+ProxyChains实现内网代理 | 叁七のblog</title>
+  <meta name="keywords" content=" 代理 , 渗透 ">
+  <meta name="description" content="Earthworm+ProxyChains实现内网代理 | 叁七のblog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="只是在尝试活着 很高兴与你相遇    了解我快捷键说明qq：2817152925qq邮箱：&#50;&#56;&#49;&#x37;&#x31;&#x35;&#50;&#x39;&#50;&#53;&#x40;&#113;&#x71;&#46;&#99;&#111;&#109;微信：Guoyikai222bilibli如有侵权请联系我">
 <meta property="og:type" content="website">
@@ -884,9 +884,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-网站中的图片显示问题" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-Earthworm-ProxyChains实现内网代理" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">网站中的图片显示问题</h1>
+        <h1 class="article-title">Earthworm+ProxyChains实现内网代理</h1>
     
     <div class="article-meta">
         
@@ -898,7 +898,7 @@
             
             <a  data-rel="计算机">计算机</a> > 
             
-            <a  data-rel="计算机&lt;---&gt;Web">Web</a>
+            <a  data-rel="计算机&lt;---&gt;渗透">渗透</a>
             
         </span>
         
@@ -906,21 +906,21 @@
         <span class="tag">
             <i class="iconfont icon-tag"></i>
             
-            <a class="color4">Web</a>
+            <a class="color3">代理</a>
             
-            <a class="color3">博客</a>
+            <a class="color3">渗透</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-12-20 17:16:57'>2024-12-15 11:38</time>
+            Created At : <time class="date" title='Updated At: 2024-12-20 20:11:53'>2024-12-20 19:35</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:984</span>
+        <span>Count:419</span>
         
         
         
@@ -939,7 +939,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B5%B7%E5%9B%A0"><span class="toc-text">起因</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BE%E7%89%87%E5%8A%A0%E8%BD%BD%E9%99%A4%E7%BD%91%E9%80%9F%E5%A4%96%EF%BC%8C%E8%BF%98%E8%B7%9F%E5%9B%BE%E7%89%87%E8%87%AA%E8%BA%AB%E8%B4%A8%E9%87%8F%E5%92%8C%E6%89%98%E7%AE%A1%E5%9B%BE%E7%89%87%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9C%89%E5%85%B3%E3%80%82"><span class="toc-text">图片加载除网速外，还跟图片自身质量和托管图片的服务器有关。</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9"><span class="toc-text">图片压缩</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E5%BA%8A"><span class="toc-text">图床</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#jsdelivr%E5%8A%A0%E9%80%9F"><span class="toc-text">jsdelivr加速</span></a></li></ol></li></ol>
+        
     
 <style>
     .left-col .switch-btn,
@@ -955,41 +955,33 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>先前网站目录列表包含了一个动图和一张高清图片，每次打开加载的很慢，动图甚至会卡得只剩几帧。</p>
-<h2 id="图片加载除网速外，还跟图片自身质量和托管图片的服务器有关。"><a href="#图片加载除网速外，还跟图片自身质量和托管图片的服务器有关。" class="headerlink" title="图片加载除网速外，还跟图片自身质量和托管图片的服务器有关。"></a>图片加载除网速外，还跟图片自身质量和托管图片的服务器有关。</h2><p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/Performance/How_browsers_work">渲染页面：浏览器的工作原理</a></p>
-<p>首先我尝试压缩高清图片的质量，但效果并不显著，反而图片模糊得看不清了，原因可能是动图加载在加载过程中占了大部分线程。</p>
-<h3 id="图片压缩"><a href="#图片压缩" class="headerlink" title="图片压缩"></a>图片压缩</h3><p>Photoshop压缩： 文件&gt;导出&gt;存储为web所用的格式 在这里你可以选择压缩大小和颜色数量，并通过预览查看压缩后的大小。<br>Asprite压缩： 小体积图片或动图格式的文件快速压缩，选择导出处的比例，或者添加脚本自定义压缩。</p>
-<p>但是本站引用网络上的高清图片加载的却很快，猜想如果把图片上传到国内服务器，然后引用该图片链接，可以加快页面和图片加载速度。</p>
-<h3 id="图床"><a href="#图床" class="headerlink" title="图床"></a>图床</h3><p>不同图床试验并没有发现明显速度差异，但图床还有被封，丢失的风险，因此在这里放图片做比较<br>(hello公益版图床即将过期，2024&#x2F;12&#x2F;19注)<br>免费图床无需登录：<br>    <a target="_blank" rel="noopener" href="https://www.helloimg.com/?lang=zh-CN">hello图床</a> 每张最大上传5MB，测速良好<br>    <img src="https://www.helloimg.com/i/2024/12/15/675e621bf16e9.jpg" alt="hello"><br>    <a target="_blank" rel="noopener" href="https://picui.cn/">picui图床</a>每张最大上传10MB，一次最多5张，服务器不在国内，速度较慢<br>    <img src="https://img.picui.cn/free/2024/12/15/675e61c397289.jpg" alt="picui"><br><span style='color:grey;font-size:smaller'><br>其他图床有的需要注册，有的服务器在国外，就不试了。<br></span><br>图片上传后再引用生成的链接，网页就快很多了。</p>
-<h3 id="jsdelivr加速"><a href="#jsdelivr加速" class="headerlink" title="jsdelivr加速"></a>jsdelivr加速</h3><p>然而，有时候图片数量庞大，如果此时一个一个去上传获取链接再引用过来，未免也太麻烦了。<br>并且图床也不是很安全，有时候图片会丢失，如果不注册，管理起来也不方便。</p>
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/lfri/p/12212878.html">jsdelivr</a>是一个快速免费的公用cdn，它能加速外网服务器资源的获取。<br>具体使用方法如下：</p>
-<pre><code>https://cdn.jsdelivr.net/gh/&lt;用户名&gt;/&lt;仓库名&gt;@&lt;发布版本号&gt;/&lt;文件路径&gt;
-</code></pre>
-<p>这个链接获取资源的速度会快许多，因此用这个链接批量访问我们托管在github的图床就能够很快的展示图片了，同时也能跟本地的脚本很好地搭配使用。</p>
-<p>放一个快速获取图片链接的python代码</p>
-<pre><code class="python">def generate_image_markdown(folder_path, output_file):
-    # 支持的图片格式
-    image_extensions = [&#39;.jpg&#39;, &#39;.jpeg&#39;, &#39;.png&#39;, &#39;.gif&#39;]
-    
-    # 打开输出文件
-    with open(output_file, &#39;w&#39;, encoding=&#39;utf-8&#39;) as outfile:
-        # 遍历文件夹中的所有文件
-        for filename in os.listdir(folder_path):
-            # 检查文件是否是图片
-            if any(filename.lower().endswith(ext) for ext in image_extensions):
-                # 写入html格式的图片引用
-                outfile.write(f&#39;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/sanqi-normal/sanqi-normal.github.io/photo/collection/img_right/&#123;filename&#125;&quot;&gt;\n&#39;)
-</code></pre>
-<p>这样一来，上传图片就变得非常轻松容易</p>
+        <p>仅仅只是笔记，更多参考官方文档</p>
 <blockquote>
+<p>前提：所有主机均可控</p>
 </blockquote>
-<p>所以，日常博客可以直接拖图片上传到公共图库，数量非常多的图片可以上传到GitHub后使用jsdelivr加速获取<br><img src="https://www.helloimg.com/i/2024/12/15/675eb7a6684d7.png"></p>
+<p>为什么有这么个前提，因为Earthworm（以下简称ew）是用来做内网渗透的，这里记的内网代理就是流程的一部分。</p>
 <blockquote>
-<p>追加</p>
+<p>更小的前提：所有主机可以互相ping通（在同一网段内或者有公网主机）</p>
 </blockquote>
-<p>使用jsdelivr加速后一开始打开正常，后来发现打不开了，查询后发现可能是加速cdn受到了dns污染，更换未受污染的子域名fastly.jsdelivr，目前尚不清楚效果如何</p>
-<p>追加的追加：jsdelivr的子域名testingcf.jsdelivr.net使用正常，速度良好</p>
-<p>追加的追加的追加： 现在你可以看到之前存在图床里的图片都丢了，所以说公共图床还是算了，没有办法长久。我许多问题的解决方法都卡在服务器这里，赶快放假吧，放假了一定要搭一个自己的服务器。</p>
+<p>这是因为只记ew的第一种用法，也许之后用到其他的会回来补。</p>
+<p>目标代理主机上执行</p>
+<pre><code class="shell">git clone https://github.com/idlefire/ew
+</code></pre>
+<p>将ew下载到本地</p>
+<pre><code class="shell">cd ew
+ew_for_Win.exe # 换成你自己的系统类型,可以查看一下目录都有哪些
+ew ./ew -s ssocksd -l &lt;port&gt; # 开放端口socks5代理
+</code></pre>
+<p>攻击主机（或者说需要代理的主机）上执行</p>
+<pre><code class="shell">vim   /etc/proxychains.conf 
+ # proxychains的配置文件，在此之前先要安装proxychains服务
+</code></pre>
+<p>打开后文末修改添加<br><code>socks5 &lt;目标主机内网ip&gt; &lt;port&gt;</code><br>注意端口一致</p>
+<p>proxychains 使用方法是在每条命令前加上proxychains</p>
+<p>到此内网代理已经完成，攻击主机所有流量会经过目标代理主机，可以访问原来受限的目标。同在一个局域网可能作用不大，但可以不需要下载梯子就共享vpn流量，前提是目标主机开启clash的全局代理。</p>
+<p>直接将代理端口设为vpn代理端口也是不行的，只能开全局代理。</p>
+<p>如果我这时候虚拟机没下梯子，那还挺方便的，可惜。</p>
+<p>如果是浏览器的话，就在浏览器上手动设置代理，效果应该一样。</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 此方悬停 </span>
