@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>有关ip数据存储的全程回顾 | 叁七のblog</title>
-  <meta name="keywords" content=" 后端 , 日志 ">
-  <meta name="description" content="有关ip数据存储的全程回顾 | 叁七のblog">
+  <title>linux系统shell脚本书写 | 叁七のblog</title>
+  <meta name="keywords" content=" 笔记 , linux , shell ">
+  <meta name="description" content="linux系统shell脚本书写 | 叁七のblog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="此页面禁用了快捷键，如导航到新页面无法使用快捷键，请重新刷新界面如发送按钮无效，也请等待或刷新页面介绍：这是借用fittencode的api的ai 查看本地AIweb界面   发送       body {         font-family: Arial, sans-serif;         background:rgb(255, 241, 200)!important;">
 <meta property="og:type" content="website">
@@ -908,9 +908,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-有关ip追踪存储的全程回顾" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-linux脚本书写" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">有关ip数据存储的全程回顾</h1>
+        <h1 class="article-title">linux系统shell脚本书写</h1>
     
     <div class="article-meta">
         
@@ -922,7 +922,7 @@
             
             <a  data-rel="计算机">计算机</a> > 
             
-            <a  data-rel="计算机&lt;---&gt;后端">后端</a>
+            <a  data-rel="计算机&lt;---&gt;操作系统">操作系统</a>
             
         </span>
         
@@ -930,21 +930,23 @@
         <span class="tag">
             <i class="iconfont icon-tag"></i>
             
-            <a class="color3">后端</a>
+            <a class="color3">笔记</a>
             
-            <a class="color3">日志</a>
+            <a class="color1">linux</a>
+            
+            <a class="color1">shell</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-12-18 22:21:42'>2024-12-17 21:13</time>
+            Created At : <time class="date" title='Updated At: 2024-12-22 21:04:56'>2024-12-22 20:22</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:1.3k</span>
+        <span>Count:3.2k</span>
         
         
         
@@ -963,7 +965,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%98%E5%82%A8"><span class="toc-text">存储</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82"><span class="toc-text">请求</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82ip"><span class="toc-text">请求ip</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E8%AF%BB%E5%8F%96"><span class="toc-text">请求读取</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E5%AD%98%E5%82%A8"><span class="toc-text">请求存储</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E6%B5%81%E7%A8%8B"><span class="toc-text">实现流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98"><span class="toc-text">一些问题</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%EF%BC%9A"><span class="toc-text">常用命令：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%91%BD%E4%BB%A4"><span class="toc-text">其他命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bash%E8%84%9A%E6%9C%AC%E8%AF%AD%E6%B3%95%EF%BC%9A"><span class="toc-text">bash脚本语法：</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -979,82 +981,507 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>这个东西思路简单，但实现也是耗费了一整天时间，毕竟你不知道哪里问题会突然跳出来，做完眼都花了。</p>
-<p>我想从大概三个方面总结一下：存储、请求和实现流程。先说思路，再说过程。</p>
-<h3 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h3><p>存储一直是个很麻烦的事情，先前照片存储就折腾了很久，又是图床又是加速，最终效果也不好（当然，你既然想要啥都免费了，就不能又要又要的）。</p>
-<p>而这次不同先前，不光要存储和读取，还要能修改写入，不然得到了ip也没有用，所以静态存储已经不能满足我们的需要了。</p>
-<p>我始终没有找到免费的国内云端数据库，所以用的还是github——哎？等等，不是静态存储已经不能……</p>
-<p>没错，我们要用github存储和读取，并在网页客户端频繁更改。</p>
-<p>新建一个仓库，放入一个你要存储的空文件，在个人页面生成一个拥有修改此文件权限的token。（我英语不好，之前以为token全局生效，为了避免其他仓库数据泄露风险选择了用另一个邮箱注册了新号，实则不需要）</p>
-<p>接下来就是在网页端实现对ip的获取和存储。</p>
-<h3 id="请求"><a href="#请求" class="headerlink" title="请求"></a>请求</h3><p>以下是简化的请求格式，仅供参考</p>
-<h4 id="请求ip"><a href="#请求ip" class="headerlink" title="请求ip"></a>请求ip</h4><pre><code class="js">    const ipAddresses = &#39;&#39;;//接入获取ip的api
-    try &#123;
-            const response = await fetch(ipAddress);
-            const data = await response.json();
-            return data.ip; 
-        &#125; 
-   
+        <p>以bash为例，记录linux系统shell脚本的基本语法和常用命令。</p>
+<p>没必要都背下来，实际用到不记得了一般也是在网上搜，但需要大概知道都能做什么，所以记下来。</p>
+<h2 id="常用命令："><a href="#常用命令：" class="headerlink" title="常用命令："></a>常用命令：</h2><ul>
+<li><p>ls：列出目录下的文件和目录</p>
+<ul>
+<li>ls -l：显示详细信息，包括文件权限、所有者、大小、修改时间等</li>
+<li>ls -a：显示隐藏文件</li>
+<li>ls -d：显示目录本身，而不是目录里的文件</li>
+<li>ls -R：递归显示目录下所有文件和目录</li>
+<li>ls -lh：以更易读的形式显示文件大小</li>
+<li>ls -t：按修改时间排序</li>
+<li>ls -S：按文件大小排序</li>
+<li>ls -X：按文件类型排序</li>
+</ul>
+</li>
+<li><p>pwd：显示当前目录的路径</p>
+</li>
+<li><p>cd：切换目录</p>
+<ul>
+<li>cd ..：返回上级目录</li>
+<li>cd -：返回上次所在目录</li>
+<li>cd ~：返回用户主目录</li>
+<li>cd &#x2F;：切换到根目录</li>
+</ul>
+</li>
+<li><p>mkdir：创建目录</p>
+<ul>
+<li>mkdir -p：创建多级目录</li>
+<li>rmdir：删除空目录</li>
+</ul>
+</li>
+<li><p>touch：创建文件</p>
+</li>
+<li><p>rm：删除文件或目录</p>
+<ul>
+<li>rm -f：强制删除文件或目录</li>
+<li>rm -r：递归删除目录</li>
+<li>rm -i：删除前询问用户</li>
+<li>rm -I：删除前不询问用户</li>
+</ul>
+</li>
+<li><p>mv：移动或重命名文件或目录</p>
+<ul>
+<li>mv -i：移动或重命名前询问用户</li>
+<li>mv -I：移动或重命名前不询问用户</li>
+</ul>
+</li>
+<li><p>cp：复制文件或目录</p>
+<ul>
+<li>cp -r：递归复制目录</li>
+</ul>
+</li>
+<li><p>find：搜索文件或目录</p>
+<ul>
+<li>find . -name “*.txt”：搜索当前目录下所有.txt文件</li>
+<li>find &#x2F; -name “passwd”：搜索系统所有&#x2F;目录下名为passwd的文件</li>
+<li>find &#x2F; -user root：搜索系统所有&#x2F;目录下所有root用户的文件</li>
+<li>find &#x2F; -perm -u&#x3D;x：搜索系统所有&#x2F;目录下所有可执行文件</li>
+<li>find &#x2F; -size +10M：搜索系统所有&#x2F;目录下大小大于10M的文件</li>
+<li>find &#x2F; -type f -size +10M：搜索系统所有&#x2F;目录下类型为文件且大小大于10M的文件</li>
+<li>find &#x2F; -type d -empty：搜索系统所有&#x2F;目录下类型为目录且为空的文件夹</li>
+</ul>
+</li>
+<li><p>chmod：修改文件或目录权限</p>
+<ul>
+<li>chmod 777 file：给file文件添加所有权限(7&#x3D;rwx,777&#x3D;{u(ser)&#x3D;7,g(roup)&#x3D;7,o(ther)&#x3D;7 })</li>
+</ul>
+</li>
+<li><p>chown：修改文件或目录所有者</p>
+<ul>
+<li>chown user file：将file文件的所有者修改为user</li>
+<li>chown user:group file：将file文件的所有者和组修改为user:group</li>
+</ul>
+</li>
+<li><p>chgrp：修改文件或目录组</p>
+<ul>
+<li>chgrp group file：将file文件修改为group组</li>
+</ul>
+</li>
+<li><p>ln：创建链接</p>
+<ul>
+<li>ln （无参数）file link：创建硬链接</li>
+<li>ln -s (..)：创建软链接</li>
+<li>ln -f (..)：强制创建链接</li>
+</ul>
+</li>
+<li><p>ps：查看进程信息</p>
+<ul>
+<li>ps -ef：显示所有进程信息</li>
+<li>ps -ef | grep “keyword”：搜索进程信息</li>
+<li>ps -p pid：显示指定进程信息</li>
+<li>ps -u user：显示指定用户的进程信息</li>
+<li>ps -eo pid,user,cmd | grep “keyword”：搜索进程信息</li>
+</ul>
+</li>
+<li><p>cat：查看文件内容</p>
+<ul>
+<li>cat -n：显示行号</li>
+<li>cat -b：显示不可打印字符</li>
+<li>cat -T：显示特殊字符</li>
+<li>cat file1 file2：显示多个文件内容<br>more和less：</li>
+<li>展示文件内容，more命令一次只能看到一屏的内容，less命令可以翻页查看文件内容。</li>
+<li>less：类似more命令，但是可以向前向后翻页，空格翻页，回车翻页，q退出。</li>
+<li>more：类似less命令，但是只能向下翻页。</li>
+</ul>
+</li>
+<li><p>head：显示文件开头内容</p>
+<ul>
+<li>head -n：显示前n行内容</li>
+<li>head -c：显示前c字节内容</li>
+</ul>
+</li>
+<li><p>tail：显示文件末尾内容</p>
+<ul>
+<li>tail -n：显示后n行内容</li>
+<li>tail -f：实时显示文件末尾内容</li>
+</ul>
+</li>
+<li><p>echo：输出内容到屏幕或文件</p>
+<ul>
+<li>echo -e：支持转义字符</li>
+<li>echo -n：不输出换行符</li>
+</ul>
+</li>
+<li><p>grep：搜索文件内容</p>
+<ul>
+<li>grep -i：忽略大小写</li>
+<li>grep -v：反向选择</li>
+<li>grep -n：显示行号</li>
+<li>grep -c：显示匹配行数</li>
+<li>grep -A：显示匹配行及后n行</li>
+<li>grep -B：显示匹配行及前n行</li>
+<li>grep -C：显示匹配行及上下n行</li>
+<li>grep -o：显示匹配内容</li>
+</ul>
+</li>
+<li><p>awk：数据分析语言</p>
+<ul>
+<li>awk ‘{print $1}’：打印第一列内容</li>
+<li>awk ‘{print $1,$2}’：打印第一、二列内容</li>
+<li>awk ‘{sum+&#x3D;$1} END {print sum}’：求和</li>
+<li>awk ‘{print $1,$2}’ file1 file2：打印多个文件内容</li>
+<li>awk -F：指定分隔符</li>
+<li>awk -v：指定变量</li>
+<li>awk -f：执行外部脚本</li>
+<li>awk -v OFS&#x3D;”:” ‘{print $1,$2}’：指定输出分隔符</li>
+</ul>
+</li>
+<li><p>sort：排序文件内容</p>
+<ul>
+<li>sort -n：按数字排序</li>
+<li>sort -r：反向排序</li>
+<li>sort -k：按指定列排序</li>
+<li>sort -t：指定分隔符</li>
+<li>sort -u：去除重复行</li>
+<li>sort -m：合并已排序文件</li>
+<li>sort -o：输出到文件</li>
+</ul>
+</li>
+<li><p>cut：提取文件内容</p>
+<ul>
+<li>cut -d：指定分隔符</li>
+<li>cut -f：指定列</li>
+<li>cut -c：指定字节</li>
+</ul>
+</li>
+<li><p>uniq：去除重复行</p>
+</li>
+<li><p>wc：统计文件行数、字数、字节数</p>
+<ul>
+<li>wc -l：显示行数</li>
+<li>wc -w：显示字数</li>
+<li>wc -c：显示字节数</li>
+</ul>
+</li>
+<li><p>date：显示当前日期和时间</p>
+<ul>
+<li>date “+%Y-%m-%d %H:%M:%S”：显示格式化日期和时间</li>
+</ul>
+</li>
+<li><p>cal：显示日历</p>
+<ul>
+<li>cal 2024：显示2024年日历</li>
+<li>cal -3：显示上个月、本月、下个月日历</li>
+<li>cal -s：显示星期几缩写</li>
+<li>cal -m：显示月份缩写</li>
+<li>cal -y：显示年份缩写</li>
+</ul>
+</li>
+<li><p>whoami：显示当前用户 </p>
+</li>
+<li><p>who：显示当前登录用户信息</p>
+<ul>
+<li>who -b：显示当前登录用户的位置</li>
+<li>who -m：显示当前登录用户的电话号码</li>
+<li>who -u：显示当前登录用户的用户ID</li>
+</ul>
+</li>
+<li><p>groups：显示当前用户组信息</p>
+<ul>
+<li>groups user：显示指定用户的用户组信息</li>
+</ul>
+</li>
+<li><p>id：显示当前用户信息</p>
+<ul>
+<li>id user：显示指定用户信息</li>
+</ul>
+</li>
+<li><p>last：显示登录记录</p>
+<ul>
+<li>last -u：显示指定用户的登录记录</li>
+</ul>
+</li>
+<li><p>uptime：显示系统运行时间</p>
+</li>
+<li><p>hostname：显示主机名</p>
+</li>
+<li><p>uname：显示系统信息</p>
+<ul>
+<li>uname -a：显示全部信息</li>
+<li>uname -s：显示操作系统名</li>
+<li>uname -n：显示主机名</li>
+<li>uname -r：显示内核版本</li>
+<li>uname -m：显示硬件平台</li>
+</ul>
+</li>
+<li><p>man：显示命令帮助信息</p>
+<ul>
+<li>man command：显示command命令的帮助信息</li>
+<li>man -k keyword：搜索keyword关键字的帮助信息</li>
+</ul>
+</li>
+<li><p>apropos：搜索帮助信息</p>
+<ul>
+<li>apropos keyword：搜索keyword关键字的帮助信息</li>
+</ul>
+</li>
+<li><p>alias：设置命令别名</p>
+<ul>
+<li>alias name&#x3D;’command’：设置name别名为command命令</li>
+<li>unalias name：删除name别名</li>
+</ul>
+</li>
+<li><p>history：显示历史命令</p>
+<ul>
+<li>history：显示所有历史命令</li>
+<li>history -c：清空历史命令</li>
+<li>!n：执行第n条历史命令</li>
+<li>!!：执行上一条命令</li>
+<li>!string：执行最近的以string开头的命令</li>
+</ul>
+</li>
+</ul>
+<h2 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h2><ul>
+<li><p>top：查看系统资源占用情况</p>
+</li>
+<li><p>df：查看磁盘使用情况</p>
+</li>
+<li><p>du：查看目录或文件大小</p>
+</li>
+<li><p>free：查看系统内存使用情况</p>
+</li>
+<li><p>ifconfig：查看网络接口信息</p>
+</li>
+<li><p>netstat：查看网络连接信息</p>
+</li>
+<li><p>ssh：远程登录</p>
+</li>
+<li><p>scp：远程复制文件</p>
+</li>
+<li><p>ssh-keygen：生成ssh密钥</p>
+</li>
+<li><p>ssh-copy-id：将ssh密钥拷贝到远程主机</p>
+</li>
+<li><p>ssh-agent：管理ssh密钥</p>
+</li>
+<li><p>ssh-add：添加ssh密钥到ssh-agent</p>
+</li>
+<li><p>ssh-keyscan：扫描远程主机的ssh密钥</p>
+</li>
+<li><p>sshpass：通过ssh远程执行命令</p>
+</li>
+<li><p>wget：下载文件</p>
+</li>
+<li><p>curl：下载文件</p>
+</li>
+<li><p>tar：打包和压缩文件</p>
+</li>
+<li><p>gzip：压缩文件</p>
+</li>
+<li><p>bzip2：压缩文件</p>
+</li>
+<li><p>unzip：解压文件</p>
+</li>
+<li><p>zip：压缩文件</p>
+</li>
+<li><p>unrar：解压rar文件</p>
+</li>
+<li><p>rsync：同步文件</p>
+</li>
+<li><p>mount：挂载磁盘</p>
+</li>
+<li><p>umount：卸载磁盘</p>
+</li>
+<li><p>fdisk：管理磁盘分区</p>
+</li>
+<li><p>lsof：查看系统打开的文件</p>
+</li>
+<li><p>kill：杀死进程</p>
+</li>
+<li><p>killall：杀死进程</p>
+</li>
+<li><p>ln：创建链接</p>
+</li>
+</ul>
+<h2 id="bash脚本语法："><a href="#bash脚本语法：" class="headerlink" title="bash脚本语法："></a>bash脚本语法：</h2><ul>
+<li>注释：#开头的行表示注释<ul>
+<li>多行注释：&#x2F;* *&#x2F;</li>
+</ul>
+</li>
+<li>变量：以$开头，如$var表示变量var的值<ul>
+<li>字符串变量：用双引号括起来的内容，如”$str”</li>
+<li>数字变量：用$((…))括起来的内容，如”$((num1+num2))”</li>
+<li>数组变量：用${array_name[index]}表示数组元素，如”${array_name[0]}”</li>
+<li>环境变量：用$ENV{var}表示环境变量var的值</li>
+</ul>
+</li>
+<li>字符串：用双引号或单引号括起来的内容，如”hello world”或’hello world’<ul>
+<li>转义字符：\n、\t、\r、\b、\a、\e、\0、\、$、&quot;、&#39;</li>
+<li>变量替换：$var或${var}，如”$name”或”${name}”</li>
+</ul>
+</li>
+<li>运算符：支持算术运算、关系运算、逻辑运算、字符串运算<ul>
+<li>算术运算符：+、-、<em>、&#x2F;、%、</em>*</li>
+<li>关系运算符：-eq、-ne、-gt、-lt、-ge、-le</li>
+<li>逻辑运算符：!、&amp;&amp;、||</li>
+</ul>
+</li>
+<li>条件语句：if、then、else、fi<ul>
+<li>多分支条件：if [ $num -eq 1 ] || [ $num -eq 2 ]; then…; fi</li>
+<li>双分支条件：if [ $num -eq 1 ]; then…; else…; fi</li>
+</ul>
+</li>
+<li>循环语句：for、while、do、done<ul>
+<li>for循环：for var in item1 item2…; do…; done</li>
+<li>while循环：while [ condition ]; do…; done</li>
+<li>until循环：until [ condition ]; do…; done</li>
+</ul>
+</li>
+<li>控制结构：case、esac、select、function<ul>
+<li>case语句：case $var in pattern1) command1;; pattern2) command2;;…; esac</li>
+<li>select语句：select var in item1 item2…; do…; done</li>
+</ul>
+</li>
+<li>函数：function name(){…}<ul>
+<li>调用函数：name arg1 arg2…</li>
+<li>脚本：#!&#x2F;bin&#x2F;bash</li>
+<li>脚本参数：$#、$0、$1、$2、…、$@、$*</li>
+<li>脚本执行：.&#x2F;script.sh arg1 arg2…</li>
+</ul>
+</li>
+<li>数组：array_name[index]&#x3D;value</li>
+<li>后台运行：&amp;<ul>
+<li>nohup command &amp;：即使退出系统，command仍然在后台运行</li>
+</ul>
+</li>
+<li>管道：|<br>  管道符|表示将前一个命令的输出作为后一个命令的输入。如ls -l &#x2F;etc | grep “^-“表示列出&#x2F;etc目录下以”-“开头的文件信息。</li>
+<li>重定向：&gt;、&gt;&gt;、&lt;、&lt;&lt;<ul>
+<li>&gt;：输出重定向，将命令的输出重定向到文件，覆盖原文件内容</li>
+<li>&gt;&gt;：追加重定向，将命令的输出重定向到文件，追加到原文件内容</li>
+<li>&lt;：输入重定向，将文件内容作为命令的输入</li>
+<li>&lt;&lt;：here文档，将后面的内容作为命令的输入，可以跨行</li>
+<li>将标准输出重定向：    <ul>
+<li>command &gt; file：将命令的输出重定向到文件</li>
+<li>command &gt;&gt; file：将命令的输出追加到文件</li>
+<li>command &lt; file：将文件内容作为命令的输入</li>
+<li>command &lt;&lt; delimiter：here文档，将后面的内容作为命令的输入，可以跨行</li>
+</ul>
+</li>
+<li>将标准错误重定向：<ul>
+<li>command 2&gt; file：将命令的错误输出重定向到文件</li>
+<li>command 2&gt;&gt; file：将命令的错误输出追加到文件</li>
+</ul>
+</li>
+<li>合并重定向：<ul>
+<li>command1 &gt; file 2&gt;&amp;1：将命令的输出和错误输出合并到文件</li>
+</ul>
+</li>
+<li>筛去错误输出：<ul>
+<li>command 2&gt;&#x2F;dev&#x2F;null：筛去命令的错误输出</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>环境变量：$PATH、$HOME、$PWD、$USER、$SHELL、$UID、$PS1、$PS2、$PS3、$PS4<ul>
+<li>$PATH：搜索命令的路径</li>
+<li>$HOME：用户主目录</li>
+<li>$PWD：当前工作目录</li>
+<li>$USER：当前用户</li>
+<li>$SHELL：当前登录的shell</li>
+<li>$UID：当前用户ID</li>
+<li>$PS1：命令提示符，默认是”$”</li>
+<li>$PS2：第二个命令提示符，默认是”&gt;”</li>
+<li>$PS3：第三个命令提示符，默认是”#”</li>
+<li>$PS4：第四个命令提示符，用于调试脚本</li>
+</ul>
+</li>
+<li>退出状态：0表示成功，非0表示失败<ul>
+<li>$?：上个命令的退出状态</li>
+<li>$!：上个后台命令的进程号</li>
+<li>自定义退出状态：exit n，n为0-255之间的整数</li>
+<li>判断退出状态：if [ $? -eq 0 ]; then…; else…; fi</li>
+<li>取消自定义退出状态：trap “” EXIT</li>
+</ul>
+</li>
+<li>调试：set -x、set -e、bash -x<ul>
+<li>set -x：显示执行的命令</li>
+<li>set -e：遇到错误立即退出脚本</li>
+<li>bash -x：显示执行的脚本内容</li>
+</ul>
+</li>
+<li>脚本参数：$#、$0、$1、$2、…、$@、$*<ul>
+<li>$#：传递给脚本的参数个数</li>
+<li>$0：脚本名</li>
+<li>$1、$2、…：传递给脚本的第一个参数、第二个参数、…</li>
+<li>$@：传递给脚本的所有参数，以”$1” “$2”…的形式展开</li>
+<li>$*：传递给脚本的所有参数，以”$1” “$2”…的形式展开，但是不包括脚本名</li>
+</ul>
+</li>
+<li>定时任务：crontab命令<ul>
+<li>crontab -e：编辑定时任务</li>
+<li>crontab -l：列出定时任务</li>
+<li>crontab -r：删除定时任务</li>
+</ul>
+</li>
+<li>日志：logger命令<ul>
+<li>logger “message”：记录日志信息</li>
+<li>logger -p priority “message”：设置日志级别，priority为emerg、alert、crit、err、warning、notice、info、debug</li>
+</ul>
+</li>
+<li>进程管理：nohup、&amp;、jobs、kill、bg、fg、disown、wait、trap、killall、killpg、wait<ul>
+<li>nohup command：不挂断地运行命令</li>
+<li>&amp;：将命令放入后台运行</li>
+<li>jobs：显示当前后台任务</li>
+<li>kill pid：杀死进程<ul>
+<li>kill -9 pid：强制杀死进程</li>
+<li>kill -l：列出所有信号名称</li>
+</ul>
+</li>
+<li>bg pid：将进程放入后台<ul>
+<li>bg %：将当前任务放入后台</li>
+</ul>
+</li>
+<li>fg pid：将后台进程放入前台<ul>
+<li>fg %：将当前任务放入前台</li>
+</ul>
+</li>
+<li>disown：将当前工作目录切换到后台<ul>
+<li>disown %：将当前任务的工作目录切换到后台</li>
+</ul>
+</li>
+</ul>
+<pre><code class="shell"># 一个将任务放到后台，记下进程号，等任务完成后再拿到前台的脚本例子
+#!/bin/bash
+
+# 将任务放到后台
+some_command &amp;  # 将your_command替换为实际的命令
+PID=$!          # 记录进程号
+
+echo &quot;任务已放入后台，进程号: $PID&quot;
+
+# 等待后台任务完成
+wait $PID
+
+echo &quot;任务已完成，进程号: $PID&quot;
+
+# 将任务带回前台（如果需要）
+fg %1  # 假设%1是对应的作业号
 </code></pre>
-<p>在直接存储之前，我们还有读取文件的过程，我们还需要读取已有的数据并检验此ip是否已经被存储了，我们不重复存储数据才能实现进站计数效果，我认为这个效果要比之前那个刷新一次就记一次数的插件要好。</p>
-<h4 id="请求读取"><a href="#请求读取" class="headerlink" title="请求读取"></a>请求读取</h4><pre><code class="js">    const response = await fetch(&#39;https://raw.githubusercontent.com/用户名/库名/&lt;文件&gt; &#39;);
-   //原生数据地址
+<ul>
+<li>wait：等待子进程结束<ul>
+<li>wait -n：等待n秒</li>
+<li>wait -p：显示进程号</li>
+<li>用法举例：<pre><code class="shell">#!/bin/bash
+# 后台运行sleep
+- sleep 10 &amp;
+# 等待后台sleep结束
+- wait
+# sleep结束后输出done
+- echo &quot;done&quot;
 </code></pre>
-<p>‘这里为啥不用cdn加速了？’<br>因为我发现cdn加速获取不到最新数据，提交后会覆盖原有数据，使数据不准确<br>‘那这个get不会很慢吗？’<br>而且不挂梯子很容易失败，这就没有办法了，没有找到免费的国内数据库</p>
-<h4 id="请求存储"><a href="#请求存储" class="headerlink" title="请求存储"></a>请求存储</h4><pre><code class="js">    const updateResponse = await fetch(&#39;https://api.github.com/repos/用户名/库名/&lt;文件&gt; &#39;, &#123;
-        method: &#39;PUT&#39;,//put请求常用于文件更改或替换
-        headers: &#123;
-            &#39;Authorization&#39;: `&lt;你生成的token&gt; `,//当然这里是有很大的泄露风险的，或者说几乎是赤裸的，所以不要用作重要的数据，并且这里最好先加密再解密以绕过扫描，或者分成两段字符串，我猜的，感兴趣可以试试
-            &#39;Content-Type&#39;: &#39;application/json&#39;
-        &#125;,
-        body: JSON.stringify(&#123;
-            message: &#39;&#39;,//提交注释信息
-            content: //编码后的存储数据 
-            sha: //文件sha值，确保一致
-        &#125;)
-    &#125;);
-</code></pre>
-<p><a target="_blank" rel="noopener" href="https://api.github.com/repos/%E7%94%A8%E6%88%B7%E5%90%8D/%E5%BA%93%E5%90%8D/">https://api.github.com/repos/用户名/库名/</a>&lt;文件&gt;是github提供的api，更多详见官方文档</p>
-<p>其他逻辑不再详述，自此我们假设脚本已能成功获取存储ip了。</p>
-<h3 id="实现流程"><a href="#实现流程" class="headerlink" title="实现流程"></a>实现流程</h3><p>这有什么可说的，不就</p>
-<p>把获取和存储ip的脚本放到网页上</p>
-<p>就行了吗？</p>
-<p>是这样的，都多余了。</p>
-<p>不过有几个值得记下来的地方。</p>
-<p>网页在解析到<code>&lt;script&gt;</code>时就会自动开始编译和执行脚本，但是我们的js脚本请求很慢，尤其还有个get原生国外网址，会导致页面加载不出来，解决的办法就是把脚本放到页面渲染完毕之后再执行。</p>
-<p>所幸刚好有这样便捷的方法</p>
-<pre><code class="html">&lt;script defer&gt;&lt;/script&gt;
-</code></pre>
-<p>顺便，把脚本拿到网页md文件的外面</p>
-<pre><code class="html">&lt;script src=&quot;你的/脚本/路径/目标脚本.js&quot; defer&gt;&lt;/script&gt;
-</code></pre>
-<p>如果放在模板文件里，就能让所有页面搭载上这个脚本了。</p>
-<h3 id="一些问题"><a href="#一些问题" class="headerlink" title="一些问题"></a>一些问题</h3><blockquote>
-<p>文件上传时遇到了 - Push cannot contain secrets</p>
-</blockquote>
-<p>这是github的私密扫描，不允许上传token等敏感信息，点击它返回的链接选择<code>我愿意泄密</code>就可以了，当然确保确实不会泄露重要信息</p>
-<blockquote>
-<p>同一ip连续的get全都是404因而被github禁止访问</p>
-</blockquote>
-<p>get加上token允许访问的次数会多一些<br>我遇到这个问题是因为调试代码，一直失败，没办法的，调试好了就没有了。</p>
-<blockquote>
-<p>脚本加载得很慢，不挂梯子成功率很低</p>
-</blockquote>
-<p>我在想。</p>
-<blockquote>
-<p>怎么调试代码</p>
-</blockquote>
-<p>浏览器的控制台可以查看日志<br><a href="../../18/Http%E8%BF%94%E5%9B%9E%E7%8A%B6%E6%80%81%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%8E%E8%A7%A3%E5%86%B3">根据返回的状态码判断问题</a></p>
-<blockquote>
-<p>生成的token到期</p>
-</blockquote>
-<p>重新生成token并调整token使用期限<br>如果是预期意外的过期，有可能是把token上传到了公开库，<a href="../../18/github%E7%BB%95%E8%BF%87%E7%A7%81%E5%AF%86%E6%89%AB%E6%8F%8F">寻求方法绕过</a></p>
-<p>到此为止吧</p>
-<blockquote>
-<p>追加</p>
-</blockquote>
-<p>现在会有时候返回422，如果一直返回倒也不奇怪，但是有时候返回，有时候又正常，这我就不明白了，这跟浏览器读取我的请求有关系吧。</p>
-<p>如果返回429，说明限制了访问频率限制。18号追加</p>
+</li>
+</ul>
+</li>
+<li>trap command signal：设置信号处理命令</li>
+<li>killall command：杀死所有command进程</li>
+<li>killpg pid：杀死进程组</li>
+<li>你不是杀手，你不要一直杀杀杀。</li>
+</ul>
+</li>
+</ul>
 
       
        <hr><span style="font-style: italic;color: gray;"> 此方悬停 </span>
