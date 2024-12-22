@@ -1793,6 +1793,9 @@ img.pswp__img {
   .nav-left {
     width: 100px;
   }
+  .nav-left .refresh-button {
+    display: none;
+  }
   .nav-left .avatar {
     width: 80px;
     height: 80px;
@@ -1884,15 +1887,34 @@ img.pswp__img {
   }
   .nav-left .more-menus {
     position: absolute;
-    color: #fff;
+    color: #b8b8b8;
     display: block;
     z-index: 100;
     bottom: 32px;
-    right: 0;
-    border: solid 2px;
-    border-right: none;
-    border-radius: 15px 0 0 15px;
+    left: 65%;
+    transform: translateX(-50%);
+    font-size: 18px;
+    height: 5px;
+    border: none;
     line-height: 20px;
+  }
+  .nav-left .more-menus:before {
+    content: '·';
+    margin-left: 7px;
+  }
+  .nav-left .refresh-button {
+    display: block;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: rgba(0,0,0,0);
+    color: #b8b8b8;
+    border: none;
+    border-radius: 15px;
+    padding: 10px 15px;
+    cursor: pointer;
+    z-index: 100;
+    font-size: 16px;
   }
   .nav-left .left-bottom {
     top: 108px;
