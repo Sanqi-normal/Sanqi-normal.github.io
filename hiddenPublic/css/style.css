@@ -509,7 +509,7 @@
 .nav-left {
   width: 120px;
   height: 100%;
-  background: #0a9600;
+  background: #2a353f;
   box-shadow: inset -15px 0 15px -15px #222;
   float: left;
   position: relative;
@@ -550,7 +550,7 @@
   line-height: 19px;
 }
 .nav-left .icon a:hover {
-  color: #309e85;
+  color: #323245;
 }
 .nav-left ul {
   margin: 0;
@@ -660,7 +660,7 @@
 .nav-right {
   width: 420px;
   height: 100%;
-  background: #fff;
+  background: #dde3ea;
   border-right: 1px solid #e5e8ec;
   overflow: hidden;
   float: left;
@@ -710,7 +710,7 @@
 }
 .nav-right .title-list .right-top #default-panel .iconfont.icon-search.active,
 .nav-right .title-list .right-top #outline-panel .iconfont.icon-search.active {
-  color: #009116;
+  color: #2f334b;
 }
 .nav-right .title-list .right-top #default-panel .iconfont.icon-file-tree,
 .nav-right .title-list .right-top #outline-panel .iconfont.icon-file-tree {
@@ -900,7 +900,7 @@
 }
 .nav-right .title-list #outline-list .toc a.active {
   background-color: #ebedef;
-  color: #00723d;
+  color: #333f4f;
 }
 .nav-right .title-list nav,
 .nav-right .title-list #local-search-result {
@@ -923,7 +923,7 @@
 }
 .nav-right .title-list nav::-webkit-scrollbar-thumb,
 .nav-right .title-list #local-search-result::-webkit-scrollbar-thumb {
-  background: #008029;
+  background: #2c313e;
 }
 .nav-right .title-list nav #no-item-tips,
 .nav-right .title-list #local-search-result #no-item-tips {
@@ -1039,7 +1039,7 @@
 }
 .nav-right .friends-area .friends-content a {
   line-height: 30px;
-  color: #477420;
+  color: #333c42;
 }
 #nprogress {
   position: fixed;
