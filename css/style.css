@@ -660,7 +660,7 @@
 .nav-right {
   width: 420px;
   height: 100%;
-  background: #f2ede8;
+  background: #fff;
   border-right: 1px solid #e5e8ec;
   overflow: hidden;
   float: left;
@@ -1687,17 +1687,17 @@ h2 {
   font-weight: bolder;
 }
 img {
-  width: 400px;
+  width: 350px;
   height: auto;
 }
 /* 容器样式 */
 .image-left {
   display: flex;
   float: left;
-  width: 49.5%;
+  width: 49%;
   flex-direction: column;
   justify-content: flex-start;
-  margin-bottom: 10px; /* 图片之间的垂直间距 */
+  margin-bottom: 20px; /* 图片之间的垂直间距 */
 }
 .image-left img {
   float: left;
@@ -1705,10 +1705,10 @@ img {
 .image-right {
   display: flex;
   float: right;
-  width: 49.5%;
+  width: 49%;
   flex-direction: column;
   justify-content: flex-start;
-  margin-bottom: 10px; /* 图片之间的垂直间距 */
+  margin-bottom: 20px; /* 图片之间的垂直间距 */
 }
 .image-right img {
   float: right;
@@ -1792,9 +1792,6 @@ img.pswp__img {
   }
   .nav-left {
     width: 100px;
-  }
-  .nav-left .refresh-button {
-    display: none;
   }
   .nav-left .avatar {
     width: 80px;
@@ -1887,34 +1884,15 @@ img.pswp__img {
   }
   .nav-left .more-menus {
     position: absolute;
-    color: #b8b8b8;
+    color: #fff;
     display: block;
     z-index: 100;
     bottom: 32px;
-    left: 65%;
-    transform: translateX(-50%);
-    font-size: 18px;
-    height: 5px;
-    border: none;
+    right: 0;
+    border: solid 2px;
+    border-right: none;
+    border-radius: 15px 0 0 15px;
     line-height: 20px;
-  }
-  .nav-left .more-menus:before {
-    content: '·';
-    margin-left: 7px;
-  }
-  .nav-left .refresh-button {
-    display: block;
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background-color: rgba(0,0,0,0);
-    color: #b8b8b8;
-    border: none;
-    border-radius: 15px;
-    padding: 10px 15px;
-    cursor: pointer;
-    z-index: 100;
-    font-size: 16px;
   }
   .nav-left .left-bottom {
     top: 108px;
