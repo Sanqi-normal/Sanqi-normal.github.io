@@ -1,0 +1,2001 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>linux系统shell脚本书写 | 叁七のblog</title>
+  <meta name="keywords" content=" 笔记 , linux , shell ">
+  <meta name="description" content="linux系统shell脚本书写 | 叁七のblog">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="只是在尝试活着 很高兴与你相遇   切换主题了解我快捷键说明qq：2817152925qq邮箱：&#x32;&#x38;&#49;&#55;&#x31;&#x35;&#50;&#57;&#x32;&#53;&#x40;&#113;&#x71;&#46;&#99;&#111;&#109;微信：Guoyikai222bilibli如有侵权请联系我删除">
+<meta property="og:type" content="website">
+<meta property="og:title" content="关于我">
+<meta property="og:url" content="http://example.com/about/index.html">
+<meta property="og:site_name" content="叁七のblog">
+<meta property="og:description" content="只是在尝试活着 很高兴与你相遇   切换主题了解我快捷键说明qq：2817152925qq邮箱：&#x32;&#x38;&#49;&#55;&#x31;&#x35;&#50;&#57;&#x32;&#53;&#x40;&#113;&#x71;&#46;&#99;&#111;&#109;微信：Guoyikai222bilibli如有侵权请联系我删除">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/img/about.gif">
+<meta property="article:published_time" content="2024-12-09T09:51:04.000Z">
+<meta property="article:modified_time" content="2024-12-23T07:06:00.705Z">
+<meta property="article:author" content="叁七">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/about.gif">
+
+
+<link rel="icon" href="https://pic.nximg.cn/file/20230801/34816314_105542883101_2.jpg">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-light.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css" rel="stylesheet">
+<link href="//cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+  <input id="page_shortcut" value="false" /><!--我自己加的变量用来使某些页面禁用快捷键，传递到script的pageshortcut-->
+  <input id="theme_highlight_on" value="true" />
+  <input id="theme_code_copy" value="true" />
+</div>
+
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <!--左侧栏模板逻辑-->
+<!--头像与图标链接-->
+<a href="/"
+   class="avatar_target">
+    <img class="avatar"
+         src="https://www.helloimg.com/i/2024/12/23/6769080bb7159.jpg"/>
+</a>
+<div class="author">
+    <span>叁七</span>
+</div>
+
+<div class="icon">
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+</div>
+
+
+<!--以下为文章列表格式-->
+
+
+<ul>
+    <li>
+        <div class="all active" data-rel="All">All
+            
+        </div>
+    </li>
+    
+        
+            
+                
+    <li>
+        <div data-rel="笔记">
+            
+            笔记
+            
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="计算机">
+            <i class="fold iconfont icon-right"></i>
+            计算机
+            
+        </div>
+        
+            <ul class="sub hide">
+                
+                    
+    <li>
+        <div data-rel="计算机&lt;---&gt;操作系统">
+            
+            操作系统
+            
+        </div>
+        
+    </li>
+
+                
+                    
+    <li>
+        <div data-rel="计算机&lt;---&gt;后端">
+            
+            后端
+            
+        </div>
+        
+    </li>
+
+                
+                    
+    <li>
+        <div data-rel="计算机&lt;---&gt;渗透">
+            
+            渗透
+            
+        </div>
+        
+    </li>
+
+                
+                    
+    <li>
+        <div data-rel="计算机&lt;---&gt;硬件">
+            
+            硬件
+            
+        </div>
+        
+    </li>
+
+                
+                    
+    <li>
+        <div data-rel="计算机&lt;---&gt;AI">
+            
+            AI
+            
+        </div>
+        
+    </li>
+
+                
+                    
+    <li>
+        <div data-rel="计算机&lt;---&gt;Web">
+            
+            Web
+            
+        </div>
+        
+    </li>
+
+                
+            </ul>
+        
+    </li>
+
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="日志">
+            
+            日志
+            
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="生活">
+            <i class="fold iconfont icon-right"></i>
+            生活
+            
+        </div>
+        
+            <ul class="sub hide">
+                
+                    
+    <li>
+        <div data-rel="生活&lt;---&gt;记录">
+            
+            记录
+            
+        </div>
+        
+    </li>
+
+                
+                    
+    <li>
+        <div data-rel="生活&lt;---&gt;文章">
+            
+            文章
+            
+        </div>
+        
+    </li>
+
+                
+            </ul>
+        
+    </li>
+
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="游戏">
+            <i class="fold iconfont icon-right"></i>
+            游戏
+            
+        </div>
+        
+            <ul class="sub hide">
+                
+                    
+    <li>
+        <div data-rel="游戏&lt;---&gt;创作">
+            
+            创作
+            
+        </div>
+        
+    </li>
+
+                
+                    
+    <li>
+        <div data-rel="游戏&lt;---&gt;评测">
+            
+            评测
+            
+        </div>
+        
+    </li>
+
+                
+            </ul>
+        
+    </li>
+
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+</ul>
+<!--以下为自定义菜单栏-->
+<div class="left-bottom">
+    <div class="menus">
+        
+            
+            
+            
+            
+    </div>
+    <div>
+        
+        
+    </div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="39">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        Links
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="search shortcut key i"></i>
+            <div class="right-title">All</div>
+            <i class="iconfont icon-file-tree" data-title="switch to outline view shortcut key w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="return"></i>
+            <input id="local-search-input" autocomplete="off"/>
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="case sensitive"></i>
+            <i class="iconfont icon-tag" data-title="label"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">outline</div>
+            <i class="iconfont icon-list" data-title="switch to article list"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>笔记</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>博客</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>操作系统</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>测试</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>代理</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>端口</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>后端</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>扩展</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>评论</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>前端</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>日志</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>渗透</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>渗透笔记</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>小说</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>一篇流</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>游戏</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>游戏评测</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Ai</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>AI</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>api</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>github</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>hexo</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>linux</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>shell</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Web</a>
+            </li>
+        
+    </div>
+
+</div>
+
+    
+    <div id="local-search-result">
+
+    </div>
+    
+    <nav id="title-list-nav">
+        
+        
+        <a  class="All 日志 "
+           href="/2024/12/22/%E6%97%A5%E5%BF%97%EF%BC%8810%EF%BC%89/"
+           data-tag="博客"
+           data-author="" >
+            <span class="post-title" title="日志（10）">日志（10）</span>
+            <span class="post-date" title="2024-12-22 22:44:40">2024/12/22</span>
+        </a>
+        
+        
+        <a  class="All 计算机 操作系统 "
+           href="/2024/12/22/linux%E8%84%9A%E6%9C%AC%E4%B9%A6%E5%86%99/"
+           data-tag="笔记,linux,shell"
+           data-author="" >
+            <span class="post-title" title="linux系统shell脚本书写">linux系统shell脚本书写</span>
+            <span class="post-date" title="2024-12-22 20:22:36">2024/12/22</span>
+        </a>
+        
+        
+        <a  class="All 计算机 渗透 "
+           href="/2024/12/22/%E8%AE%B0nc%E5%B7%A5%E5%85%B7%E5%87%A0%E7%A7%8D%E7%94%A8%E6%B3%95/"
+           data-tag="笔记,渗透"
+           data-author="" >
+            <span class="post-title" title="记nc工具几种用法">记nc工具几种用法</span>
+            <span class="post-date" title="2024-12-22 19:52:28">2024/12/22</span>
+        </a>
+        
+        
+        <a  class="All 计算机 渗透 "
+           href="/2024/12/20/Earthworm-ProxyChains%E5%AE%9E%E7%8E%B0%E5%86%85%E7%BD%91%E4%BB%A3%E7%90%86/"
+           data-tag="代理,渗透"
+           data-author="" >
+            <span class="post-title" title="Earthworm+ProxyChains实现内网代理">Earthworm+ProxyChains实现内网代理</span>
+            <span class="post-date" title="2024-12-20 19:35:18">2024/12/20</span>
+        </a>
+        
+        
+        <a  class="All 计算机 操作系统 "
+           href="/2024/12/19/%E5%88%9B%E5%BB%BA%E7%B3%BB%E7%BB%9F%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8%E7%A8%8B%E5%BA%8F/"
+           data-tag="日志,操作系统"
+           data-author="" >
+            <span class="post-title" title="创建系统开机自启动程序">创建系统开机自启动程序</span>
+            <span class="post-date" title="2024-12-19 18:10:55">2024/12/19</span>
+        </a>
+        
+        
+        <a  class="All 计算机 后端 "
+           href="/2024/12/19/Ai%E7%9A%84%E6%B5%81%E5%BC%8F%E8%BF%94%E5%9B%9E%E5%8F%8A%E5%A4%84%E7%90%86/"
+           data-tag="AI,后端"
+           data-author="" >
+            <span class="post-title" title="Ai的流式返回及结果处理">Ai的流式返回及结果处理</span>
+            <span class="post-date" title="2024-12-19 18:10:17">2024/12/19</span>
+        </a>
+        
+        
+        <a  class="All 计算机 AI "
+           href="/2024/12/19/%E5%A6%82%E4%BD%95%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E5%88%9B%E5%BB%BA%E8%87%AA%E5%AE%9A%E4%B9%89ai%E5%8F%8Aapi%E6%8E%A5%E5%8F%A3/"
+           data-tag="AI,api,一篇流"
+           data-author="" >
+            <span class="post-title" title="如何从零开始创建自定义ai及api接口（梦想版）">如何从零开始创建自定义ai及api接口（梦想版）</span>
+            <span class="post-date" title="2024-12-19 18:09:43">2024/12/19</span>
+        </a>
+        
+        
+        <a  class="All 计算机 Web "
+           href="/2024/12/18/github%E7%BB%95%E8%BF%87%E7%A7%81%E5%AF%86%E6%89%AB%E6%8F%8F/"
+           data-tag="日志,github"
+           data-author="" >
+            <span class="post-title" title="github绕过私密扫描">github绕过私密扫描</span>
+            <span class="post-date" title="2024-12-18 13:17:38">2024/12/18</span>
+        </a>
+        
+        
+        <a  class="All 计算机 Web "
+           href="/2024/12/18/Http%E8%BF%94%E5%9B%9E%E7%8A%B6%E6%80%81%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%8E%E8%A7%A3%E5%86%B3/"
+           data-tag="Web,笔记"
+           data-author="" >
+            <span class="post-title" title="Http返回状态码分析与解决">Http返回状态码分析与解决</span>
+            <span class="post-date" title="2024-12-18 12:15:59">2024/12/18</span>
+        </a>
+        
+        
+        <a  class="All 计算机 后端 "
+           href="/2024/12/17/%E6%9C%89%E5%85%B3ip%E8%BF%BD%E8%B8%AA%E5%AD%98%E5%82%A8%E7%9A%84%E5%85%A8%E7%A8%8B%E5%9B%9E%E9%A1%BE/"
+           data-tag="后端,日志"
+           data-author="" >
+            <span class="post-title" title="有关ip数据存储的全程回顾">有关ip数据存储的全程回顾</span>
+            <span class="post-date" title="2024-12-17 21:13:53">2024/12/17</span>
+        </a>
+        
+        
+        <a  class="All 计算机 后端 "
+           href="/2024/12/17/github%E6%8B%89%E5%8F%96%E4%B8%8E%E6%8E%A8%E9%80%81%E6%93%8D%E4%BD%9C/"
+           data-tag="笔记,github"
+           data-author="" >
+            <span class="post-title" title="github拉取与推送等操作">github拉取与推送等操作</span>
+            <span class="post-date" title="2024-12-17 17:17:34">2024/12/17</span>
+        </a>
+        
+        
+        <a  class="All 日志 "
+           href="/2024/12/17/%E6%97%A5%E5%BF%97%EF%BC%889%EF%BC%89/"
+           data-tag="博客"
+           data-author="" >
+            <span class="post-title" title="日志（9）">日志（9）</span>
+            <span class="post-date" title="2024-12-17 12:58:04">2024/12/17</span>
+        </a>
+        
+        
+        <a  class="All 日志 "
+           href="/2024/12/16/%E6%97%A5%E5%BF%97%EF%BC%888%EF%BC%89/"
+           data-tag="博客,Ai"
+           data-author="" >
+            <span class="post-title" title="日志（8）">日志（8）</span>
+            <span class="post-date" title="2024-12-16 13:45:04">2024/12/16</span>
+        </a>
+        
+        
+        <a  class="All 日志 "
+           href="/2024/12/15/%E6%97%A5%E5%BF%97%EF%BC%887%EF%BC%89/"
+           data-tag="博客"
+           data-author="" >
+            <span class="post-title" title="日志（7）">日志（7）</span>
+            <span class="post-date" title="2024-12-15 13:38:31">2024/12/15</span>
+        </a>
+        
+        
+        <a  class="All 计算机 Web "
+           href="/2024/12/15/%E7%BD%91%E7%AB%99%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E6%98%BE%E7%A4%BA%E9%97%AE%E9%A2%98/"
+           data-tag="Web,博客"
+           data-author="" >
+            <span class="post-title" title="网站中的图片显示问题">网站中的图片显示问题</span>
+            <span class="post-date" title="2024-12-15 11:38:31">2024/12/15</span>
+        </a>
+        
+        
+        <a  class="All 日志 "
+           href="/2024/12/13/%E6%97%A5%E5%BF%97%EF%BC%886%EF%BC%89/"
+           data-tag="博客"
+           data-author="" >
+            <span class="post-title" title="日志（6）">日志（6）</span>
+            <span class="post-date" title="2024-12-13 20:21:17">2024/12/13</span>
+        </a>
+        
+        
+        <a  class="All 游戏 评测 "
+           href="/2024/12/13/%E5%85%B3%E4%BA%8Etga2024/"
+           data-tag="游戏"
+           data-author="" >
+            <span class="post-title" title="关于tga2024">关于tga2024</span>
+            <span class="post-date" title="2024-12-13 16:45:26">2024/12/13</span>
+        </a>
+        
+        
+        <a  class="All 日志 "
+           href="/2024/12/12/%E6%97%A5%E5%BF%97%EF%BC%885%EF%BC%89/"
+           data-tag="博客,评论"
+           data-author="" >
+            <span class="post-title" title="日志（5）评论测试">日志（5）评论测试</span>
+            <span class="post-date" title="2024-12-12 21:30:51">2024/12/12</span>
+        </a>
+        
+        
+        <a  class="All 笔记 "
+           href="/2024/12/12/%E5%85%B3%E4%BA%8Ehexo%E4%BF%AE%E6%94%B9%E4%B8%BB%E9%A2%98%E6%96%87%E4%BB%B6%E6%97%A0%E6%B3%95%E6%AD%A3%E7%A1%AE%E7%94%9F%E6%88%90%E9%A1%B5%E9%9D%A2%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/"
+           data-tag="hexo"
+           data-author="" >
+            <span class="post-title" title="关于hexo修改主题文件无法正确生成页面的解决办法">关于hexo修改主题文件无法正确生成页面的解决办法</span>
+            <span class="post-date" title="2024-12-12 20:12:38">2024/12/12</span>
+        </a>
+        
+        
+        <a  class="All 计算机 Web "
+           href="/2024/12/12/%E7%94%B5%E8%84%91%E6%B5%8F%E8%A7%88%E6%89%8B%E6%9C%BA%E7%AB%AF%E7%BD%91%E9%A1%B5%E6%96%B9%E6%B3%95/"
+           data-tag="Web"
+           data-author="" >
+            <span class="post-title" title="电脑浏览手机端格式网页方法">电脑浏览手机端格式网页方法</span>
+            <span class="post-date" title="2024-12-12 15:35:48">2024/12/12</span>
+        </a>
+        
+        
+        <a  class="All 日志 "
+           href="/2024/12/12/%E6%97%A5%E5%BF%97%EF%BC%884%EF%BC%89/"
+           data-tag="博客,测试"
+           data-author="" >
+            <span class="post-title" title="日志（4）">日志（4）</span>
+            <span class="post-date" title="2024-12-12 14:36:06">2024/12/12</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2024/12/12/blog-theme/"
+           data-tag="笔记,前端"
+           data-author="" >
+            <span class="post-title" title="blog_theme">blog_theme</span>
+            <span class="post-date" title="2024-12-12 11:11:09">2024/12/12</span>
+        </a>
+        
+        
+        <a  class="All 计算机 "
+           href="/2024/12/12/%E6%89%A9%E5%B1%95/"
+           data-tag="扩展"
+           data-author="" >
+            <span class="post-title" title="扩展工具">扩展工具</span>
+            <span class="post-date" title="2024-12-12 10:43:31">2024/12/12</span>
+        </a>
+        
+        
+        <a  class="All 计算机 硬件 "
+           href="/2024/12/12/%E7%AB%AF%E5%8F%A3/"
+           data-tag="端口"
+           data-author="" >
+            <span class="post-title" title="端口笔记">端口笔记</span>
+            <span class="post-date" title="2024-12-12 10:18:56">2024/12/12</span>
+        </a>
+        
+        
+        <a  class="All 计算机 渗透 "
+           href="/2024/12/11/webst/"
+           data-tag="渗透笔记"
+           data-author="" >
+            <span class="post-title" title="Web渗透流程">Web渗透流程</span>
+            <span class="post-date" title="2024-12-11 21:52:23">2024/12/11</span>
+        </a>
+        
+        
+        <a  class="All 计算机 渗透 "
+           href="/2024/12/11/%E9%80%9A%E8%BF%87%E5%86%85%E7%BD%91dns%E6%AC%BA%E9%AA%97%E8%BF%9B%E8%A1%8C%E6%B5%81%E9%87%8F%E5%8A%AB%E6%8C%81/"
+           data-tag="渗透笔记"
+           data-author="" >
+            <span class="post-title" title="通过内网dns欺骗进行流量劫持">通过内网dns欺骗进行流量劫持</span>
+            <span class="post-date" title="2024-12-11 16:47:49">2024/12/11</span>
+        </a>
+        
+        
+        <a  class="All 计算机 渗透 "
+           href="/2024/12/11/%E6%B8%97%E9%80%8F%E7%AC%94%E8%AE%B0/"
+           data-tag="渗透笔记"
+           data-author="" >
+            <span class="post-title" title="渗透笔记(持续更新)">渗透笔记(持续更新)</span>
+            <span class="post-date" title="2024-12-11 16:32:43">2024/12/11</span>
+        </a>
+        
+        
+        <a  class="All 日志 "
+           href="/2024/12/11/%E6%97%A5%E5%BF%97%EF%BC%883%EF%BC%89/"
+           data-tag="日志"
+           data-author="" >
+            <span class="post-title" title="日志（3）">日志（3）</span>
+            <span class="post-date" title="2024-12-11 15:25:51">2024/12/11</span>
+        </a>
+        
+        
+        <a  class="All 生活 文章 "
+           href="/2024/12/11/%E6%9C%80%E5%90%8E%E7%9A%84%E5%91%8A%E5%88%AB/"
+           data-tag="小说"
+           data-author="" >
+            <span class="post-title" title="最后的告别">最后的告别</span>
+            <span class="post-date" title="2024-12-11 13:53:14">2024/12/11</span>
+        </a>
+        
+        
+        <a  class="All 笔记 "
+           href="/2024/12/11/%E5%BD%93%E4%BB%8A%E4%B8%AD%E5%9B%BD%E9%9D%92%E5%B9%B4%E9%98%B6%E5%B1%82%E5%88%86%E6%9E%90/"
+           data-tag="笔记"
+           data-author="" >
+            <span class="post-title" title="当今中国青年阶层分析">当今中国青年阶层分析</span>
+            <span class="post-date" title="2024-12-11 13:32:35">2024/12/11</span>
+        </a>
+        
+        
+        <a  class="All 笔记 "
+           href="/2024/12/11/%E4%B8%B9%E6%9F%AF/"
+           data-tag="笔记"
+           data-author="" >
+            <span class="post-title" title="丹柯">丹柯</span>
+            <span class="post-date" title="2024-12-11 11:35:50">2024/12/11</span>
+        </a>
+        
+        
+        <a  class="All 游戏 评测 "
+           href="/2024/12/11/%E3%80%8A%E6%9A%97%E5%96%BB%E5%B9%BB%E6%83%B3%E3%80%8B%E6%B8%B8%E6%88%8F%E8%AF%84%E6%B5%8B/"
+           data-tag="游戏评测"
+           data-author="" >
+            <span class="post-title" title="《暗喻幻想》游戏评测">《暗喻幻想》游戏评测</span>
+            <span class="post-date" title="2024-12-11 10:34:58">2024/12/11</span>
+        </a>
+        
+        
+        <a  class="All 笔记 "
+           href="/2024/12/11/%E5%89%AF%E5%8F%B8%E4%BB%A4%E9%A9%AC%E6%96%AF%E7%A7%91/"
+           data-tag="笔记"
+           data-author="" >
+            <span class="post-title" title="副司令马斯科">副司令马斯科</span>
+            <span class="post-date" title="2024-12-11 10:20:31">2024/12/11</span>
+        </a>
+        
+        
+        <a  class="All 日志 "
+           href="/2024/12/10/%E6%97%A5%E5%BF%97%EF%BC%882%EF%BC%89/"
+           data-tag="博客"
+           data-author="" >
+            <span class="post-title" title="日志（2）">日志（2）</span>
+            <span class="post-date" title="2024-12-10 20:23:27">2024/12/10</span>
+        </a>
+        
+        
+        <a  class="All 游戏 创作 "
+           href="/2024/12/10/%E5%88%86%E4%BA%AB%E6%88%91%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%AE%8C%E6%88%90%E5%88%9B%E4%BD%9C%E7%9A%84%E6%B8%B8%E6%88%8F/"
+           data-tag="游戏"
+           data-author="" >
+            <span class="post-title" title="分享我第一个完成创作的游戏">分享我第一个完成创作的游戏</span>
+            <span class="post-date" title="2024-12-10 18:31:38">2024/12/10</span>
+        </a>
+        
+        
+        <a  class="All 日志 "
+           href="/2024/12/10/%E5%8D%9A%E5%AE%A2%E6%97%A5%E5%BF%970/"
+           data-tag="测试"
+           data-author="" >
+            <span class="post-title" title="日志（0）">日志（0）</span>
+            <span class="post-date" title="2024-12-10 09:09:00">2024/12/10</span>
+        </a>
+        
+        
+        <a  class="All 日志 "
+           href="/2024/12/10/%E5%8D%9A%E5%AE%A2%E6%97%A5%E5%BF%97/"
+           data-tag="博客"
+           data-author="" >
+            <span class="post-title" title="日志（1）">日志（1）</span>
+            <span class="post-date" title="2024-12-10 09:02:02">2024/12/10</span>
+        </a>
+        
+        
+        <a  class="All 生活 记录 "
+           href="/2024/12/09/%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/"
+           data-tag="博客"
+           data-author="" >
+            <span class="post-title" title="第一篇文章">第一篇文章</span>
+            <span class="post-date" title="2024-12-09 22:10:00">2024/12/09</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2024/12/09/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/"
+           data-tag="测试"
+           data-author="" >
+            <span class="post-title" title="叁七的测试博客">叁七的测试博客</span>
+            <span class="post-date" title="2024-12-09 16:50:50">2024/12/09</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="Toggle full screen shortcut key s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-linux脚本书写" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">linux系统shell脚本书写</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="计算机">计算机</a> > 
+            
+            <a  data-rel="计算机&lt;---&gt;操作系统">操作系统</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color3">笔记</a>
+            
+            <a class="color1">linux</a>
+            
+            <a class="color1">shell</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2024-12-22 21:04:56'>2024-12-22 20:22</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%EF%BC%9A"><span class="toc-text">常用命令：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%91%BD%E4%BB%A4"><span class="toc-text">其他命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bash%E8%84%9A%E6%9C%AC%E8%AF%AD%E6%B3%95%EF%BC%9A"><span class="toc-text">bash脚本语法：</span></a></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>以bash为例，记录linux系统shell脚本的基本语法和常用命令。</p>
+<p>没必要都背下来，实际用到不记得了一般也是在网上搜，但需要大概知道都能做什么，所以记下来。</p>
+<h2 id="常用命令："><a href="#常用命令：" class="headerlink" title="常用命令："></a>常用命令：</h2><ul>
+<li><p>ls：列出目录下的文件和目录</p>
+<ul>
+<li>ls -l：显示详细信息，包括文件权限、所有者、大小、修改时间等</li>
+<li>ls -a：显示隐藏文件</li>
+<li>ls -d：显示目录本身，而不是目录里的文件</li>
+<li>ls -R：递归显示目录下所有文件和目录</li>
+<li>ls -lh：以更易读的形式显示文件大小</li>
+<li>ls -t：按修改时间排序</li>
+<li>ls -S：按文件大小排序</li>
+<li>ls -X：按文件类型排序</li>
+</ul>
+</li>
+<li><p>pwd：显示当前目录的路径</p>
+</li>
+<li><p>cd：切换目录</p>
+<ul>
+<li>cd ..：返回上级目录</li>
+<li>cd -：返回上次所在目录</li>
+<li>cd ~：返回用户主目录</li>
+<li>cd &#x2F;：切换到根目录</li>
+</ul>
+</li>
+<li><p>mkdir：创建目录</p>
+<ul>
+<li>mkdir -p：创建多级目录</li>
+<li>rmdir：删除空目录</li>
+</ul>
+</li>
+<li><p>touch：创建文件</p>
+</li>
+<li><p>rm：删除文件或目录</p>
+<ul>
+<li>rm -f：强制删除文件或目录</li>
+<li>rm -r：递归删除目录</li>
+<li>rm -i：删除前询问用户</li>
+<li>rm -I：删除前不询问用户</li>
+</ul>
+</li>
+<li><p>mv：移动或重命名文件或目录</p>
+<ul>
+<li>mv -i：移动或重命名前询问用户</li>
+<li>mv -I：移动或重命名前不询问用户</li>
+</ul>
+</li>
+<li><p>cp：复制文件或目录</p>
+<ul>
+<li>cp -r：递归复制目录</li>
+</ul>
+</li>
+<li><p>find：搜索文件或目录</p>
+<ul>
+<li>find . -name “*.txt”：搜索当前目录下所有.txt文件</li>
+<li>find &#x2F; -name “passwd”：搜索系统所有&#x2F;目录下名为passwd的文件</li>
+<li>find &#x2F; -user root：搜索系统所有&#x2F;目录下所有root用户的文件</li>
+<li>find &#x2F; -perm -u&#x3D;x：搜索系统所有&#x2F;目录下所有可执行文件</li>
+<li>find &#x2F; -size +10M：搜索系统所有&#x2F;目录下大小大于10M的文件</li>
+<li>find &#x2F; -type f -size +10M：搜索系统所有&#x2F;目录下类型为文件且大小大于10M的文件</li>
+<li>find &#x2F; -type d -empty：搜索系统所有&#x2F;目录下类型为目录且为空的文件夹</li>
+</ul>
+</li>
+<li><p>chmod：修改文件或目录权限</p>
+<ul>
+<li>chmod 777 file：给file文件添加所有权限(7&#x3D;rwx,777&#x3D;{u(ser)&#x3D;7,g(roup)&#x3D;7,o(ther)&#x3D;7 })</li>
+</ul>
+</li>
+<li><p>chown：修改文件或目录所有者</p>
+<ul>
+<li>chown user file：将file文件的所有者修改为user</li>
+<li>chown user:group file：将file文件的所有者和组修改为user:group</li>
+</ul>
+</li>
+<li><p>chgrp：修改文件或目录组</p>
+<ul>
+<li>chgrp group file：将file文件修改为group组</li>
+</ul>
+</li>
+<li><p>ln：创建链接</p>
+<ul>
+<li>ln （无参数）file link：创建硬链接</li>
+<li>ln -s (..)：创建软链接</li>
+<li>ln -f (..)：强制创建链接</li>
+</ul>
+</li>
+<li><p>ps：查看进程信息</p>
+<ul>
+<li>ps -ef：显示所有进程信息</li>
+<li>ps -ef | grep “keyword”：搜索进程信息</li>
+<li>ps -p pid：显示指定进程信息</li>
+<li>ps -u user：显示指定用户的进程信息</li>
+<li>ps -eo pid,user,cmd | grep “keyword”：搜索进程信息</li>
+</ul>
+</li>
+<li><p>cat：查看文件内容</p>
+<ul>
+<li>cat -n：显示行号</li>
+<li>cat -b：显示不可打印字符</li>
+<li>cat -T：显示特殊字符</li>
+<li>cat file1 file2：显示多个文件内容<br>more和less：</li>
+<li>展示文件内容，more命令一次只能看到一屏的内容，less命令可以翻页查看文件内容。</li>
+<li>less：类似more命令，但是可以向前向后翻页，空格翻页，回车翻页，q退出。</li>
+<li>more：类似less命令，但是只能向下翻页。</li>
+</ul>
+</li>
+<li><p>head：显示文件开头内容</p>
+<ul>
+<li>head -n：显示前n行内容</li>
+<li>head -c：显示前c字节内容</li>
+</ul>
+</li>
+<li><p>tail：显示文件末尾内容</p>
+<ul>
+<li>tail -n：显示后n行内容</li>
+<li>tail -f：实时显示文件末尾内容</li>
+</ul>
+</li>
+<li><p>echo：输出内容到屏幕或文件</p>
+<ul>
+<li>echo -e：支持转义字符</li>
+<li>echo -n：不输出换行符</li>
+</ul>
+</li>
+<li><p>grep：搜索文件内容</p>
+<ul>
+<li>grep -i：忽略大小写</li>
+<li>grep -v：反向选择</li>
+<li>grep -n：显示行号</li>
+<li>grep -c：显示匹配行数</li>
+<li>grep -A：显示匹配行及后n行</li>
+<li>grep -B：显示匹配行及前n行</li>
+<li>grep -C：显示匹配行及上下n行</li>
+<li>grep -o：显示匹配内容</li>
+</ul>
+</li>
+<li><p>awk：数据分析语言</p>
+<ul>
+<li>awk ‘{print $1}’：打印第一列内容</li>
+<li>awk ‘{print $1,$2}’：打印第一、二列内容</li>
+<li>awk ‘{sum+&#x3D;$1} END {print sum}’：求和</li>
+<li>awk ‘{print $1,$2}’ file1 file2：打印多个文件内容</li>
+<li>awk -F：指定分隔符</li>
+<li>awk -v：指定变量</li>
+<li>awk -f：执行外部脚本</li>
+<li>awk -v OFS&#x3D;”:” ‘{print $1,$2}’：指定输出分隔符</li>
+</ul>
+</li>
+<li><p>sort：排序文件内容</p>
+<ul>
+<li>sort -n：按数字排序</li>
+<li>sort -r：反向排序</li>
+<li>sort -k：按指定列排序</li>
+<li>sort -t：指定分隔符</li>
+<li>sort -u：去除重复行</li>
+<li>sort -m：合并已排序文件</li>
+<li>sort -o：输出到文件</li>
+</ul>
+</li>
+<li><p>cut：提取文件内容</p>
+<ul>
+<li>cut -d：指定分隔符</li>
+<li>cut -f：指定列</li>
+<li>cut -c：指定字节</li>
+</ul>
+</li>
+<li><p>uniq：去除重复行</p>
+</li>
+<li><p>wc：统计文件行数、字数、字节数</p>
+<ul>
+<li>wc -l：显示行数</li>
+<li>wc -w：显示字数</li>
+<li>wc -c：显示字节数</li>
+</ul>
+</li>
+<li><p>date：显示当前日期和时间</p>
+<ul>
+<li>date “+%Y-%m-%d %H:%M:%S”：显示格式化日期和时间</li>
+</ul>
+</li>
+<li><p>cal：显示日历</p>
+<ul>
+<li>cal 2024：显示2024年日历</li>
+<li>cal -3：显示上个月、本月、下个月日历</li>
+<li>cal -s：显示星期几缩写</li>
+<li>cal -m：显示月份缩写</li>
+<li>cal -y：显示年份缩写</li>
+</ul>
+</li>
+<li><p>whoami：显示当前用户 </p>
+</li>
+<li><p>who：显示当前登录用户信息</p>
+<ul>
+<li>who -b：显示当前登录用户的位置</li>
+<li>who -m：显示当前登录用户的电话号码</li>
+<li>who -u：显示当前登录用户的用户ID</li>
+</ul>
+</li>
+<li><p>groups：显示当前用户组信息</p>
+<ul>
+<li>groups user：显示指定用户的用户组信息</li>
+</ul>
+</li>
+<li><p>id：显示当前用户信息</p>
+<ul>
+<li>id user：显示指定用户信息</li>
+</ul>
+</li>
+<li><p>last：显示登录记录</p>
+<ul>
+<li>last -u：显示指定用户的登录记录</li>
+</ul>
+</li>
+<li><p>uptime：显示系统运行时间</p>
+</li>
+<li><p>hostname：显示主机名</p>
+</li>
+<li><p>uname：显示系统信息</p>
+<ul>
+<li>uname -a：显示全部信息</li>
+<li>uname -s：显示操作系统名</li>
+<li>uname -n：显示主机名</li>
+<li>uname -r：显示内核版本</li>
+<li>uname -m：显示硬件平台</li>
+</ul>
+</li>
+<li><p>man：显示命令帮助信息</p>
+<ul>
+<li>man command：显示command命令的帮助信息</li>
+<li>man -k keyword：搜索keyword关键字的帮助信息</li>
+</ul>
+</li>
+<li><p>apropos：搜索帮助信息</p>
+<ul>
+<li>apropos keyword：搜索keyword关键字的帮助信息</li>
+</ul>
+</li>
+<li><p>alias：设置命令别名</p>
+<ul>
+<li>alias name&#x3D;’command’：设置name别名为command命令</li>
+<li>unalias name：删除name别名</li>
+</ul>
+</li>
+<li><p>history：显示历史命令</p>
+<ul>
+<li>history：显示所有历史命令</li>
+<li>history -c：清空历史命令</li>
+<li>!n：执行第n条历史命令</li>
+<li>!!：执行上一条命令</li>
+<li>!string：执行最近的以string开头的命令</li>
+</ul>
+</li>
+</ul>
+<h2 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h2><ul>
+<li><p>top：查看系统资源占用情况</p>
+</li>
+<li><p>df：查看磁盘使用情况</p>
+</li>
+<li><p>du：查看目录或文件大小</p>
+</li>
+<li><p>free：查看系统内存使用情况</p>
+</li>
+<li><p>ifconfig：查看网络接口信息</p>
+</li>
+<li><p>netstat：查看网络连接信息</p>
+</li>
+<li><p>ssh：远程登录</p>
+</li>
+<li><p>scp：远程复制文件</p>
+</li>
+<li><p>ssh-keygen：生成ssh密钥</p>
+</li>
+<li><p>ssh-copy-id：将ssh密钥拷贝到远程主机</p>
+</li>
+<li><p>ssh-agent：管理ssh密钥</p>
+</li>
+<li><p>ssh-add：添加ssh密钥到ssh-agent</p>
+</li>
+<li><p>ssh-keyscan：扫描远程主机的ssh密钥</p>
+</li>
+<li><p>sshpass：通过ssh远程执行命令</p>
+</li>
+<li><p>wget：下载文件</p>
+</li>
+<li><p>curl：下载文件</p>
+</li>
+<li><p>tar：打包和压缩文件</p>
+</li>
+<li><p>gzip：压缩文件</p>
+</li>
+<li><p>bzip2：压缩文件</p>
+</li>
+<li><p>unzip：解压文件</p>
+</li>
+<li><p>zip：压缩文件</p>
+</li>
+<li><p>unrar：解压rar文件</p>
+</li>
+<li><p>rsync：同步文件</p>
+</li>
+<li><p>mount：挂载磁盘</p>
+</li>
+<li><p>umount：卸载磁盘</p>
+</li>
+<li><p>fdisk：管理磁盘分区</p>
+</li>
+<li><p>lsof：查看系统打开的文件</p>
+</li>
+<li><p>kill：杀死进程</p>
+</li>
+<li><p>killall：杀死进程</p>
+</li>
+<li><p>ln：创建链接</p>
+</li>
+</ul>
+<h2 id="bash脚本语法："><a href="#bash脚本语法：" class="headerlink" title="bash脚本语法："></a>bash脚本语法：</h2><ul>
+<li>注释：#开头的行表示注释<ul>
+<li>多行注释：&#x2F;* *&#x2F;</li>
+</ul>
+</li>
+<li>变量：以$开头，如$var表示变量var的值<ul>
+<li>字符串变量：用双引号括起来的内容，如”$str”</li>
+<li>数字变量：用$((…))括起来的内容，如”$((num1+num2))”</li>
+<li>数组变量：用${array_name[index]}表示数组元素，如”${array_name[0]}”</li>
+<li>环境变量：用$ENV{var}表示环境变量var的值</li>
+</ul>
+</li>
+<li>字符串：用双引号或单引号括起来的内容，如”hello world”或’hello world’<ul>
+<li>转义字符：\n、\t、\r、\b、\a、\e、\0、\、$、&quot;、&#39;</li>
+<li>变量替换：$var或${var}，如”$name”或”${name}”</li>
+</ul>
+</li>
+<li>运算符：支持算术运算、关系运算、逻辑运算、字符串运算<ul>
+<li>算术运算符：+、-、<em>、&#x2F;、%、</em>*</li>
+<li>关系运算符：-eq、-ne、-gt、-lt、-ge、-le</li>
+<li>逻辑运算符：!、&amp;&amp;、||</li>
+</ul>
+</li>
+<li>条件语句：if、then、else、fi<ul>
+<li>多分支条件：if [ $num -eq 1 ] || [ $num -eq 2 ]; then…; fi</li>
+<li>双分支条件：if [ $num -eq 1 ]; then…; else…; fi</li>
+</ul>
+</li>
+<li>循环语句：for、while、do、done<ul>
+<li>for循环：for var in item1 item2…; do…; done</li>
+<li>while循环：while [ condition ]; do…; done</li>
+<li>until循环：until [ condition ]; do…; done</li>
+</ul>
+</li>
+<li>控制结构：case、esac、select、function<ul>
+<li>case语句：case $var in pattern1) command1;; pattern2) command2;;…; esac</li>
+<li>select语句：select var in item1 item2…; do…; done</li>
+</ul>
+</li>
+<li>函数：function name(){…}<ul>
+<li>调用函数：name arg1 arg2…</li>
+<li>脚本：#!&#x2F;bin&#x2F;bash</li>
+<li>脚本参数：$#、$0、$1、$2、…、$@、$*</li>
+<li>脚本执行：.&#x2F;script.sh arg1 arg2…</li>
+</ul>
+</li>
+<li>数组：array_name[index]&#x3D;value</li>
+<li>后台运行：&amp;<ul>
+<li>nohup command &amp;：即使退出系统，command仍然在后台运行</li>
+</ul>
+</li>
+<li>管道：|<br>  管道符|表示将前一个命令的输出作为后一个命令的输入。如ls -l &#x2F;etc | grep “^-“表示列出&#x2F;etc目录下以”-“开头的文件信息。</li>
+<li>重定向：&gt;、&gt;&gt;、&lt;、&lt;&lt;<ul>
+<li>&gt;：输出重定向，将命令的输出重定向到文件，覆盖原文件内容</li>
+<li>&gt;&gt;：追加重定向，将命令的输出重定向到文件，追加到原文件内容</li>
+<li>&lt;：输入重定向，将文件内容作为命令的输入</li>
+<li>&lt;&lt;：here文档，将后面的内容作为命令的输入，可以跨行</li>
+<li>将标准输出重定向：    <ul>
+<li>command &gt; file：将命令的输出重定向到文件</li>
+<li>command &gt;&gt; file：将命令的输出追加到文件</li>
+<li>command &lt; file：将文件内容作为命令的输入</li>
+<li>command &lt;&lt; delimiter：here文档，将后面的内容作为命令的输入，可以跨行</li>
+</ul>
+</li>
+<li>将标准错误重定向：<ul>
+<li>command 2&gt; file：将命令的错误输出重定向到文件</li>
+<li>command 2&gt;&gt; file：将命令的错误输出追加到文件</li>
+</ul>
+</li>
+<li>合并重定向：<ul>
+<li>command1 &gt; file 2&gt;&amp;1：将命令的输出和错误输出合并到文件</li>
+</ul>
+</li>
+<li>筛去错误输出：<ul>
+<li>command 2&gt;&#x2F;dev&#x2F;null：筛去命令的错误输出</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>环境变量：$PATH、$HOME、$PWD、$USER、$SHELL、$UID、$PS1、$PS2、$PS3、$PS4<ul>
+<li>$PATH：搜索命令的路径</li>
+<li>$HOME：用户主目录</li>
+<li>$PWD：当前工作目录</li>
+<li>$USER：当前用户</li>
+<li>$SHELL：当前登录的shell</li>
+<li>$UID：当前用户ID</li>
+<li>$PS1：命令提示符，默认是”$”</li>
+<li>$PS2：第二个命令提示符，默认是”&gt;”</li>
+<li>$PS3：第三个命令提示符，默认是”#”</li>
+<li>$PS4：第四个命令提示符，用于调试脚本</li>
+</ul>
+</li>
+<li>退出状态：0表示成功，非0表示失败<ul>
+<li>$?：上个命令的退出状态</li>
+<li>$!：上个后台命令的进程号</li>
+<li>自定义退出状态：exit n，n为0-255之间的整数</li>
+<li>判断退出状态：if [ $? -eq 0 ]; then…; else…; fi</li>
+<li>取消自定义退出状态：trap “” EXIT</li>
+</ul>
+</li>
+<li>调试：set -x、set -e、bash -x<ul>
+<li>set -x：显示执行的命令</li>
+<li>set -e：遇到错误立即退出脚本</li>
+<li>bash -x：显示执行的脚本内容</li>
+</ul>
+</li>
+<li>脚本参数：$#、$0、$1、$2、…、$@、$*<ul>
+<li>$#：传递给脚本的参数个数</li>
+<li>$0：脚本名</li>
+<li>$1、$2、…：传递给脚本的第一个参数、第二个参数、…</li>
+<li>$@：传递给脚本的所有参数，以”$1” “$2”…的形式展开</li>
+<li>$*：传递给脚本的所有参数，以”$1” “$2”…的形式展开，但是不包括脚本名</li>
+</ul>
+</li>
+<li>定时任务：crontab命令<ul>
+<li>crontab -e：编辑定时任务</li>
+<li>crontab -l：列出定时任务</li>
+<li>crontab -r：删除定时任务</li>
+</ul>
+</li>
+<li>日志：logger命令<ul>
+<li>logger “message”：记录日志信息</li>
+<li>logger -p priority “message”：设置日志级别，priority为emerg、alert、crit、err、warning、notice、info、debug</li>
+</ul>
+</li>
+<li>进程管理：nohup、&amp;、jobs、kill、bg、fg、disown、wait、trap、killall、killpg、wait<ul>
+<li>nohup command：不挂断地运行命令</li>
+<li>&amp;：将命令放入后台运行</li>
+<li>jobs：显示当前后台任务</li>
+<li>kill pid：杀死进程<ul>
+<li>kill -9 pid：强制杀死进程</li>
+<li>kill -l：列出所有信号名称</li>
+</ul>
+</li>
+<li>bg pid：将进程放入后台<ul>
+<li>bg %：将当前任务放入后台</li>
+</ul>
+</li>
+<li>fg pid：将后台进程放入前台<ul>
+<li>fg %：将当前任务放入前台</li>
+</ul>
+</li>
+<li>disown：将当前工作目录切换到后台<ul>
+<li>disown %：将当前任务的工作目录切换到后台</li>
+</ul>
+</li>
+</ul>
+<pre><code class="shell"># 一个将任务放到后台，记下进程号，等任务完成后再拿到前台的脚本例子
+#!/bin/bash
+
+# 将任务放到后台
+some_command &amp;  # 将your_command替换为实际的命令
+PID=$!          # 记录进程号
+
+echo &quot;任务已放入后台，进程号: $PID&quot;
+
+# 等待后台任务完成
+wait $PID
+
+echo &quot;任务已完成，进程号: $PID&quot;
+
+# 将任务带回前台（如果需要）
+fg %1  # 假设%1是对应的作业号
+</code></pre>
+<ul>
+<li>wait：等待子进程结束<ul>
+<li>wait -n：等待n秒</li>
+<li>wait -p：显示进程号</li>
+<li>用法举例：<pre><code class="shell">#!/bin/bash
+# 后台运行sleep
+- sleep 10 &amp;
+# 等待后台sleep结束
+- wait
+# sleep结束后输出done
+- echo &quot;done&quot;
+</code></pre>
+</li>
+</ul>
+</li>
+<li>trap command signal：设置信号处理命令</li>
+<li>killall command：杀死所有command进程</li>
+<li>killpg pid：杀死进程组</li>
+<li>你不是杀手，你不要一直杀杀杀。</li>
+</ul>
+</li>
+</ul>
+
+      
+       
+    </div>
+</article>
+
+
+
+
+
+<!--我可能把主页index元素误删了，所以添加了页面comments元素为false时不展示评论的功能-->
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    none
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="Toggle full screen shortcut key s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'photoSwipe';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+
+        /*访问数量*/
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+
+        // PhotoSwipe
+        $('article').each(function(i){
+            $(this).find('img').each(function(){
+                if ($(this).closest('figure').hasClass('article-gallery-img')) {
+                    return;
+                }
+                var alt = this.alt;
+                $(this)
+                    .wrap('<figure class="article-gallery-img" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject"></figure>')
+                    .wrap('<a href="' + this.src + '" title="' + alt + '"></a>');
+                $(this).after('<div class="img_alt"><span>' + (alt || '') + '</span></div>');
+            });
+        });
+
+        var pswpElement = document.querySelectorAll('.pswp')[0];
+        if (pswpElement) {
+            var gallerySelector = '.article-gallery, article';
+
+            var initPhotoSwipeFromDOM = function(gallerySelector) {
+
+                // parse slide data (url, title, size ...) from DOM elements
+                // (children of gallerySelector)
+                var parseThumbnailElements = function(el) {
+                    var thumbElements = $(el).find('figure.article-gallery-img').toArray(),
+                        numNodes = thumbElements.length,
+                        items = [],
+                        figureEl,
+                        linkEl,
+                        size,
+                        imgEl,
+                        item;
+
+                    for (var i = 0; i < numNodes; i++) {
+
+                        figureEl = thumbElements[i]; // <figure> element
+
+                        // include only element nodes
+                        if (figureEl.nodeType !== 1) {
+                            continue;
+                        }
+
+                        linkEl = figureEl.children[0]; // <a> element
+                        imgEl = linkEl.children[0]; // <img>
+
+                        size = linkEl.getAttribute('data-size');
+                        size = size && size.split('x');
+
+                        // create slide object
+                        item = {
+                            src: linkEl.getAttribute('href'),
+                            w: size && parseInt(size[0], 10) || imgEl.width,
+                            h: size && parseInt(size[1], 10) || imgEl.height
+                        };
+
+                        if (figureEl.children.length > 1) {
+                            // <figcaption> content
+                            item.title = figureEl.children[1].innerHTML;
+                        }
+
+                        if (linkEl.children.length > 0) {
+                            // <img> thumbnail element, retrieving thumbnail url
+                            item.msrc = linkEl.children[0].getAttribute('src');
+                        }
+
+                        item.el = figureEl; // save link to element for getThumbBoundsFn
+                        items.push(item);
+                    }
+
+                    return items;
+                };
+
+                // find nearest parent element
+                var closest = function closest(el, fn) {
+                    return el && (fn(el) ? el : closest(el.parentNode, fn));
+                };
+
+                // triggers when user clicks on thumbnail
+                var onThumbnailsClick = function(e) {
+                    e = e || window.event;
+
+                    var eTarget = e.target || e.srcElement;
+
+                    // find root element of slide
+                    var clickedListItem = closest(eTarget, function(el) {
+                        return (el.tagName && el.tagName.toUpperCase() === 'FIGURE');
+                    });
+
+                    if (!clickedListItem) {
+                        return;
+                    }
+
+                    if (e.preventDefault) {
+                        e.preventDefault();
+                    } else {
+                        e.returnValue = false;
+                    }
+
+                    // find index of clicked item by looping through all child nodes
+                    // alternatively, you may define index via data- attribute
+                    var clickedGallery = $(clickedListItem).closest(gallerySelector)[0],
+                        childNodes = $(clickedGallery).find('figure.article-gallery-img').toArray(),
+                        numChildNodes = childNodes.length,
+                        nodeIndex = 0,
+                        index;
+
+                    for (var i = 0; i < numChildNodes; i++) {
+                        if (childNodes[i].nodeType !== 1) {
+                            continue;
+                        }
+
+                        if (childNodes[i] === clickedListItem) {
+                            index = nodeIndex;
+                            break;
+                        }
+                        nodeIndex++;
+                    }
+
+
+
+                    if (index >= 0) {
+                        // open PhotoSwipe if valid index found
+                        openPhotoSwipe(index, clickedGallery);
+                    }
+                    return false;
+                };
+
+                // parse picture index and gallery index from URL (#&pid=1&gid=2)
+                var photoswipeParseHash = function() {
+                    var hash = window.location.hash.substring(1),
+                        params = {};
+
+                    if (hash.length < 5) {
+                        return params;
+                    }
+
+                    var vars = hash.split('&');
+                    for (var i = 0; i < vars.length; i++) {
+                        if (!vars[i]) {
+                            continue;
+                        }
+                        var pair = vars[i].split('=');
+                        if (pair.length < 2) {
+                            continue;
+                        }
+                        params[pair[0]] = pair[1];
+                    }
+
+                    if (params.gid) {
+                        params.gid = parseInt(params.gid, 10);
+                    }
+
+                    return params;
+                };
+
+                var openPhotoSwipe = function(index, galleryElement, disableAnimation, fromURL) {
+                    var pswpElement = document.querySelectorAll('.pswp')[0],
+                        gallery,
+                        options,
+                        items;
+
+                    items = parseThumbnailElements(galleryElement);
+
+                    // define options (if needed)
+                    options = {
+
+                        // define gallery index (for URL)
+                        galleryUID: galleryElement.getAttribute('data-pswp-uid'),
+
+                        getThumbBoundsFn: function(index) {
+                            // See Options -> getThumbBoundsFn section of documentation for more info
+                            var thumbnail = items[index].el.getElementsByTagName('img')[0], // find thumbnail
+                                pageYScroll = window.pageYOffset || document.documentElement.scrollTop,
+                                rect = thumbnail.getBoundingClientRect();
+
+                            return {
+                                x: rect.left,
+                                y: rect.top + pageYScroll,
+                                w: rect.width
+                            };
+                        }
+                    };
+
+                    // PhotoSwipe opened from URL
+                    if (fromURL) {
+                        if (options.galleryPIDs) {
+                            // parse real index when custom PIDs are used
+                            // http://photoswipe.com/documentation/faq.html#custom-pid-in-url
+                            for (var j = 0; j < items.length; j++) {
+                                if (items[j].pid == index) {
+                                    options.index = j;
+                                    break;
+                                }
+                            }
+                        } else {
+                            // in URL indexes start from 1
+                            options.index = parseInt(index, 10) - 1;
+                        }
+                    } else {
+                        options.index = parseInt(index, 10);
+                    }
+
+                    // exit if index not found
+                    if (isNaN(options.index)) {
+                        return;
+                    }
+
+                    if (disableAnimation) {
+                        options.showAnimationDuration = 0;
+                    }
+
+                    // Pass data to PhotoSwipe and initialize it
+                    gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, options);
+
+                    gallery.listen('imageLoadComplete', function(index, item) {
+                        var linkEl = item.el.children[0];
+                        var img = item.container.children[0];
+                        if (!linkEl.getAttribute('data-size')) {
+                            linkEl.setAttribute('data-size', img.naturalWidth + 'x' + img.naturalHeight);
+                            item.w = img.naturalWidth;
+                            item.h = img.naturalHeight;
+                            gallery.invalidateCurrItems();
+                            gallery.updateSize(true);
+                        }
+                    });
+
+                    gallery.init();
+                };
+
+                // loop through all gallery elements and bind events
+                var galleryElements = document.querySelectorAll(gallerySelector);
+
+                for (var i = 0, l = galleryElements.length; i < l; i++) {
+                    galleryElements[i].setAttribute('data-pswp-uid', i + 1);
+                    galleryElements[i].onclick = onThumbnailsClick;
+                }
+
+                // Parse URL and open gallery if it contains #&pid=3&gid=1
+                var hashData = photoswipeParseHash();
+                if (hashData.pid && hashData.gid) {
+                    openPhotoSwipe(hashData.pid, galleryElements[hashData.gid - 1], true, true);
+                }
+            };
+
+            // execute above function
+            initPhotoSwipeFromDOM(gallerySelector);
+        }
+        
+        
+        /* 渲染*/
+        function HTMLDecode(text) {
+            var temp = document.createElement("div");
+            temp.innerHTML = text;
+            var output = temp.innerText || temp.textContent;
+            temp = null;
+            return output;
+        }
+        if (window.mermaid){
+            window.mermaid = null
+        }
+        $.getScript("//cdn.jsdelivr.net/npm/mermaid@8.4.2/dist/mermaid.min.js", function () {
+            var mermaidOptions = JSON.parse(HTMLDecode("{&#34;theme&#34;:&#34;default&#34;,&#34;startOnLoad&#34;:true,&#34;flowchart&#34;:{&#34;useMaxWidth&#34;:false,&#34;htmlLabels&#34;:true}}"))
+            if (window.mermaid) {
+                mermaid.initialize(mermaidOptions)
+                mermaid.contentLoaded()
+            }
+        })
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #000000;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #000000;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #EE2C2C;
+    }
+    
+    
+    .nav-right nav a.hover > span{
+        color: #ffffff !important;
+    }
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+
+    
+</style>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+         It's a separate element, as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. PhotoSwipe keeps only 3 slides in DOM to save memory. -->
+        <!-- don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <!-- Preloader demo https://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+<div id="musicMouseDrag" style="position:fixed; z-index: 9999; bottom: 0; right: 0; width: 86px; height: 86px;">
+    <div id="musicDragTop" class="musicDragArea" style="position: absolute; top: 0; left: 0; width: 100%; height: 10px; cursor: move; z-index: 10;"></div>
+    <div id="musicDragBottom" class="musicDragArea" style="position: absolute; bottom: 0; left: 0; width: 100%; height: 10px; cursor: move; z-index: 10;"></div>
+    <div id="musicDragLeft" class="musicDragArea" style="position: absolute; top: 0; left: 0; width: 10px; height: 100%; cursor: move; z-index: 10;"></div>
+    <div id="musicDragRight" class="musicDragArea" style="position: absolute; top: 0; right: 0; width: 10px; height: 100%; cursor: move; z-index: 10;"></div>
+    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="200" height="86" src="//music.163.com/outchain/player?type=2&id=539928216&auto=1&height=66"></iframe>
+</div>
+
+<script>
+    var $DOC = $(document);
+
+    $('.musicDragArea').on('mousedown touchstart', function (e) {
+        e.preventDefault(); // 阻止默认行为
+        e.stopPropagation(); // 阻止事件冒泡
+
+        // 阻止文本选中
+        $DOC.bind("selectstart", function () {
+            return false;
+        });
+
+        var $moveTarget = $('#musicMouseDrag');
+        $moveTarget.css('border', '1px dashed grey');
+
+        var div_x = e.pageX - $moveTarget.offset().left;
+        var div_y = e.pageY - $moveTarget.offset().top;
+
+        $DOC.on('mousemove touchmove', function (e) {
+            e.preventDefault(); // 阻止默认行为
+            e.stopPropagation(); // 阻止事件冒泡
+
+            var pageX = e.type === 'touchmove' ? e.originalEvent.touches[0].pageX : e.pageX;
+            var pageY = e.type === 'touchmove' ? e.originalEvent.touches[0].pageY : e.pageY;
+
+            var targetX = pageX - div_x;
+            var targetY = pageY - div_y;
+
+            targetX = targetX < 0 ? 0 : (targetX + $moveTarget.outerWidth() >= window.innerWidth) ? window.innerWidth - $moveTarget.outerWidth() : targetX;
+            targetY = targetY < 0 ? 0 : (targetY + $moveTarget.outerHeight() >= window.innerHeight) ? window.innerHeight - $moveTarget.outerHeight() : targetY;
+
+            $moveTarget.css({'left': targetX + 'px', 'top': targetY + 'px', 'bottom': 'inherit', 'right': 'inherit'});
+        }).on('mouseup touchend', function () {
+            $DOC.unbind("selectstart");
+            $DOC.off('mousemove touchmove');
+            $DOC.off('mouseup touchend');
+            $moveTarget.css('border', 'none');
+        });
+    });
+</script>
+
+</html>
