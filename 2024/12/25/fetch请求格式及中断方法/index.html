@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>通过内网dns欺骗进行流量劫持 | 叁七のblog</title>
-  <meta name="keywords" content=" 渗透笔记 ">
-  <meta name="description" content="通过内网dns欺骗进行流量劫持 | 叁七のblog">
+  <title>fetch请求格式及中断方法 | 叁七のblog</title>
+  <meta name="keywords" content=" Web , 笔记 ">
+  <meta name="description" content="fetch请求格式及中断方法 | 叁七のblog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="此页面禁用了快捷键，如导航到新页面无法使用快捷键，请重新刷新界面如发送按钮无效，也请等待或刷新页面介绍：这是借用fittencode的api的ai 查看本地AIweb界面   发送       body {         font-family: Arial, sans-serif;         background:rgb(255, 241, 200)!important;">
 <meta property="og:type" content="website">
@@ -969,9 +969,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-通过内网dns欺骗进行流量劫持" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-fetch请求格式及中断方法" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">通过内网dns欺骗进行流量劫持</h1>
+        <h1 class="article-title">fetch请求格式及中断方法</h1>
     
     <div class="article-meta">
         
@@ -983,7 +983,7 @@
             
             <a  data-rel="计算机">计算机</a> > 
             
-            <a  data-rel="计算机&lt;---&gt;渗透">渗透</a>
+            <a  data-rel="计算机&lt;---&gt;Web">Web</a>
             
         </span>
         
@@ -991,19 +991,21 @@
         <span class="tag">
             <i class="iconfont icon-tag"></i>
             
-            <a class="color5">渗透笔记</a>
+            <a class="color4">Web</a>
+            
+            <a class="color3">笔记</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-12-11 20:24:02'>2024-12-11 16:47</time>
+            Created At : <time class="date" title='Updated At: 2024-12-25 22:36:22'>2024-12-25 22:11</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:227</span>
+        <span>Count:637</span>
         
         
         
@@ -1022,7 +1024,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E7%BD%91%E8%99%9A%E6%8B%9F%E6%9C%BAwindowsXp%E7%B3%BB%E7%BB%9F%E6%B8%97%E9%80%8F%E5%B0%9D%E8%AF%95"><span class="toc-text">内网虚拟机windowsXp系统渗透尝试:</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8E%B0%E5%9C%A8%E5%B0%9D%E8%AF%95DNS%E6%AC%BA%E9%AA%97"><span class="toc-text">现在尝试DNS欺骗</span></a></li></ol></li></ol>
+        
     
 <style>
     .left-col .switch-btn,
@@ -1038,30 +1040,79 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="内网虚拟机windowsXp系统渗透尝试"><a href="#内网虚拟机windowsXp系统渗透尝试" class="headerlink" title="内网虚拟机windowsXp系统渗透尝试:"></a>内网虚拟机windowsXp系统渗透尝试:</h2><p>   使用Nessus查询发现存在 <code>IP Forwarding Enabled </code>漏洞</p>
-<p>   使用ettercap  添加网关和ip为<code>target1</code> 和<code>target2</code> 执行ARP欺骗(虚拟机必须和网关在同一网段下) </p>
-<p>   WireShark筛选条件选arp可以看到握手后攻击者主机mac地址成功成为中间人</p>
-<h3 id="现在尝试DNS欺骗"><a href="#现在尝试DNS欺骗" class="headerlink" title="现在尝试DNS欺骗"></a>现在尝试DNS欺骗</h3><pre><code>vim /etc/ettercap/etter.dns  #添加*A &lt;攻击者主机ip&gt;
+        <p>因为一个fetch请求中断被折磨了好久。</p>
+<p>fetch请求格式：</p>
+<p>Get请求：</p>
+<pre><code class="javascript">fetch(url, &#123;
+  method: &#39;GET&#39;,
+  headers: &#123;
+    &#39;Content-Type&#39;: &#39;application/json&#39;
+  &#125;
+&#125;)
+.then(response =&gt; &#123;//响应处理
+  if (!response.ok) &#123;
+    throw new Error(&#39;Network response was not ok&#39;);
+  &#125;
+  return response.json();
+&#125;)
+.then(data =&gt; &#123;//数据处理
+  console.log(&#39;Success:&#39;, data);
+&#125;)
+.catch(error =&gt; &#123;//错误处理
+  console.error(&#39;Error:&#39;, error);
+&#125;);
 </code></pre>
-<p>打开apache服务 将电脑转为服务器</p>
-<pre><code>/etc/init.d/apache2 start
+<p>Post请求：</p>
+<pre><code class="javascript">fetch(url, &#123;
+  method: &#39;POST&#39;,
+  headers: &#123;
+    &#39;Content-Type&#39;: &#39;application/json&#39;
+  &#125;,
+  body: JSON.stringify(data)//请求体,用来上传json数据
+&#125;);
 </code></pre>
-<p>制作钓鱼页面内容</p>
-<pre><code>cd /var/www/html
-vim index.html
+<p>中断方法：</p>
+<p>如果fetch请求中断，可以用AbortController来取消请求。</p>
+<pre><code class="javascript">const controller = new AbortController();
+
+fetch(url, &#123;
+  signal: controller.signal
+&#125;);
+
+//需要中断时调用
+controller.abort();
 </code></pre>
-<p>设置ip转发以尽量隐藏自己</p>
-<pre><code>echo &quot;1&quot; &gt; /proc/sys/net/ipv4/ip_forward #为0时取消转发
+<p>fetch的第二个参数是对象，一般可写为options&#x3D;{},对象里添加请求头等参数属性。</p>
+<p>也可以直接写为：</p>
+<pre><code class="javascript">fetch(url, &#123;method: &#39;POST&#39;,headers: &#123;&#39;Content-Type&#39;: &#39;application/json&#39;&#125;,
+signal: controller.signal&#125;);//是的，这样我就明白了，常规写法不过是换行了。
 </code></pre>
-<p>靶机没能成功打开页面可能是没清除缓存<br>清除dns缓存 </p>
-<pre><code>ipconfig /flushdns
+<p>signal在options对象中应当放在headers对象之后而不是header当中，也就是说它是请求部分传递的参数。</p>
+<p>如果写成{options,signal},这样就会报错。</p>
+<pre><code class="javascript">fetch(url, &#123;
+  method: &#39;POST&#39;,
+  headers: &#123;    
+    &#39;Content-Type&#39;: &#39;application/json&#39;
+  &#125;,
+  signal: controller.signal//在header外面
+&#125;);
 </code></pre>
-<blockquote>
-<p>相关<br>setookit 社会工程学 伪造页面收集登陆者信息</p>
-</blockquote>
-<span style="color: gray; font-size:;">
-笔记内容摘自网络，仅供记录与学习
-</span>
+<p>signal被触发后响应的事件可以这么写：</p>
+<pre><code class="javascript">let abortornot;
+signal.addEventListener(&#39;abort&#39;,
+  () =&gt; abortornot=true//可以添加其他响应事件
+);
+</code></pre>
+<p>关于javascript的()&#x3D;&gt;语法，它是一个箭头函数，箭头函数提供了一种更简洁的函数定义方式，特别适用于那些需要匿名函数的场景，比如回调函数、事件处理程序等。箭头函数不仅语法更简洁，而且它不会创建自己的 this 上下文，而是捕获其所在上下文的 this 值。</p>
+<pre><code class="javascript">this.value = 1;
+const myFunc = () =&gt; &#123;
+  console.log(this.value);// 1, 而不是 undefined
+&#125;;
+</code></pre>
+<p>另外，fetch请求是异步的，也就是说，它不会阻塞主线程，而是返回一个 Promise 对象，当响应返回时，Promise 对象会被解析，并调用相应的 then() 或 catch() 方法。</p>
+<p>有些语法只有在异步请求里才可以用，比如在 then() 方法里的箭头函数，因为 then() 方法里的回调函数是在异步请求完成后才执行的。</p>
+<p>try{…}catch{…}finally{…}是用来处理请求的错误的，它可以用来捕获异步请求的错误，并在请求完成后执行一些清理工作，这个方法也可用于同步。</p>
+
       
        <hr><span style="font-style: italic;color: gray;"> 此方悬停 </span>
     </div>
