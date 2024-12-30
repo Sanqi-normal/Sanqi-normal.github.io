@@ -411,7 +411,7 @@
     </div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="46">
-<input type="hidden" id="yelog_site_word_count" value="47.9k">
+<input type="hidden" id="yelog_site_word_count" value="48.1k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -616,7 +616,7 @@
         
         <a  class="All 计算机 Web "
            href="/2024/12/25/fetch%E8%AF%B7%E6%B1%82%E6%A0%BC%E5%BC%8F%E5%8F%8A%E4%B8%AD%E6%96%AD%E6%96%B9%E6%B3%95/"
-           data-tag="笔记,Web"
+           data-tag="Web,笔记"
            data-author="" >
             <span class="post-title" title="fetch请求格式及中断方法">fetch请求格式及中断方法</span>
             <span class="post-date" title="2024-12-25 22:11:11">2024/12/25</span>
@@ -661,7 +661,7 @@
         
         <a  class="All 计算机 渗透 "
            href="/2024/12/22/%E8%AE%B0nc%E5%B7%A5%E5%85%B7%E5%87%A0%E7%A7%8D%E7%94%A8%E6%B3%95/"
-           data-tag="渗透,笔记"
+           data-tag="笔记,渗透"
            data-author="" >
             <span class="post-title" title="记nc工具几种用法">记nc工具几种用法</span>
             <span class="post-date" title="2024-12-22 19:52:28">2024/12/22</span>
@@ -715,7 +715,7 @@
         
         <a  class="All 计算机 Web "
            href="/2024/12/18/Http%E8%BF%94%E5%9B%9E%E7%8A%B6%E6%80%81%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%8E%E8%A7%A3%E5%86%B3/"
-           data-tag="笔记,Web"
+           data-tag="Web,笔记"
            data-author="" >
             <span class="post-title" title="Http返回状态码分析与解决">Http返回状态码分析与解决</span>
             <span class="post-date" title="2024-12-18 12:15:59">2024/12/18</span>
@@ -1028,25 +1028,14 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-12-28 22:07:41'>2024-12-27 19:13</time>
+            Created At : <time class="date" title='Updated At: 2024-12-30 14:05:16'>2024-12-27 19:13</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:388</span>
+        <span>Count:585</span>
         
         
-        
-        <span class="top-comment" title="Jump to comment area">
-            <a href="#comments">
-                Comment:<span class="count-comment">
-                    <span class="spinner">
-                      <div class="cube1"></div>
-                      <div class="cube2"></div>
-                    </span>
-                </span>
-            </a>
-        </span>
         
     </div>
     
@@ -1084,6 +1073,17 @@
 <p>长流程的工作ai并不清楚何时返回成功结果，我也不清楚如何让ai返回结果。</p>
 <p>并不是所有的命令都能用代码检查是否成功，同时并不是所有的命令即使有了交互用户就知道什么时候中断。</p>
 <p>虽然终止命令逻辑上应该避免交互。交互体验效果不会很好的。</p>
+<blockquote>
+<p>12月30日追加</p>
+</blockquote>
+<p>我想到了可行的准确执行的策略，还没有实践。</p>
+<p>就是将ai返回的命令执行步骤准确化为每个块。</p>
+<p>每个块返回执行结果，执行完毕后前进到下一个块，直到完成整个任务。</p>
+<p>这和之前有什么区别？</p>
+<p>这就意味着放弃ai以目的为导向的执行，一开始就决定了ai执行路线。</p>
+<p>如果真的每次能返回执行结果的话，也许不会陷入执行错误或者方向混乱的死循环的情况。</p>
+<p>另外，评论区被来必力放广告了，我说怎么不用来必力，要是给我利润分成也算。</p>
+<p>最近先关了评论区，反正也没人留过言。</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 此方悬停 </span>
@@ -1092,32 +1092,6 @@
 
 
 
-
-
-    
-<div id="comments">
-    <!-- 来必力City版安装代码 -->
-    <div id="lv-container" data-id="city" data-uid="MTAyMC82MDI5Ni8zNjc2NA==">
-        <script type="text/javascript">
-			(function(d, s) {
-				var j, e = d.getElementsByTagName(s)[0];
-
-				if (typeof LivereTower === 'function') { return; }
-
-				j = d.createElement(s);
-				window.livereOptions = {
-					eagerLoading: true,
-					scrollEventTargetSelector: '#post'
-                }
-				j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-				j.async = true;
-				e.parentNode.insertBefore(j, e);
-			})(document, 'script');
-        </script>
-        <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
-    </div>
-    <!-- City版安装代码已完成 -->
-</div>
 
 
 <!--我可能把主页index元素误删了，所以添加了页面comments元素为false时不展示评论的功能-->
