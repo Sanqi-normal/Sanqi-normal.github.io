@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>照片墙 | 叁七のblog</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="照片墙 | 叁七のblog">
+  <title>日志（12） | 叁七のblog</title>
+  <meta name="keywords" content=" 日志 ">
+  <meta name="description" content="日志（12） | 叁七のblog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="此页面禁用了快捷键，如导航到新页面无法使用快捷键，请重新刷新界面如发送按钮无效，也请等待或刷新页面介绍：这是借用fittencode的api的ai 查看本地AIweb界面   发送       body {         font-family: Arial, sans-serif;         background:rgb(255, 241, 200)!important;">
 <meta property="og:type" content="website">
@@ -1031,24 +1031,39 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="page-" class="article article-type-page" itemscope itemprop="blogPost">
+        <article id="post-日志（12）" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">照片墙</h1>
+        <h1 class="article-title">日志（12）</h1>
     
     <div class="article-meta">
         
         
         
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="日志">日志</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color3">日志</a>
+            
+        </span>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-12-15 18:42:49'>2024-12-15 18:42</time>
+            Created At : <time class="date" title='Updated At: 2024-12-31 14:49:28'>2024-12-31 14:00</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:22</span>
+        <span>Count:526</span>
         
         
         
@@ -1072,9 +1087,28 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>为了方便均未上传图床，点击需谨慎</p>
-<p><a href="/photo/pixel">像素画</a></p>
-<p><a href="/photo/collection">绘画收藏</a></p>
+        <p>博客头像这几天一直打不开，太懒了一直没管，今天一张一张补了cdn。</p>
+<p>昨天把Alice成功移植到了命令行，我是对的，命令行上Alice执行代码和与用户交互都方便很多</p>
+<p>应该说省去了很多不必要的问题，至少在当前，命令行是Alice恰当的存在方式。</p>
+<p>之前桌面应用到命令行上多了一个步骤，这使得执行命令这个过程不可见。现在能看到任何想看到的。</p>
+<p>但也不算很顺利。</p>
+<p>除了请求方法的重写，还遇到了中文传送损坏的问题。</p>
+<p>可能是损坏，也可能编码错误，但拼音就没有这个问题，比如nihao，然而ai并不总把拼音当中文理解</p>
+<p><img src="/img/a0a4893b82f48c44ef542e667ef3d65.png" alt="我想我是一个让人困惑的人"></p>
+<p>我想到之前和ai聊天时，ai是直接把用户传输的某种编码方式当文本理解，那我直接把文本编码当成字符串传输，ai是不是也能理解。</p>
+<p>我把各种编码方式试了一遍，发现<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_25482087/article/details/117048596">unicode</a>编码ai可以正常理解。</p>
+<p>于是把用户输入的文本和提示词都用unicode编码后再发送，发现确实成功了，ai可以正常理解中文。</p>
+<p>——统一的标准真是伟大，我现在深刻理解了“车同轨，书同文”是一件多么了不起的事。</p>
+<p><img src="/img/997dda18fe1ddc4ecea0ec86067c543.png" alt="有一种Alice接管了powershell的感觉"></p>
+<p>可以直接不离开Alice 在Alice内部执行任何powershell可执行的命令</p>
+<p><img src="/img/b70b01c1a9f65f1247813a8d2b864d7.png" alt="这不帅吗，这当然帅"></p>
+<p>当然，普通powershell命令执行同样绕过请求，对话前提是此命令powershell无法执行，幸好powershell在语言上是相当有限的。</p>
+<p>纠错</p>
+<p><img src="/img/d3ab88f2a6966969d24d7edf6567aa5.png" alt="纠错"></p>
+<p>并且可以不返回纠错，直接返回纠错后的代码重新执行。</p>
+<p>我隐隐感觉到，这样的功能微软不可能没有在做，也许是在等ai足够成熟，也许就在windows12，根本不需要我做。</p>
+<p>Alice能做什么比他们，或者说比现在更多的事？</p>
+<p>我很期待，但我也意识到一个人的力量真是太有限了。</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 此方悬停 </span>
