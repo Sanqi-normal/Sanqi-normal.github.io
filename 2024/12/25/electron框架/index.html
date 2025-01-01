@@ -692,7 +692,7 @@
         
         <a  class="All 计算机 渗透 "
            href="/2024/12/22/%E8%AE%B0nc%E5%B7%A5%E5%85%B7%E5%87%A0%E7%A7%8D%E7%94%A8%E6%B3%95/"
-           data-tag="笔记,渗透"
+           data-tag="渗透,笔记"
            data-author="" >
             <span class="post-title" title="记nc工具几种用法">记nc工具几种用法</span>
             <span class="post-date" title="2024-12-22 19:52:28">2024/12/22</span>
@@ -1330,16 +1330,17 @@ webFrame.setVisualZoomLevelLimits(minimumLevel, maximumLevel)：设置视觉缩�
 
         .container {
             border : 3px solid #bcbcbc;
-            max-width: 90%;
+            max-width: 100%;
             margin: auto;
             background-color: white!important;
             padding-left: 20px; /* 添加左侧内边距 */
         }
 
-        #commentsSection {
+        #commentsDiv {
             margin-top: 20px;
             background-color: white!important;
         }
+
 
         .comment {
             border: 1px solid #ccc;
@@ -1348,16 +1349,18 @@ webFrame.setVisualZoomLevelLimits(minimumLevel, maximumLevel)：设置视觉缩�
             background-color: white!important;
         }
         .button {
+            width: 20%;
             background-color: #ececec;
             border: 1.5px solid #5c5c5c;
             border-radius: 5px;
             color: rgb(0, 0, 0);
-            padding: 10px 20px;
+            padding: 8px 0px;
             text-decoration: none;
             display: inline-block;
             font-size: 16px;
             margin: 4px 2px;
             cursor: pointer;
+            transform: scale(0.9);
         }
         .input {
             background-color: #ececec;
@@ -1370,20 +1373,27 @@ webFrame.setVisualZoomLevelLimits(minimumLevel, maximumLevel)：设置视觉缩�
             font-size: 16px;
             margin: 4px 2px;
             cursor: pointer;
+            &.nickname {
+                width: 10%;
+            }
+            &.content {
+                width: 30%;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>发送评论</h2>
-        <h4>无需登录即可评论</h4>
-        <input type="text" id="nickname" class="input" placeholder="昵称" required>
-        <input type="text" id="content" class="input" placeholder="请输入评论内容" required>
-        <button id="submitComment" class="button" >提交评论</button>
-        <div id="commentsSection" ></div>
+        <a id="comments"style="visibility: hidden" ></a>
+        <h3>发送评论</h3>
+        <p style="font-size: smaller;color: grey;">无需登录即可评论</p>
+        <input type="text" id="nickname" class="input nickname" placeholder="昵称" required>
+        <input type="text" id="content" class="input content" placeholder="请输入评论内容" required>
+        <button id="submitComment" class="button" >发送</button>
+        <div id="commentsDiv" ></div>
     </div>
-    <script defer>
-        const commentsSection = document.getElementById('commentsSection');
+    <script>
+        const commentsDiv = document.getElementById('commentsDiv');
         const submitCommentButton = document.getElementById('submitComment');
 
         // 从GitHub获取评论数据
@@ -1404,12 +1414,15 @@ webFrame.setVisualZoomLevelLimits(minimumLevel, maximumLevel)：设置视觉缩�
             
             // 获取当前页面的标题
             const currentTitle = document.title;
+            //console.log('当前页面标题：'+currentTitle); 
 
             // 对评论按时间降序排序
             comments.sort((a, b) => new Date(b.time) - new Date(a.time));
 
             comments.forEach(comment => {
+                //console.log(comment);
                 if (comment.title != currentTitle) {
+                    //console.log('不是当前页面的评论,此评论页面：'+comment.title);
                     return; // 跳过不是当前页面的评论
                 }
                 // 使用 JSON 字符串化的方式检查是否已存在
@@ -1419,10 +1432,10 @@ webFrame.setVisualZoomLevelLimits(minimumLevel, maximumLevel)：设置视觉缩�
 
                     const commentDiv = document.createElement('div');
                     commentDiv.className = 'comment';
-                    commentDiv.innerHTML = `<strong>${comment.nickname}</strong> (${comment.location})
+                    commentDiv.innerHTML = `<strong>${comment.nickname}</strong>
                                             ${comment.time}<br>
                                             ${comment.content}`;
-                    commentsSection.appendChild(commentDiv);
+                    commentsDiv.appendChild(commentDiv);
                 }
             });
         }
@@ -1448,7 +1461,7 @@ webFrame.setVisualZoomLevelLimits(minimumLevel, maximumLevel)：设置视觉缩�
             const sanitizedContent = sanitizeInput(content);
             const time = new Date().toLocaleString();
 
-            const newComment = { tile: articleTitle,nickname: sanitizedNickname, content: sanitizedContent, time };
+            const newComment = { title: articleTitle,nickname: sanitizedNickname, content: sanitizedContent, time };
             
             // 清空输入框
             document.getElementById('nickname').value = '';
@@ -1467,7 +1480,7 @@ webFrame.setVisualZoomLevelLimits(minimumLevel, maximumLevel)：设置视觉缩�
             commentDiv.innerHTML = `<strong>${comment.nickname}</strong>
                                     ${comment.time}<br>
                                     ${comment.content}`;
-            commentsSection.appendChild(commentDiv);
+            commentsDiv.insertBefore(commentDiv,commentsDiv.firstChild);
         }
 
         // 更新评论到GitHub
@@ -1528,11 +1541,31 @@ webFrame.setVisualZoomLevelLimits(minimumLevel, maximumLevel)：设置视觉缩�
             renderComments(comments);
         }
 
+
+        // 清空评论区
+function clearComments() {
+    console.log('清空评论区');
+    const commentsDiv = document.getElementById('commentsDiv');
+    while (commentsDiv.firstChild) {
+        commentsDiv.removeChild(commentsDiv.firstChild);
+    }
+}
+
+// 在页面卸载前执行清理
+window.addEventListener('beforeunload', clearComments);
+
+// 页面加载完成后初始化
+document.addEventListener('DOMContentLoaded', async () => {
+    await init(); // 初始化
+});
+
+
         // 初始化
         async function init() {
             await loadComments();
             submitCommentButton.addEventListener('click', submitComment);
         }
+
 
         init();
     </script>
