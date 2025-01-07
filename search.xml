@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>日志（14）</title>
+      <link href="/2025/01/07/%E6%97%A5%E5%BF%97%EF%BC%8814%EF%BC%89/"/>
+      <url>/2025/01/07/%E6%97%A5%E5%BF%97%EF%BC%8814%EF%BC%89/</url>
+      
+        <content type="html"><![CDATA[<p>增加了历史对话发现不稳定，<del>也许应该限制对话范围到三次以内或者当下干脆舍弃对话专注一次命令的执行</del></p><p>–将对话分隔开，自然语言交流接收历史，命令执行不接收历史对话，这样就确保执行精确了</p><p>我当下的理解是，AI本身不是一个命令工具，而是推理工具，在命令执行过程中应该始终处于辅助作用的地位</p><p>AI命令执行逻辑流程图（设想）</p><p><img src="https://testingcf.jsdelivr.net/gh/sanqi-normal/sanqi-normal.github.io/img/f1a3e397f93c1230326487d700bfa3c.png" alt="流程设想图"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 日志 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>随笔</title>
       <link href="/2025/01/03/%E4%BE%BF%E7%AC%BA/"/>
       <url>/2025/01/03/%E4%BE%BF%E7%AC%BA/</url>
@@ -478,9 +497,9 @@
       
         <tags>
             
-            <tag> github </tag>
-            
             <tag> 日志 </tag>
+            
+            <tag> github </tag>
             
         </tags>
       
@@ -829,9 +848,9 @@
       
         <tags>
             
-            <tag> 测试 </tag>
-            
             <tag> 博客 </tag>
+            
+            <tag> 测试 </tag>
             
         </tags>
       
