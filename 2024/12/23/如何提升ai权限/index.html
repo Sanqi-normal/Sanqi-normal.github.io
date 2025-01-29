@@ -120,7 +120,7 @@
     <li>
         <div class="all active" data-rel="All">All
             
-                <small>(52)</small>
+                <small>(54)</small>
             
         </div>
     </li>
@@ -409,8 +409,8 @@
         
     </div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="52">
-<input type="hidden" id="yelog_site_word_count" value="51.7k">
+<input type="hidden" id="yelog_site_posts_number" value="54">
+<input type="hidden" id="yelog_site_word_count" value="53.4k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -589,6 +589,24 @@
     <nav id="title-list-nav">
         
         
+        <a  class="All "
+           href="/2025/01/30/%E5%89%8D%E5%90%8E%E7%AB%AF%E8%AF%B7%E6%B1%82%E7%9A%84%E5%8F%8C%E5%B1%82%E5%A4%84%E7%90%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="前后端请求的双层处理:如何通过JavaScript实现简单通信">前后端请求的双层处理:如何通过JavaScript实现简单通信</span>
+            <span class="post-date" title="2025-01-30 01:17:49">2025/01/30</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2025/01/30/%E8%AE%B0deepseekAPI%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="记deepseekAPI使用方法">记deepseekAPI使用方法</span>
+            <span class="post-date" title="2025-01-30 00:11:41">2025/01/30</span>
+        </a>
+        
+        
         <a  class="All 计算机 "
            href="/2025/01/17/%E5%B0%9D%E8%AF%95%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E4%B8%93%E5%B1%9E%E7%9A%84%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/"
            data-tag="网络,云服务器"
@@ -726,7 +744,7 @@
         
         <a  class="All 计算机 渗透 "
            href="/2024/12/22/%E8%AE%B0nc%E5%B7%A5%E5%85%B7%E5%87%A0%E7%A7%8D%E7%94%A8%E6%B3%95/"
-           data-tag="笔记,渗透"
+           data-tag="渗透,笔记"
            data-author="" >
             <span class="post-title" title="记nc工具几种用法">记nc工具几种用法</span>
             <span class="post-date" title="2024-12-22 19:52:28">2024/12/22</span>
@@ -1113,17 +1131,6 @@
         
         
         
-        <span class="top-comment" title="Jump to comment area">
-            <a href="#comments">
-                Comment:<span class="count-comment">
-                    <span class="spinner">
-                      <div class="cube1"></div>
-                      <div class="cube2"></div>
-                    </span>
-                </span>
-            </a>
-        </span>
-        
     </div>
     
     <div class="toc-ref">
@@ -1183,263 +1190,6 @@
 
 
 
-
-
-    <!DOCTYPE html>
-<html lang="zh">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0px;
-            background-color: white!important;
-        }
-
-        .container {
-            border : 3px solid #bcbcbc;
-            max-width: 100%;
-            margin: auto;
-            background-color: white!important;
-            padding-left: 20px; /* 添加左侧内边距 */
-        }
-
-        #commentsDiv {
-            margin-top: 20px;
-            background-color: white!important;
-        }
-
-
-        .comment {
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin-bottom: 10px;
-            background-color: white!important;
-        }
-        .button {
-            width: 20%;
-            background-color: #ececec;
-            border: 1.5px solid #5c5c5c;
-            border-radius: 5px;
-            color: rgb(0, 0, 0);
-            padding: 8px 0px;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-            transform: scale(0.9);
-        }
-        .input {
-            background-color: #ececec;
-            border: none;
-            border-radius: 2px;
-            color: rgb(0, 0, 0);
-            padding: 10px 20px;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-            &.nickname {
-                width: 10%;
-            }
-            &.content {
-                width: 30%;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <a id="comments"style="visibility: hidden" ></a>
-        <h3>发送评论</h3>
-        <p style="font-size: smaller;color: grey;">无需登录即可评论</p>
-        <input type="text" id="nickname" class="input nickname" placeholder="昵称" required>
-        <input type="text" id="content" class="input content" placeholder="请输入评论内容" required>
-        <button id="submitComment" class="button" >发送</button>
-        <div id="commentsDiv" ></div>
-    </div>
-    <script>
-        const commentsDiv = document.getElementById('commentsDiv');
-        const submitCommentButton = document.getElementById('submitComment');
-
-        // 从GitHub获取评论数据
-        async function fetchCommentsData() {
-            try {
-                const response = await fetch('https://raw.githubusercontent.com/Sanqi-normal/Data/refs/heads/main/comments.json');
-                const comments = await response.json();
-                return comments;
-            } catch (error) {
-                console.error('获取评论数据时发生错误:', error);
-                return [];  // 出错时返回空数组
-            }
-        }
-
-        function renderComments(comments) {
-            // 使用 Set 来跟踪已渲染的评论
-            const uniqueComments = new Set();
-            
-            // 获取当前页面的标题
-            const currentTitle = document.title;
-            //console.log('当前页面标题：'+currentTitle); 
-
-            // 对评论按时间降序排序
-            comments.sort((a, b) => new Date(b.time) - new Date(a.time));
-
-            comments.forEach(comment => {
-                //console.log(comment);
-                if (comment.title != currentTitle) {
-                    //console.log('不是当前页面的评论,此评论页面：'+comment.title);
-                    return; // 跳过不是当前页面的评论
-                }
-                // 使用 JSON 字符串化的方式检查是否已存在
-                const commentKey = JSON.stringify(comment);
-                if (!uniqueComments.has(commentKey)) {
-                    uniqueComments.add(commentKey); // 记录该评论，防止重复
-
-                    const commentDiv = document.createElement('div');
-                    commentDiv.className = 'comment';
-                    commentDiv.innerHTML = `<strong>${comment.nickname}</strong>
-                                            ${comment.time}<br>
-                                            ${comment.content}`;
-                    commentsDiv.appendChild(commentDiv);
-                }
-            });
-        }
-
-        // 过滤危险的特殊字符
-        function sanitizeInput(input) {
-            const div = document.createElement('div');
-            div.textContent = input; // 将输入放入 div 中，以自动转义 HTML
-            return div.innerHTML; // 返回转义后的 HTML
-        }
-
-        async function submitComment() {
-            const nickname = document.getElementById('nickname').value.trim();
-            const content = document.getElementById('content').value.trim();
-            const articleTitle = document.title; // 获取当前页面的标题
-            if (!nickname || !content) {
-                alert('昵称和评论内容不能为空！');
-                return;
-            }
-
-            // 清理用户输入
-            const sanitizedNickname = sanitizeInput(nickname);
-            const sanitizedContent = sanitizeInput(content);
-            const time = new Date().toLocaleString();
-
-            const newComment = { title: articleTitle,nickname: sanitizedNickname, content: sanitizedContent, time };
-            
-            // 清空输入框
-            document.getElementById('nickname').value = '';
-            document.getElementById('content').value = '';
-            // 立即在页面上生成评论块
-            renderComment(newComment);
-           
-            // 提交评论到 GitHub
-            await updateCommentsOnGitHub(newComment);
-        }
-
-        // 渲染单条评论
-        function renderComment(comment) {
-            const commentDiv = document.createElement('div');
-            commentDiv.className = 'comment';
-            commentDiv.innerHTML = `<strong>${comment.nickname}</strong>
-                                    ${comment.time}<br>
-                                    ${comment.content}`;
-            commentsDiv.insertBefore(commentDiv,commentsDiv.firstChild);
-        }
-
-        // 更新评论到GitHub
-        async function updateCommentsOnGitHub(newComment) {
-            try {
-                //  token
-                const base64EncodedString = 'QmVhcmVyIGdpdGh1Yl9wYXRfMTFCTlIyRUZJMEowcFJONFJPcUZxaF9aT3NWWkx3NjFHVkdtQVp2RnlFbE9wSDJHMXc0emIyRlpLMmx5SkdkdWRGNEpSNU9MUVNlMTFYZnNiQg==';
-                const decodedString = atob(base64EncodedString);
-                //get
-                const response = await fetch('https://api.github.com/repos/Sanqi-normal/Data/contents/comments.json',{
-                    method: 'GET',
-                    headers: {
-                        'Authorization': decodedString
-                    }
-                });
-                const fileData = await response.json();
-                const sha = fileData.sha;
-
-                // 更新文件内容
-                const decodedContent = atob(fileData.content);
-                let commentsArray;
-
-                // 尝试解析已有的评论，如果解析失败，则使用空数组
-                try {
-                    commentsArray = JSON.parse(decodeURIComponent(escape(decodedContent))) || [];
-                } catch (error) {
-                    console.error('JSON 解析错误:', error);
-                    commentsArray = []; // 如果解析失败，初始化为空数组
-                }
-
-                // 添加新评论
-                commentsArray.push(newComment); // 将新评论添加到数组中
-
-                // 将评论数组转换为 JSON 字符串并进行 Base64 编码
-                const commentContentEncoded = btoa(unescape(encodeURIComponent(JSON.stringify(commentsArray))));
-
-                await fetch('https://api.github.com/repos/Sanqi-normal/Data/contents/comments.json', {
-                    method: 'PUT',
-                    headers: {
-                        'Authorization': decodedString,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        message: 'Update comments',
-                        content: commentContentEncoded,
-                        sha: sha
-                    })
-                });
-
-            } catch (error) {
-                console.error('提交评论时发生错误:', error);
-            }
-        }
-
-        // 加载评论并渲染
-        async function loadComments() {
-            const comments = await fetchCommentsData();
-            renderComments(comments);
-        }
-
-
-        // 清空评论区
-function clearComments() {
-    console.log('清空评论区');
-    const commentsDiv = document.getElementById('commentsDiv');
-    while (commentsDiv.firstChild) {
-        commentsDiv.removeChild(commentsDiv.firstChild);
-    }
-}
-
-// 在页面卸载前执行清理
-window.addEventListener('beforeunload', clearComments);
-
-// 页面加载完成后初始化
-document.addEventListener('DOMContentLoaded', async () => {
-    await init(); // 初始化
-});
-
-
-        // 初始化
-        async function init() {
-            await loadComments();
-            submitCommentButton.addEventListener('click', submitComment);
-        }
-
-
-        init();
-    </script>
-</body>
-</html>
 
 
 <!--我可能把主页index元素误删了，所以添加了页面comments元素为false时不展示评论的功能-->

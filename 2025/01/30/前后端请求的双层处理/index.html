@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8"> 
-  <title>fetch请求格式及中断方法 | 叁七のblog</title>
-  <meta name="keywords" content=" Web , 笔记 ">
-  <meta name="description" content="fetch请求格式及中断方法 | 叁七のblog">
+  <title>前后端请求的双层处理:如何通过JavaScript实现简单通信 | 叁七のblog</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="前后端请求的双层处理:如何通过JavaScript实现简单通信 | 叁七のblog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="此页面禁用了快捷键，如导航到新页面无法使用快捷键，请重新刷新界面如发送按钮无效，也请等待或刷新页面介绍：这是借用fittencode的api的ai 查看本地AIweb界面   发送       body {         font-family: Arial, sans-serif;         background:rgb(255, 241, 200)!important;">
 <meta property="og:type" content="website">
@@ -1093,43 +1093,24 @@
 <div id="post">
      
     <div class="pjax">
-        <article id="post-fetch请求格式及中断方法" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-前后端请求的双层处理" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">fetch请求格式及中断方法</h1>
+        <h1 class="article-title">前后端请求的双层处理:如何通过JavaScript实现简单通信</h1>
     
     <div class="article-meta">
         
         
         
-        <span class="book">
-            <i class="iconfont icon-category"></i>
-            
-            
-            <a  data-rel="计算机">计算机</a> > 
-            
-            <a  data-rel="计算机&lt;---&gt;Web">Web</a>
-            
-        </span>
-        
-        
-        <span class="tag">
-            <i class="iconfont icon-tag"></i>
-            
-            <a class="color4">Web</a>
-            
-            <a class="color3">笔记</a>
-            
-        </span>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-12-25 22:36:22'>2024-12-25 22:11</time>
+            Created At : <time class="date" title='Updated At: 2025-01-30 01:58:04'>2025-01-30 01:17</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:637</span>
+        <span>Count:1.1k</span>
         
         
         
@@ -1137,7 +1118,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%89%8D%E7%AB%AF%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86"><span class="toc-text">一、前端请求处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%8F%91%E9%80%81GET%E8%AF%B7%E6%B1%82%EF%BC%88%E5%B8%A6URL%E5%8F%82%E6%95%B0%EF%BC%89"><span class="toc-text">1. 发送GET请求（带URL参数）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%8F%91%E9%80%81POST%E8%AF%B7%E6%B1%82%EF%BC%88%E5%B8%A6JSON%E5%8F%82%E6%95%B0%EF%BC%89"><span class="toc-text">2. 发送POST请求（带JSON参数）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%A4%84%E7%90%86URL%E6%9F%A5%E8%AF%A2%E5%8F%82%E6%95%B0"><span class="toc-text">3. 处理URL查询参数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%90%8E%E7%AB%AF%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86"><span class="toc-text">二、后端请求处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%8E%A5%E6%94%B6GET%E5%8F%82%E6%95%B0"><span class="toc-text">1. 接收GET参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%8E%A5%E6%94%B6POST%E5%8F%82%E6%95%B0"><span class="toc-text">2. 接收POST参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%A4%84%E7%90%86%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1%E5%8F%82%E6%95%B0"><span class="toc-text">3. 处理动态路由参数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%89%8D%E5%90%8E%E7%AB%AF%E5%8D%8F%E4%BD%9C%E5%AE%8C%E6%95%B4%E7%A4%BA%E4%BE%8B"><span class="toc-text">三、前后端协作完整示例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%BA%E6%99%AF%EF%BC%9A%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E5%8A%9F%E8%83%BD"><span class="toc-text">场景：用户登录功能</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%89%8D%E7%AB%AF%E4%BB%A3%E7%A0%81"><span class="toc-text">前端代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%8E%E7%AB%AF%E4%BB%A3%E7%A0%81"><span class="toc-text">后端代码</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%85%B3%E9%94%AE%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-text">四、关键注意事项</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -1153,78 +1134,130 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>因为一个fetch请求中断被折磨了好久。</p>
-<p>fetch请求格式：</p>
-<p>Get请求：</p>
-<pre><code class="javascript">fetch(url, &#123;
-  method: &#39;GET&#39;,
-  headers: &#123;
-    &#39;Content-Type&#39;: &#39;application/json&#39;
-  &#125;
-&#125;)
-.then(response =&gt; &#123;//响应处理
-  if (!response.ok) &#123;
-    throw new Error(&#39;Network response was not ok&#39;);
-  &#125;
-  return response.json();
-&#125;)
-.then(data =&gt; &#123;//数据处理
-  console.log(&#39;Success:&#39;, data);
-&#125;)
-.catch(error =&gt; &#123;//错误处理
-  console.error(&#39;Error:&#39;, error);
+        <p>注：本篇全文为deepseek一次生成</p>
+<p>在实际的Web开发中，前后端的数据交互是核心功能之一。本文将通过JavaScript代码示例，演示前端如何发送带参数的请求，后端如何接收并处理这些请求，最终完成前后端的协作通信。</p>
+<hr>
+<h2 id="一、前端请求处理"><a href="#一、前端请求处理" class="headerlink" title="一、前端请求处理"></a>一、前端请求处理</h2><p>在前端，我们通过JavaScript发送HTTP请求（如GET或POST），并携带必要的参数。以下是几种常见场景的实现方式。</p>
+<h3 id="1-发送GET请求（带URL参数）"><a href="#1-发送GET请求（带URL参数）" class="headerlink" title="1. 发送GET请求（带URL参数）"></a>1. 发送GET请求（带URL参数）</h3><p>GET请求适合从服务器获取数据，参数通常通过URL传递：</p>
+<pre><code class="javascript">// 示例：获取用户信息，传递用户ID
+async function fetchUser(userId) &#123;
+    try &#123;
+        const response = await fetch(`/api/user?id=$&#123;userId&#125;`);
+        const data = await response.json();
+        console.log(&quot;用户数据:&quot;, data);
+    &#125; catch (error) &#123;
+        console.error(&quot;请求失败:&quot;, error);
+    &#125;
+&#125;
+</code></pre>
+<h3 id="2-发送POST请求（带JSON参数）"><a href="#2-发送POST请求（带JSON参数）" class="headerlink" title="2. 发送POST请求（带JSON参数）"></a>2. 发送POST请求（带JSON参数）</h3><p>POST请求适合提交数据，参数通过请求体传递：</p>
+<pre><code class="javascript">// 示例：提交表单数据
+async function submitForm(userData) &#123;
+    try &#123;
+        const response = await fetch(&#39;/api/submit&#39;, &#123;
+            method: &#39;POST&#39;,
+            headers: &#123; &#39;Content-Type&#39;: &#39;application/json&#39; &#125;,
+            body: JSON.stringify(userData)
+        &#125;);
+        const result = await response.json();
+        console.log(&quot;提交结果:&quot;, result);
+    &#125; catch (error) &#123;
+        console.error(&quot;提交失败:&quot;, error);
+    &#125;
+&#125;
+</code></pre>
+<h3 id="3-处理URL查询参数"><a href="#3-处理URL查询参数" class="headerlink" title="3. 处理URL查询参数"></a>3. 处理URL查询参数</h3><p>若需要动态拼接多个参数，可使用<code>URLSearchParams</code>：</p>
+<pre><code class="javascript">// 示例：分页查询文章列表
+async function fetchArticles(page, size) &#123;
+    const params = new URLSearchParams(&#123; page, size &#125;);
+    const response = await fetch(`/api/articles?$&#123;params&#125;`);
+    // 处理响应...
+&#125;
+</code></pre>
+<hr>
+<h2 id="二、后端请求处理"><a href="#二、后端请求处理" class="headerlink" title="二、后端请求处理"></a>二、后端请求处理</h2><p>后端需要接收前端发送的参数，处理业务逻辑，并返回响应数据。以下以Node.js（Express框架）为例。</p>
+<h3 id="1-接收GET参数"><a href="#1-接收GET参数" class="headerlink" title="1. 接收GET参数"></a>1. 接收GET参数</h3><p>通过<code>req.query</code>获取URL中的查询参数：</p>
+<pre><code class="javascript">// 示例：获取单个用户信息
+app.get(&#39;/api/user&#39;, (req, res) =&gt; &#123;
+    const userId = req.query.id;
+    const user = findUserById(userId); // 伪代码：查询数据库
+    res.json(&#123; code: 200, data: user &#125;);
 &#125;);
 </code></pre>
-<p>Post请求：</p>
-<pre><code class="javascript">fetch(url, &#123;
-  method: &#39;POST&#39;,
-  headers: &#123;
-    &#39;Content-Type&#39;: &#39;application/json&#39;
-  &#125;,
-  body: JSON.stringify(data)//请求体,用来上传json数据
-&#125;);
-</code></pre>
-<p>中断方法：</p>
-<p>如果fetch请求中断，可以用AbortController来取消请求。</p>
-<pre><code class="javascript">const controller = new AbortController();
+<h3 id="2-接收POST参数"><a href="#2-接收POST参数" class="headerlink" title="2. 接收POST参数"></a>2. 接收POST参数</h3><p>通过<code>req.body</code>获取请求体中的JSON参数：</p>
+<pre><code class="javascript">// 需添加JSON解析中间件
+app.use(express.json());
 
-fetch(url, &#123;
-  signal: controller.signal
-&#125;);
-
-//需要中断时调用
-controller.abort();
-</code></pre>
-<p>fetch的第二个参数是对象，一般可写为options&#x3D;{},对象里添加请求头等参数属性。</p>
-<p>也可以直接写为：</p>
-<pre><code class="javascript">fetch(url, &#123;method: &#39;POST&#39;,headers: &#123;&#39;Content-Type&#39;: &#39;application/json&#39;&#125;,
-signal: controller.signal&#125;);//是的，这样我就明白了，常规写法不过是换行了。
-</code></pre>
-<p>signal在options对象中应当放在headers对象之后而不是header当中，也就是说它是请求部分传递的参数。</p>
-<p>如果写成{options,signal},这样就会报错。</p>
-<pre><code class="javascript">fetch(url, &#123;
-  method: &#39;POST&#39;,
-  headers: &#123;    
-    &#39;Content-Type&#39;: &#39;application/json&#39;
-  &#125;,
-  signal: controller.signal//在header外面
+// 示例：处理表单提交
+app.post(&#39;/api/submit&#39;, (req, res) =&gt; &#123;
+    const userData = req.body;
+    if (!userData.name || !userData.email) &#123;
+        return res.status(400).json(&#123; code: 400, error: &quot;参数不完整&quot; &#125;);
+    &#125;
+    saveToDatabase(userData); // 伪代码：存储数据
+    res.json(&#123; code: 200, message: &quot;提交成功&quot; &#125;);
 &#125;);
 </code></pre>
-<p>signal被触发后响应的事件可以这么写：</p>
-<pre><code class="javascript">let abortornot;
-signal.addEventListener(&#39;abort&#39;,
-  () =&gt; abortornot=true//可以添加其他响应事件
-);
+<h3 id="3-处理动态路由参数"><a href="#3-处理动态路由参数" class="headerlink" title="3. 处理动态路由参数"></a>3. 处理动态路由参数</h3><p>通过<code>req.params</code>获取URL路径中的参数：</p>
+<pre><code class="javascript">// 示例：根据文章ID获取内容
+app.get(&#39;/api/articles/:id&#39;, (req, res) =&gt; &#123;
+    const articleId = req.params.id;
+    const article = findArticleById(articleId); // 伪代码：查询数据
+    res.json(&#123; code: 200, data: article &#125;);
+&#125;);
 </code></pre>
-<p>关于javascript的()&#x3D;&gt;语法，它是一个箭头函数，箭头函数提供了一种更简洁的函数定义方式，特别适用于那些需要匿名函数的场景，比如回调函数、事件处理程序等。箭头函数不仅语法更简洁，而且它不会创建自己的 this 上下文，而是捕获其所在上下文的 this 值。</p>
-<pre><code class="javascript">this.value = 1;
-const myFunc = () =&gt; &#123;
-  console.log(this.value);// 1, 而不是 undefined
-&#125;;
+<hr>
+<h2 id="三、前后端协作完整示例"><a href="#三、前后端协作完整示例" class="headerlink" title="三、前后端协作完整示例"></a>三、前后端协作完整示例</h2><h3 id="场景：用户登录功能"><a href="#场景：用户登录功能" class="headerlink" title="场景：用户登录功能"></a>场景：用户登录功能</h3><h4 id="前端代码"><a href="#前端代码" class="headerlink" title="前端代码"></a>前端代码</h4><pre><code class="javascript">async function login(username, password) &#123;
+    try &#123;
+        const response = await fetch(&#39;/api/login&#39;, &#123;
+            method: &#39;POST&#39;,
+            headers: &#123; &#39;Content-Type&#39;: &#39;application/json&#39; &#125;,
+            body: JSON.stringify(&#123; username, password &#125;)
+        &#125;);
+        const result = await response.json();
+        if (result.code === 200) &#123;
+            alert(&quot;登录成功！&quot;);
+        &#125; else &#123;
+            alert(result.error);
+        &#125;
+    &#125; catch (error) &#123;
+        alert(&quot;网络请求异常&quot;);
+    &#125;
+&#125;
 </code></pre>
-<p>另外，fetch请求是异步的，也就是说，它不会阻塞主线程，而是返回一个 Promise 对象，当响应返回时，Promise 对象会被解析，并调用相应的 then() 或 catch() 方法。</p>
-<p>有些语法只有在异步请求里才可以用，比如在 then() 方法里的箭头函数，因为 then() 方法里的回调函数是在异步请求完成后才执行的。</p>
-<p>try{…}catch{…}finally{…}是用来处理请求的错误的，它可以用来捕获异步请求的错误，并在请求完成后执行一些清理工作，这个方法也可用于同步。</p>
+<h4 id="后端代码"><a href="#后端代码" class="headerlink" title="后端代码"></a>后端代码</h4><pre><code class="javascript">app.post(&#39;/api/login&#39;, (req, res) =&gt; &#123;
+    const &#123; username, password &#125; = req.body;
+    const user = db.query(&#39;SELECT * FROM users WHERE username = ?&#39;, [username]);
+    
+    if (!user) &#123;
+        return res.json(&#123; code: 404, error: &quot;用户不存在&quot; &#125;);
+    &#125;
+    if (user.password !== hashPassword(password)) &#123;
+        return res.json(&#123; code: 401, error: &quot;密码错误&quot; &#125;);
+    &#125;
+    res.json(&#123; code: 200, token: generateToken(user.id) &#125;);
+&#125;);
+</code></pre>
+<hr>
+<h2 id="四、关键注意事项"><a href="#四、关键注意事项" class="headerlink" title="四、关键注意事项"></a>四、关键注意事项</h2><ol>
+<li><p><strong>参数校验</strong><br>前端做基础校验（如非空检查），后端做完整性校验和业务规则校验。</p>
+</li>
+<li><p><strong>跨域问题</strong><br>若前后端分离部署，需在后端设置CORS：</p>
+<pre><code class="javascript">const cors = require(&#39;cors&#39;);
+app.use(cors()); // 允许所有来源（生产环境需配置具体域名）
+</code></pre>
+</li>
+<li><p><strong>错误处理</strong><br>前端捕获网络异常，后端返回明确的错误码：</p>
+<pre><code class="javascript">// 后端示例：统一错误处理
+app.use((err, req, res, next) =&gt; &#123;
+    res.status(500).json(&#123; code: 500, error: &quot;服务器内部错误&quot; &#125;);
+&#125;);
+</code></pre>
+</li>
+</ol>
+<hr>
+<p>通过以上示例可以看出，前后端通过清晰的参数传递规则和标准的HTTP方法，即可高效协作完成数据交互。实际开发中，可根据需求扩展参数加密、接口版本控制等进阶功能。</p>
+<p>ai生成到此结束</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 此方悬停 </span>

@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8"> 
-  <title>fetch请求格式及中断方法 | 叁七のblog</title>
-  <meta name="keywords" content=" Web , 笔记 ">
-  <meta name="description" content="fetch请求格式及中断方法 | 叁七のblog">
+  <title>记deepseekAPI使用方法 | 叁七のblog</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="记deepseekAPI使用方法 | 叁七のblog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="此页面禁用了快捷键，如导航到新页面无法使用快捷键，请重新刷新界面如发送按钮无效，也请等待或刷新页面介绍：这是借用fittencode的api的ai 查看本地AIweb界面   发送       body {         font-family: Arial, sans-serif;         background:rgb(255, 241, 200)!important;">
 <meta property="og:type" content="website">
@@ -1093,43 +1093,24 @@
 <div id="post">
      
     <div class="pjax">
-        <article id="post-fetch请求格式及中断方法" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-记deepseekAPI使用方法" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">fetch请求格式及中断方法</h1>
+        <h1 class="article-title">记deepseekAPI使用方法</h1>
     
     <div class="article-meta">
         
         
         
-        <span class="book">
-            <i class="iconfont icon-category"></i>
-            
-            
-            <a  data-rel="计算机">计算机</a> > 
-            
-            <a  data-rel="计算机&lt;---&gt;Web">Web</a>
-            
-        </span>
-        
-        
-        <span class="tag">
-            <i class="iconfont icon-tag"></i>
-            
-            <a class="color4">Web</a>
-            
-            <a class="color3">笔记</a>
-            
-        </span>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-12-25 22:36:22'>2024-12-25 22:11</time>
+            Created At : <time class="date" title='Updated At: 2025-01-30 01:53:37'>2025-01-30 00:11</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:637</span>
+        <span>Count:657</span>
         
         
         
@@ -1137,7 +1118,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#javascript-%E4%BB%A3%E7%A0%81%E5%8F%8A%E6%B3%A8%E9%87%8A%EF%BC%9A"><span class="toc-text">javascript 代码及注释：</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -1153,78 +1134,94 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>因为一个fetch请求中断被折磨了好久。</p>
-<p>fetch请求格式：</p>
-<p>Get请求：</p>
-<pre><code class="javascript">fetch(url, &#123;
-  method: &#39;GET&#39;,
-  headers: &#123;
-    &#39;Content-Type&#39;: &#39;application/json&#39;
-  &#125;
-&#125;)
-.then(response =&gt; &#123;//响应处理
-  if (!response.ok) &#123;
-    throw new Error(&#39;Network response was not ok&#39;);
-  &#125;
-  return response.json();
-&#125;)
-.then(data =&gt; &#123;//数据处理
-  console.log(&#39;Success:&#39;, data);
-&#125;)
-.catch(error =&gt; &#123;//错误处理
-  console.error(&#39;Error:&#39;, error);
-&#125;);
-</code></pre>
-<p>Post请求：</p>
-<pre><code class="javascript">fetch(url, &#123;
-  method: &#39;POST&#39;,
-  headers: &#123;
-    &#39;Content-Type&#39;: &#39;application/json&#39;
-  &#125;,
-  body: JSON.stringify(data)//请求体,用来上传json数据
-&#125;);
-</code></pre>
-<p>中断方法：</p>
-<p>如果fetch请求中断，可以用AbortController来取消请求。</p>
-<pre><code class="javascript">const controller = new AbortController();
+        <p>deepseek官方服务器又挂了，api和网页哪个都用不了，是不是该考虑下个蒸馏小模型到本地</p>
+<p>API 文档原址：<a target="_blank" rel="noopener" href="https://api-docs.deepseek.com/zh-cn/">https://api-docs.deepseek.com/zh-cn/</a></p>
+<h2 id="javascript-代码及注释："><a href="#javascript-代码及注释：" class="headerlink" title="javascript 代码及注释："></a>javascript 代码及注释：</h2><p>构造及发送请求：</p>
+<pre><code class="javascript">const OpenAI = require(&#39;openai&#39;);// 导入openai包
 
-fetch(url, &#123;
-  signal: controller.signal
+// 实例化openai对象，并传入DeepSeek API Key
+const openai = new OpenAI(&#123;
+        baseURL: &#39;https://api.deepseek.com&#39;,
+        apiKey: &#39;&lt;DeepSeek API Key&gt;&#39;
 &#125;);
+//构造请求函数
+  const completion = await openai.chat.completions.create(&#123;
+    messages: [&#123; role: &quot;system&quot;, content: &quot;&lt;示例&gt;You are a helpful assistant.&quot; &#125;],
+    model: &quot;deepseek-chat&quot;||&quot;deepseek-reasoner&quot;,//选择模型，deepseek-chat为聊天模型，deepseek-reasoner为推理模型，写的时候肯定不用||，只是为了都展示出来
+    stream: false,//暂只写非流式吧
+  &#125;);
+</code></pre>
+<p>传入json范例（messages）：</p>
+<pre><code class="javascript">messages = [&#123;&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: system_prompt&#125;,
+            &#123;&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: user_prompt&#125;]
+</code></pre>
+<p>处理响应：</p>
+<pre><code class="javascript">const reply = completion.choices[0].message.content;
+console.log(reply);//举例，输出回复
+</code></pre>
+<p>添加对话历史（与api无关）：</p>
+<pre><code class="javascript">const sessionHistory = new Map();
+    // 初始化或获取对话历史，刷新页面历史记录不消失
+if (!sessionHistory.has(sessionId)) &#123;
+            sessionHistory.set(sessionId, []);
+&#125;
+const history = sessionHistory.get(sessionId);
 
-//需要中断时调用
-controller.abort();
+// 添加用户消息到历史
+history.push(&#123; role: &quot;user&quot;, content: message &#125;);
+//添加机器回复到历史
+history.push(&#123; role: &quot;assistant&quot;, content: reply &#125;);
+//添加历史到请求消息中
+const messages = [
+    &#123;略&#125;,
+    ...history,//将history数组展开添加到messages数组中
+]
 </code></pre>
-<p>fetch的第二个参数是对象，一般可写为options&#x3D;{},对象里添加请求头等参数属性。</p>
-<p>也可以直接写为：</p>
-<pre><code class="javascript">fetch(url, &#123;method: &#39;POST&#39;,headers: &#123;&#39;Content-Type&#39;: &#39;application/json&#39;&#125;,
-signal: controller.signal&#125;);//是的，这样我就明白了，常规写法不过是换行了。
+<p>限定前后缀：</p>
+<pre><code class="javascript">messages = [
+    &#123;略&#125;,
+    &#123;&quot;role&quot;: &quot;assistant&quot;, &quot;content&quot;: &quot;```python\n&quot;, &quot;prefix&quot;: True&#125;//添加前缀
+]
+response = client.chat.completions.create(
+    &lt;略&gt;
+    stop=[&quot;```&quot;],//添加后缀
+)
 </code></pre>
-<p>signal在options对象中应当放在headers对象之后而不是header当中，也就是说它是请求部分传递的参数。</p>
-<p>如果写成{options,signal},这样就会报错。</p>
-<pre><code class="javascript">fetch(url, &#123;
-  method: &#39;POST&#39;,
-  headers: &#123;    
-    &#39;Content-Type&#39;: &#39;application/json&#39;
-  &#125;,
-  signal: controller.signal//在header外面
-&#125;);
+<p>接收深度思考思维链：</p>
+<pre><code class="javascript">reasoning_content = response.choices[0].message.reasoning_content
 </code></pre>
-<p>signal被触发后响应的事件可以这么写：</p>
-<pre><code class="javascript">let abortornot;
-signal.addEventListener(&#39;abort&#39;,
-  () =&gt; abortornot=true//可以添加其他响应事件
-);
+<p>从node环境中获取环境变量作为apikey降低泄露风险（与其api无关）:</p>
+<pre><code class="javascript">require(&#39;dotenv&#39;).config();//加载环境变量，文件为同目录下名为.env的文件
+apiKey=process.env.DEEPSEEK_API_KEY//仅为示例
 </code></pre>
-<p>关于javascript的()&#x3D;&gt;语法，它是一个箭头函数，箭头函数提供了一种更简洁的函数定义方式，特别适用于那些需要匿名函数的场景，比如回调函数、事件处理程序等。箭头函数不仅语法更简洁，而且它不会创建自己的 this 上下文，而是捕获其所在上下文的 this 值。</p>
-<pre><code class="javascript">this.value = 1;
-const myFunc = () =&gt; &#123;
-  console.log(this.value);// 1, 而不是 undefined
-&#125;;
+<p>简单的前后端双层请求处理：</p>
+<pre><code class="javascript">//后端
+//后端准备工作
+const express = require(&#39;express&#39;);//构建服务器
+const cors = require(&#39;cors&#39;);//同源策略
+const app = express();
+//中间件
+app.use(cors());
+app.use(express.json());
+app.use(express.static(&#39;public&#39;));
+//前端
+const response = await fetch(&#39;/chat&#39;, &#123;//路径为举例
+//利用前端数据构造请求并发往后端
+&#125;
+//后端
+app.post(&#39;/chat&#39;, async (req, res) =&gt; &#123;
+    //获取前端请求的参数
+    const &#123; sessionId, systemPrompt, message,model, temperature &#125; = req.body;//参数为举例
+    //构造请求并接收响应
+    //发送响应到前端
+    res.json(&#123; reply &#125;);
+&#125;
+//前端
+//接收到后端的json数据
+const data = await response.json();
+//处理数据并响应
 </code></pre>
-<p>另外，fetch请求是异步的，也就是说，它不会阻塞主线程，而是返回一个 Promise 对象，当响应返回时，Promise 对象会被解析，并调用相应的 then() 或 catch() 方法。</p>
-<p>有些语法只有在异步请求里才可以用，比如在 then() 方法里的箭头函数，因为 then() 方法里的回调函数是在异步请求完成后才执行的。</p>
-<p>try{…}catch{…}finally{…}是用来处理请求的错误的，它可以用来捕获异步请求的错误，并在请求完成后执行一些清理工作，这个方法也可用于同步。</p>
+<p>联网搜索还需要再看看</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 此方悬停 </span>
