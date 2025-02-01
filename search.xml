@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>node中的express框架</title>
+      <link href="/2025/01/31/node%E4%B8%AD%E7%9A%84express%E6%A1%86%E6%9E%B6/"/>
+      <url>/2025/01/31/node%E4%B8%AD%E7%9A%84express%E6%A1%86%E6%9E%B6/</url>
+      
+        <content type="html"><![CDATA[<p>Express.js 是 Node.js 中最流行的轻量级 Web 应用框架，用于快速构建服务器端应用程序和 RESTful API。它基于中间件（Middleware）模式，简化了 HTTP 请求处理和路由管理。以下是其核心概念和用法详解：</p><hr><h3 id="1-核心功能"><a href="#1-核心功能" class="headerlink" title="1. 核心功能"></a><strong>1. 核心功能</strong></h3><ul><li><p><strong>路由管理</strong><br>通过简洁的语法定义 HTTP 请求（GET、POST 等）与 URL 路径的映射：</p><pre><code class="javascript">app.get(&#39;/users&#39;, (req, res) =&gt; &#123;  res.send(&#39;返回用户列表&#39;);&#125;);</code></pre></li><li><p><strong>中间件（Middleware）</strong><br>中间件是处理请求和响应的函数链，可执行日志记录、身份验证等操作：</p><pre><code class="javascript">app.use((req, res, next) =&gt; &#123;  console.log(&#39;请求时间:&#39;, new Date());  next(); // 传递给下一个中间件&#125;);</code></pre></li><li><p><strong>模板引擎支持</strong><br>支持 EJS、Pug、Handlebars 等模板引擎渲染动态内容：</p><pre><code class="javascript">app.set(&#39;view engine&#39;, &#39;ejs&#39;);app.get(&#39;/&#39;, (req, res) =&gt; &#123;  res.render(&#39;index&#39;, &#123; title: &#39;主页&#39; &#125;);&#125;);</code></pre></li><li><p><strong>静态文件服务</strong><br>使用 <code>express.static</code> 托管静态文件（如 CSS、图片）：</p><pre><code class="javascript">app.use(express.static(&#39;public&#39;));</code></pre></li></ul><hr><h3 id="2-安装与基础示例"><a href="#2-安装与基础示例" class="headerlink" title="2. 安装与基础示例"></a><strong>2. 安装与基础示例</strong></h3><ol><li><p><strong>安装</strong><br>通过 npm 安装：</p><pre><code class="bash">npm install express</code></pre></li><li><p><strong>基础服务器</strong><br>创建一个简单的服务器：</p><pre><code class="javascript">const express = require(&#39;express&#39;);const app = express();const port = 3000;app.get(&#39;/&#39;, (req, res) =&gt; &#123;  res.send(&#39;Hello World!&#39;);&#125;);app.listen(port, () =&gt; &#123;  console.log(`服务器运行在 http://localhost:$&#123;port&#125;`);&#125;);</code></pre></li><li><p><strong>electron中使用</strong></p><pre><code class="javascript">const express = require(&#39;express&#39;);</code></pre></li></ol><hr><h3 id="3-常用中间件"><a href="#3-常用中间件" class="headerlink" title="3. 常用中间件"></a><strong>3. 常用中间件</strong></h3><ul><li><p><strong>内置中间件</strong>  </p><ul><li><code>express.json()</code>：解析 JSON 格式的请求体（替代 <code>body-parser</code>）。</li><li><code>express.urlencoded()</code>：解析 URL 编码的请求体。</li></ul><pre><code class="javascript">app.use(express.json()); // Content-Type: application/jsonapp.use(express.urlencoded(&#123; extended: true &#125;)); // Content-Type: application/x-www-form-urlencoded</code></pre></li><li><p><strong>第三方中间件</strong>  </p><ul><li><code>cors</code>：处理跨域请求。</li><li><code>morgan</code>：记录请求日志。</li><li><code>helmet</code>：增强安全性头部。</li></ul><pre><code class="javascript">const cors = require(&#39;cors&#39;);app.use(cors());</code></pre></li></ul><hr><h3 id="4-路由模块化"><a href="#4-路由模块化" class="headerlink" title="4. 路由模块化"></a><strong>4. 路由模块化</strong></h3><p>通过 <code>express.Router()</code> 组织路由，提升代码可维护性：</p><pre><code class="javascript">// routes/users.jsconst router = express.Router();router.get(&#39;/&#39;, (req, res) =&gt; &#123; /* 获取用户列表 */ &#125;);router.post(&#39;/&#39;, (req, res) =&gt; &#123; /* 创建用户 */ &#125;);module.exports = router;// 主文件const usersRouter = require(&#39;./routes/users&#39;);app.use(&#39;/users&#39;, usersRouter);</code></pre><hr><h3 id="5-错误处理"><a href="#5-错误处理" class="headerlink" title="5. 错误处理"></a><strong>5. 错误处理</strong></h3><p>定义错误处理中间件（需4个参数）：</p><pre><code class="javascript">app.use((err, req, res, next) =&gt; &#123;  console.error(err.stack);  res.status(500).send(&#39;服务器错误!&#39;);&#125;);</code></pre><hr><h3 id="6-优缺点"><a href="#6-优缺点" class="headerlink" title="6. 优缺点"></a><strong>6. 优缺点</strong></h3><ul><li><p><strong>优点</strong>  </p><ul><li>轻量灵活，易于扩展。</li><li>庞大的中间件生态系统。</li><li>适合快速开发 API 和单页应用。</li></ul></li><li><p><strong>缺点</strong>  </p><ul><li>需手动处理某些功能（如身份验证）。</li><li>异步处理稍显陈旧。</li></ul></li></ul><hr><hr><p>Express 的核心在于 <strong>中间件流程</strong> 和 <strong>路由控制</strong>，通过组合不同功能模块，开发者可以高效构建灵活的服务端应用。学习时建议结合官方文档和常用中间件（如 <a href="https://expressjs.com/en/resources/middleware.html">Express 中间件列表</a>）实践。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 计算机 </category>
+          
+          <category> Web </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Web </tag>
+            
+            <tag> 框架 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>前后端请求的双层处理:如何通过JavaScript实现简单通信</title>
       <link href="/2025/01/30/%E5%89%8D%E5%90%8E%E7%AB%AF%E8%AF%B7%E6%B1%82%E7%9A%84%E5%8F%8C%E5%B1%82%E5%A4%84%E7%90%86/"/>
       <url>/2025/01/30/%E5%89%8D%E5%90%8E%E7%AB%AF%E8%AF%B7%E6%B1%82%E7%9A%84%E5%8F%8C%E5%B1%82%E5%A4%84%E7%90%86/</url>
@@ -15,16 +44,16 @@
           
           <category> 计算机 </category>
           
-          <category> 后端 </category>
+          <category> Web </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> 后端 </tag>
-            
             <tag> 前端 </tag>
+            
+            <tag> 后端 </tag>
             
         </tags>
       
@@ -294,9 +323,9 @@
       
         <tags>
             
-            <tag> 笔记 </tag>
-            
             <tag> Web </tag>
+            
+            <tag> 笔记 </tag>
             
         </tags>
       
@@ -435,9 +464,9 @@
       
         <tags>
             
-            <tag> 渗透 </tag>
-            
             <tag> 笔记 </tag>
+            
+            <tag> 渗透 </tag>
             
         </tags>
       
@@ -515,7 +544,7 @@
           
           <category> 计算机 </category>
           
-          <category> 后端 </category>
+          <category> AI </category>
           
       </categories>
       
@@ -523,8 +552,6 @@
         <tags>
             
             <tag> AI </tag>
-            
-            <tag> 后端 </tag>
             
         </tags>
       
@@ -611,9 +638,9 @@
       
         <tags>
             
-            <tag> 笔记 </tag>
-            
             <tag> Web </tag>
+            
+            <tag> 笔记 </tag>
             
         </tags>
       
@@ -640,9 +667,9 @@
       
         <tags>
             
-            <tag> 后端 </tag>
-            
             <tag> 日志 </tag>
+            
+            <tag> 后端 </tag>
             
         </tags>
       
