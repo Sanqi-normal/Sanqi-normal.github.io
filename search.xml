@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>无内置网卡的主机如何进行网络连接</title>
+      <link href="/2025/02/09/%E6%97%A0%E5%86%85%E7%BD%AE%E7%BD%91%E5%8D%A1%E7%9A%84%E4%B8%BB%E6%9C%BA%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E7%BD%91%E7%BB%9C%E8%BF%9E%E6%8E%A5/"/>
+      <url>/2025/02/09/%E6%97%A0%E5%86%85%E7%BD%AE%E7%BD%91%E5%8D%A1%E7%9A%84%E4%B8%BB%E6%9C%BA%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E7%BD%91%E7%BB%9C%E8%BF%9E%E6%8E%A5/</url>
+      
+        <content type="html"><![CDATA[<p>有些主机没有自带的无线网络适配器，无法连接wifi，但是电脑不联网能做的事情很有限，那么除了购买安装内置和外置的网卡外，如何使其能够临时连无线网，解决燃眉之急。</p><h2 id="随身wifi"><a href="#随身wifi" class="headerlink" title="随身wifi"></a>随身wifi</h2><p>随身wifi在一些特殊情况下非常方便，但为了不常出现的特殊情况而购买套餐并不合理，因此购买需谨慎。</p><p>某些随身wifi在连接上电脑USB接口之后可像路由器一样直接提供网络服务。</p><p>我先前买的试了试不行，虽然商家说可以，让我升级网卡配置，那我连不上网怎么升级呢（摊手）</p><h2 id="路由器桥接"><a href="#路由器桥接" class="headerlink" title="路由器桥接"></a>路由器桥接</h2><p>主机连接路由器是正常的联网方式，但是存在路由器没牵线的情况（比如我现在，只有个路由器壳子）。</p><p>主机连上路由器后，显示电脑连接上了网络，虽然联不上网。</p><p>这时候电脑本地浏览器打开路由器控制界面（地址192.168.1.1等），用路由器去连接其他wifi，连上之后电脑就可以上网了。</p><p>由于翻遍全家都没找到连接路由器的电源线，我最终没能尝试，但是之后有机会还是会试一下，</p><h2 id="手机USB分享网络连接"><a href="#手机USB分享网络连接" class="headerlink" title="手机USB分享网络连接"></a>手机USB分享网络连接</h2><p>方便、快捷、难度低。</p><p>手机和主机通过usb连接之后，打开设置，允许手机通过usb分享网络连接，就能看到主机有网络了。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 计算机 </category>
+          
+          <category> 硬件 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 网络 </tag>
+            
+            <tag> 主机 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>日记</title>
       <link href="/2025/02/06/%E6%97%A5%E5%BF%97/"/>
       <url>/2025/02/06/%E6%97%A5%E5%BF%97/</url>
@@ -477,9 +506,9 @@
       
         <tags>
             
-            <tag> 笔记 </tag>
-            
             <tag> 渗透 </tag>
+            
+            <tag> 笔记 </tag>
             
         </tags>
       
