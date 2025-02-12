@@ -8,7 +8,7 @@
       <link href="/2025/02/12/%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%B8%93%E6%9C%89%E5%90%8D%E8%AF%8D%E9%83%BD%E6%98%AF%E7%94%A8%E6%9D%A5%E5%B9%B2%E4%BB%80%E4%B9%88%E7%9A%84/"/>
       <url>/2025/02/12/%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%B8%93%E6%9C%89%E5%90%8D%E8%AF%8D%E9%83%BD%E6%98%AF%E7%94%A8%E6%9D%A5%E5%B9%B2%E4%BB%80%E4%B9%88%E7%9A%84/</url>
       
-        <content type="html"><![CDATA[<p>是不是一个一目了然的标题？</p><p>再来个一目了然的架构图：</p><p>主机1– |<br>主机2– |—交换机— 路由器A（网关ip）—B —C—…— N — 目标服务器主机<br>主机3– |</p><hr><h2 id="IP"><a href="#IP" class="headerlink" title="IP"></a>IP</h2><p>Internet Protocol，即互联网协议，是TCP&#x2F;IP协议族中的一员，它是TCP&#x2F;IP协议簇的核心协议，用于在网络上进行通信。</p><p>IPv4：Internet Protocol version 4，即互联网协议版本4，是目前使用最广泛的IP协议版本。</p><p>IPv6：Internet Protocol version 6，即互联网协议版本6，是下一代互联网协议，它将IP地址的位数从32位扩展到128位，以便更好地适应IPv4地址的需求。</p><p>不同于物理地址，ip地址经常变动，因此需要将ip地址和物理地址相关联</p><h2 id="ARP"><a href="#ARP" class="headerlink" title="ARP"></a>ARP</h2><p>Address Resolution Protocol，即地址解析协议，它是一种通过IP地址获取物理地址的网络协议。</p><p>ARP欺骗 通过伪造ARP表，将目标计算机的IP地址映射到攻击者的计算机上，导致网络流量被导向攻击者的计算机。</p><h2 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h2><p>Transmission Control Protocol，即传输控制协议，是一种面向连接的、可靠的、基于字节流的传输层通信协议，它是一种提供可靠交付的协议，保证数据包按序到达。</p><h3 id="DOS"><a href="#DOS" class="headerlink" title="DOS"></a>DOS</h3><p>Denial of Service，即拒绝服务攻击，是一种网络攻击手段，它通过大量发送无效数据包，使目标计算机资源耗尽，导致网络瘫痪。</p><p>DDOS Distributed Denial of Service，分布式拒绝服务攻击。</p><hr><h2 id="URL"><a href="#URL" class="headerlink" title="URL"></a>URL</h2><p>Uniform Resource Locator，即统一资源定位符，它是互联网上用来标识信息资源的字符串。</p><p>它包含了域名、协议、端口号、路径等信息，可以直接被访问。</p><h2 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h2><p>Hypertext Transfer Protocol，即超文本传输协议，是互联网上应用最为广泛的协议，它定义了浏览器和服务器之间互相通信的规则。</p><h3 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h3><p>Hypertext Transfer Protocol Secure，即超文本传输协议安全，是HTTP的安全版本，它是通过SSL&#x2F;TLS加密技术来建立安全连接的。</p><p>有时连接网址被警告不安全，这时可以尝试使用HTTPS协议看能否成功访问。</p><h2 id="域名"><a href="#域名" class="headerlink" title="域名"></a>域名</h2><p>域名是指互联网上可用的计算机主机名，它通常由一串用点分隔的字符组成，通常以“www”开头。</p><p>域名会直接与ip地址相对应，域名解析服务器会将域名转换为ip地址。</p><h2 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h2><p>Domain Name System，即域名系统，是互联网的一项服务，它用于将域名转换为IP地址，以便用户访问互联网资源。</p><h2 id="CDN"><a href="#CDN" class="headerlink" title="CDN"></a>CDN</h2><p>Content Delivery Network，内容分发网络。</p><p>当个人难以与公网ip地址直接通信时，可以将静态资源部署在边缘服务器上，通过CDN节点服务器来分发内容，提高用户访问速度。</p>]]></content>
+        <content type="html"><![CDATA[<p>是不是一个一目了然的标题？</p><p>再来个一目了然的架构图：</p><p>主机1– |<br>主机2– |—交换机— 路由器A（网关ip）—B —C—…— N — 目标服务器主机<br>主机3– |</p><hr><h2 id="IP"><a href="#IP" class="headerlink" title="IP"></a>IP</h2><p>Internet Protocol，即互联网协议，是TCP&#x2F;IP协议族中的一员，它是TCP&#x2F;IP协议簇的核心协议，用于在网络上进行通信。</p><p>IPv4：Internet Protocol version 4，即互联网协议版本4，是目前使用最广泛的IP协议版本。</p><p>IPv6：Internet Protocol version 6，即互联网协议版本6，是下一代互联网协议，它将IP地址的位数从32位扩展到128位，以便更好地适应IPv4地址的需求。</p><p>不同于物理地址，ip地址经常变动，因此需要将ip地址和物理地址相关联</p><h2 id="ARP"><a href="#ARP" class="headerlink" title="ARP"></a>ARP</h2><p>Address Resolution Protocol，即地址解析协议，它是一种通过IP地址获取物理地址的网络协议。</p><p>ARP欺骗 通过伪造ARP表，将目标计算机的IP地址映射到攻击者的计算机上，导致网络流量被导向攻击者的计算机。</p><h2 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h2><p>Transmission Control Protocol，即传输控制协议，是一种面向连接的、可靠的、基于字节流的传输层通信协议，它是一种提供可靠交付的协议，保证数据包按序到达。</p><h3 id="DOS"><a href="#DOS" class="headerlink" title="DOS"></a>DOS</h3><p>Denial of Service，即拒绝服务攻击，是一种网络攻击手段，它通过大量发送无效数据包，使目标计算机资源耗尽，导致网络瘫痪。</p><p>DDOS Distributed Denial of Service，分布式拒绝服务攻击。</p><hr><h2 id="URL"><a href="#URL" class="headerlink" title="URL"></a>URL</h2><p>Uniform Resource Locator，即统一资源定位符，它是互联网上用来标识信息资源的字符串。</p><p>它包含了域名、协议、端口号、路径等信息，可以直接被访问。</p><h2 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h2><p>Hypertext Transfer Protocol，即超文本传输协议，是互联网上应用最为广泛的协议，它定义了浏览器和服务器之间互相通信的规则。</p><h3 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h3><p>Hypertext Transfer Protocol Secure，即超文本传输协议安全，是HTTP的安全版本，它是通过SSL&#x2F;TLS加密技术来建立安全连接的。</p><p>有时连接网址被警告不安全，这时可以尝试使用HTTPS协议看能否成功访问。</p><h2 id="域名"><a href="#域名" class="headerlink" title="域名"></a>域名</h2><p>域名是指互联网上可用的计算机主机名，它通常由一串用点分隔的字符组成，通常以“www”开头。</p><p>域名会直接与ip地址相对应，域名解析服务器会将域名转换为ip地址。</p><h2 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h2><p>Domain Name System，即域名系统，是互联网的一项服务，它用于将域名转换为IP地址，以便用户访问互联网资源。</p><h2 id="CDN"><a href="#CDN" class="headerlink" title="CDN"></a>CDN</h2><p>Content Delivery Network，内容分发网络。</p><p>当个人难以与公网ip地址直接通信时，可以将静态资源部署在边缘服务器上，通过CDN节点服务器来分发内容，提高用户访问速度。</p><h2 id="VPN"><a href="#VPN" class="headerlink" title="VPN"></a>VPN</h2><p>虚拟专用网络。</p><p>通过隧道利用公共网络将两个不同的局域网连接起来，进行加密通讯，可隐藏原有目的和地址。</p><hr><p>一边查一边写，以前模糊的东西现在在脑海里建立起了联系。</p>]]></content>
       
       
       <categories>
@@ -419,9 +419,9 @@
       
         <tags>
             
-            <tag> 笔记 </tag>
-            
             <tag> Web </tag>
+            
+            <tag> 笔记 </tag>
             
         </tags>
       
@@ -705,9 +705,9 @@
       
         <tags>
             
-            <tag> github </tag>
-            
             <tag> 日志 </tag>
+            
+            <tag> github </tag>
             
         </tags>
       
@@ -734,9 +734,9 @@
       
         <tags>
             
-            <tag> 笔记 </tag>
-            
             <tag> Web </tag>
+            
+            <tag> 笔记 </tag>
             
         </tags>
       
