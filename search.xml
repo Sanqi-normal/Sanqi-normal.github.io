@@ -4,6 +4,48 @@
   
     
     <entry>
+      <title>重要外链汇总</title>
+      <link href="/2025/02/16/%E9%87%8D%E8%A6%81%E5%A4%96%E9%93%BE%E6%B1%87%E6%80%BB/"/>
+      <url>/2025/02/16/%E9%87%8D%E8%A6%81%E5%A4%96%E9%93%BE%E6%B1%87%E6%80%BB/</url>
+      
+        <content type="html"><![CDATA[<p style="color:grey;font-size:smaller">注：部分需科学上网，部分作者自己也没看</p><h2 id="友链"><a href="#友链" class="headerlink" title="友链"></a>友链</h2><p>暂无</p><h2 id="教程"><a href="#教程" class="headerlink" title="教程"></a>教程</h2><p>本博客搭建 <a href="https://blog.csdn.net/yaorongke/article/details/119089190">https://blog.csdn.net/yaorongke/article/details/119089190</a></p><p>ctf <a href="https://hello-ctf.com/">https://hello-ctf.com/</a></p><p>huggingface <a href="https://huggingface.co/learn">https://huggingface.co/learn</a></p><p>n8n 中文教程 <a href="https://n8n.akashio.com/article/welcome">https://n8n.akashio.com/article/welcome</a></p><h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><p>ip查询 <a href="https://ip.sb/">https://ip.sb/</a></p><p>站长工具 <a href="https://tool.chinaz.com/">https://tool.chinaz.com/</a></p><p>Z-library <a href="https://zh.z-lib.gs/">https://zh.z-lib.gs/</a></p><p>电子书（搭配Z-lib） <a href="https://www.neat-reader.cn/">https://www.neat-reader.cn/</a></p><p>加解密 <a href="https://www.toolhelper.cn/">https://www.toolhelper.cn/</a></p><p>Github代理下载 <a href="https://ghproxy.link/">https://ghproxy.link/</a></p><p>镜像网站 <a href="https://zhuanlan.zhihu.com/p/609597886">https://zhuanlan.zhihu.com/p/609597886</a></p><p>虚拟机 <a href="https://www.vulnhub.com/">https://www.vulnhub.com/</a></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>近期动态整理</title>
+      <link href="/2025/02/16/%E8%BF%91%E6%9C%9F%E5%8A%A8%E6%80%81%E6%95%B4%E7%90%86/"/>
+      <url>/2025/02/16/%E8%BF%91%E6%9C%9F%E5%8A%A8%E6%80%81%E6%95%B4%E7%90%86/</url>
+      
+        <content type="html"><![CDATA[<p>最近很乱，方向很多，什么东西都想了解一下，像无头苍蝇一样到处乱撞，想法很多但又都因为存在门槛无从下手或者懒得深入。</p><p>现在我把我混乱的思路理一下，从简单的一点点入手。</p><p><strong>deepseek</strong></p><p>首先是最近大火的deepseek，这应该是包括我在内很多人接触到的第一个“更接近人”的语言模型，让我看到个性化和去中心化的曙光。</p><p>它的深度思考过程让我眼前一亮，这就是我过去设想过的，对提高准确率和用户理解很有帮助。</p><p>但我不清楚deepseek这个深度思考的内部逻辑，多次试验后我觉得它的思考和输出有一定隔阂，这也说明它有改进空间，能够让回答更准确更贴近人的想法。</p><p>这是第一点，第二点是它的思考缺乏交互（与用户，联网，利用工具等），虽然存在内部计算，但是有些时候不一定能修正输出。</p><p><strong>本地部署</strong></p><p>我尝试了本地部署deepseek模型，结论是对硬件配置要求较高，我卡在了显存这里。14b Q4_K_M量化的模型8G显存依旧难以运行，预估差不多10G就能流畅。</p><p>14b以下的模型性能表现实在难以言说，虽然快，但是多数时候回答与期望不符——但大概还是可以完成一些简单的日常任务，如写简单的代码，考察简单的知识。</p><p>但要我说，不如直接用更具性能的api，不过这些本地模型未来是否能胜任一些简单的自动化任务，倘若能，它们反倒更快一些。</p><p>另外一点，r1模型的深度思考并非什么时候都有利，如果需要提高效率，是否应当考虑据说比前几代更小规模的llama3.3？</p><p>deepseek的api还是很有性价比的，奈何担心需求过多，如果能绕过工作量验证直接利用网页的免费提问就更好了。这就是第一个难题。</p><p>那么接下来，假设我有了稳定的ai问答环境，现在我要实现ai的两种扩展功能，一是长期记忆，二是工具利用。</p><p><strong>有关长期记忆</strong></p><p>虽然deepseek每次能接受和处理的token非常多，但在对话中如果对话过长模型思考的时间也会越长，并且如果我用的是api，那每次会白白浪费很多token。<br>我需要模型对历史记录有依赖。但这种需求主要出自我个人想法，对个性化ai来说非常重要，对于工具利用来说，这不必要甚至应该舍弃。</p><p>长期记忆的途径也不止一种，我想可以有以下几种。</p><p>1）概括过去内容，提炼关键信息加入会话，适用粗糙的记忆，不准确，长期来看也不适用。</p><p>2）将过去对话构建为向量，存储在数据库，然后建立关键词映射，ai需要时取出。听起来很玄乎，我不确定我是否能做到。</p><p>应该说我肯定是做不到，但是可能有现成的工具，记下一个：<a href="https://github.com/modelscope/MemoryScope">https://github.com/modelscope/MemoryScope</a></p><p>这里就先这样，回头再来。</p><p><strong>有关工具利用</strong></p><p>虽然说AI不是万能胶，不是哪里都能塞。但是我下意识就想让所有地方都能用ai来解决问题。</p><p>渗透、逆向、建模、编程、系统……</p><p>相比公司团队，我一个人肯定能做的太少，通常只是找找现成工具食人尾气，最多集成起来，但是个人就有个人的优势，比如经得起折腾，愿意折腾、折腾成本低……</p><p>然而一个人思想有时候也很难统一。</p><p>回到工具利用，少不了的一定是自动化工作流。</p><p>我过去刚开始想做AI提权工具的时候，想的就是封装成单个应用，然而事实是那样可拓展性和可维护性都很低。</p><p>目前我所接触到的ai只是简单的输入输出，既然这样，无论个性化还是工具利用，自动化都是必不可少的了。</p><p><strong>自动化</strong></p><p>了解的东西很少，我打算先从Docker部署n8n开始。</p><p>用户发送消息，客户端上传会话请求，一并上传的还有系统提示词，提示词改变ai1的输出方向。</p><p>比如提示词如是说：“你的工作不是回答问题，而是总结用户需求，返回记忆&#x2F;工具利用请求”</p><p>那么这时候ai1返回的命令直接被执行，需求的内容在后台不经过用户发送给ai2</p><p>ai2由此获得到了记忆映射或者命令执行得到的信息。</p><p>ai1可以是本地快速运行的模型，执行这些简单的任务；ai2是云端分析问题给出准确回答的模型。</p><p>这是常驻会话，但是有可能更复杂的工具利用ai要和会话分开而与工具直接结合，形成半自动化工具。</p><p>比如渗透测试，在少量信息提供和交互下直接走完全部流程。</p><p>据我了解，这样的工具已经有了，所以你看，像我一样把ai当万能胶水涂的哪都是的人大有人在。</p><p>那你还做这些干什么？</p><p>啊……你这么一问让我有点迷茫了。</p><p>反正总会有人做的。你做了ai渗透难道真的会用它渗透去？</p><p><del>难说</del>既然一定有人会做，那做的人是我也是理所当然的事吧，毕竟我也只是个普通人……</p><p>——倒不如说，我相信做的这些不起眼的小东西会在未来某个时候帮我去创造出相当了不起的东西来……</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 计算机 </category>
+          
+          <category> AI </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> AI </tag>
+            
+            <tag> 自动化 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>镜像下载途径和应用</title>
       <link href="/2025/02/15/%E9%95%9C%E5%83%8F%E4%B8%8B%E8%BD%BD%E9%80%94%E5%BE%84%E5%92%8C%E5%BA%94%E7%94%A8/"/>
       <url>/2025/02/15/%E9%95%9C%E5%83%8F%E4%B8%8B%E8%BD%BD%E9%80%94%E5%BE%84%E5%92%8C%E5%BA%94%E7%94%A8/</url>
@@ -620,9 +662,9 @@
       
         <tags>
             
-            <tag> 笔记 </tag>
-            
             <tag> 渗透 </tag>
+            
+            <tag> 笔记 </tag>
             
         </tags>
       
