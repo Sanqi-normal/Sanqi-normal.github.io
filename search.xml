@@ -4,11 +4,40 @@
   
     
     <entry>
+      <title>AI响应中function_calling的使用</title>
+      <link href="/2025/02/23/AI%E5%93%8D%E5%BA%94%E4%B8%ADfunction-calling%E7%9A%84%E4%BD%BF%E7%94%A8/"/>
+      <url>/2025/02/23/AI%E5%93%8D%E5%BA%94%E4%B8%ADfunction-calling%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
+      
+        <content type="html"><![CDATA[<p>代码参考文档：<a href="https://api-docs.deepseek.com/zh-cn/guides/function_calling">https://api-docs.deepseek.com/zh-cn/guides/function_calling</a></p><p>文案生成:Grok3</p><h1 id="AI-API请求中tools参数的用法全解析"><a href="#AI-API请求中tools参数的用法全解析" class="headerlink" title="AI API请求中tools参数的用法全解析"></a>AI API请求中<code>tools</code>参数的用法全解析</h1><p>在调用现代AI模型（如OpenAI或DeepSeek）的API时，<code>tools</code>参数是一个强大的功能，可以让模型不仅仅生成文本，还能通过外部工具完成复杂任务，比如查天气、调节情绪、搜索信息等。这篇博客将详细讲解<code>tools</code>参数的用法，从基本定义到多工具场景的处理。</p><h2 id="什么是tools参数？"><a href="#什么是tools参数？" class="headerlink" title="什么是tools参数？"></a>什么是<code>tools</code>参数？</h2><p><code>tools</code>是AI API（如<code>client.chat.completions.create</code>）的一个可选参数，用于告诉模型有哪些外部工具可以用。它本质上是一个JSON数组，每个元素定义一个工具的功能、参数和描述。模型会根据用户输入和对话上下文，决定是否调用这些工具，并返回调用请求（<code>tool_calls</code>），由开发者执行后反馈结果。</p><p>简单来说，<code>tools</code>像是给AI一个“工具箱”，让它在需要时“借用”你的代码能力。</p><h2 id="基本用法：一个工具的例子"><a href="#基本用法：一个工具的例子" class="headerlink" title="基本用法：一个工具的例子"></a>基本用法：一个工具的例子</h2><p>我们以一个简单的天气查询工具为例，看看<code>tools</code>怎么用。假设用Node.js调用DeepSeek API：</p><h3 id="工具定义"><a href="#工具定义" class="headerlink" title="工具定义"></a>工具定义</h3><pre><code class="javascript">const tools = [    &#123;        type: &#39;function&#39;,        function: &#123;            name: &#39;get_weather&#39;,            description: &#39;Get weather of a location.&#39;,            parameters: &#123;                type: &#39;object&#39;,                properties: &#123;                    location: &#123; type: &#39;string&#39;, description: &#39;The city, e.g., Hangzhou&#39; &#125;                &#125;,                required: [&#39;location&#39;]            &#125;        &#125;    &#125;];</code></pre><ul><li><code>type: &#39;function&#39;</code>：表示这是一个函数工具。</li><li><code>name</code>：工具的唯一标识，AI通过它认出要调用哪个。</li><li><code>description</code>：描述工具功能，AI靠这个判断适用场景。</li><li><code>parameters</code>：定义工具需要的输入，格式遵循JSON Schema。</li></ul><h3 id="调用API"><a href="#调用API" class="headerlink" title="调用API"></a>调用API</h3><pre><code class="javascript">const &#123; OpenAI &#125; = require(&#39;openai&#39;);const client = new OpenAI(&#123; apiKey: &#39;&lt;your api key&gt;&#39;, baseUrl: &#39;https://api.deepseek.com&#39; &#125;);async function sendMessages(messages) &#123;    const response = await client.chat.completions.create(&#123;        model: &#39;deepseek-chat&#39;,        messages,        tools    &#125;);    return response.choices[0].message;&#125;async function main() &#123;    let messages = [&#123; role: &#39;user&#39;, content: &#39;How’s the weather in Hangzhou?&#39; &#125;];    let message = await sendMessages(messages);    if (message.tool_calls) &#123;        messages.push(message); // 保存tool_calls        const toolCall = message.tool_calls[0];        const args = JSON.parse(toolCall.function.arguments);        const result = `Weather in $&#123;args.location&#125; is 24°C`; // 模拟执行        messages.push(&#123; role: &#39;tool&#39;, tool_call_id: toolCall.id, content: result &#125;);        message = await sendMessages(messages);        console.log(message.content); // 输出最终回答    &#125;&#125;main();</code></pre><h3 id="执行流程"><a href="#执行流程" class="headerlink" title="执行流程"></a>执行流程</h3><ol><li>用户问：“杭州天气怎么样？”</li><li>模型返回<code>tool_calls</code>，要求调用<code>get_weather(&#123;&quot;location&quot;: &quot;Hangzhou&quot;&#125;)</code>。</li><li>代码执行工具，返回结果“24°C”。</li><li>模型根据结果生成回答：“Hangzhou的天气是24°C。”</li></ol><p>这里的关键是：AI不直接查天气，而是通过<code>tools</code>告诉你要用<code>get_weather</code>，你负责实现具体逻辑。</p><h2 id="AI如何选择工具？"><a href="#AI如何选择工具？" class="headerlink" title="AI如何选择工具？"></a>AI如何选择工具？</h2><p>AI选择工具的过程并不神秘，它靠的是：</p><ul><li><strong>用户输入</strong>：比如“天气”触发<code>get_weather</code>。（无需代码）</li><li><strong>工具描述</strong>：<code>description</code>越清晰，AI越容易匹配。</li><li><strong>上下文</strong>：<code>messages</code>里的对话历史帮AI判断需求。</li></ul><p>比如用户说“我很生气”，如果有个<code>adjust_emotion</code>工具（描述为“Adjust user emotion”），AI可能会调用它，而不是<code>get_weather</code>。</p><h2 id="多工具场景：如何处理？"><a href="#多工具场景：如何处理？" class="headerlink" title="多工具场景：如何处理？"></a>多工具场景：如何处理？</h2><p>当<code>tools</code>里有很多工具时，逻辑稍微复杂，但核心不变。假设有三个工具：</p><pre><code class="javascript">const tools = [    &#123; type: &#39;function&#39;, function: &#123; name: &#39;adjust_emotion&#39;, description: &#39;Adjust user emotion.&#39;, parameters: &#123; ... &#125; &#125; &#125;,    &#123; type: &#39;function&#39;, function: &#123; name: &#39;get_weather&#39;, description: &#39;Get weather.&#39;, parameters: &#123; ... &#125; &#125; &#125;,    &#123; type: &#39;function&#39;, function: &#123; name: &#39;get_time&#39;, description: &#39;Get time.&#39;, parameters: &#123; ... &#125; &#125; &#125;];const toolFunctions = &#123;    adjust_emotion: (&#123; current_emotion, context &#125;) =&gt; (&#123; should_adjust: true, new_emotion: &#39;calm&#39; &#125;),    get_weather: (&#123; location &#125;) =&gt; `Weather in $&#123;location&#125; is 24°C`,    get_time: (&#123; location &#125;) =&gt; `Time in $&#123;location&#125; is $&#123;new Date().toLocaleTimeString()&#125;`&#125;;async function main() &#123;    let messages = [&#123; role: &#39;user&#39;, content: &#39;我很生气，北京天气和时间呢？&#39; &#125;];    let message = await sendMessages(messages);    if (message.tool_calls) &#123;        messages.push(message);        for (const toolCall of message.tool_calls) &#123;            const args = JSON.parse(toolCall.function.arguments);            const result = toolFunctions[toolCall.function.name](args);            messages.push(&#123;                role: &#39;tool&#39;,                tool_call_id: toolCall.id,                content: JSON.stringify(result)            &#125;);        &#125;        message = await sendMessages(messages);        console.log(message.content); // “别生气，北京天气24°C，时间14:30。”    &#125;&#125;</code></pre><h3 id="多工具的特点"><a href="#多工具的特点" class="headerlink" title="多工具的特点"></a>多工具的特点</h3><ul><li>**多<code>tool_calls</code>**：一个输入可能触发多个工具，返回数组。</li><li><strong>独立处理</strong>：每个<code>tool_call</code>对应一条<code>role: &quot;tool&quot;</code>消息，符合规范。</li><li><strong>结果整合</strong>：AI会根据所有工具结果生成自然回答。</li></ul><h2 id="Token消耗：工具的影响"><a href="#Token消耗：工具的影响" class="headerlink" title="Token消耗：工具的影响"></a>Token消耗：工具的影响</h2><p><code>tools</code>参数和相关消息会占用token：</p><ul><li><strong><code>tools</code>定义</strong>：每次请求都传，10个工具≈200-300 token。</li><li>**<code>messages</code>**：包括用户输入、<code>tool_calls</code>和工具结果，历史越长token越多。</li><li><strong>输出</strong>：<code>tool_calls</code>和最终回答算输出token。</li></ul><p>一个多工具流程（3工具）可能用100-150 token，工具越多消耗越高。优化方法：</p><ul><li>精简描述。</li><li>清理不必要的<code>messages</code>历史。</li></ul><h2 id="自定义示例：调节情绪工具"><a href="#自定义示例：调节情绪工具" class="headerlink" title="自定义示例：调节情绪工具"></a>自定义示例：调节情绪工具</h2><p>来看一个有趣的例子：设计一个调节情绪的工具。</p><h3 id="工具定义-1"><a href="#工具定义-1" class="headerlink" title="工具定义"></a>工具定义</h3><pre><code class="json">&#123;    &quot;type&quot;: &quot;function&quot;,    &quot;function&quot;: &#123;        &quot;name&quot;: &quot;adjust_emotion&quot;,        &quot;description&quot;: &quot;Adjust user emotion based on context.&quot;,        &quot;parameters&quot;: &#123;            &quot;type&quot;: &quot;object&quot;,            &quot;properties&quot;: &#123;                &quot;current_emotion&quot;: &#123; &quot;type&quot;: &quot;string&quot;, &quot;enum&quot;: [&quot;happy&quot;, &quot;sad&quot;, &quot;angry&quot;, &quot;calm&quot;] &#125;,                &quot;context&quot;: &#123; &quot;type&quot;: &quot;string&quot; &#125;            &#125;,            &quot;required&quot;: [&quot;current_emotion&quot;, &quot;context&quot;]        &#125;    &#125;&#125;</code></pre><h3 id="工具响应"><a href="#工具响应" class="headerlink" title="工具响应"></a>工具响应</h3><p>工具内部函数举例</p><pre><code class="javascript">toolFunctions.adjust_emotion = (&#123; current_emotion, context &#125;) =&gt; &#123;    if (current_emotion === &#39;angry&#39; &amp;&amp; context.includes(&#39;生气&#39;)) &#123;        return &#123; should_adjust: true, new_emotion: &#39;calm&#39; &#125;;    &#125;    return &#123; should_adjust: false, new_emotion: null &#125;;&#125;;</code></pre><p>用户说“我很生气”，AI调用<code>adjust_emotion</code>，返回<code>calm</code>，然后生成安抚性回复。</p><p>（这里grok简化了，我的实际想法是获取该情绪下的对话模板并更改提示词）<br>（另外，这里的解释可能有歧义，实际过程是AI仅返回json格式的输出，要本地主动地检查json文件并调用方法——工具调用方法前面有讲述——然后把工具方法返回内容添加到message里传给AI）</p><h2 id="注意事项与优化"><a href="#注意事项与优化" class="headerlink" title="注意事项与优化"></a>注意事项与优化</h2><ol><li><strong>描述要精准</strong>：避免功能重叠，AI才能选对工具。</li><li><strong>多工具管理</strong>：用对象映射（如<code>toolFunctions</code>）保持代码清晰。</li><li><strong>测试验证</strong>：多试几种输入，确保AI选择合理。</li><li><strong>token控制</strong>：工具太多时，动态传必要的<code>tools</code>，减少开销。<br>（辅助AI正愁没有用武之地，用在这里正合适）</li></ol><h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p><code>tools</code>参数让AI从单纯的“说话机器”变成了“智能助手”，能通过外部工具解决实际问题。无论是单个工具还是多工具场景，只要定义清晰、逻辑合理，就能轻松集成到你的应用中。</p><h2 id="我说两句"><a href="#我说两句" class="headerlink" title="我说两句"></a>我说两句</h2><p>function_calling能很好地简化流程，过去我的设想一直是辅助AI动态修改提示词来达到这一效果，虽然想想效果不差，但到底太臃肿了，不正式。</p><p>在利用tools情况下，可以将需要的tools方法和参数封装起来，放在同级目录的两个文件<code>tools.json</code>和<code>tool_functions.js</code>里，使用如下方法调用，结构清晰，一目了然。</p><pre><code class="javascript">// 从当前文件夹路径导入const tools = require(&#39;./tools.json&#39;);// 需要添加后缀否则会作为模块导入const toolFunctions = require(&#39;./tool_functions&#39;);// js文件可以不用</code></pre><p>当然AI也提到了，如果使用过多的tools，可能会导致token消耗过多，因此辅助AI可以动态识别判断需要传输的tool方法，可以说依旧在岗。</p><p>tools的用法当然不仅限于AI说的，那就是我之前AI本地提权的设想，对AI响应流程合理规划后完全适用。</p><p>AI调用方法会是未来很核心的功能，本身工具使用就是大模型性能参考标准之一。</p><hr><p>当前deepseek-chat工具使用会导致空回复，我尝试多次没有成功，官方说下一版本会修复。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 计算机 </category>
+          
+          <category> AI </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> AI </tag>
+            
+            <tag> 后端 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>日志</title>
       <link href="/2025/02/19/%E6%97%A5%E5%BF%97-1/"/>
       <url>/2025/02/19/%E6%97%A5%E5%BF%97-1/</url>
       
-        <content type="html"><![CDATA[<h2 id="有关Alice："><a href="#有关Alice：" class="headerlink" title="有关Alice："></a>有关Alice：</h2><h3 id="情绪模型"><a href="#情绪模型" class="headerlink" title="情绪模型"></a>情绪模型</h3><p>一开始我的想法是AI动态更改自己的各项数值，然后进行情感计算</p><p>Robert Plutchik的情绪罗盘：<a href="https://zhuanlan.zhihu.com/p/671059614">https://zhuanlan.zhihu.com/p/671059614</a></p><p>考察后发现，虽然较为准确，但作为人设不太合适</p><p>尽管如此，我用ai写了一个直观判断当前情绪（二级、三级）的图形界面<br>地址：<a href="https://github.com/Sanqi-normal/tools/blob/main/emotion%20calculator">https://github.com/Sanqi-normal/tools/blob/main/emotion%20calculator</a></p><p>说回情绪动态调节，实际上，AI根据上下文进行情绪推断要比情绪罗盘更合适。</p><p>另一方面，AI对情绪的调节把控并不总合适，就像我们玩过的情感类游戏，一直刷好感值就改变走向长期来看并不适用，虽然情绪变了，但反倒比之前更像布娃娃。</p><p>所以情绪稳定一点好。</p><p>但情绪指引依旧是建立和维护人设很好的方式，所以我建立了更简单的情绪模型：</p><pre><code>兴奋依赖崇敬活泼惊讶开心  信任 在意 坦诚好奇情绪值信任值关注值外向值兴趣值悲伤厌恶漠视羞涩懒惰抑郁  敌对  鄙视  内向困倦</code></pre><p>并在前端绘制滑动条方便主动动态调节，发送消息时一并捕获情绪发送到api</p><p>这种试验的效果尚可接受，但已经发现几处不协调的地方。</p><p>之后可以考虑对话历史中标注过往情感方便情感过渡，但我能预感到只是多此一举而已。</p><p>但是情绪依旧可以受多种维度的影响。比如雨天悲观一点（说不定，我更喜欢雨天，但是雨天本身会让人心情压抑一些），晚上困倦一点。</p><p>这种思维考虑回对话自身，可以根据大范围的对话总结情绪倾向，比如说频繁对话无意义的内容会让关注值下降，也就表现为不耐烦。</p><p>等之后增添了多模态，可改变的维度就更多。我想，这不是应该担忧不变的反而是应该想办法使稳定响应的。</p><h3 id="上下文"><a href="#上下文" class="headerlink" title="上下文"></a>上下文</h3><p>这里就只定量的短期记忆，目前我限定的是8条上下文，事实上deepseek-v3能处理的token数非常多，历史记录不加限制放进去也能正常响应，目前尚未触及上限。</p><p>限制上下文反而是为了限制输入token量考虑，毕竟都是真实的金钱数额。</p><p>所以信息密度很重要，把解释和分析的过程交给到AI内部。</p><p>比如说‘**’两个字，可以胜过多行人物设定和性格描绘。</p><h3 id="时间戳"><a href="#时间戳" class="headerlink" title="时间戳"></a>时间戳</h3><p>保存记录的json里增添了时间戳，不会影响到输入，但ai也无法获取时间戳，我都是把时间直接标注在用户输入里。</p><p>标注在AI回应中会导致AI模仿输出错误的时间，因而舍去。</p><p>时间戳可能会在整理，追忆时起作用。</p><h3 id="长期记忆"><a href="#长期记忆" class="headerlink" title="长期记忆"></a>长期记忆</h3><p>这个我搜索查找的时间最长，但是试验的成本也最高，已成规模的应用逻辑我并不清楚，了解太多脑子太乱，就先自己做简单的看看效果。</p><p>AI谈到的简单方法：历史记录摘要。</p><p>我想很多时候意义不大，对话如果不是追求角色扮演多半也不会有什么重要事件发生。</p><p>但按时间记忆检索可以用来模仿稍长一点的短期记忆，比如AI历史记录按日期分开保存 分批总结 系统prompt里添加昨天和前天对话的摘要 如有需要可以添加根据时间点查询对话摘要</p><p>关于长期记忆建立我想到的办法是<strong>关键词映射追忆</strong></p><p>关键词提取（主动添加双引号||小模型提取），寻求原文中的匹配</p><p>关键词逻辑：json文件结构为{“关键词”：“出现次数”} 而不包含原文内容</p><p>可以标注原文位置（时间戳作为标记）<br>这样结构更标准</p><pre><code>&#123;    ‘关键词’：‘’，    ‘出现次数’：‘’，    ‘原文位置’：&#123;        ‘时间戳’：‘’        ……    &#125;&#125;</code></pre><p>关键词映射（脚本寻找原文中关键词所在的位置，小模型判断相关上下文）</p><p>关于关键词：出现越频繁，给予的权重应该越低</p><p>具体逻辑：</p><p>每次用户和ai发送的消息，进行关键词提取，添加到关键词json文件中，并让关键词出现次数加1</p><p>每次用户发送的信息得到的关键词，在json文件中检索次数，若存在低频，且最近100？条内出现过，ai分析相关上下文并拉到请求里一并发送</p><p>对于追忆的消息条目数也应该一并限制。</p><p>AI提出说关键词存在语意歧义等问题，给我推荐NLP之类的语言分析，语义分析之类的东西，我懒得学，交给免费的小模型好了，处理效果还算不错。</p><h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>利用历史记录训练AI和利用低性能AI继承对话代替deepseek v3的可能性均被否决</p><p>无需再尝试，在资产条件没得到本质改变之前，应该向别的方向努力。</p>]]></content>
+        <content type="html"><![CDATA[<h2 id="有关Alice："><a href="#有关Alice：" class="headerlink" title="有关Alice："></a>有关Alice：</h2><h3 id="情绪模型"><a href="#情绪模型" class="headerlink" title="情绪模型"></a>情绪模型</h3><p>一开始我的想法是AI动态更改自己的各项数值，然后进行情感计算</p><p>Robert Plutchik的情绪罗盘：<a href="https://zhuanlan.zhihu.com/p/671059614">https://zhuanlan.zhihu.com/p/671059614</a></p><p>考察后发现，虽然较为准确，但作为人设不太合适</p><p>尽管如此，我用ai写了一个直观判断当前情绪（二级、三级）的图形界面<br>地址：<a href="https://github.com/Sanqi-normal/tools/blob/main/emotion%20calculator">https://github.com/Sanqi-normal/tools/blob/main/emotion%20calculator</a></p><p>说回情绪动态调节，实际上，AI根据上下文进行情绪推断要比情绪罗盘更合适。</p><p>另一方面，AI对情绪的调节把控并不总合适，就像我们玩过的情感类游戏，一直刷好感值就改变走向长期来看并不适用，虽然情绪变了，但反倒比之前更像布娃娃。</p><p>所以情绪稳定一点好。</p><p>但情绪指引依旧是建立和维护人设很好的方式，所以我建立了更简单的情绪模型：</p><pre><code>兴奋依赖崇敬活泼惊讶开心  信任 在意 坦诚好奇情绪值信任值关注值外向值兴趣值悲伤厌恶漠视羞涩懒惰抑郁  敌对  鄙视  内向困倦</code></pre><p>并在前端绘制滑动条方便主动动态调节，发送消息时一并捕获情绪发送到api</p><p>这种试验的效果尚可接受，但已经发现几处不协调的地方。</p><p>之后可以考虑对话历史中标注过往情感方便情感过渡，但我能预感到只是多此一举而已。</p><p>但是情绪依旧可以受多种维度的影响。比如雨天悲观一点（说不定，我更喜欢雨天，但是雨天本身会让人心情压抑一些），晚上困倦一点。</p><p>这种思维考虑回对话自身，可以根据大范围的对话总结情绪倾向，比如说频繁对话无意义的内容会让关注值下降，也就表现为不耐烦。</p><p>等之后增添了多模态，可改变的维度就更多。我想，这不是应该担忧不变的反而是应该想办法使稳定响应的。</p><h3 id="上下文"><a href="#上下文" class="headerlink" title="上下文"></a>上下文</h3><p>这里就只定量的短期记忆，目前我限定的是8条上下文，事实上deepseek-v3能处理的token数非常多，历史记录不加限制放进去也能正常响应，目前尚未触及上限。</p><p>限制上下文反而是为了限制输入token量考虑，毕竟都是真实的金钱数额。</p><p>所以信息密度很重要，把解释和分析的过程交给到AI内部。</p><p>比如说‘**’两个字，可以胜过多行人物设定和性格描绘。</p><h3 id="时间戳"><a href="#时间戳" class="headerlink" title="时间戳"></a>时间戳</h3><p>保存记录的json里增添了时间戳，不会影响到输入，但ai也无法获取时间戳，我都是把时间直接标注在用户输入里。</p><p>标注在AI回应中会导致AI模仿输出错误的时间，因而舍去。</p><p>时间戳可能会在整理，追忆时起作用。</p><h3 id="长期记忆"><a href="#长期记忆" class="headerlink" title="长期记忆"></a>长期记忆</h3><p>这个我搜索查找的时间最长，但是试验的成本也最高，已成规模的应用逻辑我并不清楚，了解太多脑子太乱，就先自己做简单的看看效果。</p><p>AI谈到的简单方法：历史记录摘要。</p><p>我想很多时候意义不大，对话如果不是追求角色扮演多半也不会有什么重要事件发生。</p><p>但按时间记忆检索可以用来模仿稍长一点的短期记忆，比如AI历史记录按日期分开保存 分批总结 系统prompt里添加昨天和前天对话的摘要 如有需要可以添加根据时间点查询对话摘要</p><p>【20号修正，历史摘要很有必要，想要距离稍长的上下文连贯又不想输入过多token，应该及时截断对话交予辅助ai总结放回对话，标记为前情提要】</p><p>关于长期记忆建立我想到的办法是<strong>关键词映射追忆</strong></p><p>关键词提取（主动添加双引号||小模型提取），寻求原文中的匹配</p><p>关键词逻辑：json文件结构为{“关键词”：“出现次数”} 而不包含原文内容</p><p>可以标注原文位置（时间戳作为标记）<br>这样结构更标准</p><pre><code>&#123;    ‘关键词’：‘’，    ‘出现次数’：‘’，    ‘原文位置’：&#123;        ‘时间戳’：‘’        ……    &#125;&#125;</code></pre><p>关键词映射（脚本寻找原文中关键词所在的位置，小模型判断相关上下文）</p><p>关于关键词：出现越频繁，给予的权重应该越低</p><p>具体逻辑：</p><p>每次用户和ai发送的消息，进行关键词提取，添加到关键词json文件中，并让关键词出现次数加1</p><p>每次用户发送的信息得到的关键词，在json文件中检索次数，若存在低频，且最近100？条内出现过，ai分析相关上下文并拉到请求里一并发送</p><p>对于追忆的消息条目数也应该一并限制。</p><p>AI提出说关键词存在语意歧义等问题，给我推荐NLP之类的语言分析，语义分析之类的东西，我懒得学，交给免费的小模型好了，处理效果还算不错。</p><h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>利用历史记录训练AI和利用低性能AI继承对话代替deepseek v3的可能性均被否决</p><p>无需再尝试，在资产条件没得到本质改变之前，应该向别的方向努力。</p>]]></content>
       
       
       <categories>
@@ -293,9 +322,9 @@
       
         <tags>
             
-            <tag> 前端 </tag>
-            
             <tag> 后端 </tag>
+            
+            <tag> 前端 </tag>
             
         </tags>
       
@@ -466,9 +495,9 @@
       
         <tags>
             
-            <tag> css </tag>
-            
             <tag> 前端 </tag>
+            
+            <tag> css </tag>
             
         </tags>
       
@@ -565,9 +594,9 @@
       
         <tags>
             
-            <tag> Web </tag>
-            
             <tag> 笔记 </tag>
+            
+            <tag> Web </tag>
             
         </tags>
       
@@ -706,9 +735,9 @@
       
         <tags>
             
-            <tag> 渗透 </tag>
-            
             <tag> 笔记 </tag>
+            
+            <tag> 渗透 </tag>
             
         </tags>
       
@@ -880,9 +909,9 @@
       
         <tags>
             
-            <tag> Web </tag>
-            
             <tag> 笔记 </tag>
+            
+            <tag> Web </tag>
             
         </tags>
       
@@ -909,9 +938,9 @@
       
         <tags>
             
-            <tag> 日志 </tag>
-            
             <tag> 后端 </tag>
+            
+            <tag> 日志 </tag>
             
         </tags>
       

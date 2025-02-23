@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8"> 
-  <title>有关ip数据存储的全程回顾 | 叁七のblog</title>
-  <meta name="keywords" content=" 后端 , 日志 ">
-  <meta name="description" content="有关ip数据存储的全程回顾 | 叁七のblog">
+  <title>AI响应中function_calling的使用 | 叁七のblog</title>
+  <meta name="keywords" content=" AI , 后端 ">
+  <meta name="description" content="AI响应中function_calling的使用 | 叁七のblog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="此页面禁用了快捷键，如导航到新页面无法使用快捷键，请重新刷新界面如发送按钮无效，也请等待或刷新页面介绍：这是借用fittencode的api的ai 查看本地AIweb界面   发送       body {         font-family: Arial, sans-serif;         background:rgb(255, 241, 200)!important;">
 <meta property="og:type" content="website">
@@ -1248,9 +1248,9 @@
 <div id="post">
      
     <div class="pjax">
-        <article id="post-有关ip追踪存储的全程回顾" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-AI响应中function-calling的使用" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">有关ip数据存储的全程回顾</h1>
+        <h1 class="article-title">AI响应中function_calling的使用</h1>
     
     <div class="article-meta">
         
@@ -1262,7 +1262,7 @@
             
             <a  data-rel="计算机">计算机</a> > 
             
-            <a  data-rel="计算机&lt;---&gt;后端">后端</a>
+            <a  data-rel="计算机&lt;---&gt;AI">AI</a>
             
         </span>
         
@@ -1270,21 +1270,21 @@
         <span class="tag">
             <i class="iconfont icon-tag"></i>
             
-            <a class="color3">后端</a>
+            <a class="color3">AI</a>
             
-            <a class="color3">日志</a>
+            <a class="color3">后端</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-12-18 22:21:42'>2024-12-17 21:13</time>
+            Created At : <time class="date" title='Updated At: 2025-02-23 17:48:14'>2025-02-23 16:50</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:1.3k</span>
+        <span>Count:2k</span>
         
         
         
@@ -1292,7 +1292,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%98%E5%82%A8"><span class="toc-text">存储</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82"><span class="toc-text">请求</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82ip"><span class="toc-text">请求ip</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E8%AF%BB%E5%8F%96"><span class="toc-text">请求读取</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E5%AD%98%E5%82%A8"><span class="toc-text">请求存储</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E6%B5%81%E7%A8%8B"><span class="toc-text">实现流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98"><span class="toc-text">一些问题</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#AI-API%E8%AF%B7%E6%B1%82%E4%B8%ADtools%E5%8F%82%E6%95%B0%E7%9A%84%E7%94%A8%E6%B3%95%E5%85%A8%E8%A7%A3%E6%9E%90"><span class="toc-text">AI API请求中tools参数的用法全解析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFtools%E5%8F%82%E6%95%B0%EF%BC%9F"><span class="toc-text">什么是tools参数？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%EF%BC%9A%E4%B8%80%E4%B8%AA%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="toc-text">基本用法：一个工具的例子</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E5%85%B7%E5%AE%9A%E4%B9%89"><span class="toc-text">工具定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B0%83%E7%94%A8API"><span class="toc-text">调用API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="toc-text">执行流程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AI%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E5%B7%A5%E5%85%B7%EF%BC%9F"><span class="toc-text">AI如何选择工具？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E5%B7%A5%E5%85%B7%E5%9C%BA%E6%99%AF%EF%BC%9A%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%EF%BC%9F"><span class="toc-text">多工具场景：如何处理？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E5%B7%A5%E5%85%B7%E7%9A%84%E7%89%B9%E7%82%B9"><span class="toc-text">多工具的特点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Token%E6%B6%88%E8%80%97%EF%BC%9A%E5%B7%A5%E5%85%B7%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="toc-text">Token消耗：工具的影响</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%A4%BA%E4%BE%8B%EF%BC%9A%E8%B0%83%E8%8A%82%E6%83%85%E7%BB%AA%E5%B7%A5%E5%85%B7"><span class="toc-text">自定义示例：调节情绪工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E5%85%B7%E5%AE%9A%E4%B9%89-1"><span class="toc-text">工具定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E5%85%B7%E5%93%8D%E5%BA%94"><span class="toc-text">工具响应</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%E4%B8%8E%E4%BC%98%E5%8C%96"><span class="toc-text">注意事项与优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E8%AF%AD"><span class="toc-text">结语</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%91%E8%AF%B4%E4%B8%A4%E5%8F%A5"><span class="toc-text">我说两句</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -1308,82 +1308,173 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>这个东西思路简单，但实现也是耗费了一整天时间，毕竟你不知道哪里问题会突然跳出来，做完眼都花了。</p>
-<p>我想从大概三个方面总结一下：存储、请求和实现流程。先说思路，再说过程。</p>
-<h3 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h3><p>存储一直是个很麻烦的事情，先前照片存储就折腾了很久，又是图床又是加速，最终效果也不好（当然，你既然想要啥都免费了，就不能又要又要的）。</p>
-<p>而这次不同先前，不光要存储和读取，还要能修改写入，不然得到了ip也没有用，所以静态存储已经不能满足我们的需要了。</p>
-<p>我始终没有找到免费的国内云端数据库，所以用的还是github——哎？等等，不是静态存储已经不能……</p>
-<p>没错，我们要用github存储和读取，并在网页客户端频繁更改。</p>
-<p>新建一个仓库，放入一个你要存储的空文件，在个人页面生成一个拥有修改此文件权限的token。（我英语不好，之前以为token全局生效，为了避免其他仓库数据泄露风险选择了用另一个邮箱注册了新号，实则不需要）</p>
-<p>接下来就是在网页端实现对ip的获取和存储。</p>
-<h3 id="请求"><a href="#请求" class="headerlink" title="请求"></a>请求</h3><p>以下是简化的请求格式，仅供参考</p>
-<h4 id="请求ip"><a href="#请求ip" class="headerlink" title="请求ip"></a>请求ip</h4><pre><code class="js">    const ipAddresses = &#39;&#39;;//接入获取ip的api
-    try &#123;
-            const response = await fetch(ipAddress);
-            const data = await response.json();
-            return data.ip; 
-        &#125; 
-   
+        <p>代码参考文档：<a target="_blank" rel="noopener" href="https://api-docs.deepseek.com/zh-cn/guides/function_calling">https://api-docs.deepseek.com/zh-cn/guides/function_calling</a></p>
+<p>文案生成:Grok3</p>
+<h1 id="AI-API请求中tools参数的用法全解析"><a href="#AI-API请求中tools参数的用法全解析" class="headerlink" title="AI API请求中tools参数的用法全解析"></a>AI API请求中<code>tools</code>参数的用法全解析</h1><p>在调用现代AI模型（如OpenAI或DeepSeek）的API时，<code>tools</code>参数是一个强大的功能，可以让模型不仅仅生成文本，还能通过外部工具完成复杂任务，比如查天气、调节情绪、搜索信息等。这篇博客将详细讲解<code>tools</code>参数的用法，从基本定义到多工具场景的处理。</p>
+<h2 id="什么是tools参数？"><a href="#什么是tools参数？" class="headerlink" title="什么是tools参数？"></a>什么是<code>tools</code>参数？</h2><p><code>tools</code>是AI API（如<code>client.chat.completions.create</code>）的一个可选参数，用于告诉模型有哪些外部工具可以用。它本质上是一个JSON数组，每个元素定义一个工具的功能、参数和描述。模型会根据用户输入和对话上下文，决定是否调用这些工具，并返回调用请求（<code>tool_calls</code>），由开发者执行后反馈结果。</p>
+<p>简单来说，<code>tools</code>像是给AI一个“工具箱”，让它在需要时“借用”你的代码能力。</p>
+<h2 id="基本用法：一个工具的例子"><a href="#基本用法：一个工具的例子" class="headerlink" title="基本用法：一个工具的例子"></a>基本用法：一个工具的例子</h2><p>我们以一个简单的天气查询工具为例，看看<code>tools</code>怎么用。假设用Node.js调用DeepSeek API：</p>
+<h3 id="工具定义"><a href="#工具定义" class="headerlink" title="工具定义"></a>工具定义</h3><pre><code class="javascript">const tools = [
+    &#123;
+        type: &#39;function&#39;,
+        function: &#123;
+            name: &#39;get_weather&#39;,
+            description: &#39;Get weather of a location.&#39;,
+            parameters: &#123;
+                type: &#39;object&#39;,
+                properties: &#123;
+                    location: &#123; type: &#39;string&#39;, description: &#39;The city, e.g., Hangzhou&#39; &#125;
+                &#125;,
+                required: [&#39;location&#39;]
+            &#125;
+        &#125;
+    &#125;
+];
 </code></pre>
-<p>在直接存储之前，我们还有读取文件的过程，我们还需要读取已有的数据并检验此ip是否已经被存储了，我们不重复存储数据才能实现进站计数效果，我认为这个效果要比之前那个刷新一次就记一次数的插件要好。</p>
-<h4 id="请求读取"><a href="#请求读取" class="headerlink" title="请求读取"></a>请求读取</h4><pre><code class="js">    const response = await fetch(&#39;https://raw.githubusercontent.com/用户名/库名/&lt;文件&gt; &#39;);
-   //原生数据地址
-</code></pre>
-<p>‘这里为啥不用cdn加速了？’<br>因为我发现cdn加速获取不到最新数据，提交后会覆盖原有数据，使数据不准确<br>‘那这个get不会很慢吗？’<br>而且不挂梯子很容易失败，这就没有办法了，没有找到免费的国内数据库</p>
-<h4 id="请求存储"><a href="#请求存储" class="headerlink" title="请求存储"></a>请求存储</h4><pre><code class="js">    const updateResponse = await fetch(&#39;https://api.github.com/repos/用户名/库名/&lt;文件&gt; &#39;, &#123;
-        method: &#39;PUT&#39;,//put请求常用于文件更改或替换
-        headers: &#123;
-            &#39;Authorization&#39;: `&lt;你生成的token&gt; `,//当然这里是有很大的泄露风险的，或者说几乎是赤裸的，所以不要用作重要的数据，并且这里最好先加密再解密以绕过扫描，或者分成两段字符串，我猜的，感兴趣可以试试
-            &#39;Content-Type&#39;: &#39;application/json&#39;
-        &#125;,
-        body: JSON.stringify(&#123;
-            message: &#39;&#39;,//提交注释信息
-            content: //编码后的存储数据 
-            sha: //文件sha值，确保一致
-        &#125;)
+<ul>
+<li><code>type: &#39;function&#39;</code>：表示这是一个函数工具。</li>
+<li><code>name</code>：工具的唯一标识，AI通过它认出要调用哪个。</li>
+<li><code>description</code>：描述工具功能，AI靠这个判断适用场景。</li>
+<li><code>parameters</code>：定义工具需要的输入，格式遵循JSON Schema。</li>
+</ul>
+<h3 id="调用API"><a href="#调用API" class="headerlink" title="调用API"></a>调用API</h3><pre><code class="javascript">const &#123; OpenAI &#125; = require(&#39;openai&#39;);
+const client = new OpenAI(&#123; apiKey: &#39;&lt;your api key&gt;&#39;, baseUrl: &#39;https://api.deepseek.com&#39; &#125;);
+
+async function sendMessages(messages) &#123;
+    const response = await client.chat.completions.create(&#123;
+        model: &#39;deepseek-chat&#39;,
+        messages,
+        tools
     &#125;);
+    return response.choices[0].message;
+&#125;
+
+async function main() &#123;
+    let messages = [&#123; role: &#39;user&#39;, content: &#39;How’s the weather in Hangzhou?&#39; &#125;];
+    let message = await sendMessages(messages);
+
+    if (message.tool_calls) &#123;
+        messages.push(message); // 保存tool_calls
+        const toolCall = message.tool_calls[0];
+        const args = JSON.parse(toolCall.function.arguments);
+        const result = `Weather in $&#123;args.location&#125; is 24°C`; // 模拟执行
+
+        messages.push(&#123; role: &#39;tool&#39;, tool_call_id: toolCall.id, content: result &#125;);
+        message = await sendMessages(messages);
+        console.log(message.content); // 输出最终回答
+    &#125;
+&#125;
+
+main();
 </code></pre>
-<p><a target="_blank" rel="noopener" href="https://api.github.com/repos/%E7%94%A8%E6%88%B7%E5%90%8D/%E5%BA%93%E5%90%8D/">https://api.github.com/repos/用户名/库名/</a>&lt;文件&gt;是github提供的api，更多详见官方文档</p>
-<p>其他逻辑不再详述，自此我们假设脚本已能成功获取存储ip了。</p>
-<h3 id="实现流程"><a href="#实现流程" class="headerlink" title="实现流程"></a>实现流程</h3><p>这有什么可说的，不就</p>
-<p>把获取和存储ip的脚本放到网页上</p>
-<p>就行了吗？</p>
-<p>是这样的，都多余了。</p>
-<p>不过有几个值得记下来的地方。</p>
-<p>网页在解析到<code>&lt;script&gt;</code>时就会自动开始编译和执行脚本，但是我们的js脚本请求很慢，尤其还有个get原生国外网址，会导致页面加载不出来，解决的办法就是把脚本放到页面渲染完毕之后再执行。</p>
-<p>所幸刚好有这样便捷的方法</p>
-<pre><code class="html">&lt;script defer&gt;&lt;/script&gt;
+<h3 id="执行流程"><a href="#执行流程" class="headerlink" title="执行流程"></a>执行流程</h3><ol>
+<li>用户问：“杭州天气怎么样？”</li>
+<li>模型返回<code>tool_calls</code>，要求调用<code>get_weather(&#123;&quot;location&quot;: &quot;Hangzhou&quot;&#125;)</code>。</li>
+<li>代码执行工具，返回结果“24°C”。</li>
+<li>模型根据结果生成回答：“Hangzhou的天气是24°C。”</li>
+</ol>
+<p>这里的关键是：AI不直接查天气，而是通过<code>tools</code>告诉你要用<code>get_weather</code>，你负责实现具体逻辑。</p>
+<h2 id="AI如何选择工具？"><a href="#AI如何选择工具？" class="headerlink" title="AI如何选择工具？"></a>AI如何选择工具？</h2><p>AI选择工具的过程并不神秘，它靠的是：</p>
+<ul>
+<li><strong>用户输入</strong>：比如“天气”触发<code>get_weather</code>。（无需代码）</li>
+<li><strong>工具描述</strong>：<code>description</code>越清晰，AI越容易匹配。</li>
+<li><strong>上下文</strong>：<code>messages</code>里的对话历史帮AI判断需求。</li>
+</ul>
+<p>比如用户说“我很生气”，如果有个<code>adjust_emotion</code>工具（描述为“Adjust user emotion”），AI可能会调用它，而不是<code>get_weather</code>。</p>
+<h2 id="多工具场景：如何处理？"><a href="#多工具场景：如何处理？" class="headerlink" title="多工具场景：如何处理？"></a>多工具场景：如何处理？</h2><p>当<code>tools</code>里有很多工具时，逻辑稍微复杂，但核心不变。假设有三个工具：</p>
+<pre><code class="javascript">const tools = [
+    &#123; type: &#39;function&#39;, function: &#123; name: &#39;adjust_emotion&#39;, description: &#39;Adjust user emotion.&#39;, parameters: &#123; ... &#125; &#125; &#125;,
+    &#123; type: &#39;function&#39;, function: &#123; name: &#39;get_weather&#39;, description: &#39;Get weather.&#39;, parameters: &#123; ... &#125; &#125; &#125;,
+    &#123; type: &#39;function&#39;, function: &#123; name: &#39;get_time&#39;, description: &#39;Get time.&#39;, parameters: &#123; ... &#125; &#125; &#125;
+];
+
+const toolFunctions = &#123;
+    adjust_emotion: (&#123; current_emotion, context &#125;) =&gt; (&#123; should_adjust: true, new_emotion: &#39;calm&#39; &#125;),
+    get_weather: (&#123; location &#125;) =&gt; `Weather in $&#123;location&#125; is 24°C`,
+    get_time: (&#123; location &#125;) =&gt; `Time in $&#123;location&#125; is $&#123;new Date().toLocaleTimeString()&#125;`
+&#125;;
+
+async function main() &#123;
+    let messages = [&#123; role: &#39;user&#39;, content: &#39;我很生气，北京天气和时间呢？&#39; &#125;];
+    let message = await sendMessages(messages);
+
+    if (message.tool_calls) &#123;
+        messages.push(message);
+        for (const toolCall of message.tool_calls) &#123;
+            const args = JSON.parse(toolCall.function.arguments);
+            const result = toolFunctions[toolCall.function.name](args);
+            messages.push(&#123;
+                role: &#39;tool&#39;,
+                tool_call_id: toolCall.id,
+                content: JSON.stringify(result)
+            &#125;);
+        &#125;
+        message = await sendMessages(messages);
+        console.log(message.content); // “别生气，北京天气24°C，时间14:30。”
+    &#125;
+&#125;
 </code></pre>
-<p>顺便，把脚本拿到网页md文件的外面</p>
-<pre><code class="html">&lt;script src=&quot;你的/脚本/路径/目标脚本.js&quot; defer&gt;&lt;/script&gt;
+<h3 id="多工具的特点"><a href="#多工具的特点" class="headerlink" title="多工具的特点"></a>多工具的特点</h3><ul>
+<li>**多<code>tool_calls</code>**：一个输入可能触发多个工具，返回数组。</li>
+<li><strong>独立处理</strong>：每个<code>tool_call</code>对应一条<code>role: &quot;tool&quot;</code>消息，符合规范。</li>
+<li><strong>结果整合</strong>：AI会根据所有工具结果生成自然回答。</li>
+</ul>
+<h2 id="Token消耗：工具的影响"><a href="#Token消耗：工具的影响" class="headerlink" title="Token消耗：工具的影响"></a>Token消耗：工具的影响</h2><p><code>tools</code>参数和相关消息会占用token：</p>
+<ul>
+<li><strong><code>tools</code>定义</strong>：每次请求都传，10个工具≈200-300 token。</li>
+<li>**<code>messages</code>**：包括用户输入、<code>tool_calls</code>和工具结果，历史越长token越多。</li>
+<li><strong>输出</strong>：<code>tool_calls</code>和最终回答算输出token。</li>
+</ul>
+<p>一个多工具流程（3工具）可能用100-150 token，工具越多消耗越高。优化方法：</p>
+<ul>
+<li>精简描述。</li>
+<li>清理不必要的<code>messages</code>历史。</li>
+</ul>
+<h2 id="自定义示例：调节情绪工具"><a href="#自定义示例：调节情绪工具" class="headerlink" title="自定义示例：调节情绪工具"></a>自定义示例：调节情绪工具</h2><p>来看一个有趣的例子：设计一个调节情绪的工具。</p>
+<h3 id="工具定义-1"><a href="#工具定义-1" class="headerlink" title="工具定义"></a>工具定义</h3><pre><code class="json">&#123;
+    &quot;type&quot;: &quot;function&quot;,
+    &quot;function&quot;: &#123;
+        &quot;name&quot;: &quot;adjust_emotion&quot;,
+        &quot;description&quot;: &quot;Adjust user emotion based on context.&quot;,
+        &quot;parameters&quot;: &#123;
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;properties&quot;: &#123;
+                &quot;current_emotion&quot;: &#123; &quot;type&quot;: &quot;string&quot;, &quot;enum&quot;: [&quot;happy&quot;, &quot;sad&quot;, &quot;angry&quot;, &quot;calm&quot;] &#125;,
+                &quot;context&quot;: &#123; &quot;type&quot;: &quot;string&quot; &#125;
+            &#125;,
+            &quot;required&quot;: [&quot;current_emotion&quot;, &quot;context&quot;]
+        &#125;
+    &#125;
+&#125;
 </code></pre>
-<p>如果放在模板文件里，就能让所有页面搭载上这个脚本了。</p>
-<h3 id="一些问题"><a href="#一些问题" class="headerlink" title="一些问题"></a>一些问题</h3><blockquote>
-<p>文件上传时遇到了 - Push cannot contain secrets</p>
-</blockquote>
-<p>这是github的私密扫描，不允许上传token等敏感信息，点击它返回的链接选择<code>我愿意泄密</code>就可以了，当然确保确实不会泄露重要信息</p>
-<blockquote>
-<p>同一ip连续的get全都是404因而被github禁止访问</p>
-</blockquote>
-<p>get加上token允许访问的次数会多一些<br>我遇到这个问题是因为调试代码，一直失败，没办法的，调试好了就没有了。</p>
-<blockquote>
-<p>脚本加载得很慢，不挂梯子成功率很低</p>
-</blockquote>
-<p>我在想。</p>
-<blockquote>
-<p>怎么调试代码</p>
-</blockquote>
-<p>浏览器的控制台可以查看日志<br><a href="../../18/Http%E8%BF%94%E5%9B%9E%E7%8A%B6%E6%80%81%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%8E%E8%A7%A3%E5%86%B3">根据返回的状态码判断问题</a></p>
-<blockquote>
-<p>生成的token到期</p>
-</blockquote>
-<p>重新生成token并调整token使用期限<br>如果是预期意外的过期，有可能是把token上传到了公开库，<a href="../../18/github%E7%BB%95%E8%BF%87%E7%A7%81%E5%AF%86%E6%89%AB%E6%8F%8F">寻求方法绕过</a></p>
-<p>到此为止吧</p>
-<blockquote>
-<p>追加</p>
-</blockquote>
-<p>现在会有时候返回422，如果一直返回倒也不奇怪，但是有时候返回，有时候又正常，这我就不明白了，这跟浏览器读取我的请求有关系吧。</p>
-<p>如果返回429，说明限制了访问频率限制。18号追加</p>
+<h3 id="工具响应"><a href="#工具响应" class="headerlink" title="工具响应"></a>工具响应</h3><p>工具内部函数举例</p>
+<pre><code class="javascript">toolFunctions.adjust_emotion = (&#123; current_emotion, context &#125;) =&gt; &#123;
+    if (current_emotion === &#39;angry&#39; &amp;&amp; context.includes(&#39;生气&#39;)) &#123;
+        return &#123; should_adjust: true, new_emotion: &#39;calm&#39; &#125;;
+    &#125;
+    return &#123; should_adjust: false, new_emotion: null &#125;;
+&#125;;
+</code></pre>
+<p>用户说“我很生气”，AI调用<code>adjust_emotion</code>，返回<code>calm</code>，然后生成安抚性回复。</p>
+<p>（这里grok简化了，我的实际想法是获取该情绪下的对话模板并更改提示词）<br>（另外，这里的解释可能有歧义，实际过程是AI仅返回json格式的输出，要本地主动地检查json文件并调用方法——工具调用方法前面有讲述——然后把工具方法返回内容添加到message里传给AI）</p>
+<h2 id="注意事项与优化"><a href="#注意事项与优化" class="headerlink" title="注意事项与优化"></a>注意事项与优化</h2><ol>
+<li><strong>描述要精准</strong>：避免功能重叠，AI才能选对工具。</li>
+<li><strong>多工具管理</strong>：用对象映射（如<code>toolFunctions</code>）保持代码清晰。</li>
+<li><strong>测试验证</strong>：多试几种输入，确保AI选择合理。</li>
+<li><strong>token控制</strong>：工具太多时，动态传必要的<code>tools</code>，减少开销。<br>（辅助AI正愁没有用武之地，用在这里正合适）</li>
+</ol>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p><code>tools</code>参数让AI从单纯的“说话机器”变成了“智能助手”，能通过外部工具解决实际问题。无论是单个工具还是多工具场景，只要定义清晰、逻辑合理，就能轻松集成到你的应用中。</p>
+<h2 id="我说两句"><a href="#我说两句" class="headerlink" title="我说两句"></a>我说两句</h2><p>function_calling能很好地简化流程，过去我的设想一直是辅助AI动态修改提示词来达到这一效果，虽然想想效果不差，但到底太臃肿了，不正式。</p>
+<p>在利用tools情况下，可以将需要的tools方法和参数封装起来，放在同级目录的两个文件<code>tools.json</code>和<code>tool_functions.js</code>里，使用如下方法调用，结构清晰，一目了然。</p>
+<pre><code class="javascript">// 从当前文件夹路径导入
+const tools = require(&#39;./tools.json&#39;);// 需要添加后缀否则会作为模块导入
+const toolFunctions = require(&#39;./tool_functions&#39;);// js文件可以不用
+</code></pre>
+<p>当然AI也提到了，如果使用过多的tools，可能会导致token消耗过多，因此辅助AI可以动态识别判断需要传输的tool方法，可以说依旧在岗。</p>
+<p>tools的用法当然不仅限于AI说的，那就是我之前AI本地提权的设想，对AI响应流程合理规划后完全适用。</p>
+<p>AI调用方法会是未来很核心的功能，本身工具使用就是大模型性能参考标准之一。</p>
+<hr>
+<p>当前deepseek-chat工具使用会导致空回复，我尝试多次没有成功，官方说下一版本会修复。</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 此方悬停 </span>
