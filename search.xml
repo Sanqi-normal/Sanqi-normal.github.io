@@ -4,11 +4,42 @@
   
     
     <entry>
+      <title>语义检索搭配关键词解锁AI长期记忆</title>
+      <link href="/2025/02/25/%E8%BD%BB%E9%87%8F%E9%AB%98%E6%95%88%E8%AF%AD%E4%B9%89%E6%A3%80%E7%B4%A2%E6%90%AD%E9%85%8D%E5%85%B3%E9%94%AE%E8%AF%8D%E8%A7%A3%E9%94%81AI%E9%95%BF%E6%9C%9F%E8%AE%B0%E5%BF%86/"/>
+      <url>/2025/02/25/%E8%BD%BB%E9%87%8F%E9%AB%98%E6%95%88%E8%AF%AD%E4%B9%89%E6%A3%80%E7%B4%A2%E6%90%AD%E9%85%8D%E5%85%B3%E9%94%AE%E8%AF%8D%E8%A7%A3%E9%94%81AI%E9%95%BF%E6%9C%9F%E8%AE%B0%E5%BF%86/</url>
+      
+        <content type="html"><![CDATA[<p>长期记忆也有着落了，先记下来，明天就搞这个</p><p>爽</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 计算机 </category>
+          
+          <category> AI </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Alice </tag>
+            
+            <tag> 语义检索 </tag>
+            
+            <tag> 长期记忆 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>日志</title>
       <link href="/2025/02/25/%E6%97%A5%E5%BF%97-2/"/>
       <url>/2025/02/25/%E6%97%A5%E5%BF%97-2/</url>
       
-        <content type="html"><![CDATA[<p style="font-size:smaller;color:grey;">当你遇到一个未知的问题时，首先要欣喜地想到你有克服它的可能性。      --叁七</p>成功！<p>无人在意的角落里，恭喜恭喜自己吧。</p><p>不到三天，23号下午才有这个想法，在grok3和Android Studio强大加持下，今天就已经完成了。</p><p>不用在意这是否是你自己的力量，要善于利用工具。</p><p>手机应用开发比PC上要麻烦很多，各种权限，各种依赖——但在使用体验上是截然不同的，毕竟手机随身带着，更多的体验和生活息息相关，那么就能让应用融入你的生活。</p><p>或者说让Alice融入我的生活，比如帮我定闹钟，给我记备忘录，响铃提醒，甚至延申到其他应用。当然，只是遐想，不过，也如同我过去的遐想一样，即将变成现实。</p><p>刚刚做成的时候，很高兴，想写很多骄傲一番，现在喜悦平息，反而一阵迷惘，毕竟也不算付出多少，克服多少困难。</p><p>不过，这也预示着，未来要实现的东西，也不会有多难。</p><p>简单看看效果吧（3倍速）。</p><video width="320" height="240" controls>  <source src="https://testingcf.jsdelivr.net/gh/sanqi-normal/sanqi-normal.github.io/video/Alice手机应用.mp4" type="video/mp4">  您的浏览器不支持 video 标签。</video><p>为了能成功，删去了一些复杂的功能，只是简单的问答。</p><p>因为对安卓环境不熟悉，对Kotlin一无所知，所以后续添加复杂的功能可能很难。</p><p>之后会继续完善。</p>]]></content>
+        <content type="html"><![CDATA[<p style="font-size:smaller;color:grey;">当你遇到一个未知的问题时，首先要欣喜地想到你有克服它的可能性。      --叁七</p>成功！<p>无人在意的角落里，恭喜恭喜自己吧。</p><p>不到三天，23号下午才有这个想法，在grok3和Android Studio强大加持下，今天就已经完成了。</p><p>不用在意这是否是你自己的力量，要善于利用工具。</p><p>手机应用开发比PC上要麻烦很多，各种权限，各种依赖——但在使用体验上是截然不同的，毕竟手机随身带着，更多的体验和生活息息相关，那么就能让应用融入你的生活。</p><p>或者说让Alice融入我的生活，比如帮我定闹钟，给我记备忘录，响铃提醒，甚至延申到其他应用。当然，只是遐想，不过，也如同我过去的遐想一样，即将变成现实。</p><p>刚刚做成的时候，很高兴，想写很多骄傲一番，现在喜悦平息，反而一阵迷惘，毕竟也不算付出多少，克服多少困难。</p><p>不过，这也预示着，未来要实现的东西，也不会有多难。</p><p>简单看看效果吧（3倍速）。</p><video width="320" height="240" controls>  <source src="https://testingcf.jsdelivr.net/gh/sanqi-normal/sanqi-normal.github.io/video/Alice手机应用.mp4" type="video/mp4">  您的浏览器不支持 video 标签。</video><p>为了能成功，删去了一些复杂的功能，只是简单的问答。</p><p>因为对安卓环境不熟悉，对Kotlin一无所知，所以后续添加复杂的功能可能很难。</p><p>之后会继续完善。</p><p>下一步必须要解决的问题是长期记忆和工具利用，否则始终就在问答里兜圈子了。</p><p>再往后是优化对话体验。</p><p>如果这些都成型了，再往后一点可以是多模态。</p><p>简单的构想到此为止吧，当然我说的是PC端，移植到安卓起码要在优化对话体验之后，并且工具利用会是另外一套截然不同的用途。</p>]]></content>
       
       
       <categories>
@@ -1339,9 +1370,9 @@
       
         <tags>
             
-            <tag> 测试 </tag>
-            
             <tag> 博客 </tag>
+            
+            <tag> 测试 </tag>
             
         </tags>
       
