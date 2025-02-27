@@ -120,7 +120,7 @@
     <li>
         <div class="all active" data-rel="All">All
             
-                <small>(71)</small>
+                <small>(72)</small>
             
         </div>
     </li>
@@ -174,7 +174,7 @@
         <div data-rel="计算机">
             <i class="fold iconfont icon-right"></i>
             计算机
-            <small>(36)</small>
+            <small>(37)</small>
         </div>
         
             <ul class="sub hide">
@@ -439,8 +439,8 @@
         
     </div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="71">
-<input type="hidden" id="yelog_site_word_count" value="69.6k">
+<input type="hidden" id="yelog_site_posts_number" value="72">
+<input type="hidden" id="yelog_site_word_count" value="71k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -556,6 +556,10 @@
             </li>
         
             <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>数据结构</a>
+            </li>
+        
+            <li class="article-tag-list-item">
                 <i class="iconfont icon-tag"></i><a>网络</a>
             </li>
         
@@ -648,6 +652,10 @@
             </li>
         
             <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>json</a>
+            </li>
+        
+            <li class="article-tag-list-item">
                 <i class="iconfont icon-tag"></i><a>linux</a>
             </li>
         
@@ -686,6 +694,15 @@
            data-author="" >
             <span class="post-title" title="爱丽丝的出生声明">爱丽丝的出生声明</span>
             <span class="post-date" title="2025-02-19 22:12:55">2025/02/19</span>
+        </a>
+        
+        
+        <a  class="All 计算机 "
+           href="/2025/02/27/json%E6%A0%BC%E5%BC%8F%E7%AC%94%E8%AE%B0/"
+           data-tag="json,数据结构"
+           data-author="" >
+            <span class="post-title" title="json格式笔记">json格式笔记</span>
+            <span class="post-date" title="2025-02-27 14:04:59">2025/02/27</span>
         </a>
         
         
@@ -889,7 +906,7 @@
         
         <a  class="All 计算机 前端 "
            href="/2024/12/30/css%E6%A0%B7%E5%BC%8F%E4%B9%A6%E5%86%99%E7%AC%94%E8%AE%B0/"
-           data-tag="css,前端"
+           data-tag="前端,css"
            data-author="" >
             <span class="post-title" title="css样式书写笔记">css样式书写笔记</span>
             <span class="post-date" title="2024-12-30 15:38:32">2024/12/30</span>
@@ -1141,7 +1158,7 @@
         
         <a  class="All 日志 "
            href="/2024/12/12/%E6%97%A5%E5%BF%97%EF%BC%884%EF%BC%89/"
-           data-tag="测试,博客"
+           data-tag="博客,测试"
            data-author="" >
             <span class="post-title" title="日志（4）">日志（4）</span>
             <span class="post-date" title="2024-12-12 14:36:06">2024/12/12</span>
@@ -1361,12 +1378,12 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2025-02-26 16:08:11'>2025-02-25 22:43</time>
+            Created At : <time class="date" title='Updated At: 2025-02-26 19:46:01'>2025-02-25 22:43</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:1.4k</span>
+        <span>Count:1.7k</span>
         
         
         
@@ -1391,9 +1408,9 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>这个也完成了，不愧是我。</p>
-<p>我的原标题是：语义检索搭配关键词解锁AI长期记忆，因为这是我昨天的思路，今天反复测试后修改了方案。</p>
-<p>我最最最开始是想用AI提取关键词然后写个程序匹配文本搜索相关的历史条目，但是这样就有两个问题，一是效率不高，耗时长。向AI发送请求需要时间，能处理的文本也少，毕竟通用大模型本身不是用来执行这种事的；二是之前我提过的，关键词语义不同，就会匹配到错误的会话里。</p>
-<p>不过根据关键词数量调整权重我自认为还算不错，这是比语义要好的地方，语义真的是会莫名引导到不相干的地方，并且相似度还莫名的高，这是语义的算法导致的。</p>
+<p>这个完成的是在只拥有api，无法训练AI的情况下，如何通过语义检索搭配关键词解锁AI长期记忆。</p>
+<p>我最最最开始是想用AI提取关键词然后写个程序匹配文本搜索相关的历史条目，但是这样就有两个问题，一是效率不高，耗时长。向AI发送请求需要时间，能处理的文本也少，毕竟通用大模型本身不是用来执行这种事的；二是之前我提过的，关键词在不同句子中可能语义不同，就会匹配到错误的会话里。</p>
+<p>不过根据关键词数量调整权重这个想法我自认为还算不错，这是比语义要好的地方，语义真的是会莫名引导到不相干的地方，并且相似度还莫名的高，这是语义的算法导致的。</p>
 <p>接下来逐步讲讲思路和流程。</p>
 <h2 id="干扰词筛选"><a href="#干扰词筛选" class="headerlink" title="干扰词筛选"></a>干扰词筛选</h2><p>这是多次试验的结果，也是解决非关键词影响语义的措施。</p>
 <p>比如口头称呼在对话中占比非常多，换用不同的口头称呼就导致语义不同，不能找到最恰当的结果，因此需要对输入文本和历史消息都进行干扰词筛选。</p>
@@ -1455,6 +1472,20 @@ results = [result for result in results if all(keyword in result for keyword in 
 <p>简单的语义检索测试脚本（python）地址：<br><a target="_blank" rel="noopener" href="https://github.com/Sanqi-normal/tools/blob/main/%E8%AF%AD%E4%B9%89%E6%A3%80%E7%B4%A2/long_memory.py">https://github.com/Sanqi-normal/tools/blob/main/%E8%AF%AD%E4%B9%89%E6%A3%80%E7%B4%A2/long_memory.py</a></p>
 <p>如果你奇怪python脚本如何能够被node环境利用，实际上我是让python脚本占用了端口开放检索记忆的服务，然后后端发送http请求。</p>
 <p>当然这样不适用后续生产环境，临时搭建测试而已。</p>
+<p>后续补充：</p>
+<p>不足：</p>
+<ul>
+<li>精度不高，文本信息量不单一时出现不准确的筛选情况时有发生，即使关键词也没办法有效纠正。如果无法做到对历史记录的准确检索，那长期记忆就无法有效发挥作用。<ul>
+<li>或许应该寻求更精确的语义模型&#x2F;关键词检索模型</li>
+</ul>
+</li>
+<li>历史缺失。由于我的程序每隔几次会话都主动进行过去短期历史记录的压缩以减少输入，这种情况还好；但多次对话下必然无法承受历史记录的积累，需要把最早的卸下来或者降低历史摘要的精度。而这部分由于语义检索是静态的而不能被添加到检索中，因而就缺失了。<ul>
+<li>冗长的一轮对话后重新启动服务器，或者趁用户等待返回信息的时候悄悄重启，无缝填充。当然，这是用户体验的部分。</li>
+</ul>
+</li>
+<li>关键词筛选。“上大学”会返回多条记录，“上学”却不能，这是关键词筛选的问题，把符合语义的筛选掉了。但不用关键词筛选，有时候返回的结果太挨不着边了。</li>
+</ul>
+<p>仍需优化。</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 此方悬停 </span>

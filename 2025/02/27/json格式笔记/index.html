@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8"> 
-  <title>分享我第一个完成创作的游戏 | 叁七のblog</title>
-  <meta name="keywords" content=" 游戏 ">
-  <meta name="description" content="分享我第一个完成创作的游戏 | 叁七のblog">
+  <title>json格式笔记 | 叁七のblog</title>
+  <meta name="keywords" content=" json , 数据结构 ">
+  <meta name="description" content="json格式笔记 | 叁七のblog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="此页面禁用了快捷键，如导航到新页面无法使用快捷键，请重新刷新界面如发送按钮无效，也请等待或刷新页面介绍：这是借用fittencode的api的ai 查看本地AIweb界面   发送       body {         font-family: Arial, sans-serif;         background:rgb(255, 241, 200)!important;">
 <meta property="og:type" content="website">
@@ -1345,9 +1345,9 @@
 <div id="post">
      
     <div class="pjax">
-        <article id="post-分享我第一个完成创作的游戏" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-json格式笔记" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">分享我第一个完成创作的游戏</h1>
+        <h1 class="article-title">json格式笔记</h1>
     
     <div class="article-meta">
         
@@ -1357,9 +1357,7 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="游戏">游戏</a> > 
-            
-            <a  data-rel="游戏&lt;---&gt;创作">创作</a>
+            <a  data-rel="计算机">计算机</a>
             
         </span>
         
@@ -1367,19 +1365,21 @@
         <span class="tag">
             <i class="iconfont icon-tag"></i>
             
-            <a class="color3">游戏</a>
+            <a class="color5">json</a>
+            
+            <a class="color5">数据结构</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-12-11 09:49:10'>2024-12-10 18:31</time>
+            Created At : <time class="date" title='Updated At: 2025-02-27 14:59:00'>2025-02-27 14:04</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:175</span>
+        <span>Count:1.1k</span>
         
         
         
@@ -1387,7 +1387,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-text">介绍</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%AE%9A%E4%B9%89%E4%B8%8E%E7%89%B9%E6%80%A7"><span class="toc-text">一、定义与特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%A0%BC%E5%BC%8F%E8%A6%81%E6%B1%82%E4%B8%8E%E8%AF%AD%E6%B3%95%E8%A7%84%E8%8C%83"><span class="toc-text">二、格式要求与语法规范</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E7%BB%93%E6%9E%84%EF%BC%9A"><span class="toc-text">基础结构：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%BC%E5%BC%8F%E8%A7%84%E8%8C%83%EF%BC%9A"><span class="toc-text">格式规范：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#json%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%E7%A4%BA%E4%BE%8B%EF%BC%9A"><span class="toc-text">json文件内容示例：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B5%8C%E5%A5%97%E7%BB%93%E6%9E%84"><span class="toc-text">嵌套结构</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95%EF%BC%88JavaScript%EF%BC%89"><span class="toc-text">三、数据处理方法（JavaScript）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3"><span class="toc-text">相关</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -1403,8 +1403,135 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>   名字叫《绝境逢光》，和其他三个伙伴一起创作的游戏,我担任策划。<br>   本来是为了参加taptap首届聚光灯GameJam，结果没能按期完成。<br><small style="color: gray;">学习游戏制作这段时间的事我也想写一写。</small><br>   内容也不多，bug也不少，嗨——哎我真要被气死了，谁能告诉我fittencode自动补全怎么关啊，它是不是觉得自己很知道我想说什么啊？ </p>
-<p>   <a href="/game/LightInWar.apk">点此下载</a><br>   TapTap详情页(未上传下载渠道)：<a target="_blank" rel="noopener" href="https://www.taptap.cn/app/726480">https://www.taptap.cn/app/726480</a><br>    一定注意是手机游戏喔，没有电脑版喔，只支持安卓喔，安卓版本不能高了也不能低了喔（v11-12）</p>
+        <p>苦于基础不牢固而对一个格式要求抓耳挠腮、进度频频被阻塞。</p>
+<h3 id="一、定义与特性"><a href="#一、定义与特性" class="headerlink" title="一、定义与特性"></a>一、定义与特性</h3><p>JSON（JavaScript Object Notation）是一种轻量级的数据交换格式，基于 JavaScript 对象语法，但独立于编程语言。  </p>
+<ul>
+<li>核心特征：  <ol>
+<li>可读性强，结构清晰（键值对 + 层级嵌套）；  </li>
+<li>体积小，传输效率高；  </li>
+<li>支持跨平台数据交换（Web&#x2F;移动端&#x2F;服务端通用）。</li>
+</ol>
+</li>
+</ul>
+<hr>
+<h3 id="二、格式要求与语法规范"><a href="#二、格式要求与语法规范" class="headerlink" title="二、格式要求与语法规范"></a>二、格式要求与语法规范</h3><h4 id="基础结构："><a href="#基础结构：" class="headerlink" title="基础结构："></a>基础结构：</h4><ul>
+<li>对象：<code>&#123; &quot;key&quot;: value &#125;</code>，键名必须用<strong>双引号</strong>包裹；<ul>
+<li>value基础类型：字符串（<code>&quot;string&quot;</code>）、数字（整数&#x2F;浮点数）、布尔（<code>true/false</code>）、<code>null</code>；</li>
+</ul>
+</li>
+<li>数组：<code>[ value1, value2 ]</code>，元素间用逗号分隔。</li>
+</ul>
+<h4 id="格式规范："><a href="#格式规范：" class="headerlink" title="格式规范："></a>格式规范：</h4><ul>
+<li>禁止注释，键名必须为双引号字符串；  </li>
+<li>最后一个元素后不能有逗号；  </li>
+<li>严格区分大小写。</li>
+</ul>
+<h4 id="json文件内容示例："><a href="#json文件内容示例：" class="headerlink" title="json文件内容示例："></a>json文件内容示例：</h4><pre><code class="json">[
+    &#123;
+        &quot;name&quot;: &quot;Alice&quot;,
+        &quot;age&quot;: 14,
+        &quot;description&quot;: &quot;哈喽，我是一条注释。虽然没有注释专用写法，但是添加一些不被获取处理的内容不就能当注释用了。看，下面的那个对象包含了一个数组，羡慕哦&quot;,
+        &quot;hobbies&quot;: [&quot;⭐&quot;,&quot;叁七&quot;]
+    &#125;
+]
+</code></pre>
+<p>json文件为一个json数组，而内容是一条或多条json格式的对象</p>
+<pre><code class="json">[
+    &#123;
+        &quot;name&quot;: &quot;Alice&quot;,
+        &quot;age&quot;: 14,
+        &quot;hobbies&quot;: [&quot;⭐&quot;]
+    &#125;,
+    &#123;
+        &quot;name&quot;: &quot;叁七&quot;,
+        &quot;age&quot;: 20,
+        &quot;hobbies&quot;: [&quot;🎮&quot;]
+    &#125;
+]
+</code></pre>
+<h4 id="嵌套结构"><a href="#嵌套结构" class="headerlink" title="嵌套结构"></a>嵌套结构</h4><pre><code class="json">[
+    &#123;
+        &quot;name&quot;: &quot;Alice&quot;,
+        &quot;age&quot;: 14,
+        &quot;hobbies&quot;: [&quot;⭐&quot;],
+        &quot;friends&quot;: [
+            &#123;
+                &quot;name&quot;: &quot;叁七&quot;,
+                &quot;age&quot;: 20,
+                &quot;hobbies&quot;: [&quot;🎮&quot;]
+            &#125;,&#123;
+                &quot;name&quot;: &quot;Alice还没有其他朋友&quot;,
+                &quot;description&quot;:&quot;并非json文件中所有并行对象格式都必须相同，但会在处理中报错，并且强迫症看到极其不舒服&quot;
+            &#125;
+            ]
+    &#125;
+]
+</code></pre>
+<hr>
+<h3 id="三、数据处理方法（JavaScript）"><a href="#三、数据处理方法（JavaScript）" class="headerlink" title="三、数据处理方法（JavaScript）"></a>三、数据处理方法（JavaScript）</h3><ol>
+<li>JSON ↔ 字符串转换：  <ul>
+<li>序列化：<code>JSON.stringify(obj)</code>，将对象转为 JSON 字符串；  </li>
+<li>反序列化：<code>JSON.parse(str)</code>，将字符串转为 JS 对象。</li>
+</ul>
+</li>
+</ol>
+<p>你可能见过</p>
+<pre><code>const obj = &#123; name: &quot;Alice&quot;, age: 14&#125;;
+</code></pre>
+<p>似乎很像json，然而事实是它只是一个JavaScript对象，再次强调json字符串是格式严格的，键值对必须用双引号包裹。</p>
+<p>转换的方法是：</p>
+<pre><code>const jsonStr = JSON.stringify(obj);
+const obj = JSON.parse(jsonStr);
+</code></pre>
+<p><strong>序列化或反序列化之前不进行格式检查，有可能丢失原本的属性，你可能在报错中见过形如<code>[Object Object]</code>的字符串，就是被玩坏的json格式</strong></p>
+<pre><code class="javascript">   // 格式化
+   const jsonStr = JSON.stringify(obj, null, 2); // **缩进2空格美化**；
+   console.log(jsonStr);//打印出我们常见的格式
+</code></pre>
+<ol start="2">
+<li>数据处理：</li>
+</ol>
+<p>JavaScript 如何利用json数据？</p>
+<p>假设一个json对象如下：<br><code>const data = &#123; users: [&#123; id: 1 &#125;, &#123; id: 2 &#125;] &#125;;</code></p>
+<p>那么<code>data.users</code>就会得到一个数组，数组中包含两个对象，每个对象都有<code>id</code>属性。</p>
+<ul>
+<li>对象：用 <code>for...in</code> 循环或 <code>Object.keys()</code> 遍历键值对；  </li>
+<li>数组：用 <code>forEach()</code> 或 <code>for</code> 循环处理。</li>
+</ul>
+<pre><code class="javascript">   // 示例：遍历 JSON 对象
+   const data = &#123; users: [&#123; id: 1 &#125;, &#123; id: 2 &#125;] &#125;;
+   for (let key in data) &#123;
+       console.log(key, data[key]);
+   &#125;
+   // 输出：users [ &#123; id: 1 &#125;, &#123; id: 2 &#125; ]
+   //注意，这里因为没有加引号，不是有效的json格式，json格式必须加引号
+   data.users.forEach(user =&gt; console.log(user.id)); // 输出 1, 2；
+   console.log(data.users.map(user =&gt; user.id)); // 输出 [1, 2]
+   console.log(data.users[1]);// 输出 &#123; id: 2 &#125;
+</code></pre>
+<ol start="3">
+<li><p>复杂操作：  </p>
+<ul>
+<li>递归处理嵌套结构：用于深度修改或筛选数据；  </li>
+<li>字符串替换：正则表达式处理特殊字符（如 <code>replace(/\\/g, &#39;&#39;)</code>）。</li>
+</ul>
+</li>
+<li><p><code>JSON.parse()</code> 异常处理：  </p>
+<ul>
+<li>使用 <code>try...catch</code> 捕获无效 JSON 字符串。</li>
+</ul>
+<pre><code class="javascript">try &#123;
+    const data = JSON.parse(jsonStr);
+&#125; catch (e) &#123;
+    console.error(e);//一般输出invalide JSON string
+&#125;
+</code></pre>
+<p>而 <code>JSON.stringify()</code>不会检查原本是不是字符串格式</p>
+</li>
+</ol>
+<p>关于json的处理，可以在node环境打开命令行输入简单的语句进行测试</p>
+<p><code>cmd</code>-&gt; <code>node</code> -&gt; <code>console.log(JSON.parse(&#39;&#123;&quot;name&quot;: &quot;Alice&quot;, &quot;age&quot;: 14&#125;&#39;));</code></p>
+<h3 id="相关"><a href="#相关" class="headerlink" title="相关"></a>相关</h3><p>jsonl文件：json文件每行一条数据，适合于大数据量的处理，常用于大模型数据训练。</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 此方悬停 </span>
