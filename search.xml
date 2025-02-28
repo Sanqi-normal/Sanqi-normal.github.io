@@ -8,7 +8,7 @@
       <link href="/2025/02/27/%E6%97%A5%E5%BF%97-3/"/>
       <url>/2025/02/27/%E6%97%A5%E5%BF%97-3/</url>
       
-        <content type="html"><![CDATA[<h3 id="长期记忆优化"><a href="#长期记忆优化" class="headerlink" title="长期记忆优化"></a>长期记忆优化</h3><ul><li><p>调用硅基嵌入模型免费api，将优化所得向量保存至本地</p></li><li><p>启动后端时直接读取量化后的向量文本</p></li><li><p>每次对话添加量化后的向量到json文件数组中，注意index</p></li></ul><p>这样就省去模型的本地部署和向量每次初始化，效率大大提升。</p><p>同时，硅基嵌入模型BAAI&#x2F;bge-m3免费，一次最大接收8k上下文，对中文处理更优，多次测试结果相比先前paraphrase-multilingual-MiniLM-L12-v2效果好很多，可谓是省时省力效果又提升。</p>]]></content>
+        <content type="html"><![CDATA[<h3 id="长期记忆优化"><a href="#长期记忆优化" class="headerlink" title="长期记忆优化"></a>长期记忆优化</h3><ul><li><p>调用硅基嵌入模型免费api，将优化所得向量保存至本地</p></li><li><p>启动后端时直接读取量化后的向量文本</p></li><li><p>每次对话添加量化后的向量到json文件数组中，注意index</p></li></ul><p>这样就省去模型的本地部署和向量每次初始化，效率大大提升。</p><p>同时，硅基嵌入模型BAAI&#x2F;bge-m3免费，一次最大接收8k上下文，对中文处理更优，多次测试结果相比先前paraphrase-multilingual-MiniLM-L12-v2效果好很多，可谓是省时省力效果又提升。</p><p>以此为思路，工具调用也应该找硅基上的小模型，可以预想到效果会好很多。</p>]]></content>
       
       
       
@@ -1092,9 +1092,9 @@
       
         <tags>
             
-            <tag> 日志 </tag>
-            
             <tag> github </tag>
+            
+            <tag> 日志 </tag>
             
         </tags>
       
@@ -1443,9 +1443,9 @@
       
         <tags>
             
-            <tag> 测试 </tag>
-            
             <tag> 博客 </tag>
+            
+            <tag> 测试 </tag>
             
         </tags>
       
