@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8"> 
-  <title>fetch请求格式及中断方法 | 叁七のblog</title>
-  <meta name="keywords" content=" 笔记 , Web ">
-  <meta name="description" content="fetch请求格式及中断方法 | 叁七のblog">
+  <title>日志 | 叁七のblog</title>
+  <meta name="keywords" content=" 日志 ">
+  <meta name="description" content="日志 | 叁七のblog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="此页面禁用了快捷键，如导航到新页面无法使用快捷键，请重新刷新界面如发送按钮无效，也请等待或刷新页面介绍：这是借用fittencode的api的ai 查看本地AIweb界面   发送       body {         font-family: Arial, sans-serif;         background:rgb(255, 241, 200)!important;">
 <meta property="og:type" content="website">
@@ -1367,43 +1367,31 @@
 <div id="post">
      
     <div class="pjax">
-        <article id="post-fetch请求格式及中断方法" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-日志-3" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">fetch请求格式及中断方法</h1>
+        <h1 class="article-title">日志</h1>
     
     <div class="article-meta">
         
         
-        
-        <span class="book">
-            <i class="iconfont icon-category"></i>
-            
-            
-            <a  data-rel="计算机">计算机</a> > 
-            
-            <a  data-rel="计算机&lt;---&gt;Web">Web</a>
-            
-        </span>
         
         
         <span class="tag">
             <i class="iconfont icon-tag"></i>
             
-            <a class="color3">笔记</a>
-            
-            <a class="color4">Web</a>
+            <a class="color3">日志</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-12-25 22:36:22'>2024-12-25 22:11</time>
+            Created At : <time class="date" title='Updated At: 2025-02-28 12:34:21'>2025-02-27 21:37</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:637</span>
+        <span>Count:157</span>
         
         
         
@@ -1411,7 +1399,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%95%BF%E6%9C%9F%E8%AE%B0%E5%BF%86%E4%BC%98%E5%8C%96"><span class="toc-text">长期记忆优化</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -1427,78 +1415,16 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>因为一个fetch请求中断被折磨了好久。</p>
-<p>fetch请求格式：</p>
-<p>Get请求：</p>
-<pre><code class="javascript">fetch(url, &#123;
-  method: &#39;GET&#39;,
-  headers: &#123;
-    &#39;Content-Type&#39;: &#39;application/json&#39;
-  &#125;
-&#125;)
-.then(response =&gt; &#123;//响应处理
-  if (!response.ok) &#123;
-    throw new Error(&#39;Network response was not ok&#39;);
-  &#125;
-  return response.json();
-&#125;)
-.then(data =&gt; &#123;//数据处理
-  console.log(&#39;Success:&#39;, data);
-&#125;)
-.catch(error =&gt; &#123;//错误处理
-  console.error(&#39;Error:&#39;, error);
-&#125;);
-</code></pre>
-<p>Post请求：</p>
-<pre><code class="javascript">fetch(url, &#123;
-  method: &#39;POST&#39;,
-  headers: &#123;
-    &#39;Content-Type&#39;: &#39;application/json&#39;
-  &#125;,
-  body: JSON.stringify(data)//请求体,用来上传json数据
-&#125;);
-</code></pre>
-<p>中断方法：</p>
-<p>如果fetch请求中断，可以用AbortController来取消请求。</p>
-<pre><code class="javascript">const controller = new AbortController();
-
-fetch(url, &#123;
-  signal: controller.signal
-&#125;);
-
-//需要中断时调用
-controller.abort();
-</code></pre>
-<p>fetch的第二个参数是对象，一般可写为options&#x3D;{},对象里添加请求头等参数属性。</p>
-<p>也可以直接写为：</p>
-<pre><code class="javascript">fetch(url, &#123;method: &#39;POST&#39;,headers: &#123;&#39;Content-Type&#39;: &#39;application/json&#39;&#125;,
-signal: controller.signal&#125;);//是的，这样我就明白了，常规写法不过是换行了。
-</code></pre>
-<p>signal在options对象中应当放在headers对象之后而不是header当中，也就是说它是请求部分传递的参数。</p>
-<p>如果写成{options,signal},这样就会报错。</p>
-<pre><code class="javascript">fetch(url, &#123;
-  method: &#39;POST&#39;,
-  headers: &#123;    
-    &#39;Content-Type&#39;: &#39;application/json&#39;
-  &#125;,
-  signal: controller.signal//在header外面
-&#125;);
-</code></pre>
-<p>signal被触发后响应的事件可以这么写：</p>
-<pre><code class="javascript">let abortornot;
-signal.addEventListener(&#39;abort&#39;,
-  () =&gt; abortornot=true//可以添加其他响应事件
-);
-</code></pre>
-<p>关于javascript的()&#x3D;&gt;语法，它是一个箭头函数，箭头函数提供了一种更简洁的函数定义方式，特别适用于那些需要匿名函数的场景，比如回调函数、事件处理程序等。箭头函数不仅语法更简洁，而且它不会创建自己的 this 上下文，而是捕获其所在上下文的 this 值。</p>
-<pre><code class="javascript">this.value = 1;
-const myFunc = () =&gt; &#123;
-  console.log(this.value);// 1, 而不是 undefined
-&#125;;
-</code></pre>
-<p>另外，fetch请求是异步的，也就是说，它不会阻塞主线程，而是返回一个 Promise 对象，当响应返回时，Promise 对象会被解析，并调用相应的 then() 或 catch() 方法。</p>
-<p>有些语法只有在异步请求里才可以用，比如在 then() 方法里的箭头函数，因为 then() 方法里的回调函数是在异步请求完成后才执行的。</p>
-<p>try{…}catch{…}finally{…}是用来处理请求的错误的，它可以用来捕获异步请求的错误，并在请求完成后执行一些清理工作，这个方法也可用于同步。</p>
+        <h3 id="长期记忆优化"><a href="#长期记忆优化" class="headerlink" title="长期记忆优化"></a>长期记忆优化</h3><ul>
+<li><p>调用硅基嵌入模型免费api，将优化所得向量保存至本地</p>
+</li>
+<li><p>启动后端时直接读取量化后的向量文本</p>
+</li>
+<li><p>每次对话添加量化后的向量到json文件数组中，注意index</p>
+</li>
+</ul>
+<p>这样就省去模型的本地部署和向量每次初始化，效率大大提升。</p>
+<p>同时，硅基嵌入模型BAAI&#x2F;bge-m3免费，一次最大接收8k上下文，对中文处理更优，多次测试结果相比先前paraphrase-multilingual-MiniLM-L12-v2效果好很多，可谓是省时省力效果又提升。</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 此方悬停 </span>
