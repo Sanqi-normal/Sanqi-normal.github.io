@@ -57,64 +57,7 @@
 
 
 <body>
-<!-- 模态框 HTML 
-<div id="myModal" class="modal">
-    <div class="modal-content">
-        <p style="text-align:center;font-size:26px;">你从何处，来此驻足</p>
-        <br/>
-        <br/>
-        <br/>
-        <div class="modal-options-left">
-            <a id="passby">进来逛逛</button>
-        </div>
-        <div class="modal-options-right">
-            <a id="seeyou">我认得你</button>
-        </div>
-    </div>
-</div>
-<script>
-// 获取模态框元素
-var modal = document.getElementById('myModal');
-window.onload = function() {
-    // 检查是否是第一次访问
-    if (!sessionStorage.getItem('modalShown')) {
-        document.getElementById('myModal').style.display = 'block'; // 显示模态框
-   }
 
-
-    // 点击模态框外部也可以关闭模态框
-    window.onclick = function(event) {
-        const modal = document.getElementById('myModal');
-        if (event.target === modal) {
-            modal.style.display = 'none';
-        }
-    }
-    var option1 = document.getElementById('passby');
-var option2 = document.getElementById('seeyou');
-
-    // 点击选项1时关闭模态框
-    option1.onclick = function() {
-        modal.style.display = "none";
-        sessionStorage.setItem('modalShown', 'true'); // 设置一个标记，表示模态框已显示过
- 
-    }
-
-    // 点击选项2时关闭模态框
-    option2.onclick = function() {
-        modal.style.display = "none";
-        input();
-        sessionStorage.setItem('modalShown', 'true'); // 设置一个标记，表示模态框已显示过
-    }
-
-};
-function input(){
-    var token = prompt("魔法咒语是");
-    if(token &&token != "token"){
-        alert("去找我聊聊天吧");
-        input(); 
-    }
-}
-</script>-->
 <aside class="nav mobile">
     <div class="nav-left">
         <!--左侧栏模板逻辑-->
@@ -178,7 +121,7 @@ function input(){
     <li>
         <div class="all active" data-rel="All">All
             
-                <small>(76)</small>
+                <small>(78)</small>
             
         </div>
     </li>
@@ -232,7 +175,7 @@ function input(){
         <div data-rel="计算机">
             <i class="fold iconfont icon-right"></i>
             计算机
-            <small>(39)</small>
+            <small>(40)</small>
         </div>
         
             <ul class="sub hide">
@@ -275,7 +218,7 @@ function input(){
         <div data-rel="计算机&lt;---&gt;软件">
             
             软件
-            <small>(5)</small>
+            <small>(6)</small>
         </div>
         
     </li>
@@ -497,8 +440,8 @@ function input(){
         
     </div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="76">
-<input type="hidden" id="yelog_site_word_count" value="74.5k">
+<input type="hidden" id="yelog_site_posts_number" value="78">
+<input type="hidden" id="yelog_site_word_count" value="75.3k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -763,6 +706,24 @@ function input(){
         </a>
         
         
+        <a  class="All 计算机 软件 "
+           href="/2025/03/04/%E6%88%91%E7%8B%AC%E7%AB%8B%E5%88%9B%E5%BB%BA%E7%9A%84%E7%AC%AC%E4%B8%80%E6%AC%BE%E6%89%8B%E6%9C%BA%E5%BA%94%E7%94%A8/"
+           data-tag="Android,Alice"
+           data-author="" >
+            <span class="post-title" title="我独立创建的第一款手机应用">我独立创建的第一款手机应用</span>
+            <span class="post-date" title="2025-03-04 10:53:07">2025/03/04</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2025/03/04/%E5%AE%89%E5%8D%93%E5%BA%94%E7%94%A8%E5%86%85%E9%83%A8%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="安卓应用内部生命周期">安卓应用内部生命周期</span>
+            <span class="post-date" title="2025-03-04 10:48:31">2025/03/04</span>
+        </a>
+        
+        
         <a  class="All 计算机 渗透 "
            href="/2025/02/28/%E9%80%9A%E8%BF%87%E6%B1%87%E7%BC%96%E5%B1%82%E9%9D%A2%E8%AF%AD%E4%B9%89%E9%87%8F%E5%8C%96%E5%8F%8A%E6%98%A0%E5%B0%84%E6%9D%A5%E9%80%86%E5%90%91%E7%A8%8B%E5%BA%8F%E7%9A%84%E8%AE%BE%E6%83%B3/"
            data-tag="AI,逆向工程"
@@ -1008,7 +969,7 @@ function input(){
         
         <a  class="All 计算机 前端 "
            href="/2024/12/30/css%E6%A0%B7%E5%BC%8F%E4%B9%A6%E5%86%99%E7%AC%94%E8%AE%B0/"
-           data-tag="前端,css"
+           data-tag="css,前端"
            data-author="" >
             <span class="post-title" title="css样式书写笔记">css样式书写笔记</span>
             <span class="post-date" title="2024-12-30 15:38:32">2024/12/30</span>
@@ -1462,8 +1423,7 @@ function input(){
     }
 </style>
 </div>
-            <h1 id="你从何处-来此驻足"><a href="#你从何处-来此驻足" class="headerlink" title="你从何处  来此驻足"></a>你从何处  来此驻足</h1><script src="/js/ipsave.js" defer></script>
-<!--
+            <h1 id="你从何处-来此驻足"><a href="#你从何处-来此驻足" class="headerlink" title="你从何处  来此驻足"></a>你从何处  来此驻足</h1><!--<script src="/js/ipsave.js" defer></script>
 <br/><br/><br/><br/><br/>
 <span style='color:grey;font-size:smaller'>
 文章数量：<code class="article_number"></code>总字数：<code class="site_word_count"></code>
