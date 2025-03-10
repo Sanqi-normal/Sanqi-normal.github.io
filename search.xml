@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>AI图生图、图生视频鉴赏</title>
+      <link href="/2025/03/10/AI%E5%9B%BE%E7%94%9F%E5%9B%BE%E3%80%81%E5%9B%BE%E7%94%9F%E8%A7%86%E9%A2%91%E9%89%B4%E8%B5%8F/"/>
+      <url>/2025/03/10/AI%E5%9B%BE%E7%94%9F%E5%9B%BE%E3%80%81%E5%9B%BE%E7%94%9F%E8%A7%86%E9%A2%91%E9%89%B4%E8%B5%8F/</url>
+      
+        <content type="html"><![CDATA[<p>优秀的生图AI已然真假难辨了。</p><p>这几张图是我用自己画的像素画生出来的。</p><p><img src="https://testingcf.jsdelivr.net/gh/sanqi-normal/sanqi-normal.github.io/img/3612b03c9c271cb9e8d5c2e9c00c914.jpg"></p><p><img src="https://testingcf.jsdelivr.net/gh/sanqi-normal/sanqi-normal.github.io/img/adca41b77ad2a0e764c157a3186c8d4.jpg"></p><p><img src="https://testingcf.jsdelivr.net/gh/sanqi-normal/sanqi-normal.github.io/img/b6b8171b05af80ceec972f44af2156b.jpg"></p><p>还有图生视频</p><video src="https://testingcf.jsdelivr.net/gh/sanqi-normal/sanqi-normal.github.io/video/Alice_AI生图.mp4" controls="controls" width="640" height="480">Your browser does not support the video tag.</video>]]></content>
+      
+      
+      <categories>
+          
+          <category> 计算机 </category>
+          
+          <category> AI </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> AI </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Alice形象绘制</title>
       <link href="/2025/03/06/Alice%E5%BD%A2%E8%B1%A1%E7%BB%98%E5%88%B6/"/>
       <url>/2025/03/06/Alice%E5%BD%A2%E8%B1%A1%E7%BB%98%E5%88%B6/</url>
@@ -832,9 +859,9 @@
       
         <tags>
             
-            <tag> 前端 </tag>
-            
             <tag> css </tag>
+            
+            <tag> 前端 </tag>
             
         </tags>
       
