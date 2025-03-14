@@ -509,7 +509,7 @@
 .nav-left {
   width: 120px;
   height: 100%;
-  background: #2e2828;
+  background: #3f4952;
   box-shadow: inset -15px 0 15px -15px #222;
   float: left;
   position: relative;
@@ -967,7 +967,7 @@
   left: 12px;
   z-index: 1;
   font-size: 18px;
-  color: rgba(81,39,39,0.87);
+  color: #3f4952;
 }
 .nav-right .title-list nav a#top:before,
 .nav-right .title-list #local-search-result a#top:before {
