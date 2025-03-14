@@ -660,7 +660,7 @@
 .nav-right {
   width: 420px;
   height: 100%;
-  background: #fff;
+  background: rgba(255,255,255,0);
   border-right: 1px solid #e5e8ec;
   overflow: hidden;
   float: left;
