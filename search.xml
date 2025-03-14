@@ -464,7 +464,7 @@
       <link href="/2025/02/16/%E9%87%8D%E8%A6%81%E5%A4%96%E9%93%BE%E6%B1%87%E6%80%BB/"/>
       <url>/2025/02/16/%E9%87%8D%E8%A6%81%E5%A4%96%E9%93%BE%E6%B1%87%E6%80%BB/</url>
       
-        <content type="html"><![CDATA[<p style="color:grey;font-size:smaller">注：部分需科学上网，部分作者自己也没看</p><h2 id="友链"><a href="#友链" class="headerlink" title="友链"></a>友链</h2><p>暂无</p><h2 id="教程"><a href="#教程" class="headerlink" title="教程"></a>教程</h2><p>本博客搭建 <a href="https://blog.csdn.net/yaorongke/article/details/119089190">https://blog.csdn.net/yaorongke/article/details/119089190</a></p><p>ctf <a href="https://hello-ctf.com/">https://hello-ctf.com/</a></p><p>huggingface <a href="https://huggingface.co/learn">https://huggingface.co/learn</a></p><p>n8n 中文教程 <a href="https://n8n.akashio.com/article/welcome">https://n8n.akashio.com/article/welcome</a></p><h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><p>ip查询 <a href="https://ip.sb/">https://ip.sb/</a></p><p>站长工具 <a href="https://tool.chinaz.com/">https://tool.chinaz.com/</a></p><p>Z-library <a href="https://zh.z-lib.gs/">https://zh.z-lib.gs/</a></p><p>电子书（搭配Z-lib） <a href="https://www.neat-reader.cn/">https://www.neat-reader.cn/</a></p><p>加解密 <a href="https://www.toolhelper.cn/">https://www.toolhelper.cn/</a></p><p>Github代理下载 <a href="https://ghproxy.link/">https://ghproxy.link/</a></p><p>镜像网站 <a href="https://zhuanlan.zhihu.com/p/609597886">https://zhuanlan.zhihu.com/p/609597886</a></p><p>虚拟机 <a href="https://www.vulnhub.com/">https://www.vulnhub.com/</a></p>]]></content>
+        <content type="html"><![CDATA[<h2 id="友链"><a href="#友链" class="headerlink" title="友链"></a>友链</h2><p><a href="https://xavierwar.top/">Xavierwar的博客</a></p><h2 id="教程"><a href="#教程" class="headerlink" title="教程"></a>教程</h2><p style="color:grey;font-size:smaller">注：部分需科学上网，部分作者自己也没看</p><p>本博客搭建 <a href="https://blog.csdn.net/yaorongke/article/details/119089190">https://blog.csdn.net/yaorongke/article/details/119089190</a></p><p>ctf <a href="https://hello-ctf.com/">https://hello-ctf.com/</a></p><p>huggingface <a href="https://huggingface.co/learn">https://huggingface.co/learn</a></p><p>n8n 中文教程 <a href="https://n8n.akashio.com/article/welcome">https://n8n.akashio.com/article/welcome</a></p><h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><p>ip查询 <a href="https://ip.sb/">https://ip.sb/</a></p><p>站长工具 <a href="https://tool.chinaz.com/">https://tool.chinaz.com/</a></p><p>Z-library <a href="https://zh.z-lib.gs/">https://zh.z-lib.gs/</a></p><p>电子书（搭配Z-lib） <a href="https://www.neat-reader.cn/">https://www.neat-reader.cn/</a></p><p>加解密 <a href="https://www.toolhelper.cn/">https://www.toolhelper.cn/</a></p><p>Github代理下载 <a href="https://ghproxy.link/">https://ghproxy.link/</a></p><p>镜像网站 <a href="https://zhuanlan.zhihu.com/p/609597886">https://zhuanlan.zhihu.com/p/609597886</a></p><p>虚拟机 <a href="https://www.vulnhub.com/">https://www.vulnhub.com/</a></p>]]></content>
       
       
       
@@ -1118,9 +1118,9 @@
       
         <tags>
             
-            <tag> 渗透 </tag>
-            
             <tag> 笔记 </tag>
+            
+            <tag> 渗透 </tag>
             
         </tags>
       
@@ -1263,9 +1263,9 @@
       
         <tags>
             
-            <tag> github </tag>
-            
             <tag> 日志 </tag>
+            
+            <tag> github </tag>
             
         </tags>
       
