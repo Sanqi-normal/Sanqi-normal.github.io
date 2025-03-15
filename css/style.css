@@ -710,7 +710,7 @@
 }
 .nav-right .title-list .right-top #default-panel .iconfont.icon-search.active,
 .nav-right .title-list .right-top #outline-panel .iconfont.icon-search.active {
-  color: #910000;
+  color: #c00000;
 }
 .nav-right .title-list .right-top #default-panel .iconfont.icon-file-tree,
 .nav-right .title-list .right-top #outline-panel .iconfont.icon-file-tree {
@@ -807,7 +807,7 @@
   width: 3px;
 }
 .nav-right .title-list .tags-list .tag-wrapper::-webkit-scrollbar-thumb {
-  background: #a60000;
+  background: #f00000;
 }
 .nav-right .title-list .tags-list .tag-wrapper li {
   float: none;
@@ -852,7 +852,7 @@
   width: 3px;
 }
 .nav-right .title-list #outline-list::-webkit-scrollbar-thumb {
-  background: #b50000;
+  background: #f00;
 }
 .nav-right .title-list #outline-list .toc {
   list-style-type: none;
@@ -900,7 +900,7 @@
 }
 .nav-right .title-list #outline-list .toc a.active {
   background-color: #ebedef;
-  color: #ac0000;
+  color: #fe0000;
 }
 .nav-right .title-list nav,
 .nav-right .title-list #local-search-result {
@@ -923,7 +923,7 @@
 }
 .nav-right .title-list nav::-webkit-scrollbar-thumb,
 .nav-right .title-list #local-search-result::-webkit-scrollbar-thumb {
-  background: #d00000;
+  background: #f10000;
 }
 .nav-right .title-list nav #no-item-tips,
 .nav-right .title-list #local-search-result #no-item-tips {
@@ -934,7 +934,7 @@
 }
 .nav-right .title-list nav #no-item-tips span,
 .nav-right .title-list #local-search-result #no-item-tips span {
-  color: #ae0000;
+  color: #ff1313;
 }
 .nav-right .title-list nav .search-result-list,
 .nav-right .title-list #local-search-result .search-result-list {
@@ -967,7 +967,7 @@
   left: 12px;
   z-index: 1;
   font-size: 18px;
-  color: #3f4952;
+  color: #d17d00;
 }
 .nav-right .title-list nav a#top:before,
 .nav-right .title-list #local-search-result a#top:before {
@@ -1648,7 +1648,7 @@ h2 {
   width: 542px;
   height: 100%;
   float: left;
-  background-color: #fff;
+  background-color: rgba(0,0,0,0);
   transition: margin-left 0.5s cubic-bezier(0.77, 0, 0.175, 1);
 }
 .nav.fullscreen {
