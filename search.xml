@@ -4,11 +4,65 @@
   
     
     <entry>
+      <title>可编程游戏的设想与起步</title>
+      <link href="/2025/04/09/2025-4-9/"/>
+      <url>/2025/04/09/2025-4-9/</url>
+      
+        <content type="html"><![CDATA[<p>懒得写技术笔记之类的博客了，毕竟这类博客CSDN上并不缺，以后这里就专门记我的进度吧。</p><blockquote><p>基于Unity的游戏内置编译器</p></blockquote><p>两天时间写了十多个脚本，已经完成了一个基础的脚本格式的构建。</p><p>不知道起什么名字就好，但有区分的必要，暂且就叫内置语法。</p><h2 id="脚本编写流程："><a href="#脚本编写流程：" class="headerlink" title="脚本编写流程："></a>脚本编写流程：</h2><p>在游戏中选中对象，弹出脚本UI，填写提交后，如果提交内容不同于初始内容，则开始执行。</p><h3 id="1、-脚本文本解析："><a href="#1、-脚本文本解析：" class="headerlink" title="1、 脚本文本解析："></a>1、 脚本文本解析：</h3><p>脚本文本按照语法规则拆分为tokens，其中包含多个分类——语法符号、算法符号、字符。对字符进一步分类，分类为变量、方法名、参数</p><h3 id="2、tokens依次交由个体解析器，模块解析器，主解析器解析执行。"><a href="#2、tokens依次交由个体解析器，模块解析器，主解析器解析执行。" class="headerlink" title="2、tokens依次交由个体解析器，模块解析器，主解析器解析执行。"></a>2、tokens依次交由个体解析器，模块解析器，主解析器解析执行。</h3><p>个体解析器：一个挂载到对象的Behavior类，可有可无，如果有，则先由其对脚本进行解析。个体解析器由玩家用内置语法书写。<br>个体解析器的作用是给单独的对象实现了特殊的编译，比如不允许此对象被移动，这样即使游玩者输入脚本进行更改也无法实现移动。</p><p>模块解析器：当前只写了一个实现简易语法的模块解析器，如up 2 ，delete<br>模块解析器应当可以启用和禁用，作用于全局，且应当有非常良好的拓展性。除了我写的基础模块由C#编写，其他应由社区玩家用内置语法编写。<br>模块解析器会是这个半引擎游戏创造拓展的重点。一方面为了让语法足够简单抽象，模块解析器将为语法提供足够简易全面的封装函数，另一方面启用和禁用模块，能直观地展现到游戏体验上。</p><p>主解析器：只由C#编写，在同一游戏版本中无法改变。</p><p>语法规则由拆分输入文本的脚本决定，主解析器只进行标准语法规则的映射执行，因而不需要频繁维护更改。</p><blockquote><p>Q: 如何实现内置语法解析内置语法？</p></blockquote><p>A: 用内置语法将方法写入对象脚本，利用重写特性对方法进行处理，即达到解析器的效果。</p><blockquote><p>Q: 玩家模块解析器如何引入合并？</p></blockquote><p>A：游戏可以主动读取在外置文件夹的脚本等资源，因而只需要提交打包的文件夹，合并排查问题保持可兼容。</p><h3 id="3、方法的执行："><a href="#3、方法的执行：" class="headerlink" title="3、方法的执行："></a>3、方法的执行：</h3><p>基础语法如Move等标注了方法名，利用映射获取参数类型，参数匹配后进入底层的C#代码执行。</p><p>其他语法均在基础语法上嵌套。全局语法封装到模块解析器中，全局脚本执行这类语法。</p><h2 id="当前脚本规则："><a href="#当前脚本规则：" class="headerlink" title="当前脚本规则："></a>当前脚本规则：</h2><p>[以下内容写在了内容的语法表里，离完整的语法还差很多内容]</p><p>[一般直接书写注释不影响代码执行，但建议用中括号包裹注释]<br>[大小写敏感]<br>[关键词和方法不可被用作变量命名]</p><p>[运算符]<br> “&gt;”, “&lt;”, “&#x3D;”, “&gt;&#x3D;”, “&lt;&#x3D;”, “&#x3D;&#x3D;”, “+&#x3D;”, “-&#x3D;”, “+”, “-“, “*”, “&#x2F;“<br>[关键字表]<br> “if”, “or”, “and”, “break”, “return”, “destroy”, “enable”, “disable”, “enabled”,<br>  “Name”, “this”, “Object”, “Camera”, “Mouse”, “Time”, “TimeSpeed”,<br>  “x”, “y”, “z”, “v”, “up”, “down”, “north”, “west”, “south”, “east”,<br>  “x+”, “x-“, “y+”, “y-“, “z+”, “z-“, “Now”, “Once”, “Loop”,”rotate.x”,”rotate.y”,”rotate.z”, “scale.x”,”scale.y”,”scale.z”, “move”, “force”, “meet”, “wait”, “write”,”delete”</p><p>[执行方法名表]</p><p>“Move”, “Rotate”, “Scale”, “Force”, “Meet”, “?Meet”, “OnClickLeft”, “OnClickRight”,<br>“OnHoldLeft”, “OnDragLeft”, “OnHoldLeftOut”, “OnDragLeftOut”, “selected”,<br>“Find”, “generate”, “Wait”, “Write”, “Delete”</p><p>[位置]</p><p>x y  z</p><p>[简单位移旋转缩放]</p><p>x +&#x3D; 1<br>rotate.x &#x3D; 90<br>scale x &#x3D; 10</p><p>[方向]</p><p>up down<br> north west south east<br>x+[x轴正方向] x- y+ y- z+ z-<br>[在当前游戏中north对应z+ east对应x+ up当然也就对应y+]</p><p>up 2 [方向加值，固定语义为位移]</p><p>[三种周期]</p><p>[周期添加于方法前决定方法执行的时机]、</p><p>Now:[加语句][Now可省略，即直接写语句，这样的语句会在编辑完脚本后直接执行，并会在执行后删除]</p><p>Once:[加语句] [立即执行一次，不删除，之后会在每次游戏运行时进行此初始化]</p><p>Loop: [加语句][游戏中循环执行语句]</p><p>[多行执行语句]</p><p>Loop: {<br>scale.x +&#x3D; 1<br>rotate.x -&#x3D; 1<br>}</p><p>[执行语句的书写]<br>[标准执行语句：]  </p><p>[方法关键字]+{ [参数1],[参数2],… }</p><p>[参数间以逗号分隔。每个参数都会限定类型，参数会依据类型自动填充到方法中，未被填充的参数会转为string依次填充到未填充的位置，第一个位置默认为当前操作对象，无需填充]</p><p>[当前执行语句方法]</p><p>[Move]</p><p>Move{[移动对象，可略],[表方向和距离的向量],[移动类型]，[移动时间]}</p><p>[三种移动类型]</p><p>Move{up 2,Instant}[瞬间，直接改变值]<br>Move{up 2,Easing}[缓动，变化先慢后快再慢，符合运动学原理]<br>Move {up 2,Smooth}[平滑，均匀变化]</p><p>[Rotate]<br>[Scale]</p><p>[逻辑大致与Move重合]</p><p>[以下略去方法的第一个对象参数]</p><p>[Force]</p><p>Force{[方向]，[作用点]}</p><p>[作用点为close时，作用点为离受控角色最近的点，为center时，作用点为对象刚体重心]</p><p>[Meet]</p><p>[1 返回发射射线遇到的刚体]</p><p>A &#x3D; Meet: {[方向],[发射距离],[可选发射起点]}</p><p>[2 返回是否碰到了期望的对象,它是1的基础上套一层判断逻辑]</p><p>Bool &#x3D; ？Meet:{[方向]，[发射距离]，[可选发射起点]，[可选期望对象名]}</p><p>[如果不填写期望名，那返回的将是是否碰到了任何对象]</p><p>[Find]</p><p>[依据条件全局寻找对象]</p><p>Find A.Name &#x3D; * [在全局找到一个名为*的对象，引用为A]</p><p>Find All A.Name &#x3D; *<br>[获取所有满足条件的对象命名为A，接下来对A的操作会对所有对象生效]</p><p>[执行语句的嵌套]</p><p>Move{From A to B , , Meet: { up , (From A to B).distance , B } }</p><p>[周期头部不可嵌套]</p><p>[生成语句]</p><p>generate A at (x,y,z)</p><p>[A可由Find得到，方向同样也一般由计算得到]</p><p>[协程]</p><p>[简单语句]</p><p>wait 5 [等待5秒再继续执行下面语句]</p><h2 id="其他要实现的内容"><a href="#其他要实现的内容" class="headerlink" title="其他要实现的内容"></a>其他要实现的内容</h2><p>[支持中文编程]<br>[这点也很有必要，理解容易，门槛低，也许对语法的抽象也能起到积极作用]<br>[支持全局变量和范围变量]</p><p>Name[对象名，同样是脚本名]<br>Name &#x3D; * [表示将此对象名称改为* 并将此脚本内容添加到*对应内容之后 可用于应用预制体特性到此对象上  而改写预制体的名称为一个新名即创造了一个预制体的变体]</p><p>this 脚本引用<br>Object 当前对象<br>this.Object 脚本挂载的所有对象<br>Object.Script 从对象获取脚本</p><p>Camera 摄像机，作为对象<br>Mouse 鼠标，接收事件</p><p>Time [获取到游戏运行时间，表值]<br>Time + 2*3600 [时间前进2小时，具体做法是等待协程计算未来结果并返回]<br>TimeSpeed [实际是每秒多少次update]<br>TimeSpeed * 2 [时间加速两倍]<br>TimeSpeed * 0 [静止]</p><p>[方向计算]</p><p>From A to B [表示一个包含方向和距离的向量，使用时用括号包裹]<br>(From A to B).direction [归一，表方向]<br>(From A to B).distance[求距离]</p><p>[速度]</p><p>v(Object.v)<br>v.x v.y v.z</p><p>[执行语句]</p><p>Wait{[时间],[条件,为真时终止等待]}</p><p>[两个均可选，时间不写默认为始终等待，如果写了条件无论时间是多少触发了条件就会跳出等待，都不写即协程在此处终止，但也有可能在进行循环，请看下面的例子。]</p><p>[等待期间执行检测]</p><p>wait until{x &gt; 10}</p><p>Wait{ , ?Meet:{north,10,,B}}</p><p>[Write]</p><p>[将一段语句写入特定脚本]</p><p>Find B.Name &#x3D; *</p><p>Write “””  x &#x3D; x + 2  “”” to B.Script</p><p>[将被三个引号包裹的语句写入名为*对象的脚本尾部，语句部分可换行]</p><p>[还可以指定写入的周期]</p><p>Write “””  x &#x3D; x + 2  “”” to B.Script.Now</p><p>[封装函数书写]</p><pre><code>Function: &#123;    FunctionName,&#123;    [首先认领参数，认领的次序为参数展示的次序,外面参数名里面要求类型]    parameter(type),    direction(Vector3),[From to等计算语句只会将结果传入这里，所以类型没错]    moveType(string),    moveTarget(string)    [虽然参数会自动匹配，但建议可选的参数放在后面，避免参数顺序错乱]    &#125;,&#123;    [接下来写具体逻辑]    if(!moveTarget)&#123;        moveTarget = Object    &#125;    if (direction != null)&#123;        if(moveType == &quot;Instant&quot;)&#123;        moveTarget.x = moveTarget.x + direction.x        moveTarget.y = moveTarget.y + direction.y        moveTarget.z = moveTarget.z + direction.z        &#125;        &#125;    &#125;&#125;</code></pre><p>[协程方法需要写两套，语法我之后再想吧]<br>[重写]<br>[这会很常用]<br>OverrideFunction:{Name,Para,newLogic}</p><p>[继承base添加]<br>[有熟悉原函数内容的必要]</p><p>OverrideFunction:{Name,Para,{Name:{Para},newLogic}}</p><p>[玩家自己写的对象局部封装函数需手动引入指定的function]</p><p>import Name.FunctionName</p><p>[需注意此脚本内则不可出现与方法同名的方法和变量名，重写函数当心覆盖]<br>[模块解析器内的方法则不用]</p><hr><p>在这两天的脚本处理中，原本的语法规则做了一些修改来规避bug，减少复杂处理。</p><p>主要的bug出在文本处理上，层出不穷，最后只好一步一步地打印跟踪查找问题。</p><p>所以当前没有实现的假想可能会在方法构建中更改规则。</p><p>对于当前来说，既然抽象语法树已经构建，之后的处理也就是在原基础上进行扩展，我相信不会更难。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 日志 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 日志 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Numpy库学习笔记</title>
+      <link href="/2025/03/25/Numpy%E5%BA%93%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+      <url>/2025/03/25/Numpy%E5%BA%93%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+      
+        <content type="html"><![CDATA[<p><a href="https://www.runoob.com/numpy/numpy-ndarray-object.html">菜鸟教程</a><br>numpy是python的一个库，提供了处理向量、数组、矩阵的函数工具。</p><h2 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h2><p>Numpy中对象为ndarray，为N维数组对象，是一系列同类型数据的集合。</p><h3 id="构成"><a href="#构成" class="headerlink" title="构成"></a>构成</h3><ul><li>一个指向数据的指针</li><li>数据类型dtype</li><li>表示数组形状的元组shape</li><li>跨度元组stride 其中的整数指的是前进到当前维度下一元素需跨过的字节。</li></ul><h3 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h3><pre><code>numpy.array(object, dtype=None, copy=True, order=None, subok=False, ndmin=0)</code></pre><ul><li>object：数组或嵌套的数列，可以是列表、元组、元组、字典等。</li><li>dtype：数据类型，可选。</li><li>copy：是否复制数据，可选。</li><li>order：创建数组的样式，C为行，F为列，A为任意，可选。</li><li>subok：默认返回一个与基类类型一致的数组，可选。</li><li>ndmin：指定生成数组的最小维度，可选。</li></ul><pre><code>import numpy as np# 创建1维数组a = np.array([1, 2, 3])print(a) # [1 2 3]# 创建2维数组b = np.array([[1, 2], [3, 4]])print(b) # [[1 2]          #  [3 4]]# 最小维度c= np.array([1, 2, 3], ndmin=2)print(c) # [[1 2 3]] 和先前不同的是存在一个空维度# dtyped = np.array([1, 2, 3], dtype=complex)print(d) # [1.+0.j 2.+0.j 3.+0.j] # 转换类型为复数</code></pre><h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><pre><code class="py">bool_int_ # 默认类型intc  # 与C类型相同intp # 与平台无关的指针大小的整数类型 int8、int16、int32、int64 uint8、uint16、uint32、uint64 # 无符号整数类型float_ # float64float16、float32、float64complex_ # complex128 复数complex64、complex128</code></pre><h3 id="数据类型对象-dtype"><a href="#数据类型对象-dtype" class="headerlink" title="数据类型对象 dtype"></a>数据类型对象 dtype</h3><pre><code class="py">import numpy as npdt=np.dtype(object, align=False, copy=False) # 创建数据类型对象print(dt) # objectdt1=np.dtype(&#39;i4&#39;) # 整型4字节dt2=np.dtype(&#39;&lt;i4&#39;) # 小端字节序</code></pre><p>创建结构化数据类型</p><pre><code class="py">dt=np.dtype([(&#39;name&#39;, &#39;S10&#39;), (&#39;age&#39;, &#39;i4&#39;)])print(dt) # [(&#39;name&#39;, &#39;S10&#39;), (&#39;age&#39;, &#39;&lt;i4&#39;)]</code></pre><p>内建类型的字符代码：</p><ul><li>S,a：字符串</li><li>b：布尔值</li><li>i：整数  </li><li>u：无符号整数</li><li>f：浮点数</li><li>c：复数</li><li>m：timedelta</li><li>M：datetime</li><li>O：Python对象</li><li>V：原始数据（void）</li></ul><h2 id="数组属性"><a href="#数组属性" class="headerlink" title="数组属性"></a>数组属性</h2><p>数组的维数就是矩阵的秩（rank）。</p><pre><code class="py">ndarray.shape # 数组形状ndarray.ndim # 数组维数ndarray.size # 数组元素个数ndarray.dtype # 数组元素类型ndarray.itemsize # 数组元素字节大小ndarray.data # 数组数据指针(存储实际元素的缓冲，通过索引访问元素)ndarray.flags # 数组信息(内存布局、是否连续、是否只读)ndarray.real # 数组的实部ndarray.imag # 数组的虚部</code></pre><h3 id="进阶创建数组"><a href="#进阶创建数组" class="headerlink" title="进阶创建数组"></a>进阶创建数组</h3><pre><code class="py">numpy.empty(shape, dtype=float, order=&#39;C&#39;) # 指定形状，数据类型numpy.zeros(shape, dtype=float, order=&#39;C&#39;) # 全零数组numpy.zeros_like(a, dtype=None, order=&#39;K&#39;, subok=True) # 与a形状相同的全零数组numpy.ones(shape, dtype=float, order=&#39;C&#39;) # 全一数组numpy.ones_like(a, dtype=None, order=&#39;K&#39;, subok=True) # 与a形状相同的全一数组numpy.full(shape, fill_value, dtype=None, order=&#39;C&#39;) # 全指定值数组numpy.eye(N, M=None, k=0, dtype=float) # 单位阵</code></pre><h3 id="从范围创建数组"><a href="#从范围创建数组" class="headerlink" title="从范围创建数组"></a>从范围创建数组</h3><pre><code class="py">numpy.arange(start, stop, step, dtype=None) # 等差数组numpy.linspace(start, stop, num, endpoint=True, retstep=False, dtype=None) # 等间距数组numpy.logspace(start, stop, num, endpoint=True, base=10.0, dtype=None) # 对数等间距数组</code></pre><h2 id="数组转化"><a href="#数组转化" class="headerlink" title="数组转化"></a>数组转化</h2><p>将列表元组等转换为ndarray</p><pre><code class="py">numpy.asarray(a, dtype=None, order=None) # 转换为ndarray</code></pre><p>与np.array区别在于：</p><ul><li>asarray()不会复制数组，而是直接使用原数据的内存，如果输入数组是ndarray，则会返回原数组。</li><li>array()会复制数组，即使输入数组是ndarray。</li></ul><h2 id="数组操作"><a href="#数组操作" class="headerlink" title="数组操作"></a>数组操作</h2><h3 id="切片和索引"><a href="#切片和索引" class="headerlink" title="切片和索引"></a>切片和索引</h3><p>切片和索引方式本身可以作为一个对象，需要时引用。</p><pre><code class="py">s =slice(2, 5, 2) # 切片对象 (start,stop,step)a=np.arange(10) # 1维数组0-9print(a[s]) # [2 4]b=a[2:5:2] # 等效操作</code></pre><h3 id="广播"><a href="#广播" class="headerlink" title="广播"></a>广播</h3><p>BoardCast发生在两个数组的形状不相同的计算中。</p><pre><code class="py">a=np.array([1, 2, 3])b=np.array([4, 5, 6],[7, 8, 9])c=a+bprint(c) # [[5 7 9]         # [8,10,12]]</code></pre><h3 id="迭代"><a href="#迭代" class="headerlink" title="迭代"></a>迭代</h3><p>迭代器对象numpy.nditer()提供了一种灵活访问一个或者多个数组元素的方式。</p><pre><code class="py">import numpy as np a = np.arange(6).reshape(2,3)print (&#39;原始数组是：&#39;)print (a)print (&#39;\n&#39;)print (&#39;迭代输出元素：&#39;)for x in np.nditer(a):    print (x, end=&quot;, &quot; )print (&#39;\n&#39;)</code></pre><p>nditer包含一个参数op_flags，用于指定迭代的类型。</p><ul><li>op_flag&#x3D;readwrite：默认值，表示可以读写元素。</li><li>op_flag&#x3D;readonly：只读元素。</li><li>op_flag&#x3D;writeonly：只写元素。</li></ul><p>迭代也可以应用在广播上，先广播后迭代</p><h3 id="修改数组"><a href="#修改数组" class="headerlink" title="修改数组"></a>修改数组</h3><h4 id="改变形状"><a href="#改变形状" class="headerlink" title="改变形状"></a>改变形状</h4><p>reshape不改变数据的条件下修改形状<br>flat数组元素迭代器<br>flatten返回一份数组拷贝，对拷贝所做的修改不会影响原始数组<br>ravel返回展开数组 C横向 F纵向</p><h4 id="对换"><a href="#对换" class="headerlink" title="对换"></a>对换</h4><p>transpose对换数组的维度<br>ndarray.T和 self.transpose() 相同<br>rollaxis向后滚动指定的轴<br>swapaxes对换数组的两个轴</p><h4 id="修改维度"><a href="#修改维度" class="headerlink" title="修改维度"></a>修改维度</h4><p>broadcast产生模仿广播的对象<br>broadcast_to将数组广播到新形状<br>expand_dims扩展数组的形状<br>squeeze从数组的形状中删除一维条目</p><h4 id="改变元素"><a href="#改变元素" class="headerlink" title="改变元素"></a>改变元素</h4><p>resize返回指定形状的新数组<br>append将值添加到数组末尾<br>insert沿指定轴将值插入到指定下标之前<br>delete删掉某个轴的子数组，并返回删除后的新数组<br>unique查找数组内的唯一元素</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 计算机 </category>
+          
+          <category> 编程 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> python </tag>
+            
+            <tag> 深度学习 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>记一次失败</title>
       <link href="/2025/03/23/%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%A4%B1%E8%B4%A5/"/>
       <url>/2025/03/23/%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%A4%B1%E8%B4%A5/</url>
       
-        <content type="html"><![CDATA[<p>一次成功的背后是无数次失败，这样说有点夸张了，但确实并不是每次想法付诸实践都能成功，而有时候即使成功也未必达到期望的效果。</p><p>接下来我将简述一次持续两三天的想法上的滑铁卢，记录下来的话这些时间也不算白白浪费吧。</p><p>首先我的目的是语音合成，并且是实时的、特定音色的合成。</p><p>我接触了sparktts这个模型，模型的语音生成质量非常出色，只需要短短几秒示范音频，不需要给出文本，就可以拟成音色。</p><p>再继续往下说之前，简单记一下前面的环境配置(举例)。</p><p>下载Anaconda（自动处理环境依赖矛盾）（我是不是之前记过，算了，不管了）</p><p>命令行执行命令</p><pre><code class="bash">conda create -n env-name # 创建名为env—name虚拟环境conda activate env-name # 激活这个虚拟环境，虚拟环境里的配置不会系统和其他环境产生冲突conda install [pakage-name] # 安装包#没有pip的话一般先把pip安装了，之后包都用pip安装和管理也可以，需要注意的是首先确认所需包所依赖的python环境版本#有时候自身所需的依赖也会冲突，需要手动调整包的版本，这时候你就只能祈祷不会出什么错pip install -r envrequirement.txt # 很多模型项目根目录都会放一个类似这样的文件，写了具体的依赖版本，这样直接统一安装了</code></pre><p>找到主程序入口，<code>python main_name.py</code> 运行它</p><p>但在我的主机上，预热后的rtf(<a href="https://blog.csdn.net/Toormi/article/details/143725255#:~:text=%E5%9C%A8%20TTS%EF%BC%88Text-to-Speech%EF%BC%89%20%E9%A2%86%E5%9F%9F%EF%BC%8C%20RTF%20%E9%80%9A%E5%B8%B8%E6%8C%87%E7%9A%84%E6%98%AF%20Real-Time%20Factor%EF%BC%8C%E5%8D%B3%E2%80%9C%E5%AE%9E%E6%97%B6%E5%9B%A0%E5%AD%90%E2%80%9D%E3%80%82%20%E8%BF%99%E6%98%AF%E4%B8%80%E4%B8%AA%E8%A1%A1%E9%87%8F,%E5%9C%A8%E8%AF%AD%E9%9F%B3%E7%94%9F%E6%88%90%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%84%E6%95%88%E7%8E%87%E3%80%82%20RTF%20%E8%A1%A8%E7%A4%BA%E7%94%9F%E6%88%90%E8%AF%AD%E9%9F%B3%E6%89%80%E9%9C%80%E7%9A%84%E5%A4%84%E7%90%86%E6%97%B6%E9%97%B4%E4%B8%8E%E8%AF%AD%E9%9F%B3%E6%97%B6%E9%95%BF%E7%9A%84%E6%AF%94%E5%80%BC%E3%80%82%20%E5%85%B6%E5%85%AC%E5%BC%8F%E4%B8%BA%EF%BC%9A%20RTF%20%3C%201%EF%BC%9A%E5%AE%9E%E6%97%B6%E6%88%96%E6%9B%B4%E5%BF%AB%E7%9A%84%E7%94%9F%E6%88%90%E3%80%82%20%E7%94%9F%E6%88%90%E8%AF%AD%E9%9F%B3%E6%89%80%E9%9C%80%E6%97%B6%E9%97%B4%E5%B0%91%E4%BA%8E%E8%AF%AD%E9%9F%B3%E6%97%B6%E9%95%BF%E3%80%82">什么是RTF</a>)大概是4以上。</p><p>这样的话是完全无法满足实时的需要的，我通过在关键节点打印时间，确定了主要耗时活动——生成过程。</p><p>sparktts是前向传播的回归模型，这意味着它不会同时进行每帧声音合成，而是根据前帧优化后面的语音。确保声音质量很高的同时，给显卡带来负担，即使90%以上的gpu使用率，尝试更改多处参数，无法对合成过程做出本质上的优化。</p><p>相似的还有通义的CosyVoice，同属音色克隆模型，没有尝试效果，但我清楚既然同处一个时间段，性能上不会有太大差距。</p><p>于是我决定另找模型，虽然AI提出蒸馏模型的方法，我认为这个过程生成占大部分时间，对音色合成逻辑进行剪枝未必能起多大作用。</p><p>在寻找即时语音模型过程中，我找到了fastspeech2，这是一个非回归的语音合成模型，它不是专门做音色克隆的，一般只需要接受文本参数就可以合成声音。</p><p>但它合成声音的速度非常快，合成流程是：接受文本-&gt;转化文本为拼音，标注音调-&gt;所有帧同时拟合声音-&gt;合并输出语音</p><p>因此，小规模语音合成的情况下，文本量几乎不对合成时间产生影响。rtf&lt;1，符合实时输出的要求。</p><p>有关中文合成，有一份AISHELL3训练集，多（218）说话人。在命令行合成声音时，可用<code>--speaker_id n</code> 指定选择的声音</p><p>由于我想合成自己满意的音色，于是想能否通过替换音色文件达成这一目的。</p><p>用模型提取音色的脚本</p><pre><code class="py"># 执行前需要 pip install 这个模型from speechbrain.inference import SpeakerRecognition  import torchaudioimport torchAUDIO_FILE = &quot;D:/EdgeDownload/20250321220346.wav&quot; # 目标音色音频路径OUTPUT_EMB = &quot;D:/GitC/FastSpeech2/target_emb.pt&quot; # 输出张量数据文件路径model = SpeakerRecognition.from_hparams(    source=&quot;speechbrain/spkrec-ecapa-voxceleb&quot;,    savedir=&quot;D:/GitC/FastSpeech2/pretrained_models&quot; )waveform, sr = torchaudio.load(AUDIO_FILE)# sr为采样频率 waveform波形if sr != 16000:    waveform = torchaudio.transforms.Resample(sr, 16000)(waveform)emb = model.encode_batch(waveform)target_emb = emb.squeeze().cpu()print(f&quot;Target emb shape: &#123;target_emb.shape&#125;&quot;) # 校验输出张量维度torch.save(target_emb, OUTPUT_EMB)print(f&quot;Saved target embedding to &#123;OUTPUT_EMB&#125;&quot;)</code></pre><p>结果输出的张量为192维，这和目标本身256维结构不符。</p><p>你当然不能这样简单的替换，因为目标文件包含218位说话人，并且相关脚本都已经确认了256这一数字，贸然替换肯定会漫天报错。</p><p>于是又进行了张量的维度转换。</p><pre><code class="py">linear = torch.nn.Linear(192, 256).cuda()target_emb_256 = linear(target_emb.unsqueeze(0)).squeeze(0) orig_mean = speaker_emb[0].mean()orig_std = speaker_emb[0].std()target_emb_256 = (target_emb_256 - target_emb_256.mean()) / target_emb_256.std() * orig_std + orig_mean</code></pre><p>你能发现不仅仅是维度的简单转换，还进行了规范化以保持音色符合目标音色要求，当然代码是AI给的，原理我是不懂的，公式都没认真看。</p><p>即使如此，期间辛酸无以言说——黑夜里，你只有撞到墙才知道绕道走。</p><p>替换完毕，多次试验，终于最后一次输出了正常的音频。</p><p>一听，脸一黑。这就不对！</p><p>音色不对，差距太多，即使调整音调语速都无法逼近想要的结果。</p><p>我存在两个怀疑，1是向量在变换中改变了自身，输出了先前相差深远的结果。2 音色数据替换失败了，fastspeech2内部有自动纠错机制，更换了发言人。</p><p>我没有再继续往下进行深究了，考虑，如果是第1种，我验证了自己的猜想，也算没白费，如果是第二种，那究竟如何替换音色都无从考虑。并且即使音色替换正确，这个发音质量也是不能接受的。</p><p>我考虑拿sparktts的生成训练fastspeech模型。</p><p>哎，真的离谱。我想正常的训练逻辑不该是这样的，由于各种出错，AI带着我把整个项目几乎全改了一遍。</p><p>人家项目都提供了train脚本，很明显自身逻辑应该不会出什么错的，这修改时间都快够自己写个小模型了。</p><p>最离谱的是改到最后改的我心灰意冷两眼暗淡无光的时候程序居然真的开始跑了。</p><p>训练了几个小时，早上起来一测试。没声音。</p><p>很显然，训练失败了。后知后觉地发现没有预训练模型，也就是说从初始化权重开始训练的，发音要一点点自己学，我那50条语音翻来覆去训练50000步就想给它训练成能说话的吗？</p><p>又加上。</p><p>又折腾，又改脚本，又过了一上午。</p><p>训练10000步，训练了有一个小时。因为觉得只是微调，调调音色。</p><p>训练完了，一听。</p><p>倒地吐血。</p><p>胡言乱语，还有背景杂音。这是拼音都不对啊。但是拼音的标注和输出是对的，所以还是训练失败了。</p><p>这次失败暂且就记到这里，太钻牛角尖费时费力没有效果，我相信日益腾飞的科技是可以弥补我脑子的缺失的。每天就蹲着看看有啥新模型发布了。</p><p>因为确实会有模型向单gpu和低参数发展，比如gemma3。</p><p>虽然过程很恼人，结果很悲哀，也没学到什么知识——但大抵还是学到一点？比如说部署独立完整模型项目和训练模型应该是头一次。</p><p>那大概也不算，嗯，唉。</p><p>总会有这种时候，人不会一直高喊成功。但到了下次高喊成功的时候，这次的憋屈和无力就烟消云散了，所以，继续加油吧。</p>]]></content>
+        <content type="html"><![CDATA[<p>一次成功的背后是无数次失败，这样说有点夸张了，但确实并不是每次想法付诸实践都能成功，而有时候即使成功也未必达到期望的效果。</p><p>接下来我将简述一次持续两三天的想法上的滑铁卢，记录下来的话这些时间也不算白白浪费吧。</p><p>首先我的目的是语音合成，并且是实时的、特定音色的合成。</p><p>我接触了sparktts这个模型，模型的语音生成质量非常出色，只需要短短几秒示范音频，不需要给出文本，就可以拟成音色。</p><p>再继续往下说之前，简单记一下前面的环境配置(举例)。</p><p>下载Anaconda（自动处理环境依赖矛盾）（我是不是之前记过，算了，不管了）</p><p>命令行执行命令</p><pre><code class="bash">conda create -n env-name # 创建名为env—name虚拟环境conda activate env-name # 激活这个虚拟环境，虚拟环境里的配置不会系统和其他环境产生冲突conda install [pakage-name] # 安装包#没有pip的话一般先把pip安装了，之后包都用pip安装和管理也可以，需要注意的是首先确认所需包所依赖的python环境版本#有时候自身所需的依赖也会冲突，需要手动调整包的版本，这时候你就只能祈祷不会出什么错pip install -r envrequirement.txt # 很多模型项目根目录都会放一个类似这样的文件，写了具体的依赖版本，这样直接统一安装了</code></pre><p>找到主程序入口，<code>python main_name.py</code> 运行它</p><p>但在我的主机上，预热后的rtf(<a href="https://blog.csdn.net/Toormi/article/details/143725255#:~:text=%E5%9C%A8%20TTS%EF%BC%88Text-to-Speech%EF%BC%89%20%E9%A2%86%E5%9F%9F%EF%BC%8C%20RTF%20%E9%80%9A%E5%B8%B8%E6%8C%87%E7%9A%84%E6%98%AF%20Real-Time%20Factor%EF%BC%8C%E5%8D%B3%E2%80%9C%E5%AE%9E%E6%97%B6%E5%9B%A0%E5%AD%90%E2%80%9D%E3%80%82%20%E8%BF%99%E6%98%AF%E4%B8%80%E4%B8%AA%E8%A1%A1%E9%87%8F,%E5%9C%A8%E8%AF%AD%E9%9F%B3%E7%94%9F%E6%88%90%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%84%E6%95%88%E7%8E%87%E3%80%82%20RTF%20%E8%A1%A8%E7%A4%BA%E7%94%9F%E6%88%90%E8%AF%AD%E9%9F%B3%E6%89%80%E9%9C%80%E7%9A%84%E5%A4%84%E7%90%86%E6%97%B6%E9%97%B4%E4%B8%8E%E8%AF%AD%E9%9F%B3%E6%97%B6%E9%95%BF%E7%9A%84%E6%AF%94%E5%80%BC%E3%80%82%20%E5%85%B6%E5%85%AC%E5%BC%8F%E4%B8%BA%EF%BC%9A%20RTF%20%3C%201%EF%BC%9A%E5%AE%9E%E6%97%B6%E6%88%96%E6%9B%B4%E5%BF%AB%E7%9A%84%E7%94%9F%E6%88%90%E3%80%82%20%E7%94%9F%E6%88%90%E8%AF%AD%E9%9F%B3%E6%89%80%E9%9C%80%E6%97%B6%E9%97%B4%E5%B0%91%E4%BA%8E%E8%AF%AD%E9%9F%B3%E6%97%B6%E9%95%BF%E3%80%82">什么是RTF</a>)大概是4以上。</p><p>这样的话是完全无法满足实时的需要的，我通过在关键节点打印时间，确定了主要耗时活动——生成过程。</p><p>sparktts是前向传播的自回归模型，这意味着它不会同时进行每帧声音合成，而是根据前帧优化后面的语音。确保声音质量很高的同时，给显卡带来负担，即使90%以上的gpu使用率，尝试更改多处参数，无法对合成过程做出本质上的优化。</p><p>相似的还有通义的CosyVoice，同属音色克隆模型，没有尝试效果，但我清楚既然同处一个时间段，性能上不会有太大差距。</p><p>于是我决定另找模型，虽然AI提出蒸馏模型的方法，我认为这个过程生成占大部分时间，对音色合成逻辑进行剪枝未必能起多大作用。</p><p>在寻找即时语音模型过程中，我找到了fastspeech2，这是一个非自回归的语音合成模型，它不是专门做音色克隆的，一般只需要接受文本参数就可以合成声音。</p><p>但它合成声音的速度非常快，合成流程是：接受文本-&gt;转化文本为拼音，标注音调-&gt;所有帧同时拟合声音-&gt;合并输出语音</p><p>因此，小规模语音合成的情况下，文本量几乎不对合成时间产生影响。rtf&lt;1，符合实时输出的要求。</p><p>有关中文合成，有一份AISHELL3训练集，多（218）说话人。在命令行合成声音时，可用<code>--speaker_id n</code> 指定选择的声音</p><p>由于我想合成自己满意的音色，于是想能否通过替换音色文件达成这一目的。</p><p>用模型提取音色的脚本</p><pre><code class="py"># 执行前需要 pip install 这个模型from speechbrain.inference import SpeakerRecognition  import torchaudioimport torchAUDIO_FILE = &quot;D:/EdgeDownload/20250321220346.wav&quot; # 目标音色音频路径OUTPUT_EMB = &quot;D:/GitC/FastSpeech2/target_emb.pt&quot; # 输出张量数据文件路径model = SpeakerRecognition.from_hparams(    source=&quot;speechbrain/spkrec-ecapa-voxceleb&quot;,    savedir=&quot;D:/GitC/FastSpeech2/pretrained_models&quot; )waveform, sr = torchaudio.load(AUDIO_FILE)# sr为采样频率 waveform波形if sr != 16000:    waveform = torchaudio.transforms.Resample(sr, 16000)(waveform)emb = model.encode_batch(waveform)target_emb = emb.squeeze().cpu()print(f&quot;Target emb shape: &#123;target_emb.shape&#125;&quot;) # 校验输出张量维度torch.save(target_emb, OUTPUT_EMB)print(f&quot;Saved target embedding to &#123;OUTPUT_EMB&#125;&quot;)</code></pre><p>结果输出的张量为192维，这和目标本身256维结构不符。</p><p>你当然不能这样简单的替换，因为目标文件包含218位说话人，并且相关脚本都已经确认了256这一数字，贸然替换肯定会漫天报错。</p><p>于是又进行了张量的维度转换。</p><pre><code class="py">linear = torch.nn.Linear(192, 256).cuda()target_emb_256 = linear(target_emb.unsqueeze(0)).squeeze(0) orig_mean = speaker_emb[0].mean()orig_std = speaker_emb[0].std()target_emb_256 = (target_emb_256 - target_emb_256.mean()) / target_emb_256.std() * orig_std + orig_mean</code></pre><p>你能发现不仅仅是维度的简单转换，还进行了规范化以保持音色符合目标音色要求，当然代码是AI给的，原理我是不懂的，公式都没认真看。</p><p>即使如此，期间辛酸无以言说——黑夜里，你只有撞到墙才知道绕道走。</p><p>替换完毕，多次试验，终于最后一次输出了正常的音频。</p><p>一听，脸一黑。这就不对！</p><p>音色不对，差距太多，即使调整音调语速都无法逼近想要的结果。</p><p>我存在两个怀疑，1是向量在变换中改变了自身，输出了先前相差深远的结果。2 音色数据替换失败了，fastspeech2内部有自动纠错机制，更换了发言人。</p><p>我没有再继续往下进行深究了，考虑，如果是第1种，我验证了自己的猜想，也算没白费，如果是第二种，那究竟如何替换音色都无从考虑。并且即使音色替换正确，这个发音质量也是不能接受的。</p><p>我考虑拿sparktts的生成训练fastspeech模型。</p><p>哎，真的离谱。我想正常的训练逻辑不该是这样的，由于各种出错，AI带着我把整个项目几乎全改了一遍。</p><p>人家项目都提供了train脚本，很明显自身逻辑应该不会出什么错的，这修改时间都快够自己写个小模型了。</p><p>最离谱的是改到最后改的我心灰意冷两眼暗淡无光的时候程序居然真的开始跑了。</p><p>训练了几个小时，早上起来一测试。没声音。</p><p>很显然，训练失败了。后知后觉地发现没有预训练模型，也就是说从初始化权重开始训练的，发音要一点点自己学，我那50条语音翻来覆去训练50000步就想给它训练成能说话的吗？</p><p>又加上。</p><p>又折腾，又改脚本，又过了一上午。</p><p>训练10000步，训练了有一个小时。因为觉得只是微调，调调音色。</p><p>训练完了，一听。</p><p>倒地吐血。</p><p>胡言乱语，还有背景杂音。这是拼音都不对啊。但是拼音的标注和输出是对的，所以还是训练失败了。</p><p>这次失败暂且就记到这里，太钻牛角尖费时费力没有效果，我相信日益腾飞的科技是可以弥补我脑子的缺失的。每天就蹲着看看有啥新模型发布了。</p><p>因为确实会有模型向单gpu和低参数发展，比如gemma3。</p><p>虽然过程很恼人，结果很悲哀，也没学到什么知识——但大抵还是学到一点？比如说部署独立完整模型项目和训练模型应该是头一次。</p><p>那大概也不算，嗯，唉。</p><p>总会有这种时候，人不会一直高喊成功。但到了下次高喊成功的时候，这次的憋屈和无力就烟消云散了，所以，继续加油吧。</p>]]></content>
       
       
       <categories>
@@ -145,9 +199,9 @@
       
         <tags>
             
-            <tag> Alice </tag>
-            
             <tag> 日志 </tag>
+            
+            <tag> Alice </tag>
             
         </tags>
       
@@ -1042,9 +1096,9 @@
       
         <tags>
             
-            <tag> 前端 </tag>
-            
             <tag> css </tag>
+            
+            <tag> 前端 </tag>
             
         </tags>
       
@@ -1141,9 +1195,9 @@
       
         <tags>
             
-            <tag> 笔记 </tag>
-            
             <tag> Web </tag>
+            
+            <tag> 笔记 </tag>
             
         </tags>
       
@@ -1427,9 +1481,9 @@
       
         <tags>
             
-            <tag> github </tag>
-            
             <tag> 日志 </tag>
+            
+            <tag> github </tag>
             
         </tags>
       
@@ -1456,9 +1510,9 @@
       
         <tags>
             
-            <tag> 笔记 </tag>
-            
             <tag> Web </tag>
+            
+            <tag> 笔记 </tag>
             
         </tags>
       
