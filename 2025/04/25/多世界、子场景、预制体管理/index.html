@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8"> 
-  <title>日志（10） | 叁七のblog</title>
-  <meta name="keywords" content=" 博客 ">
-  <meta name="description" content="日志（10） | 叁七のblog">
+  <title>多世界、子场景、预制体管理 | 叁七のblog</title>
+  <meta name="keywords" content=" unity ">
+  <meta name="description" content="多世界、子场景、预制体管理 | 叁七のblog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="此页面禁用了快捷键，如导航到新页面无法使用快捷键，请重新刷新界面如发送按钮无效，也请等待或刷新页面介绍：这是借用fittencode的api的ai 查看本地AIweb界面   发送       body {         font-family: Arial, sans-serif;         background:rgb(255, 241, 200)!important;">
 <meta property="og:type" content="website">
@@ -1557,9 +1557,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-日志（10）" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-多世界、子场景、预制体管理" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">日志（10）</h1>
+        <h1 class="article-title">多世界、子场景、预制体管理</h1>
     
     <div class="article-meta">
         
@@ -1569,7 +1569,7 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="日志">日志</a>
+            <a  data-rel="游戏">游戏</a>
             
         </span>
         
@@ -1577,19 +1577,19 @@
         <span class="tag">
             <i class="iconfont icon-tag"></i>
             
-            <a class="color3">博客</a>
+            <a class="color1">unity</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2024-12-23 16:12:32'>2024-12-22 22:44</time>
+            Created At : <time class="date" title='Updated At: 2025-04-25 18:01:23'>2025-04-25 17:44</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:96</span>
+        <span>Count:447</span>
         
         
         
@@ -1613,13 +1613,12 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>更改</p>
-</blockquote>
-<p>调整了手机端布局，增加了首页刷新按钮，如遇标签回不到All可尝试点击此按钮返回到最初页面。</p>
-<p>增加了<a href="/hiddenPublic/">双主题</a></p>
-<p>也可以到about页面下划到‘切换主题’，点击切换。</p>
-<p>此主题为了方便看清目录的字，更多细节没有改动，刷新就会回到原主题。</p>
+        <p>我的游戏在底层构建了这么久依旧很难说项目已经开始了。</p>
+<p>世界管理先前打了个雏形，后来导入了开源项目Navigathena，这个项目为多场景的周期管理、切换提供了方便的API，很简易地就超越了原本粗糙的效果。</p>
+<p>项目地址：<a target="_blank" rel="noopener" href="https://github.com/mackysoft/Navigathena">https://github.com/mackysoft/Navigathena</a></p>
+<p>在尝试中发现unity支持同时加载运行多个场景，这确实是我之前不知道的，并且我察觉多个场景良好地共存这一点和建造、玩法模块具有天然的适配性。<br>可以将玩家对场景的更改都存在子场景中，序列化场景，在加载时在原场景的基础上加载子场景，这就有特色化的效果。</p>
+<p>预制体管理是我觉得很麻烦很烦很不想做的事，但偏偏它又是很重要的事。<br>需要在存储时存下根目录对象的预制体信息，在读取时复原。<br>场景存储对象，需要对重名预制体进行重命名，这点已经做到了。它的用处是保存时利用名称将对象信息区分开。<br>然后在运行时是没有标准办法查找预制体和判断来源是否为预制体的，对对象存下预制体名称或ID信息来在加载时得到预制体路径。由于一时的麻烦，我更倾向名称，虽然我知道这会在之后带来更多麻烦。</p>
+<p>我总是想着绕开这几件事走，去看看还有什么重要的事或者计划开始内容的创作。毕竟我是来制作游戏的，而不是沉浸在无底的代码地狱。</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 此方悬停 </span>
