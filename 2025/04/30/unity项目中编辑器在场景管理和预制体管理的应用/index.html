@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8"> 
-  <title>json格式笔记 | 叁七のblog</title>
-  <meta name="keywords" content=" json , 数据结构 ">
-  <meta name="description" content="json格式笔记 | 叁七のblog">
+  <title>unity项目中编辑器在场景管理和预制体管理的应用 | 叁七のblog</title>
+  <meta name="keywords" content=" unity ">
+  <meta name="description" content="unity项目中编辑器在场景管理和预制体管理的应用 | 叁七のblog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="此页面禁用了快捷键，如导航到新页面无法使用快捷键，请重新刷新界面如发送按钮无效，也请等待或刷新页面介绍：这是借用fittencode的api的ai 查看本地AIweb界面   发送       body {         font-family: Arial, sans-serif;         background:rgb(255, 241, 200)!important;">
 <meta property="og:type" content="website">
@@ -1575,9 +1575,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-json格式笔记" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-unity项目中编辑器在场景管理和预制体管理的应用" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">json格式笔记</h1>
+        <h1 class="article-title">unity项目中编辑器在场景管理和预制体管理的应用</h1>
     
     <div class="article-meta">
         
@@ -1587,7 +1587,7 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="计算机">计算机</a>
+            <a  data-rel="游戏">游戏</a>
             
         </span>
         
@@ -1595,21 +1595,19 @@
         <span class="tag">
             <i class="iconfont icon-tag"></i>
             
-            <a class="color5">json</a>
-            
-            <a class="color5">数据结构</a>
+            <a class="color1">unity</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2025-02-27 15:01:17'>2025-02-27 14:04</time>
+            Created At : <time class="date" title='Updated At: 2025-04-30 12:39:44'>2025-04-30 12:28</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:1.1k</span>
+        <span>Count:1.7k</span>
         
         
         
@@ -1617,7 +1615,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%AE%9A%E4%B9%89%E4%B8%8E%E7%89%B9%E6%80%A7"><span class="toc-text">一、定义与特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%A0%BC%E5%BC%8F%E8%A6%81%E6%B1%82%E4%B8%8E%E8%AF%AD%E6%B3%95%E8%A7%84%E8%8C%83"><span class="toc-text">二、格式要求与语法规范</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E7%BB%93%E6%9E%84%EF%BC%9A"><span class="toc-text">基础结构：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%BC%E5%BC%8F%E8%A7%84%E8%8C%83%EF%BC%9A"><span class="toc-text">格式规范：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#json%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%E7%A4%BA%E4%BE%8B%EF%BC%9A"><span class="toc-text">json文件内容示例：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B5%8C%E5%A5%97%E7%BB%93%E6%9E%84"><span class="toc-text">嵌套结构</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95%EF%BC%88JavaScript%EF%BC%89"><span class="toc-text">三、数据处理方法（JavaScript）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3"><span class="toc-text">相关</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%96%E7%95%8C%E7%AE%A1%E7%90%86%E5%99%A8%EF%BC%88WorldManagerWindow%EF%BC%89"><span class="toc-text">世界管理器（WorldManagerWindow）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%84%E5%88%B6%E4%BD%93%E7%AE%A1%E7%90%86%E5%99%A8%EF%BC%88PrefabManagerWindow%EF%BC%89"><span class="toc-text">预制体管理器（PrefabManagerWindow）</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -1633,136 +1631,115 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>苦于基础不牢固而对一个格式要求抓耳挠腮、进度频频被阻塞。</p>
-<h3 id="一、定义与特性"><a href="#一、定义与特性" class="headerlink" title="一、定义与特性"></a>一、定义与特性</h3><p>JSON（JavaScript Object Notation）是一种轻量级的数据交换格式，基于 JavaScript 对象语法，但独立于编程语言。  </p>
+        <p>在Unity开发中，管理和组织复杂的游戏世界及资源是一项重要任务。为此我专门写了此设计的两个自定义编辑器窗口，分别用于世界管理和预制体管理。它们通过直观的界面和功能，可以极大提高开发效率和资源组织便捷性。</p>
+<hr>
+<h3 id="世界管理器（WorldManagerWindow）"><a href="#世界管理器（WorldManagerWindow）" class="headerlink" title="世界管理器（WorldManagerWindow）"></a>世界管理器（WorldManagerWindow）</h3><p><strong>作用概述</strong><br>世界管理器是一个专为管理Unity游戏世界设计的编辑器工具。它允许开发者&#x2F;玩家创建、编辑、应用和删除基于特定场景的“世界”数据，核心功能是保存和恢复场景中对象的状态（如位置、旋转、缩放等）。通过世界管理器，开发者可以在不同的游戏世界之间快速切换，管理多个世界的对象状态，特别适合需要频繁测试或维护多个场景变体的项目，如开放世界游戏或关卡编辑器。</p>
+<p><strong>主要功能</strong>  </p>
+<ol>
+<li><p><strong>世界创建与管理</strong>  </p>
 <ul>
-<li>核心特征：  <ol>
-<li>可读性强，结构清晰（键值对 + 层级嵌套）；  </li>
-<li>体积小，传输效率高；  </li>
-<li>支持跨平台数据交换（Web&#x2F;移动端&#x2F;服务端通用）。</li>
-</ol>
+<li>开发者可以创建新的世界，基于指定的基础场景（Unity场景文件）。  </li>
+<li>每个世界包含一个对象状态集合，记录场景中对象的变换信息（位置、旋转、缩放）、预制体引用以及脚本数据。  </li>
+<li>提供世界列表界面，允许快速浏览和选择不同的世界。</li>
+</ul>
 </li>
+<li><p><strong>对象状态管理</strong>  </p>
+<ul>
+<li>对象只保存根目录对象，利用预制体直接还原，避免序列化完整对象加大加载和存储负担。</li>
+<li>支持查看每个世界中保存的对象详细信息，包括预制体路径、变换数据和脚本信息。  </li>
+<li>允许单独删除某个对象状态，更新世界数据，同时保持数据一致性。  </li>
+<li>折叠式界面。</li>
+</ul>
+</li>
+<li><p><strong>世界应用与场景同步</strong>  </p>
+<ul>
+<li>提供“应用”功能，将选定世界的对象状态应用到对应的基础场景，自动更新或添加场景中的对象。  </li>
+<li>支持异步操作，确保在处理大型世界数据时不会卡顿编辑器。  </li>
+<li>在应用前会提示确认，防止意外修改场景。</li>
+</ul>
+</li>
+<li><p><strong>世界删除与数据清理</strong>  </p>
+<ul>
+<li>支持删除指定世界，并自动清理相关数据（如对象状态和元数据）。  </li>
+<li>删除操作需要确认，防止误操作导致数据丢失。</li>
+</ul>
+</li>
+<li><p><strong>数据存储与加载</strong>  </p>
+<ul>
+<li>使用 Easy Save 3（ES3） 插件存储世界数据，确保数据持久化。  </li>
+<li>自动加载现有世界列表，并在编辑器启动时初始化。  </li>
+<li>提供数据大小估算功能，可以在游戏中更直观地展示。</li>
+</ul>
+</li>
+</ol>
+<p><strong>使用场景</strong>  </p>
+<ul>
+<li><strong>关卡设计</strong>：快速切换不同关卡变体，测试不同的对象布局。  </li>
+<li><strong>开放世界开发</strong>：管理大型地图的不同区域状态，方便调试和迭代。  </li>
+<li><strong>多人协作</strong>：允许多个开发者&#x2F;玩家基于同一基础场景创建独立的世界，互不干扰。  </li>
+<li><strong>自动化测试</strong>：通过保存和应用世界状态，快速验证场景配置。</li>
 </ul>
 <hr>
-<h3 id="二、格式要求与语法规范"><a href="#二、格式要求与语法规范" class="headerlink" title="二、格式要求与语法规范"></a>二、格式要求与语法规范</h3><h4 id="基础结构："><a href="#基础结构：" class="headerlink" title="基础结构："></a>基础结构：</h4><ul>
-<li>对象：<code>&#123; &quot;key&quot;: value &#125;</code>，键名必须用<strong>双引号</strong>包裹；<ul>
-<li>value基础类型：字符串（<code>&quot;string&quot;</code>）、数字（整数&#x2F;浮点数）、布尔（<code>true/false</code>）、<code>null</code>；</li>
+<h3 id="预制体管理器（PrefabManagerWindow）"><a href="#预制体管理器（PrefabManagerWindow）" class="headerlink" title="预制体管理器（PrefabManagerWindow）"></a>预制体管理器（PrefabManagerWindow）</h3><p><strong>作用概述</strong><br>预制体管理器是一个专注于Unity预制体（Prefab）组织和管理的编辑器工具。它通过分组、搜索、拖拽和缩略图预览等功能，帮助开发者高效管理项目中的预制体资源。预制体管理器特别适合资源量较大的项目，能够简化资源查找、分类和维护的工作流程。</p>
+<p>在我的项目中预制体的分组可直接应用于背包面板，让地图制作更加便捷。</p>
+<p><strong>主要功能</strong>  </p>
+<ol>
+<li><p><strong>预制体分组与组织</strong>  </p>
+<ul>
+<li>预制体的获取基于固定位置的文件夹<code>Assets/Resources/Prefabs</code></li>
+<li>允许创建自定义分组，将预制体分配到不同的组（如“敌人”、“道具”）。  </li>
+<li>支持拖拽重新排序分组或预制体，调整显示顺序。  </li>
+<li>提供默认分组，确保未分配的预制体不会丢失。</li>
 </ul>
 </li>
-<li>数组：<code>[ value1, value2 ]</code>，元素间用逗号分隔。</li>
+<li><p><strong>搜索与筛选</strong>  </p>
+<ul>
+<li>提供搜索框，支持按名称快速筛选预制体，减少查找时间。  </li>
+<li>分页显示功能，允许调整每页显示的预制体数量，适合管理大量资源。</li>
 </ul>
-<h4 id="格式规范："><a href="#格式规范：" class="headerlink" title="格式规范："></a>格式规范：</h4><ul>
-<li>禁止注释，键名必须为双引号字符串；  </li>
-<li>最后一个元素后不能有逗号；  </li>
-<li>严格区分大小写。</li>
+</li>
+<li><p><strong>缩略图生成与预览</strong>  </p>
+<ul>
+<li>自动为预制体生成缩略图，保存在指定文件夹（<code>Assets/Thumbnails</code>）。  </li>
+<li>在界面中显示缩略图，直观预览预制体内容，方便快速识别。  </li>
+<li>支持异步生成缩略图，避免编辑器卡顿。</li>
 </ul>
-<h4 id="json文件内容示例："><a href="#json文件内容示例：" class="headerlink" title="json文件内容示例："></a>json文件内容示例：</h4><pre><code class="json">[
-    &#123;
-        &quot;name&quot;: &quot;Alice&quot;,
-        &quot;age&quot;: 14,
-        &quot;description&quot;: &quot;哈喽，我是一条注释。虽然没有注释专用写法，但是添加一些不被获取处理的内容不就能当注释用了。看，下面的那个对象包含了一个数组，羡慕哦&quot;,
-        &quot;hobbies&quot;: [&quot;⭐&quot;,&quot;叁七&quot;]
-    &#125;
-]
-</code></pre>
-<p>json文件为一个json数组，而内容是一条或多条json格式的对象</p>
-<pre><code class="json">[
-    &#123;
-        &quot;name&quot;: &quot;Alice&quot;,
-        &quot;age&quot;: 14,
-        &quot;hobbies&quot;: [&quot;⭐&quot;]
-    &#125;,
-    &#123;
-        &quot;name&quot;: &quot;叁七&quot;,
-        &quot;age&quot;: 20,
-        &quot;hobbies&quot;: [&quot;🎮&quot;]
-    &#125;
-]
-</code></pre>
-<h4 id="嵌套结构"><a href="#嵌套结构" class="headerlink" title="嵌套结构"></a>嵌套结构</h4><pre><code class="json">[
-    &#123;
-        &quot;name&quot;: &quot;Alice&quot;,
-        &quot;age&quot;: 14,
-        &quot;hobbies&quot;: [&quot;⭐&quot;],
-        &quot;friends&quot;: [
-            &#123;
-                &quot;name&quot;: &quot;叁七&quot;,
-                &quot;age&quot;: 20,
-                &quot;hobbies&quot;: [&quot;🎮&quot;]
-            &#125;,&#123;
-                &quot;name&quot;: &quot;Alice还没有其他朋友&quot;,
-                &quot;description&quot;:&quot;并非json文件中所有并行对象格式都必须相同，但会在处理中报错，并且强迫症看到极其不舒服&quot;
-            &#125;
-            ]
-    &#125;
-]
-</code></pre>
+</li>
+<li><p><strong>批量操作</strong>  </p>
+<ul>
+<li>支持全选或取消选择预制体，配合批量移动功能，将选中的预制体快速转移到指定分组。  </li>
+<li>提供单个预制体的移动功能，通过右键菜单快速转移到其他分组。  </li>
+<li>支持删除预制体从分组中移除（不影响实际文件）。</li>
+</ul>
+</li>
+<li><p><strong>预制体移动与整理</strong>  </p>
+<ul>
+<li>提供“收集预制体”功能，将项目中的预制体统一移动到 <code>Assets/Resources/Prefabs</code> 文件夹，规范资源结构。  </li>
+<li>移动前会检查目标路径是否已存在，避免覆盖现有文件。  </li>
+<li>提供确认对话框，确保操作安全。</li>
+</ul>
+</li>
+<li><p><strong>数据持久化</strong>  </p>
+<ul>
+<li>使用 Easy Save 3（ES3） 保存分组数据，确保分组信息在编辑器重启后保留。  </li>
+<li>自动加载现有分组数据，并在必要时初始化默认分组。</li>
+</ul>
+</li>
+</ol>
+<p><strong>使用场景</strong>  </p>
+<ul>
+<li><strong>资源管理</strong>：在大型项目中快速组织和查找预制体，减少资源混乱。  </li>
+<li><strong>团队协作</strong>：通过分组和缩略图，帮助快速了解和使用预制体。  </li>
+<li><strong>UI&#x2F;场景搭建</strong>：通过直观的预览和拖拽功能，加速场景搭建流程。  </li>
+<li><strong>资源优化</strong>：统一预制体存储路径，方便后期资源打包和维护。</li>
+</ul>
 <hr>
-<h3 id="三、数据处理方法（JavaScript）"><a href="#三、数据处理方法（JavaScript）" class="headerlink" title="三、数据处理方法（JavaScript）"></a>三、数据处理方法（JavaScript）</h3><ol>
-<li>JSON ↔ 字符串转换：  <ul>
-<li>序列化：<code>JSON.stringify(obj)</code>，将对象转为 JSON 字符串；  </li>
-<li>反序列化：<code>JSON.parse(str)</code>，将字符串转为 JS 对象。</li>
-</ul>
-</li>
-</ol>
-<p>你可能见过</p>
-<pre><code>const obj = &#123; name: &quot;Alice&quot;, age: 14&#125;;
-</code></pre>
-<p>似乎很像json，然而事实是它只是一个JavaScript对象，再次强调json字符串是格式严格的，键值对必须用双引号包裹。</p>
-<p>转换的方法是：</p>
-<pre><code>const jsonStr = JSON.stringify(obj);
-const obj = JSON.parse(jsonStr);
-</code></pre>
-<p><strong>序列化或反序列化之前不进行格式检查，有可能丢失原本的属性，你可能在报错中见过形如<code>[Object Object]</code>的字符串，就是被玩坏的json格式</strong></p>
-<pre><code class="javascript">   // 格式化
-   const jsonStr = JSON.stringify(obj, null, 2); // **缩进2空格美化**；
-   console.log(jsonStr);//打印出我们常见的格式
-</code></pre>
-<ol start="2">
-<li>数据处理：</li>
-</ol>
-<p>JavaScript 如何利用json数据？</p>
-<p>假设一个json对象如下：<br><code>const data = &#123; users: [&#123; id: 1 &#125;, &#123; id: 2 &#125;] &#125;;</code></p>
-<p>那么<code>data.users</code>就会得到一个数组，数组中包含两个对象，每个对象都有<code>id</code>属性。</p>
 <ul>
-<li>对象：用 <code>for...in</code> 循环或 <code>Object.keys()</code> 遍历键值对；  </li>
-<li>数组：用 <code>forEach()</code> 或 <code>for</code> 循环处理。</li>
+<li><strong>世界管理器</strong> 专注于动态管理游戏世界的状态，适合需要频繁调整场景布局或测试不同世界配置的开发场景。它通过保存和应用对象状态，极大地提高了场景迭代的灵活性。  </li>
+<li><strong>预制体管理器</strong> 则聚焦于静态资源的组织，通过分组、搜索和缩略图功能，简化了预制体的查找和使用流程，特别适合资源密集型项目。</li>
 </ul>
-<pre><code class="javascript">   // 示例：遍历 JSON 对象
-   const data = &#123; users: [&#123; id: 1 &#125;, &#123; id: 2 &#125;] &#125;;
-   for (let key in data) &#123;
-       console.log(key, data[key]);
-   &#125;
-   // 输出：users [ &#123; id: 1 &#125;, &#123; id: 2 &#125; ]
-   //注意，这里因为没有加引号，不是有效的json格式，json格式必须加引号
-   data.users.forEach(user =&gt; console.log(user.id)); // 输出 1, 2；
-   console.log(data.users.map(user =&gt; user.id)); // 输出 [1, 2]
-   console.log(data.users[1]);// 输出 &#123; id: 2 &#125;
-</code></pre>
-<ol start="3">
-<li><p>复杂操作：  </p>
-<ul>
-<li>递归处理嵌套结构：用于深度修改或筛选数据；  </li>
-<li>字符串替换：正则表达式处理特殊字符（如 <code>replace(/\\/g, &#39;&#39;)</code>）。</li>
-<li>流式接收处理fetch得来的数据体</li>
-</ul>
-</li>
-<li><p><code>JSON.parse()</code> 异常处理：  </p>
-<ul>
-<li>使用 <code>try...catch</code> 捕获无效 JSON 字符串。</li>
-</ul>
-<pre><code class="javascript">try &#123;
-    const data = JSON.parse(jsonStr);
-&#125; catch (e) &#123;
-    console.error(e);//一般输出invalide JSON string
-&#125;
-</code></pre>
-<p>而 <code>JSON.stringify()</code>不会检查原本是不是字符串格式</p>
-</li>
-</ol>
-<p>关于json的处理，可以在node环境打开命令行输入简单的语句进行测试</p>
-<p><code>cmd</code>-&gt; <code>node</code> -&gt; <code>console.log(JSON.parse(&#39;&#123;&quot;name&quot;: &quot;Alice&quot;, &quot;age&quot;: 14&#125;&#39;));</code></p>
-<h3 id="相关"><a href="#相关" class="headerlink" title="相关"></a>相关</h3><p>jsonl文件：json文件每行一条数据，适合于大数据量的处理，常用于大模型数据训练。</p>
+<p>简单来说，这两个管理编辑器合作不仅让开发周期加速，还协助游戏运行时管理器实例实现了没有任何游戏制作基础的玩家不依靠引擎也能塑造游戏场景内容。</p>
+<p>这两个工具都采用了异步操作和数据持久化设计，确保了性能和数据可靠性。它们通过直观的界面和强大的功能，降低了手动操作负担，提升了工作效率。</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 此方悬停 </span>
