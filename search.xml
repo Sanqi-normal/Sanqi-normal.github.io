@@ -8,7 +8,7 @@
       <link href="/2025/05/02/%E9%80%86%E5%90%91%E5%8A%A8%E5%8A%9B%E5%AD%A6%E4%BD%BF%E6%89%8B%E9%83%A8%E8%B7%9F%E9%9A%8F%E9%BC%A0%E6%A0%87%E7%A7%BB%E5%8A%A8/"/>
       <url>/2025/05/02/%E9%80%86%E5%90%91%E5%8A%A8%E5%8A%9B%E5%AD%A6%E4%BD%BF%E6%89%8B%E9%83%A8%E8%B7%9F%E9%9A%8F%E9%BC%A0%E6%A0%87%E7%A7%BB%E5%8A%A8/</url>
       
-        <content type="html"><![CDATA[<p><video src="https://testingcf.jsdelivr.net/gh/sanqi-normal/sanqi-normal.github.io/video/逆向动力学使手跟随鼠标移动.mp4">您的浏览器不支持mp4播放</video></p>]]></content>
+        <content type="html"><![CDATA[<p><video src="https://testingcf.jsdelivr.net/gh/sanqi-normal/sanqi-normal.github.io/video/逆向动力学使手跟随鼠标移动.mp4" controls="controls" width="480" height="360" type="video/mp4">您的浏览器不支持mp4播放</video><br><video src="https://testingcf.jsdelivr.net/gh/sanqi-normal/sanqi-normal.github.io/video/同上.mp4" controls="controls" width="480" height="360" type="video/mp4">您的浏览器不支持mp4播放</video></p>]]></content>
       
       
       <categories>
@@ -2009,9 +2009,9 @@
       
         <tags>
             
-            <tag> 测试 </tag>
-            
             <tag> 博客 </tag>
+            
+            <tag> 测试 </tag>
             
         </tags>
       
