@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>逆向动力学使手部跟随鼠标移动</title>
+      <link href="/2025/05/02/%E9%80%86%E5%90%91%E5%8A%A8%E5%8A%9B%E5%AD%A6%E4%BD%BF%E6%89%8B%E9%83%A8%E8%B7%9F%E9%9A%8F%E9%BC%A0%E6%A0%87%E7%A7%BB%E5%8A%A8/"/>
+      <url>/2025/05/02/%E9%80%86%E5%90%91%E5%8A%A8%E5%8A%9B%E5%AD%A6%E4%BD%BF%E6%89%8B%E9%83%A8%E8%B7%9F%E9%9A%8F%E9%BC%A0%E6%A0%87%E7%A7%BB%E5%8A%A8/</url>
+      
+        <content type="html"><![CDATA[<p><video src="https://testingcf.jsdelivr.net/gh/sanqi-normal/sanqi-normal.github.io/video/逆向动力学使手跟随鼠标移动.mp4">您的浏览器不支持mp4播放</video></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 游戏 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> unity </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>unity项目中编辑器在场景管理和预制体管理的应用</title>
       <link href="/2025/04/30/unity%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%BC%96%E8%BE%91%E5%99%A8%E5%9C%A8%E5%9C%BA%E6%99%AF%E7%AE%A1%E7%90%86%E5%92%8C%E9%A2%84%E5%88%B6%E4%BD%93%E7%AE%A1%E7%90%86%E7%9A%84%E5%BA%94%E7%94%A8/"/>
       <url>/2025/04/30/unity%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%BC%96%E8%BE%91%E5%99%A8%E5%9C%A8%E5%9C%BA%E6%99%AF%E7%AE%A1%E7%90%86%E5%92%8C%E9%A2%84%E5%88%B6%E4%BD%93%E7%AE%A1%E7%90%86%E7%9A%84%E5%BA%94%E7%94%A8/</url>
@@ -351,9 +376,9 @@
       
         <tags>
             
-            <tag> Alice </tag>
-            
             <tag> 日志 </tag>
+            
+            <tag> Alice </tag>
             
         </tags>
       
@@ -1691,9 +1716,9 @@
       
         <tags>
             
-            <tag> 后端 </tag>
-            
             <tag> 日志 </tag>
+            
+            <tag> 后端 </tag>
             
         </tags>
       
@@ -1984,9 +2009,9 @@
       
         <tags>
             
-            <tag> 博客 </tag>
-            
             <tag> 测试 </tag>
+            
+            <tag> 博客 </tag>
             
         </tags>
       
