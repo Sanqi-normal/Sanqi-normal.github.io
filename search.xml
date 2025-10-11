@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>量化工作安排</title>
+      <link href="/2025/10/11/%E9%87%8F%E5%8C%96%E5%B7%A5%E4%BD%9C%E5%AE%89%E6%8E%92/"/>
+      <url>/2025/10/11/%E9%87%8F%E5%8C%96%E5%B7%A5%E4%BD%9C%E5%AE%89%E6%8E%92/</url>
+      
+        <content type="html"><![CDATA[<h3 id="选择合适的量化框架-☑"><a href="#选择合适的量化框架-☑" class="headerlink" title="选择合适的量化框架  ☑"></a>选择合适的量化框架  ☑</h3><p>可以先试试轻量的abu，VeighNa备选<br>stock内容简单，操作更为方便</p><p>10&#x2F;11 哪个都是又乱又杂，完全不知道怎么操作，有可能我得自己从头写，还好一些</p><h3 id="获取市场数据接口-☑"><a href="#获取市场数据接口-☑" class="headerlink" title="获取市场数据接口    ☑"></a>获取市场数据接口    ☑</h3><p>Akshare</p><h3 id="将接口编写入程序，成功运行回测-（10-11-改为编写日线回测程序）-☐"><a href="#将接口编写入程序，成功运行回测-（10-11-改为编写日线回测程序）-☐" class="headerlink" title="将接口编写入程序，成功运行回测 （10&#x2F;11 改为编写日线回测程序） ☐"></a>将接口编写入程序，成功运行回测 （10&#x2F;11 改为编写日线回测程序） ☐</h3><p>由于他人项目难以操作，和自己预想的方向不同，并且并非所有内容都是必要的。还是自己写吧，其他项目可以借鉴。<br>现在有了直观数据库，有了股票数据接口，可以说道路已经铺好了，接下来完全可以自己编写测试内容了。</p><h3 id="分时回测-☐"><a href="#分时回测-☐" class="headerlink" title="分时回测    ☐"></a>分时回测    ☐</h3><p>这个与日线不同的是日线数据少，市场全部数据下载下来预估也只有几个G，但分时肯定不能完全依赖本地，同时未来实战也有实时需要，所以要联网</p><h3 id="优化回测，初步找到合理的完整的符合宏观逻辑的量化策略-☐"><a href="#优化回测，初步找到合理的完整的符合宏观逻辑的量化策略-☐" class="headerlink" title="优化回测，初步找到合理的完整的符合宏观逻辑的量化策略    ☐"></a>优化回测，初步找到合理的完整的符合宏观逻辑的量化策略    ☐</h3><h3 id="接入实战功能、服务器托管-☐"><a href="#接入实战功能、服务器托管-☐" class="headerlink" title="接入实战功能、服务器托管    ☐"></a>接入实战功能、服务器托管    ☐</h3><p>stock提供了一个思路是编程控制交易软件操作的自动化，和我想的自动化有所不同，我以为会是直接使用交易api，不过貌似确实后者实现需要门槛。<br>stock这一套自动化可以借用。</p><h3 id="初步实战-☐"><a href="#初步实战-☐" class="headerlink" title="初步实战    ☐"></a>初步实战    ☐</h3><h3 id="优化拓展策略、资金管理，修复问题-☐"><a href="#优化拓展策略、资金管理，修复问题-☐" class="headerlink" title="优化拓展策略、资金管理，修复问题    ☐"></a>优化拓展策略、资金管理，修复问题    ☐</h3>]]></content>
+      
+      
+      <categories>
+          
+          <category> 金融 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 量化 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>高收益走势形态收集</title>
       <link href="/2025/10/10/%E9%AB%98%E6%94%B6%E7%9B%8A%E8%B5%B0%E5%8A%BF%E5%BD%A2%E6%80%81%E6%94%B6%E9%9B%86/"/>
       <url>/2025/10/10/%E9%AB%98%E6%94%B6%E7%9B%8A%E8%B5%B0%E5%8A%BF%E5%BD%A2%E6%80%81%E6%94%B6%E9%9B%86/</url>
@@ -1282,7 +1307,7 @@
       <link href="/2025/02/16/%E9%87%8D%E8%A6%81%E5%A4%96%E9%93%BE%E6%B1%87%E6%80%BB/"/>
       <url>/2025/02/16/%E9%87%8D%E8%A6%81%E5%A4%96%E9%93%BE%E6%B1%87%E6%80%BB/</url>
       
-        <content type="html"><![CDATA[<h2 id="友链"><a href="#友链" class="headerlink" title="友链"></a>友链</h2><p><a href="https://xavierwar.top/">Xavierwar的博客</a></p><p><a href="https://hoffen.fun/">Hoffen的博客</a></p><h2 id="教程"><a href="#教程" class="headerlink" title="教程"></a>教程</h2><p style="color:grey;font-size:smaller">注：部分需科学上网，部分作者自己也没看</p><p>本博客搭建 <a href="https://blog.csdn.net/yaorongke/article/details/119089190">https://blog.csdn.net/yaorongke/article/details/119089190</a></p><p>ctf <a href="https://hello-ctf.com/">https://hello-ctf.com/</a></p><p>huggingface <a href="https://huggingface.co/learn">https://huggingface.co/learn</a></p><p>n8n 中文教程 <a href="https://n8n.akashio.com/article/welcome">https://n8n.akashio.com/article/welcome</a></p><h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><p>ip查询 <a href="https://ip.sb/">https://ip.sb/</a></p><p>站长工具 <a href="https://tool.chinaz.com/">https://tool.chinaz.com/</a></p><p>Z-library <a href="https://zh.z-lib.gs/">https://zh.z-lib.gs/</a></p><p>电子书（搭配Z-lib） <a href="https://www.neat-reader.cn/">https://www.neat-reader.cn/</a></p><p>加解密 <a href="https://www.toolhelper.cn/">https://www.toolhelper.cn/</a></p><p>Github代理下载 <a href="https://ghproxy.link/">https://ghproxy.link/</a></p><p>镜像网站 <a href="https://zhuanlan.zhihu.com/p/609597886">https://zhuanlan.zhihu.com/p/609597886</a></p><p>虚拟机 <a href="https://www.vulnhub.com/">https://www.vulnhub.com/</a></p>]]></content>
+        <content type="html"><![CDATA[<h2 id="友链"><a href="#友链" class="headerlink" title="友链"></a>友链</h2><p><a href="https://xavierwar.top/">Xavierwar的博客</a></p><p><a href="https://hoffen.fun/">Hoffen的博客</a></p><h2 id="教程"><a href="#教程" class="headerlink" title="教程"></a>教程</h2><p style="color:grey;font-size:smaller">注：部分需科学上网，部分作者自己也没看</p><p>本博客搭建 <a href="https://blog.csdn.net/yaorongke/article/details/119089190">https://blog.csdn.net/yaorongke/article/details/119089190</a></p><p>ctf <a href="https://hello-ctf.com/">https://hello-ctf.com/</a></p><p>huggingface <a href="https://huggingface.co/learn">https://huggingface.co/learn</a></p><p>n8n 中文教程 <a href="https://n8n.akashio.com/article/welcome">https://n8n.akashio.com/article/welcome</a></p><p>VeighNa 使用教程 <a href="https://www.vnpy.com/docs/cn/index.html">https://www.vnpy.com/docs/cn/index.html</a></p><h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><p>ip查询 <a href="https://ip.sb/">https://ip.sb/</a></p><p>电脑测评 <a href="http://cpu.jy6d.com/">http://cpu.jy6d.com/</a></p><p>站长工具 <a href="https://tool.chinaz.com/">https://tool.chinaz.com/</a></p><p>Z-library <a href="https://zh.z-lib.gs/">https://zh.z-lib.gs/</a></p><p>电子书（搭配Z-lib） <a href="https://www.neat-reader.cn/">https://www.neat-reader.cn/</a></p><p>加解密 <a href="https://www.toolhelper.cn/">https://www.toolhelper.cn/</a></p><p>Github代理下载 <a href="https://ghproxy.link/">https://ghproxy.link/</a></p><p>镜像网站 <a href="https://zhuanlan.zhihu.com/p/609597886">https://zhuanlan.zhihu.com/p/609597886</a></p><p>虚拟机 <a href="https://www.vulnhub.com/">https://www.vulnhub.com/</a></p><p>同花顺量化回测 <a href="https://quant.10jqka.com.cn/view/study-index.html#/">https://quant.10jqka.com.cn/view/study-index.html#/</a></p><p>Mixamo(模型动作) <a href="https://www.mixamo.com/">https://www.mixamo.com/</a></p><p>腾讯混元3D（3D模型生成）<a href="https://3d.hunyuan.tencent.com/">https://3d.hunyuan.tencent.com/</a></p><p>Mermaid(逻辑图表制作) <a href="https://mermaid-live.nodejs.cn/">https://mermaid-live.nodejs.cn/</a></p><p>PICUI公共图床 <a href="https://picui.cn/">https://picui.cn/</a></p>]]></content>
       
       
       
