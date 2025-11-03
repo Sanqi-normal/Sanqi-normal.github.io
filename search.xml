@@ -4,11 +4,24 @@
   
     
     <entry>
+      <title>日志</title>
+      <link href="/2025/11/03/%E6%97%A5%E5%BF%97-8/"/>
+      <url>/2025/11/03/%E6%97%A5%E5%BF%97-8/</url>
+      
+        <content type="html"><![CDATA[<p>无法承受压力，我再次休学回家。</p><p>我需要坚定相信这是医学上的病理作祟。</p><p>尽管一次又一次做出背离本格的抉择痛苦又煎熬，我应该开始尝试抵抗这种疲惫——我有一些要做的事，几个亲人，还有一只猫，我不能也永远不会轻易放弃自己的人生。</p><p>即使已经这般模样，我相信且必须相信我的人生大有可为，我有了喘息的时间，这很好，我接下来需要把自己从深渊中拽出来。</p><p>就像我过去列过的、大多数没能做完的或失败的成百上千个计划一样，现在给自己重新列一份计划，然后开始执行，那么我会做完一到两个，然后继续。</p><p>耐心，勇气，毅力。</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>量化项目日志</title>
       <link href="/2025/10/12/%E9%87%8F%E5%8C%96%E9%A1%B9%E7%9B%AE%E6%97%A5%E5%BF%97/"/>
       <url>/2025/10/12/%E9%87%8F%E5%8C%96%E9%A1%B9%E7%9B%AE%E6%97%A5%E5%BF%97/</url>
       
-        <content type="html"><![CDATA[<h2 id="10-11"><a href="#10-11" class="headerlink" title="10&#x2F;11"></a>10&#x2F;11</h2><p>获取接口akshare</p><p>建立mysql库</p><p>下载回测数据到本地</p><h2 id="10-12"><a href="#10-12" class="headerlink" title="10&#x2F;12"></a>10&#x2F;12</h2><p>初步利用本地数据编写回测脚本，第一次回测</p><p>编写均线和倍量阳策略</p><p>规范买卖数目为1手（100股）起步</p><p>将策略相同部分抽离为基类</p><p>规范项目结构：</p><pre><code>mytrader/├── config/│   ├── __init__.py         # 空文件，标记 config 为包│   └── env.py             # 数据库配置├── data/│   ├── __init__.py         # 空文件，标记 data 为包│   └── stock_utils.py     # 数据访问和交易执行逻辑├── indicators/│   ├── __init__.py         # 空文件，标记 indicators 为包│   └── technical_indicators.py  # 技术指标├── strategies/│   ├── __init__.py         # 空文件，标记 strategies 为包│   ├── ma_cross_strategy.py  # 均线交叉策略│   └── volume_red_strategy.py  # 倍量红策略├── __init__.py             # 空文件，标记 mytrader 为包</code></pre><p>托管html到服务器，方便在浏览器上看，UI更方便操作</p><p>不错的UI，虽然这不是正事</p><p><img src="/img/a115f47ffd462954bb734a857b28afcf.png" alt="OhTheStocksWeTrade"></p><p>添加分时</p>]]></content>
+        <content type="html"><![CDATA[<h2 id="10-11"><a href="#10-11" class="headerlink" title="10&#x2F;11"></a>10&#x2F;11</h2><p>获取接口akshare</p><p>建立mysql库</p><p>下载回测数据到本地</p><h2 id="10-12"><a href="#10-12" class="headerlink" title="10&#x2F;12"></a>10&#x2F;12</h2><p>初步利用本地数据编写回测脚本，第一次回测</p><p>编写均线和倍量阳策略</p><p>规范买卖数目为1手（100股）起步</p><p>将策略相同部分抽离为基类</p><p>规范项目结构：</p><pre><code>mytrader/├── config/│   ├── __init__.py         # 空文件，标记 config 为包│   └── env.py             # 数据库配置├── data/│   ├── __init__.py         # 空文件，标记 data 为包│   └── stock_utils.py     # 数据访问和交易执行逻辑├── indicators/│   ├── __init__.py         # 空文件，标记 indicators 为包│   └── technical_indicators.py  # 技术指标├── strategies/│   ├── __init__.py         # 空文件，标记 strategies 为包│   ├── ma_cross_strategy.py  # 均线交叉策略│   └── volume_red_strategy.py  # 倍量红策略├── __init__.py             # 空文件，标记 mytrader 为包</code></pre><p>托管html到服务器，方便在浏览器上看，UI更方便操作</p><p>不错的UI，虽然这不是正事</p><p><img src="/img/a115f47ffd462954bb734a857b28afcf.png" alt="OhTheStocksWeTrade"></p><p>添加分时</p><h2 id="10-13"><a href="#10-13" class="headerlink" title="10&#x2F;13"></a>10&#x2F;13</h2><p>修正分时</p><p>将数据获取修改为优先从本地获取，本地未获取成功再联网获取并保存到本地，这样大大减少了频繁回测时联网次数</p>]]></content>
       
       
       
