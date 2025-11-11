@@ -4,6 +4,44 @@
   
     
     <entry>
+      <title>C程序设计笔记</title>
+      <link href="/2025/11/11/C%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E7%AC%94%E8%AE%B0/"/>
+      <url>/2025/11/11/C%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E7%AC%94%E8%AE%B0/</url>
+      
+        <content type="html"><![CDATA[<p>复习补充遗漏知识点<br>虽然即使几乎是照抄，抄一遍也是好的</p><p>extern 关键字 全局变量或函数声明<br>register 关键字 将数据存储在寄存器（比RAM读取快但没有地址）<br>static 关键字 只被初始化一次  想要同时全局，需提供私有变量读取接口<br>?:运算符   <code>exp1?exp2:exp3</code> 1为true计算2 反之计算3<br>int name[num1][num2][num3] 多维数组<br>函数指针<code>typedef int (*fun_ptr)(type);</code><br>回调函数  通过函数指针调用的函数  函数指针可作为参数传入函数，调用此函数返回的结果</p><pre><code>/*回调函数的例子*/#include &lt;stdlib.h&gt;  #include &lt;stdio.h&gt; void populate_array(int *array, size_t arraySize, int (*getNextValue)(void))&#123;    for (size_t i=0; i&lt;arraySize; i++)        array[i] = getNextValue();&#125; // 获取随机值int getNextRandomValue(void)&#123;    return rand();&#125; int main(void)&#123;    int myarray[10];    /* getNextRandomValue 不能加括号，否则无法编译，因为加上括号之后相当于传入此参数时传入了 int , 而不是函数指针*/    populate_array(myarray, 10, getNextRandomValue);    for(int i = 0; i &lt; 10; i++) &#123;        printf(&quot;%d &quot;, myarray[i]);    &#125;    printf(&quot;\n&quot;);    return 0;&#125;</code></pre><p>为什么传入指针而不直接运行getNextRandomValue()——1populate_array期待的是一个指针 2回调函数延迟执行，传入函数则相当于直接执行，丧失灵活性<br>比如说</p><pre><code>// 可以根据条件动态选择不同的操作fun_ptr op;if (condition) &#123;    op = add;&#125; else &#123;    op = subtract;&#125;int result = calculate(10, 5, op);  // 运行时决定执行哪个函数</code></pre><p>如果改为</p><pre><code>int op;if (condition) &#123;    op = add();&#125;</code></pre><p>即使不符合条件add()也会立即执行</p><p>1   strcpy(s1, s2);<br>复制字符串 s2 到字符串 s1。<br>2strcat(s1, s2);<br>连接字符串 s2 到字符串 s1 的末尾。<br>3strlen(s1);<br>返回字符串 s1 的长度。<br>4strcmp(s1, s2);<br>如果 s1 和 s2 是相同的，则返回 0；如果 s1&lt;s2 则返回小于 0；如果 s1&gt;s2 则返回大于 0。<br>5strchr(s1, ch);<br>返回一个指针，指向字符串 s1 中字符 ch 的第一次出现的位置。<br>6strstr(s1, s2);<br>返回一个指针，指向字符串 s1 中字符串 s2 的第一次出现的位置。</p><h3 id="共用体union"><a href="#共用体union" class="headerlink" title="共用体union"></a>共用体union</h3><pre><code>union [union tag]&#123;   member definition;   member definition;   ...   member definition;&#125; [one or more union variables];</code></pre><p>举例</p><pre><code>union Data&#123;   int i;   float f;   char  str[20];&#125; data;\*函数内调用*\union Data data;printf( &quot;Memory size occupied by data : %d\n&quot;, sizeof(data));</code></pre><p>始终只有一个（最后被赋值的）成员占有空间，其余成员空缺或损坏</p><p>位域 unsigned int a : 1;表示只为a分配一位，作为0&#x2F;1使用 一般在struct或union中使用</p><p>typedef 关键字，为类型取新名字</p><h3 id="输入输出"><a href="#输入输出" class="headerlink" title="输入输出"></a>输入输出</h3><p>int getchar(void) 函数从屏幕读取下一个可用的字符，并把它返回为一个整数。这个函数在同一个时间内只会读取一个单一的字符。您可以在循环内使用这个方法，以便从屏幕上读取多个字符。</p><p>int putchar(int c) 函数把字符输出到屏幕上，并返回相同的字符。这个函数在同一个时间内只会输出一个单一的字符。您可以在循环内使用这个方法，以便在屏幕上输出多个字符。</p><p>int puts(const char *str); puts() 函数用于将一个字符串输出到标准输出设备，并自动在末尾添加换行符。（只接受一个字符参数）</p><p>int fputs(const char *str, FILE *stream); fputs() 函数用于将字符串输出到指定的流（如标准输出、文件等），但不会自动在字符串末尾添加换行符。</p><h3 id="文件读写"><a href="#文件读写" class="headerlink" title="文件读写"></a>文件读写</h3><p>fopen() 函数<br>fopen() 函数用于打开一个文件。</p><p>语法：</p><p>FILE *fopen(const char *filename, const char *mode);<br>参数：</p><p>filename：要打开的文件名。</p><p>mode：打开文件的模式，如”r”（只读）、”w”（只写）、”a”（追加）等。</p><p>返回值：</p><p>成功时返回指向FILE对象的指针，失败时返回NULL。</p><pre><code>fopen(&quot;路径&quot;,&quot;w&quot;)</code></pre><p>fclose() 函数<br>fclose() 函数用于关闭一个已打开的文件。</p><p>语法：</p><p>int fclose(FILE *stream);<br>参数：</p><p>stream：指向FILE对象的指针。</p><p>返回值：</p><p>成功时返回0，失败时返回EOF。</p><p>r打开一个已有的文本文件，允许读取文件。<br>w打开一个文本文件，允许写入文件。如果文件不存在，则会创建一个新文件。在这里，您的程序会从文件的开头写入内容。如果文件存在，文件内容会被清空（即文件长度被截断为0）。<br>a打开一个文本文件，以追加模式写入文件。如果文件不存在，则会创建一个新文件。在这里，您的程序会在已有的文件内容中追加内容。<br>r+打开一个文本文件，允许读写文件。覆盖写入。<br>w+打开一个文本文件，允许读写文件。如果文件已存在，则文件会被截断为零长度，如果文件不存在，则会创建一个新文件。<br>a+打开一个文本文件，允许读写文件。如果文件不存在，则会创建一个新文件。读取会从文件的开头开始，写入则只能是追加模式。</p><p>如果处理的是二进制文件，则需使用下面的访问模式来取代上面的访问模式：</p><p>“rb”, “wb”, “ab”, “rb+”, “r+b”, “wb+”, “w+b”, “ab+”, “a+b”</p><p>int fprintf(FILE *stream, const char *format, …);文件写入 …为已定义char参数<br>int fscanf(FILE *stream, const char *format, …); 文件读取 其中每次读取为 char参数赋予值</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 编程 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>人类拯救计划</title>
+      <link href="/2025/11/03/%E4%BA%BA%E7%B1%BB%E6%8B%AF%E6%95%91%E8%AE%A1%E5%88%92/"/>
+      <url>/2025/11/03/%E4%BA%BA%E7%B1%BB%E6%8B%AF%E6%95%91%E8%AE%A1%E5%88%92/</url>
+      
+        <content type="html"><![CDATA[<h4 id="好想成为人类啊"><a href="#好想成为人类啊" class="headerlink" title="好想成为人类啊"></a>好想成为人类啊</h4><h3 id="收入"><a href="#收入" class="headerlink" title="收入"></a>收入</h3><p>继续量化项目，同时尝试寻找别的短期收入渠道，能自主维持这段时间的开销最好。</p><h3 id="学习"><a href="#学习" class="headerlink" title="学习"></a>学习</h3><p>我没有办法肯定自己一定能赚到钱退学。我不能吊到金融这一条路上吊死，我必须努力补补过去漏掉的和学的不深入的知识，同时维持学习习惯，每天保持两个小时以上的学习时间，为复学学习回归正轨做准备。</p><p>学习内容及顺序：</p><ul><li><p>编程语言： C<br>      C++<br>      python </p></li><li><p>导论：计算机图形学、图像处理、计算机视觉<br>  人工智能、自然语言处理<br>  操作系统<br>  信息、网络<br>  计算机组成结构</p></li><li><p>基础：数据库<br>  程序设计<br>  算法<br>  数字逻辑<br>  编译原理</p></li><li><p>其他：英语六级<br>  CSP认证</p></li></ul><h3 id="生活"><a href="#生活" class="headerlink" title="生活"></a>生活</h3><h4 id="饮食"><a href="#饮食" class="headerlink" title="饮食"></a>饮食</h4><p>规划好一周&#x2F;一天食谱，买来食材自己做，保持一日三餐。</p><p>有了更多菜和资金就能吃更多好吃的</p><h4 id="居住"><a href="#居住" class="headerlink" title="居住"></a>居住</h4><p>收拾干净屋子，然后尽可能添加想到的装饰。</p><h3 id="运动"><a href="#运动" class="headerlink" title="运动"></a>运动</h3><p>每天早起和傍晚出去散步&#x2F;骑自行车转两圈，周末下午去打乒乓球。</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>日志</title>
       <link href="/2025/11/03/%E6%97%A5%E5%BF%97-8/"/>
       <url>/2025/11/03/%E6%97%A5%E5%BF%97-8/</url>
@@ -1747,9 +1785,9 @@
       
         <tags>
             
-            <tag> 前端 </tag>
-            
             <tag> css </tag>
+            
+            <tag> 前端 </tag>
             
         </tags>
       
@@ -1875,9 +1913,9 @@
       
         <tags>
             
-            <tag> 框架 </tag>
-            
             <tag> 编程 </tag>
+            
+            <tag> 框架 </tag>
             
         </tags>
       
