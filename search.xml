@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>数字逻辑电路笔记</title>
+      <link href="/2025/11/12/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E7%94%B5%E8%B7%AF/"/>
+      <url>/2025/11/12/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E7%94%B5%E8%B7%AF/</url>
+      
+        <content type="html"><![CDATA[<p>有些地方因为书写方便用`替代了上划线，此写法并不正确，请注意</p><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>IC技术：集成电路技术<br>时代发展：电子管（发射电子）-&gt; 晶体管（半导体二&#x2F;三极管等）-&gt;  半导体集成电路</p><p>SSI 小规模集成电路（集成度&lt;12）  MSI 中规模集成电路(12-99)  LSI 大规模集成电路(100-9999) VLSI 超大规模集成电路(10000-99999) ULSI 甚大规模(&gt;10^6)<br>集成度：每个芯片所包含门（电路）的个数</p><p>ASIC 专用集成电路 设计用来执行某个特定任务</p><p>数字电路分类：<br>    按电路结构特点及对输入信号的响应规则<br>            1组合逻辑电路 无记忆，输出取决于输入<br>            2时序逻辑电路 不仅取决于当前输入，还取决于过去电路的状态<br>    按电路形式<br>            1集成电路 多个电子元件集成在一块半导体晶片上<br>            2分立电路 将独立元件通过导线等连接<br>    按器件<br>            1TTL电路 ：晶体管-晶体管逻辑 应用于早期芯片<br>            2CMOS电路 ：互补金属氧化物半导体 集成度和效率极高，成本极低，是当前主流</p><p>BJT 双极结型晶体管<br>FET 场效应管<br>    MOSFET（金属-氧化物-半导体场效应管） 是当今最常用最重要的类型</p><h3 id="数字信号"><a href="#数字信号" class="headerlink" title="数字信号"></a>数字信号</h3><p>正逻辑： 低电平0 高电平1 负逻辑反之 默认正逻辑</p><h3 id="进制"><a href="#进制" class="headerlink" title="进制"></a>进制</h3><p>十进制下标10或D 二进制2或B 八进制8或O 十六进制16或H</p><p>数码与权的乘积为加权系数 十进制数可表示为所有加权系数之和，成为按权展开式</p><h3 id="码制"><a href="#码制" class="headerlink" title="码制"></a>码制</h3><p>BCD码（二_十进制码）用二进制表示十进制 但与2进制书写方式不同，为按位书写<br>    4位可表示16种数字 但0-9只有10个数字 因而有6个伪码，根据伪码不同区分不同的编码方式<br>8421：恒权码 取前10种组合<br>2421&#x2F;5421：恒权码  分别权为 2 4 2 1 和 5 4 2 1<br>余3码：无权码 始终比8421多3 余3码最重要的特性是一个数的余3码的“按位取反”结果，正好是它“9的补数”的余3码，方便了计算，简化了电路设计</p><p>格雷码（Gray码、循环码） 特点是相邻只有一位不同，方便传输<br>奇偶校验码 信息码加1位校验位 信息码各位和为偶则奇校验码为1 偶校验码为0</p><h3 id="逻辑运算"><a href="#逻辑运算" class="headerlink" title="逻辑运算"></a>逻辑运算</h3><p>与： Y&#x3D;A·B Y&#x3D;AB<br>或： Y&#x3D;A+B<br>非： Y&#x3D;Ā<br>与非 先与后非 或非 先或后非<br>异或： Y&#x3D;A⊕B  计算方法：Y&#x3D;A+B-2AB 相同为0 不同为1 </p><p>同一律：A+A&#x3D;A AA&#x3D;A<br>互补律：A+`A&#x3D;1  A`A&#x3D;0<br>并且满足交换律结合律分配律以及加法分配律<br>摩根定理 吸收律 冗余律</p><h3 id="电子电路"><a href="#电子电路" class="headerlink" title="电子电路"></a>电子电路</h3><p>分类 1模拟电路 模拟信号，时间、幅度都连续变化  2数字电路 数字信号，断续变化，主要研究输入输出的逻辑关系</p><h3 id="分析方法"><a href="#分析方法" class="headerlink" title="分析方法"></a>分析方法</h3><h4 id="真值表"><a href="#真值表" class="headerlink" title="真值表"></a>真值表</h4><h4 id="逻辑图"><a href="#逻辑图" class="headerlink" title="逻辑图"></a>逻辑图</h4><h4 id="逻辑表达式"><a href="#逻辑表达式" class="headerlink" title="逻辑表达式"></a>逻辑表达式</h4><h4 id="卡诺图"><a href="#卡诺图" class="headerlink" title="卡诺图"></a>卡诺图</h4><h4 id="波形图"><a href="#波形图" class="headerlink" title="波形图"></a>波形图</h4>]]></content>
+      
+      
+      <categories>
+          
+          <category> 笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 电路 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>C程序设计笔记</title>
       <link href="/2025/11/11/C%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E7%AC%94%E8%AE%B0/"/>
       <url>/2025/11/11/C%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E7%AC%94%E8%AE%B0/</url>
@@ -2228,9 +2253,9 @@
       
         <tags>
             
-            <tag> 后端 </tag>
-            
             <tag> 日志 </tag>
+            
+            <tag> 后端 </tag>
             
         </tags>
       
