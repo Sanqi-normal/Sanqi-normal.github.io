@@ -109,11 +109,11 @@ function initCyberBackground() {
         ctx.save();
         ctx.translate(width - 60, height / 2 - 100);
         
-        ctx.font = '50px "Microsoft YaHei", "SimHei", sans-serif';
+        ctx.font = '50px "FZShuTi", "STHupo", cursive';
         ctx.fillStyle = 'rgba(0, 255, 255, 0.3)';
         ctx.textAlign = 'center';
         
-        const text = '你从何处，来此驻足';
+        const text = '浮生一梦 何以解忧';
         const chars = text.split('');
         const lineHeight = 50;
         
