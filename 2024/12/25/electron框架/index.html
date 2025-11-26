@@ -6,20 +6,20 @@
   <meta name="keywords" content=" 编程 , 框架 ">
   <meta name="description" content="electron框架 | 叁七のblog">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="此页面禁用了快捷键，如导航到新页面无法使用快捷键，请重新刷新界面如发送按钮无效，也请等待或刷新页面介绍：这是借用fittencode的api的ai 查看本地AIweb界面   发送       body {         font-family: Arial, sans-serif;         background:rgb(255, 241, 200)!important;">
+<meta name="description" content="这是一个假装自己是命令行的AI，找出它的破绽                    Alice Shell：$~                      body {         font-family: &#39;Courier New&#39;, monospace;         background: #000 !important;         margin: 0;         padd">
 <meta property="og:type" content="website">
 <meta property="og:title" content="叁七のblog">
 <meta property="og:url" content="http://example.com/AI/index.html">
 <meta property="og:site_name" content="叁七のblog">
-<meta property="og:description" content="此页面禁用了快捷键，如导航到新页面无法使用快捷键，请重新刷新界面如发送按钮无效，也请等待或刷新页面介绍：这是借用fittencode的api的ai 查看本地AIweb界面   发送       body {         font-family: Arial, sans-serif;         background:rgb(255, 241, 200)!important;">
+<meta property="og:description" content="这是一个假装自己是命令行的AI，找出它的破绽                    Alice Shell：$~                      body {         font-family: &#39;Courier New&#39;, monospace;         background: #000 !important;         margin: 0;         padd">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2025-07-03T10:07:43.495Z">
-<meta property="article:modified_time" content="2025-02-27T07:04:20.000Z">
+<meta property="article:published_time" content="2025-11-26T14:06:51.594Z">
+<meta property="article:modified_time" content="2025-11-26T14:06:51.594Z">
 <meta property="article:author" content="叁七">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="icon" href="https://testingcf.jsdelivr.net/gh/sanqi-normal/sanqi-normal.github.io/img/top.jpg">
+<link rel="icon" href="https://testingcf.jsdelivr.net/gh/sanqi-normal/sanqi-normal.github.io/img/top.png">
 
 <link href="/css/style.css?v=1.1.0" rel="stylesheet">
 
@@ -44,7 +44,13 @@
 
 <script src="/js/iconfont.js?v=1.1.0" ></script>
 
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Press+Start+2P&family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/_partial/cyber-background.styl">
 <meta name="generator" content="Hexo 7.3.0"></head>
+<div class="scanlines"></div>
+<div class="noise-overlay"></div>
+<div class="vignette"></div>
+<canvas id="sun-canvas"></canvas>
 <div style="display: none">
   <input class="theme_disqus_on" value="false">
   <input class="theme_preload_comment" value="">
@@ -55,18 +61,45 @@
   <input id="theme_code_copy" value="true" />
 </div>
 
+  
+<link rel="stylesheet" href="/css/cassette-player.css">
+
+
+<script src="/js/cyber-background.js"></script>
+
 
 <body>
 <aside class="nav">
     <div class="nav-left">
         <!--左侧栏模板逻辑-->
-<!--添加一个刷新到主页的按钮-->
-<div><button class="refresh-button" onclick="window.location.href='/'">首页</button></div>
+<style>
+.blog-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  letter-spacing: -0.025em;
+  padding-left: 1rem;
+  font-family: var(--font-heading);
+}
+.blog-title-cyan {
+  color: #22d3ee;
+}
+.blog-title-fuchsia {
+  color: #d946ef;
+}
+</style>
+
+<h1 class="blog-title">
+    <span class="blog-title-cyan">S</span>ANQI
+    <span class="blog-title-fuchsia">B</span>LOG
+</h1>
 <!--头像与图标链接-->
+
 <a href="/"
    class="avatar_target">
     <img class="avatar"
-         src="https://testingcf.jsdelivr.net/gh/sanqi-normal/sanqi-normal.github.io/img/avatar.jpg"/>
+         src="https://testingcf.jsdelivr.net/gh/sanqi-normal/sanqi-normal.github.io/img/avatar_vaporwave_advanced.jpg"/>
+    <div class="retro-future-overlay"></div>
 </a>
 <div class="author">
     <span>叁七</span>
@@ -120,7 +153,7 @@
     <li>
         <div class="all active" data-rel="All">All
             
-                <small>(121)</small>
+                <small>(123)</small>
             
         </div>
     </li>
@@ -132,7 +165,7 @@
         <div data-rel="日志">
             
             日志
-            <small>(21)</small>
+            <small>(22)</small>
         </div>
         
     </li>
@@ -469,8 +502,8 @@
         
     </div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="121">
-<input type="hidden" id="yelog_site_word_count" value="123.2k">
+<input type="hidden" id="yelog_site_posts_number" value="123">
+<input type="hidden" id="yelog_site_word_count" value="125k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -771,6 +804,24 @@
            data-author="" >
             <span class="post-title" title="重要外链汇总">重要外链汇总</span>
             <span class="post-date" title="2025-02-16 18:59:13">2025/02/16</span>
+        </a>
+        
+        
+        <a  class="All 日志 "
+           href="/2025/11/26/%E6%97%A5%E5%BF%97-9/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="日志">日志</span>
+            <span class="post-date" title="2025-11-26 20:59:40">2025/11/26</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2025/11/18/Unity%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BA%E4%B8%80%E5%8F%B0%E5%9B%BE%E7%81%B5%E5%AE%8C%E5%A4%87%E8%AE%A1%E7%AE%97%E6%9C%BA/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Unity从零搭建一台图灵完备计算机">Unity从零搭建一台图灵完备计算机</span>
+            <span class="post-date" title="2025-11-18 10:58:51">2025/11/18</span>
         </a>
         
         
@@ -1595,7 +1646,7 @@
         
         <a  class="All 计算机 后端 "
            href="/2024/12/17/%E6%9C%89%E5%85%B3ip%E8%BF%BD%E8%B8%AA%E5%AD%98%E5%82%A8%E7%9A%84%E5%85%A8%E7%A8%8B%E5%9B%9E%E9%A1%BE/"
-           data-tag="日志,后端"
+           data-tag="后端,日志"
            data-author="" >
             <span class="post-title" title="有关ip数据存储的全程回顾">有关ip数据存储的全程回顾</span>
             <span class="post-date" title="2024-12-17 21:13:53">2024/12/17</span>
@@ -1871,7 +1922,7 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-electron框架" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-electron框架" class="article article-type-post" itemscope itemprop="blogPost" style="background: transparent;">
     
         <h1 class="article-title">electron框架</h1>
     
@@ -2164,6 +2215,63 @@ webFrame.setVisualZoomLevelLimits(minimumLevel, maximumLevel)：设置视觉缩�
 
 <script src="//testingcf.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
 <script src="//testingcf.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<!-- 引入磁带播放器组件 -->
+
+  <!-- 简化版磁带按钮组件 -->
+<div class="cassette-button-container">
+    <button class="cassette-btn" id="playButton">
+        <span class="btn-text">插入磁带【start】</span>
+        <div class="tape-border">
+            <div class="tape-segment segment-1"></div>
+            <div class="tape-segment segment-2"></div>
+            <div class="tape-segment segment-3"></div>
+            <div class="tape-segment segment-4"></div>
+        </div>
+        <div class="led-indicator" id="statusLed"></div>
+    </button>
+</div>
+
+<audio id="audioPlayer" loop>
+    <!-- 替换为您的音乐文件路径 -->
+    <source src="/music/chill-synthwave-background-music-for-youtube-shorts-and-videos-345551.mp3" type="audio/mpeg">
+    您的浏览器不支持音频元素。
+</audio>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const playButton = document.getElementById('playButton');
+    const audioPlayer = document.getElementById('audioPlayer');
+    const statusLed = document.getElementById('statusLed');
+    let isPlaying = false;
+    AudioStart= new Audio('/music/cassette-eject-172757.mp3');
+    AudioStop= new Audio('/music/tape-cassette-insert-172758.mp3');
+    playButton.addEventListener('click', function() {
+        if (!isPlaying) {
+            // 播放音乐
+            AudioStart.play();
+            audioPlayer.play().then(() => {
+                isPlaying = true;
+                playButton.querySelector('.btn-text').textContent = '弹出磁带【stop】';
+                playButton.classList.add('playing');
+                statusLed.classList.add('active');
+            }).catch(error => {
+                console.error('播放失败:', error);
+                alert('音乐播放失败，请检查音频文件路径或浏览器权限设置。');
+            });
+        } else {
+            // 停止音乐
+            AudioStop.play();
+            audioPlayer.pause();
+            audioPlayer.currentTime = 0;
+            isPlaying = false;
+            playButton.querySelector('.btn-text').textContent = '插入磁带【start】';
+            playButton.classList.remove('playing');
+            statusLed.classList.remove('active');
+        }
+    });
+});
+</script>
 
 <script src="/js/script.js?v=1.1.0" ></script>
 <script>
@@ -2515,17 +2623,17 @@ webFrame.setVisualZoomLevelLimits(minimumLevel, maximumLevel)：设置视觉缩�
     
     
     .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
-        color: #000000;
+        color: rgba(198, 228, 0, 1);
     }
     
     
     .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
-        color: #000000;
+        color: #40dcffff;
     }
     
     
     .nav-right nav a.hover, #local-search-result a.hover{
-        background-color: #EE2C2C;
+        background-color: rgba(131, 0, 160, 1);
     }
     
     
@@ -2535,6 +2643,24 @@ webFrame.setVisualZoomLevelLimits(minimumLevel, maximumLevel)：设置视觉缩�
     
 
     /*列表样式*/
+    
+    #post .pjax article .article-entry>ol, #post .pjax article .article-entry>ul, #post .pjax article>ol, #post .pjax article>ul{
+        border: #e2dede solid 1px;
+        border-radius: 10px;
+        padding: 10px 32px 10px 56px;
+    }
+    #post .pjax article .article-entry li>ol, #post .pjax article .article-entry li>ul,#post .pjax article li>ol, #post .pjax article li>ul{
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    #post .pjax article .article-entry>ol>li, #post .pjax article .article-entry>ul>li,#post .pjax article>ol>li, #post .pjax article>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    #post .pjax article .article-entry li>ol>li, #post .pjax article .article-entry li>ul>li,#post .pjax article li>ol>li, #post .pjax article li>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
     
 
     /* 背景图样式 */
@@ -2556,7 +2682,7 @@ webFrame.setVisualZoomLevelLimits(minimumLevel, maximumLevel)：设置视觉缩�
         width: 100%;
         height: 100%;
         opacity: 0.1;
-        background: url("https://testingcf.jsdelivr.net/gh/sanqi-normal/sanqi-normal.github.io/img/background.png");
+        background: url("https://testingcf.jsdelivr.net/gh/sanqi-normal/sanqi-normal.github.io/img/vaporwave_advanced.jpg");
         background-repeat: no-repeat;
         background-position: 50% 0;
         -ms-background-size: cover;
