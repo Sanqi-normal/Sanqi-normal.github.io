@@ -1,0 +1,2686 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动态 Mermaid 架构浏览器</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none; /* 全局禁用文本选择 */
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            padding: 10px;
+            gap: 10px;
+        }
+
+        /* 左侧控制面板 */
+        .control-panel {
+            width: 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            padding: 20px;
+            overflow-y: auto;
+            max-height: 100%;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex: 1;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100%;
+            min-height: 300px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            resize: vertical;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* 按钮样式 */
+        button {
+            padding: 8px 16px;
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            white-space: nowrap;
+            flex: 1;
+        }
+        button:hover:not(:disabled) { background-color: #34495e; transform: translateY(-1px); }
+        button:disabled { background-color: #bdc3c7; cursor: not-allowed; transform: none; }
+        
+        button.action-btn { background-color: #27ae60; }
+        button.action-btn:hover { background-color: #2ecc71; }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .control-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        input[type="number"] {
+            width: 50px;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        /* 右侧图表容器 */
+        .diagram-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* 路径导航 */
+        #breadcrumbs {
+            padding: 10px 20px;
+            background: #f1f3f5;
+            border-bottom: 1px solid #e9ecef;
+            font-size: 14px;
+            color: #495057;
+        }
+
+        /* 图表容器 - 支持缩放和拖动 */
+        #diagram-wrapper {
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+            cursor: grab;
+        }
+
+        #diagram-container {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+            transform-origin: 0 0;
+            transition: transform 0.1s ease;
+        }
+
+        /* 图表内容包装器 - 用于拖拽 */
+        #diagram-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 20px;
+            transform-origin: 0 0;
+            transition: transform 0.1s ease;
+        }
+
+        /* 图表内部控制按钮 */
+        .diagram-controls {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            display: flex;
+            gap: 5px;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            padding: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .diagram-controls button {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            padding: 0;
+            background-color: #2c3e50;
+        }
+
+        .diagram-controls button:hover:not(:disabled) { 
+            background-color: #34495e; 
+            transform: translateY(-1px); 
+        }
+
+        .diagram-controls button:disabled { 
+            background-color: #bdc3c7; 
+            cursor: not-allowed; 
+            transform: none; 
+        }
+
+        /* 缩放指示器 */
+        .zoom-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            z-index: 10;
+        }
+
+        /* 强制覆盖 Mermaid 样式 */
+        .node.clickable { cursor: pointer !important; }
+        
+        /* 简单的 Loading */
+        #loading { display: none; color: #666; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+    <!-- 左侧控制面板 -->
+    <div class="control-panel">
+            <div class="control-row">
+                <span style="font-size:14px; color:#555;">显示深度:</span>
+                <input type="number" id="depthInput" value="2" min="1" max="999" onchange="updateDepth()">
+            </div>
+        <div class="input-group">
+            <textarea id="mermaidInput" placeholder="在此粘贴您的 Mermaid 代码 (flowchart TD ...)">
+flowchart TD
+    subgraph Computer[计算机完整架构 - 基础元件级细化]
+        direction TB
+        
+        subgraph CPU[中央处理器 CPU]
+            direction TB
+            
+            subgraph Core[处理器核心]
+                direction LR
+                
+                subgraph CU[控制单元 CU]
+                    direction TB
+                    
+                    subgraph InstrDec[指令译码器]
+                        direction TB
+                        ID_MUX1[多路复用器 // 指令字段选择]
+                        ID_Decoder1[地址解码器 // 操作码解码]
+                        ID_Decoder2[地址解码器 // 寄存器字段解码]
+                        ID_FF1[D触发器 // 指令锁存]
+                        ID_FF2[D触发器 // 状态保持]
+                    end
+                    
+                    subgraph Microcode[微代码ROM]
+                        direction TB
+                        MC_ROM[ROM // 微指令存储]
+                        MC_AddrDecoder[地址解码器 // 微地址解码]
+                        MC_FF1[D触发器 // 微地址寄存器]
+                        MC_FF2[D触发器 // 微指令寄存器]
+                        MC_TriBuf1[三态缓冲器 // 微指令输出]
+                    end
+                    
+                    subgraph Timing[时序控制器]
+                        direction TB
+                        TC_Counter1[计数器 // 节拍计数]
+                        TC_Counter2[计数器 // 机器周期计数]
+                        TC_Decoder1[地址解码器 // 节拍解码]
+                        TC_FF1[D触发器 // 状态标志]
+                        TC_ClockGen[时钟生成器 // 时序生成]
+                        TC_AND1[逻辑运算器 // 条件与门]
+                        TC_OR1[逻辑运算器 // 条件或门]
+                    end
+                    
+                    subgraph ControlBus[控制总线接口]
+                        direction TB
+                        CB_TriBuf1[三态缓冲器 // 控制信号输出]
+                        CB_TriBuf2[三态缓冲器 // 状态信号输入]
+                        CB_FF1[D触发器 // 控制信号锁存]
+                        CB_Decoder1[地址解码器 // 设备选择]
+                    end
+                end
+                
+                subgraph ALU[算术逻辑单元 ALU]
+                    direction TB
+                    
+                    subgraph AddSub[加法器/减法器]
+                        direction TB
+                        AS_Adder[加法器 // 二进制加法]
+                        AS_Subtractor[减法器 // 二进制减法]
+                        AS_XOR1[逻辑运算器 // 补码转换]
+                        AS_MUX1[多路复用器 // 运算选择]
+                        AS_FF1[D触发器 // 进位锁存]
+                    end
+                    
+                    subgraph LogicUnit[逻辑运算单元]
+                        direction TB
+                        LU_AND[逻辑运算器 // 与运算]
+                        LU_OR[逻辑运算器 // 或运算]
+                        LU_XOR[逻辑运算器 // 异或运算]
+                        LU_NOT[逻辑运算器 // 非运算]
+                        LU_MUX1[多路复用器 // 逻辑操作选择]
+                    end
+                    
+                    subgraph ShiftUnit[移位器]
+                        direction TB
+                        SU_ShifterL[移位器 // 左移]
+                        SU_ShifterR[移位器 // 右移]
+                        SU_ShifterA[移位器 // 算术移位]
+                        SU_MUX1[多路复用器 // 移位类型选择]
+                        SU_FF1[D触发器 // 移位位数锁存]
+                    end
+                    
+                    subgraph ALUControl[ALU控制器]
+                        direction TB
+                        AC_Decoder1[地址解码器 // ALU操作码解码]
+                        AC_FF1[D触发器 // 操作码锁存]
+                        AC_MUX1[多路复用器 // 功能选择]
+                        AC_TriBuf1[三态缓冲器 // 控制信号输出]
+                    end
+                    
+                    subgraph ALUFlags[ALU标志寄存器]
+                        direction TB
+                        AF_FF1[D触发器 // 进位标志]
+                        AF_FF2[D触发器 // 零标志]
+                        AF_FF3[D触发器 // 符号标志]
+                        AF_FF4[D触发器 // 溢出标志]
+                        AF_FF5[D触发器 // 奇偶标志]
+                        AF_TriBuf1[三态缓冲器 // 标志输出]
+                    end
+                end
+                
+                subgraph Registers[寄存器组]
+                    direction TB
+                    
+                    subgraph PC[程序计数器 PC]
+                        direction TB
+                        PC_FF1[D触发器 // PC低8位]
+                        PC_FF2[D触发器 // PC高8位]
+                        PC_Adder[加法器 // PC+1]
+                        PC_MUX1[多路复用器 // PC输入选择]
+                        PC_TriBuf1[三态缓冲器 // PC输出]
+                    end
+                    
+                    subgraph IR[指令寄存器 IR]
+                        direction TB
+                        IR_FF1[D触发器 // 操作码部分]
+                        IR_FF2[D触发器 // 地址部分]
+                        IR_TriBuf1[三态缓冲器 // 指令输出]
+                        IR_Decoder1[地址解码器 // 指令字段分离]
+                    end
+                    
+                    subgraph MAR[内存地址寄存器 MAR]
+                        direction TB
+                        MAR_FF1[D触发器 // 地址低8位]
+                        MAR_FF2[D触发器 // 地址高8位]
+                        MAR_TriBuf1[三态缓冲器 // 地址输出]
+                        MAR_MUX1[多路复用器 // 地址源选择]
+                    end
+                    
+                    subgraph MBR[内存缓冲寄存器 MBR]
+                        direction TB
+                        MBR_FF1[D触发器 // 数据输入锁存]
+                        MBR_FF2[D触发器 // 数据输出锁存]
+                        MBR_TriBuf1[三态缓冲器 // 数据输出]
+                        MBR_TriBuf2[三态缓冲器 // 数据输入]
+                    end
+                    
+                    subgraph ACC[累加器 ACC]
+                        direction TB
+                        ACC_FF1[D触发器 // 累加值存储]
+                        ACC_TriBuf1[三态缓冲器 // 累加值输出]
+                        ACC_MUX1[多路复用器 // 输入源选择]
+                    end
+                    
+                    subgraph GPR1[通用寄存器 R0-R7]
+                        direction TB
+                        GPR_FF[8xD触发器 // 寄存器存储]
+                        GPR_MUX1[多路复用器 // 寄存器选择]
+                        GPR_Decoder1[地址解码器 // 寄存器地址解码]
+                        GPR_TriBuf1[三态缓冲器 // 寄存器输出]
+                    end
+                    
+                    subgraph StatusReg[状态寄存器 Flags]
+                        direction TB
+                        SR_FF1[D触发器 // 中断使能]
+                        SR_FF2[D触发器 // 方向标志]
+                        SR_FF3[D触发器 // 系统模式]
+                        SR_TriBuf1[三态缓冲器 // 状态输出]
+                        SR_MUX1[多路复用器 // 状态输入选择]
+                    end
+                end
+                
+                subgraph InternalBus[内部数据总线]
+                    direction LR
+                    
+                    subgraph DataBus[内部数据总线]
+                        direction TB
+                        DB_Line[8x三态缓冲器 // 数据线驱动]
+                        DB_MUX1[多路复用器 // 数据源选择]
+                        DB_Decoder1[地址解码器 // 目标选择]
+                    end
+                    
+                    subgraph AddressBus[内部地址总线]
+                        direction TB
+                        AB_Line[16x三态缓冲器 // 地址线驱动]
+                        AB_MUX1[多路复用器 // 地址源选择]
+                        AB_Decoder1[地址解码器 // 地址范围解码]
+                    end
+                    
+                    subgraph ControlBusInt[内部控制总线]
+                        direction TB
+                        CB_Line[12x三态缓冲器 // 控制线驱动]
+                        CB_Decoder1[地址解码器 // 控制信号路由]
+                        CB_FF1[D触发器 // 控制信号同步]
+                    end
+                end
+            end
+            
+            subgraph CacheHierarchy[缓存层次]
+                direction LR
+                
+                subgraph L1Cache[L1缓存]
+                    direction TB
+                    L1_SRAM[SRAM阵列 // 数据存储]
+                    L1_TagRAM[SRAM阵列 // 标签存储]
+                    L1_ValidBits[D触发器阵列 // 有效位]
+                    L1_DirtyBits[D触发器阵列 // 脏位]
+                    L1_Comparator[比较器 // 标签比较]
+                    L1_Decoder[地址解码器 // 组选择]
+                    L1_MUX[多路复用器 // 路选择]
+                    L1_TriBuf[三态缓冲器 // 数据输出]
+                end
+                
+                subgraph L2Cache[L2缓存]
+                    direction TB
+                    L2_SRAM[SRAM阵列 // 数据存储]
+                    L2_TagRAM[SRAM阵列 // 标签存储]
+                    L2_ValidBits[D触发器阵列 // 有效位]
+                    L2_DirtyBits[D触发器阵列 // 脏位]
+                    L2_Comparator[比较器 // 标签比较]
+                    L2_Decoder[地址解码器 // 组选择]
+                    L2_MUX[多路复用器 // 路选择]
+                    L2_TriBuf[三态缓冲器 // 数据输出]
+                end
+                
+                subgraph L3Cache[L3缓存]
+                    direction TB
+                    L3_SRAM[SRAM阵列 // 数据存储]
+                    L3_TagRAM[SRAM阵列 // 标签存储]
+                    L3_ValidBits[D触发器阵列 // 有效位]
+                    L3_DirtyBits[D触发器阵列 // 脏位]
+                    L3_Comparator[比较器 // 标签比较]
+                    L3_Decoder[地址解码器 // 组选择]
+                    L3_MUX[多路复用器 // 路选择]
+                    L3_TriBuf[三态缓冲器 // 数据输出]
+                end
+                
+                subgraph CacheController[缓存控制器]
+                    direction TB
+                    CC_StateMachine[D触发器阵列 // 状态机]
+                    CC_AddressDecoder[地址解码器 // 地址解析]
+                    CC_Comparator[比较器 // 一致性检查]
+                    CC_MUX[多路复用器 // 缓存层级选择]
+                    CC_TriBuf[三态缓冲器 // 控制信号输出]
+                end
+            end
+            
+            subgraph MMU[内存管理单元 MMU]
+                direction TB
+                
+                subgraph TLB[转址旁路缓存 TLB]
+                    direction TB
+                    TLB_CAM[CAM阵列 // 虚拟地址匹配]
+                    TLB_RAM[SRAM阵列 // 物理地址存储]
+                    TLB_ValidBits[D触发器阵列 // 有效位]
+                    TLB_Comparator[比较器 // 地址匹配]
+                    TLB_Decoder[地址解码器 // TLB索引]
+                    TLB_MUX[多路复用器 // 输出选择]
+                end
+                
+                subgraph PageTable[页表寄存器]
+                    direction TB
+                    PTR_FF1[D触发器 // 页表基址]
+                    PTR_FF2[D触发器 // 页表长度]
+                    PTR_TriBuf1[三态缓冲器 // 基址输出]
+                    PTR_Adder[加法器 // 页表项计算]
+                end
+                
+                subgraph SegmentationUnit[分段单元]
+                    direction TB
+                    SU_Adder[加法器 // 段基址+偏移量]
+                    SU_Comparator[比较器 // 段界限检查]
+                    SU_MUX1[多路复用器 // 段选择器]
+                    SU_FF1[D触发器 // 段寄存器缓存]
+                end
+                
+                subgraph PagingUnit[分页单元]
+                    direction TB
+                    PU_Shifter[移位器 // 页表索引提取]
+                    PU_Adder[加法器 // 多级页表遍历]
+                    PU_MUX1[多路复用器 // 页大小选择]
+                    PU_Comparator[比较器 // 权限检查]
+                end
+            end
+            
+            subgraph BusInterface[CPU总线接口]
+                direction TB
+                BI_AddressLatch[D触发器阵列 // 地址锁存]
+                BI_DataLatch[D触发器阵列 // 数据锁存]
+                BI_ControlLatch[D触发器阵列 // 控制信号锁存]
+                BI_AddressDecoder[地址解码器 // 总线设备选择]
+                BI_Arbiter[逻辑运算器阵列 // 总线仲裁]
+                BI_TriBuf[三态缓冲器阵列 // 总线驱动]
+            end
+        end
+        
+        subgraph MemoryHierarchy[存储层次]
+            direction TB
+            
+            subgraph MainMemory[主内存 DRAM]
+                direction TB
+                
+                subgraph DRAMBank[DRAM存储体 Bank]
+                    direction TB
+                    DRAM_CellArray[电容-D触发器阵列 // 存储单元]
+                    DRAM_RowDecoder[地址解码器 // 行解码]
+                    DRAM_ColDecoder[地址解码器 // 列解码]
+                    DRAM_SenseAmp[比较器阵列 // 感应放大器]
+                    DRAM_Precharge[逻辑运算器 // 预充电控制]
+                end
+                
+                subgraph DRAMController[DRAM控制器]
+                    direction TB
+                    DRC_StateMachine[D触发器阵列 // 状态机]
+                    DRC_AddressDecoder[地址解码器 // 地址映射]
+                    DRC_TimingCounter[计数器 // 时序控制]
+                    DRC_RefreshCounter[计数器 // 刷新控制]
+                    DRC_MUX1[多路复用器 // 命令选择]
+                end
+                
+                subgraph RefreshCircuit[刷新电路]
+                    direction TB
+                    RFC_Counter[计数器 // 刷新地址]
+                    RFC_ClockGen[时钟生成器 // 刷新时钟]
+                    RFC_Comparator[比较器 // 刷新时机检测]
+                    RFC_FF1[D触发器 // 刷新状态]
+                end
+                
+                subgraph DataBuffer[数据缓冲器]
+                    direction TB
+                    DBF_FF[D触发器阵列 // 数据缓存]
+                    DBF_TriBuf[三态缓冲器阵列 // 数据驱动]
+                    DBF_MUX1[多路复用器 // 数据源选择]
+                end
+            end
+            
+            subgraph Storage[外部存储]
+                direction LR
+                
+                subgraph SSD[固态硬盘 SSD]
+                    direction TB
+                    
+                    subgraph NANDFlash[NAND闪存阵列]
+                        direction TB
+                        NAND_CellArray[浮栅MOSFET阵列 // 存储单元]
+                        NAND_RowDecoder[地址解码器 // 字线选择]
+                        NAND_ColDecoder[地址解码器 // 位线选择]
+                        NAND_SenseAmp[比较器阵列 // 页读取]
+                        NAND_ChargePump[逻辑控制器 // 编程电压]
+                    end
+                    
+                    subgraph SSDController[SSD控制器]
+                        direction TB
+                        SSDC_Processor[D触发器阵列 // 控制逻辑]
+                        SSDC_ECCEncoder[逻辑运算器 // 错误校正编码]
+                        SSDC_ECCDecoder[逻辑运算器 // 错误检测校正]
+                        SSDC_AddressTranslator[地址解码器 // FTL映射]
+                        SSDC_WearLeveling[计数器阵列 // 磨损均衡]
+                    end
+                    
+                    subgraph DRAMCache[DRAM缓存]
+                        direction TB
+                        SSDRAM_FF[D触发器阵列 // 缓存数据]
+                        SSDRAM_TagRAM[SRAM阵列 // 缓存标签]
+                        SSDRAM_Comparator[比较器 // 命中检测]
+                        SSDRAM_MUX[多路复用器 // 数据选择]
+                    end
+                end
+                
+                subgraph HDD[机械硬盘 HDD]
+                    direction TB
+                    
+                    subgraph Platters[盘片组]
+                        direction TB
+                        HDD_MagneticLayer[磁性材料 // 数据存储]
+                        HDD_ServoPattern[伺服信号 // 磁道定位]
+                    end
+                    
+                    subgraph ReadWriteHead[读/写磁头]
+                        direction TB
+                        RWH_Inductor[电感线圈 // 写入头]
+                        RWH_MagnetoResistor[磁阻元件 // 读取头]
+                        RWH_Preamplifier[比较器 // 信号放大]
+                    end
+                    
+                    subgraph ActuatorArm[音圈电机臂]
+                        direction TB
+                        AA_VoiceCoil[电磁线圈 // 电机驱动]
+                        AA_PositionSensor[比较器 // 位置反馈]
+                        AA_Driver[逻辑控制器 // 电机控制]
+                    end
+                    
+                    subgraph HDController[硬盘控制器]
+                        direction TB
+                        HDC_StateMachine[D触发器阵列 // 控制逻辑]
+                        HDC_DataSeparator[逻辑运算器 // 数据时钟分离]
+                        HDC_ECC[逻辑运算器 // 错误校正]
+                        HDC_Interface[三态缓冲器 // 主机接口]
+                    end
+                end
+            end
+        end
+        
+        subgraph Chipset[芯片组]
+            direction TB
+            
+            subgraph Northbridge[北桥 - 内存控制器]
+                direction TB
+                
+                subgraph MemCtrl[内存控制器]
+                    direction TB
+                    MC_Arbiter[逻辑运算器阵列 // 访问仲裁]
+                    MC_AddressMapper[地址解码器 // 地址映射]
+                    MC_CommandDecoder[地址解码器 // 命令解码]
+                    MC_StateReg[D触发器阵列 // 状态寄存器]
+                    MC_TimingGen[计数器 // 时序生成器]
+                end
+                
+                subgraph AddrDecoder[地址解码器]
+                    direction TB
+                    AD_DecoderLogic[地址解码器 // 设备选择]
+                    AD_RangeReg[D触发器阵列 // 地址范围寄存器]
+                    AD_Comparator[比较器 // 地址比较]
+                    AD_PriorityEncoder[逻辑运算器 // 优先级编码]
+                end
+                
+                subgraph DataPath[数据通路]
+                    direction TB
+                    DP_DataLatch[D触发器阵列 // 数据锁存]
+                    DP_DataMUX[多路复用器 // 路由选择]
+                    DP_ParityGen[逻辑运算器 // 奇偶校验生成]
+                    DP_ParityCheck[比较器 // 奇偶校验检查]
+                    DP_TriBuf[三态缓冲器阵列 // 数据驱动]
+                end
+                
+                subgraph Arbiter[仲裁器]
+                    direction TB
+                    ARB_PriorityLogic[逻辑运算器 // 优先级逻辑]
+                    ARB_StateFF[D触发器 // 仲裁状态]
+                    ARB_RequestLatch[D触发器阵列 // 请求锁存]
+                    ARB_GrantDecoder[地址解码器 // 授权解码]
+                end
+            end
+            
+            subgraph Southbridge[南桥 - I/O控制器]
+                direction TB
+                
+                subgraph IOControllers[I/O控制器]
+                    direction LR
+                    
+                    subgraph USBCtrl[USB控制器]
+                        direction TB
+                        
+                        subgraph UHCI[USB主机控制器接口]
+                            direction TB
+                            UHCI_FrameCounter[计数器 // 帧计数]
+                            UHCI_TransferDescRAM[SRAM // 传输描述符]
+                            UHCI_StateMachine[D触发器阵列 // 状态机]
+                            UHCI_DataFIFO[D触发器阵列 // 数据FIFO]
+                            UHCI_CRCGen[逻辑运算器 // CRC生成]
+                            UHCI_CRCCheck[比较器 // CRC校验]
+                        end
+                        
+                        subgraph RootHub[根集线器]
+                            direction TB
+                            RH_PortState[D触发器阵列 // 端口状态]
+                            RH_ConnectDetect[比较器 // 连接检测]
+                            RH_PowerControl[逻辑运算器 // 电源控制]
+                            RH_DataRouter[多路复用器 // 数据路由]
+                        end
+                        
+                        subgraph TransferScheduler[传输调度器]
+                            direction TB
+                            TS_PriorityEncoder[逻辑运算器 // 优先级编码]
+                            TS_TimeSlotCounter[计数器 // 时间片计数]
+                            TS_QueueRAM[SRAM // 传输队列]
+                            TS_Arbiter[逻辑运算器 // 调度仲裁]
+                        end
+                    end
+                    
+                    subgraph SATACtrl[SATA控制器]
+                        direction TB
+                        
+                        subgraph AHCI[高级主机控制器接口]
+                            direction TB
+                            AHCI_CmdListRAM[SRAM // 命令列表]
+                            AHCI_RecvFIFO[D触发器阵列 // 接收FIFO]
+                            AHCI_TransFIFO[D触发器阵列 // 发送FIFO]
+                            AHCI_StateMachine[D触发器阵列 // 端口状态机]
+                            AHCI_CRC32[逻辑运算器 // CRC32计算]
+                        end
+                        
+                        subgraph NCQ[Native Command Queuing]
+                            direction TB
+                            NCQ_QueueRAM[SRAM // 命令队列]
+                            NCQ_Optimizer[逻辑运算器 // 命令优化]
+                            NCQ_TagManager[D触发器阵列 // 标签管理]
+                            NCQ_CompletionSorter[逻辑运算器 // 完成排序]
+                        end
+                        
+                        subgraph PHY[SATA物理层]
+                            direction TB
+                            PHY_Encoder[逻辑运算器 // 8b/10b编码]
+                            PHY_Decoder[逻辑运算器 // 10b/8b解码]
+                            PHY_ClockDataRecovery[比较器 // 时钟数据恢复]
+                            PHY_Serializer[移位器 // 并串转换]
+                            PHY_Deserializer[移位器 // 串并转换]
+                        end
+                    end
+                    
+                    subgraph NetworkCtrl[网络控制器]
+                        direction TB
+                        
+                        subgraph MAC[媒体访问控制层]
+                            direction TB
+                            MAC_StateMachine[D触发器阵列 // 发送状态机]
+                            MAC_CRC32Gen[逻辑运算器 // CRC生成]
+                            MAC_AddressFilter[比较器 // 地址过滤]
+                            MAC_FrameBuffer[SRAM // 帧缓冲]
+                            MAC_FlowControl[逻辑运算器 // 流量控制]
+                        end
+                        
+                        subgraph PHYNet[网络物理层]
+                            direction TB
+                            PHY_LineEncoder[逻辑运算器 // 线路编码]
+                            PHY_LineDecoder[逻辑运算器 // 线路解码]
+                            PHY_AutoNegotiation[比较器 // 自动协商]
+                            PHY_LinkMonitor[D触发器 // 链路状态]
+                        end
+                        
+                        subgraph BufferMemory[缓冲存储器]
+                            direction TB
+                            BM_TxRAM[SRAM // 发送缓冲]
+                            BM_RxRAM[SRAM // 接收缓冲]
+                            BM_DMAEngine[逻辑运算器 // DMA控制]
+                            BM_QueueManager[多路复用器 // 队列管理]
+                        end
+                    end
+                    
+                    subgraph AudioCtrl[音频控制器]
+                        direction TB
+                        
+                        subgraph DAC[数模转换器]
+                            direction TB
+                            DAC_Ladder[R-2R梯型网络 // 电阻阵列]
+                            DAC_SampleHold[D触发器阵列 // 采样保持]
+                            DAC_ShiftRegister[移位器 // 数据移位]
+                            DAC_VoltageRef[比较器 // 电压参考]
+                        end
+                        
+                        subgraph ADC[模数转换器]
+                            direction TB
+                            ADC_Comparator[比较器 // 电压比较]
+                            ADC_SARRegister[D触发器阵列 // 逐次逼近寄存器]
+                            ADC_SampleHold[D触发器阵列 // 采样保持]
+                            ADC_VoltageLadder[电阻网络 // 参考电压生成]
+                        end
+                        
+                        subgraph Mixer[混音器]
+                            direction TB
+                            MIX_SummingAmp[运算放大器 // 信号叠加]
+                            MIX_VolumeControl[数字电位器 // 音量控制]
+                            MIX_SelectorMUX[多路复用器 // 输入选择]
+                            MIX_ToneControl[RC网络 // 音调控制]
+                        end
+                    end
+                end
+                
+                subgraph DMAController[DMA控制器]
+                    direction TB
+                    
+                    subgraph DMARegisters[DMA寄存器]
+                        direction TB
+                        DMAR_BaseAddress[D触发器阵列 // 基地址寄存器]
+                        DMAR_CountReg[D触发器阵列 // 计数寄存器]
+                        DMAR_ModeReg[D触发器阵列 // 模式寄存器]
+                        DMAR_StatusReg[D触发器阵列 // 状态寄存器]
+                        DMAR_AddrCounter[计数器 // 地址计数器]
+                    end
+                    
+                    subgraph DMAAribiter[DMA仲裁器]
+                        direction TB
+                        DMAA_PriorityLogic[逻辑运算器 // 优先级编码]
+                        DMAA_RequestFF[D触发器阵列 // 请求锁存]
+                        DMAA_GrantFF[D触发器阵列 // 授权锁存]
+                        DMAA_StateMachine[D触发器阵列 // 仲裁状态机]
+                    end
+                    
+                    subgraph ChannelController[通道控制器]
+                        direction TB
+                        DMC_StateMachine[D触发器阵列 // 通道状态机]
+                        DMC_AddressGenerator[加法器 // 地址生成]
+                        DMC_CountDecoder[地址解码器 // 计数检测]
+                        DMC_ControlLogic[逻辑运算器 // 控制逻辑]
+                    end
+                end
+                
+                subgraph InterruptController[中断控制器]
+                    direction TB
+                    
+                    subgraph PIC[可编程中断控制器]
+                        direction TB
+                        PIC_IRR[D触发器阵列 // 中断请求寄存器]
+                        PIC_ISR[D触发器阵列 // 中断服务寄存器]
+                        PIC_IMR[D触发器阵列 // 中断屏蔽寄存器]
+                        PIC_PriorityEncoder[逻辑运算器 // 优先级编码]
+                        PIC_VectorGenerator[地址解码器 // 向量生成]
+                    end
+                    
+                    subgraph APIC[高级可编程中断控制器]
+                        direction TB
+                        APIC_LocalUnit[D触发器阵列 // 本地单元寄存器]
+                        APIC_IOUnit[D触发器阵列 // I/O单元寄存器]
+                        APIC_Arbiter[逻辑运算器 // 仲裁逻辑]
+                        APIC_MessageEncoder[逻辑运算器 // 消息编码]
+                    end
+                    
+                    subgraph IVT[中断向量表]
+                        direction TB
+                        IVT_RAM[SRAM // 向量表存储]
+                        IVT_AddressCalc[加法器 // 向量地址计算]
+                        IVT_Decoder[地址解码器 // 向量选择]
+                    end
+                end
+            end
+        end
+        
+        subgraph Peripherals[外设]
+            direction TB
+            
+            subgraph InputDevices[输入设备]
+                direction LR
+                
+                subgraph Keyboard[键盘]
+                    direction TB
+                    
+                    subgraph KeyMatrix[键矩阵]
+                        direction TB
+                        KM_RowDriver[三态缓冲器 // 行驱动]
+                        KM_ColScanner[比较器 // 列扫描]
+                        KM_DebounceFF[D触发器阵列 // 按键状态]
+                        KM_Encoder[逻辑运算器 // 键值编码]
+                    end
+                    
+                    subgraph KbController[键盘控制器]
+                        direction TB
+                        KBC_StateMachine[D触发器阵列 // 状态机]
+                        KBC_ScanCounter[计数器 // 扫描计数]
+                        KBC_BufferRAM[SRAM // 键值缓冲]
+                        KBC_ProtocolEncoder[逻辑运算器 // 协议编码]
+                    end
+                    
+                    subgraph DebounceCircuit[去抖动电路]
+                        direction TB
+                        DBC_DelayFF[D触发器阵列 // 延时寄存器]
+                        DBC_SampleClock[时钟生成器 // 采样时钟]
+                        DBC_ConsistencyCheck[比较器 // 一致性检查]
+                    end
+                end
+                
+                subgraph Mouse[鼠标]
+                    direction TB
+                    
+                    subgraph OpticalSensor[光学传感器]
+                        direction TB
+                        OS_PixelArray[光电二极管阵列 // 图像采集]
+                        OS_ADC[比较器阵列 // 模数转换]
+                        OS_DSP[逻辑运算器 // 数字信号处理]
+                        OS_MotionCalc[加法器 // 运动向量计算]
+                    end
+                    
+                    subgraph MotionProcessor[运动处理器]
+                        direction TB
+                        MP_Accumulator[加法器 // 位移累加]
+                        MP_ScaleAdjust[逻辑运算器 // 灵敏度调整]
+                        MP_DataFormatter[逻辑运算器 // 数据格式化]
+                        MP_ReportGenerator[逻辑运算器 // 报告生成]
+                    end
+                    
+                    subgraph ButtonSwitches[按钮开关]
+                        direction TB
+                        BS_ContactMatrix[开关阵列 // 按钮矩阵]
+                        BS_StateFF[D触发器阵列 // 按钮状态]
+                        BS_Scanner[计数器 // 扫描计数器]
+                        BS_Debounce[D触发器 // 去抖动]
+                    end
+                end
+            end
+            
+            subgraph OutputDevices[输出设备]
+                direction LR
+                
+                subgraph GPU[显卡]
+                    direction TB
+                    
+                    subgraph ShaderCores[着色器核心]
+                        direction TB
+                        SC_ALUArray[ALU阵列 // 并行计算]
+                        SC_RegisterFile[SRAM // 寄存器文件]
+                        SC_InstructionDecoder[地址解码器 // 指令解码]
+                        SC_ThreadScheduler[逻辑运算器 // 线程调度]
+                    end
+                    
+                    subgraph VRAM[显存]
+                        direction TB
+                        VRAM_MemoryBank[SRAM阵列 // 存储体]
+                        VRAM_AddrDecoder[地址解码器 // 地址解码]
+                        VRAM_DataPath[多路复用器 // 数据通路]
+                        VRAM_RefreshCounter[计数器 // 刷新控制]
+                    end
+                    
+                    subgraph DisplayController[显示控制器]
+                        direction TB
+                        DC_LineCounter[计数器 // 行计数]
+                        DC_FrameCounter[计数器 // 帧计数]
+                        DC_PixelFIFO[D触发器阵列 // 像素FIFO]
+                        DC_TimingGen[时钟生成器 // 时序生成]
+                        DC_ColorPalette[SRAM // 调色板]
+                    end
+                    
+                    subgraph VideoEncoder[视频编码器]
+                        direction TB
+                        VE_ColorSpaceConv[逻辑运算器 // 色彩空间转换]
+                        VE_CompressionEngine[逻辑运算器 // 压缩引擎]
+                        VE_StreamFormatter[逻辑运算器 // 流格式化]
+                        VE_CRCGenerator[逻辑运算器 // CRC生成]
+                    end
+                end
+                
+                subgraph Display[显示器]
+                    direction TB
+                    
+                    subgraph LCDPanel[LCD面板]
+                        direction TB
+                        LCD_PixelMatrix[液晶单元阵列 // 像素矩阵]
+                        LCD_RowDriver[移位器 // 行驱动移位]
+                        LCD_ColDriver[移位器 // 列驱动移位]
+                        LCD_GateDriver[地址解码器 // 栅极驱动]
+                        LCD_SourceDriver[多路复用器 // 源极驱动]
+                    end
+                    
+                    subgraph Backlight[背光单元]
+                        direction TB
+                        BL_LEDArray[LED阵列 // 背光源]
+                        BL_Driver[逻辑控制器 // 驱动电路]
+                        BL_Dimmer[比较器 // 亮度调节]
+                        BL_Inverter[逻辑振荡器 // 逆变器]
+                    end
+                    
+                    subgraph TimingController[时序控制器]
+                        direction TB
+                        TC_SyncSeparator[比较器 // 同步分离]
+                        TC_PLL[锁相环 // 时钟同步]
+                        TC_PhaseAdjust[逻辑运算器 // 相位调整]
+                        TC_OverdriveCalc[逻辑运算器 // 过驱动计算]
+                    end
+                end
+                
+                subgraph AudioOut[音频输出]
+                    direction TB
+                    
+                    subgraph Amplifier[音频放大器]
+                        direction TB
+                        AMP_OpAmp[运算放大器 // 电压放大]
+                        AMP_BiasCircuit[偏置电路 // 工作点设置]
+                        AMP_FilterNetwork[RC网络 // 滤波电路]
+                        AMP_VolumeControl[数字电位器 // 音量控制]
+                    end
+                    
+                    subgraph SignalProcessor[信号处理器]
+                        direction TB
+                        SP_DigitalFilter[逻辑运算器 // 数字滤波]
+                        SP_SampleRateConv[逻辑运算器 // 采样率转换]
+                        SP_Equalizer[逻辑运算器 // 均衡器]
+                        SP_EffectsEngine[逻辑运算器 // 音效引擎]
+                    end
+                    
+                    subgraph Connectors[输出接口]
+                        direction TB
+                        CONN_JackDetect[比较器 // 插孔检测]
+                        CONN_ImpedanceMatch[阻抗匹配网络]
+                        CONN_ESDProtect[ESD保护二极管]
+                        CONN_GroundSwitch[逻辑开关 // 接地切换]
+                    end
+                end
+            end
+        end
+        
+        subgraph Buses[总线系统]
+            direction TB
+            
+            subgraph FSB[前端总线 FSB]
+                direction TB
+                FSB_AddressLine[16x三态缓冲器 // 地址线]
+                FSB_DataLine[32x三态缓冲器 // 数据线]
+                FSB_ControlLine[12x三态缓冲器 // 控制线]
+                FSB_Arbiter[逻辑运算器 // 总线仲裁]
+                FSB_ClockDist[时钟生成器 // 时钟分发]
+            end
+            
+            subgraph MemoryBus[内存总线]
+                direction TB
+                MB_AddressLine[16x三态缓冲器 // 地址线]
+                MB_DataLine[64x三态缓冲器 // 数据线]
+                MB_CommandLine[8x三态缓冲器 // 命令线]
+                MB_ClockLine[时钟生成器 // 时钟信号]
+                MB_Termination[终端电阻 // 阻抗匹配]
+            end
+            
+            subgraph PCIe_Bus[PCI Express总线]
+                direction TB
+                PCIE_LanePair[多组差分对 // 串行链路]
+                PCIE_SerDes[串行器/解串器 // 并串转换]
+                PCIE_ClockDataRec[比较器 // 时钟数据恢复]
+                PCIE_LinkTraining[逻辑运算器 // 链路训练]
+                PCIE_FlowControl[逻辑运算器 // 流量控制]
+            end
+            
+            subgraph InternalBuses[内部总线]
+                direction TB
+                IB_DataBus[8x三态缓冲器 // 内部数据总线]
+                IB_AddressBus[16x三态缓冲器 // 内部地址总线]
+                IB_ControlBus[8x三态缓冲器 // 内部控制总线]
+                IB_Decoder[地址解码器 // 内部设备选择]
+            end
+            
+            subgraph ExpansionBuses[扩展总线]
+                direction TB
+                EB_USB[差分串行总线 // USB]
+                EB_SATA[差分串行总线 // SATA]
+                EB_Audio[模拟音频总线 // 音频]
+                EB_Network[差分串行总线 // 网络]
+            end
+        end
+
+        %% === CPU内部连接 ===
+        %% 控制单元内部连接
+        IR_FF1 -- 指令操作码 --> ID_MUX1
+        ID_Decoder1 -- 解码信号 --> MC_AddrDecoder
+        MC_ROM -- 微指令字 --> MC_FF2
+        MC_FF2 -- 微指令 --> TC_Counter1
+        TC_ClockGen -- 时钟信号 --> TC_Decoder1
+        TC_Decoder1 -- 节拍信号 --> CB_TriBuf1
+        CB_TriBuf1 -- 控制信号 --> ALU
+        CB_TriBuf1 -- 控制信号 --> Registers
+        
+        %% 寄存器组连接
+        PC_Adder -- 下一指令地址 --> PC_MUX1
+        PC_TriBuf1 -- PC值 --> MAR_MUX1
+        IR_FF2 -- 操作数地址 --> MAR_FF1
+        MAR_TriBuf1 -- 内存地址 --> BusInterface
+        MBR_FF1 -- 指令数据 --> IR_FF1
+        MBR_FF1 -- 运算数据 --> ALU
+        MBR_FF1 -- 存储数据 --> GPR_MUX1
+        ALU -- 运算结果 --> ACC_MUX1
+        ALUFlags -- 状态标志 --> SR_FF1
+        ACC_TriBuf1 -- 累加值 --> ALU
+        ACC_TriBuf1 -- 累加值 --> MBR_FF2
+        GPR_TriBuf1 -- 寄存器值 --> ALU
+        GPR_TriBuf1 -- 寄存器值 --> MBR_FF2
+        
+        %% ALU内部连接
+        AC_Decoder1 -- ALU操作码 --> AS_MUX1
+        AC_Decoder1 -- ALU操作码 --> LU_MUX1
+        AC_Decoder1 -- ALU操作码 --> SU_MUX1
+        AS_Adder -- 算术标志 --> AF_FF1
+        LU_AND -- 逻辑标志 --> AF_FF2
+        SU_ShifterL -- 移位标志 --> AF_FF3
+        
+        %% 内部总线连接
+        DataBus -- 内部数据 --> Registers
+        AddressBus -- 内部地址 --> Registers
+        ControlBusInt -- 内部控制 --> CU
+        
+        %% === 缓存层次连接 ===
+        Core -- 访问请求 --> L1Cache
+        L1_TriBuf -- 缓存数据 --> L2Cache
+        L2_TriBuf -- 缓存数据 --> L3Cache
+        L3_TriBuf -- 内存请求 --> BusInterface
+        CC_AddressDecoder -- 虚拟地址映射 --> L1_Decoder
+        CC_AddressDecoder -- 物理地址映射 --> L2_Decoder
+        CC_Comparator -- 一致性控制 --> L3Cache
+        
+        %% === MMU连接 ===
+        MMU -- 地址转换 --> BusInterface
+        TLB_MUX -- 快速地址转换 --> MMU
+        PTR_TriBuf1 -- 页表信息 --> MMU
+        SegmentationUnit -- 线性地址 --> PagingUnit
+        PagingUnit -- 物理地址 --> TLB_CAM
+        
+        %% === CPU与外部连接 ===
+        BusInterface -- 地址/数据/控制 --> FSB_AddressLine
+        FSB_Arbiter -- 总线事务 --> Northbridge
+        
+        %% === 内存子系统连接 ===
+        MemCtrl -- 内存命令 --> MemoryBus
+        MemoryBus -- 读写操作 --> DRAMBank
+        MC_Arbiter -- 仲裁信号 --> DRC_StateMachine
+        AddrDecoder -- 片选信号 --> DRAM_RowDecoder
+        DataPath -- 数据交换 --> DataBuffer
+        Arbiter -- 访问优先级 --> MemCtrl
+        
+        %% === 芯片组内部连接 ===
+        Northbridge -- 高速IO --> PCIe_Bus
+        PCIe_Bus -- 扩展连接 --> Southbridge
+        PCIe_Bus -- 图形数据 --> GPU
+        
+        %% === 南桥内部连接 ===
+        Southbridge -- DMA控制 --> DMAController
+        Southbridge -- 中断管理 --> InterruptController
+        Southbridge -- IO管理 --> IOControllers
+        
+        %% === DMA连接 ===
+        DMAController -.->|DMA请求| MainMemory
+        DMAController -.->|DMA确认| IOControllers
+        DMAR_BaseAddress -- 传输参数 --> DMC_AddressGenerator
+        DMAA_PriorityLogic -- 优先级信号 --> DMC_StateMachine
+        
+        %% === 中断连接 ===
+        InterruptController -.->|中断信号| CPU
+        IOControllers -.->|中断请求| PIC_IRR
+        InputDevices -.->|硬件中断| PIC_IRR
+        PIC_VectorGenerator -- 中断向量 --> APIC_MessageEncoder
+        APIC_MessageEncoder -- 中断处理程序地址 --> IVT_AddressCalc
+        
+        %% === I/O设备连接 ===
+        IOControllers -- 外设协议 --> ExpansionBuses
+        ExpansionBuses -- 设备数据 --> InputDevices
+        ExpansionBuses -- 输出数据 --> OutputDevices
+        
+        USBCtrl -- USB数据 --> Keyboard
+        USBCtrl -- USB数据 --> Mouse
+        SATACtrl -- SATA数据 --> Storage
+        AudioCtrl -- 音频数据 --> AudioOut
+        
+        %% === 存储设备内部连接 ===
+        NANDFlash -- 闪存数据 --> SSDController
+        SSDController -- 映射表 --> DRAMCache
+        Platters -- 磁性数据 --> ReadWriteHead
+        ReadWriteHead -- 读写信号 --> ActuatorArm
+        ActuatorArm -- 控制信号 --> HDController
+        
+        %% === 显卡内部连接 ===
+        ShaderCores -- 渲染数据 --> VRAM
+        VRAM -- 帧缓冲数据 --> DisplayController
+        DisplayController -- 视频信号 --> LCDPanel
+        
+        %% === 显示器内部连接 ===
+        LCDPanel -- 显示数据 --> Backlight
+        Backlight -- 背光控制 --> TimingController
+        
+        %% === 音频输出内部连接 ===
+        DAC -- 模拟音频 --> Amplifier
+        Amplifier -- 放大信号 --> SignalProcessor
+        SignalProcessor -- 处理后的音频 --> Connectors
+        
+        %% === 同层级通信连接 ===
+        %% CPU内部核心间通信
+        CU -- 控制信号 --> ALU
+        ALU -- 状态反馈 --> CU
+        Registers -- 数据交换 --> InternalBus
+        InternalBus -- 路由控制 --> CU
+        
+        %% 缓存层次间通信
+        L1Cache -- 一致性协议 --> L2Cache
+        L2Cache -- 一致性协议 --> L3Cache
+        L3Cache -- 内存预取 --> MainMemory
+        
+        %% 芯片组内部通信
+        Northbridge -- 数据通路 --> Southbridge
+        Southbridge -- 中断通知 --> Northbridge
+        
+        %% I/O控制器间通信
+        USBCtrl -- 资源共享 --> SATACtrl
+        SATACtrl -- 带宽协调 --> NetworkCtrl
+        NetworkCtrl -- 数据同步 --> AudioCtrl
+        
+        %% 外设间通信
+        Keyboard -- 输入事件 --> Mouse
+        GPU -- 显示数据 --> Display
+        AudioOut -- 音频同步 --> Display
+        
+        %% 总线系统间通信
+        FSB -- 桥接 --> MemoryBus
+        MemoryBus -- 转换 --> PCIe_Bus
+        PCIe_Bus -- 扩展 --> ExpansionBuses
+        
+
+    end
+            </textarea>
+            <div class="button-group">
+                <button class="action-btn" onclick="parseAndLoad()">解析生成</button>
+                <button onclick="loadDemo()">加载示例</button>
+            </div>
+        </div>
+
+        <div class="controls">
+
+            
+            <div id="loading">渲染中...</div>
+        </div>
+    </div>
+
+    <!-- 右侧图表区域 -->
+    <div class="diagram-area">
+        <div id="breadcrumbs">当前位置: Root</div>
+        <div id="diagram-wrapper">
+            <div id="diagram-container">
+                <div id="diagram-content"></div>
+            </div>
+            <div class="diagram-controls">
+                <button id="backBtn" onclick="goBack()" disabled title="返回上级">⬅</button>
+                <button onclick="zoomIn()" title="放大">+</button>
+                <button onclick="zoomOut()" title="缩小">-</button>
+                <button onclick="resetZoom()" title="重置缩放">↺</button>
+            </div>
+            <div class="zoom-indicator" id="zoomIndicator">100%</div>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // 1. Mermaid 解析器 (Parser)
+        // ==========================================
+        const demoCode = `flowchart TD
+    subgraph Computer[计算机完整架构 - 基础元件级细化]
+        direction TB
+        
+        subgraph CPU[中央处理器 CPU]
+            direction TB
+            
+            subgraph Core[处理器核心]
+                direction LR
+                
+                subgraph CU[控制单元 CU]
+                    direction TB
+                    
+                    subgraph InstrDec[指令译码器]
+                        direction TB
+                        ID_MUX1[多路复用器 // 指令字段选择]
+                        ID_Decoder1[地址解码器 // 操作码解码]
+                        ID_Decoder2[地址解码器 // 寄存器字段解码]
+                        ID_FF1[D触发器 // 指令锁存]
+                        ID_FF2[D触发器 // 状态保持]
+                    end
+                    
+                    subgraph Microcode[微代码ROM]
+                        direction TB
+                        MC_ROM[ROM // 微指令存储]
+                        MC_AddrDecoder[地址解码器 // 微地址解码]
+                        MC_FF1[D触发器 // 微地址寄存器]
+                        MC_FF2[D触发器 // 微指令寄存器]
+                        MC_TriBuf1[三态缓冲器 // 微指令输出]
+                    end
+                    
+                    subgraph Timing[时序控制器]
+                        direction TB
+                        TC_Counter1[计数器 // 节拍计数]
+                        TC_Counter2[计数器 // 机器周期计数]
+                        TC_Decoder1[地址解码器 // 节拍解码]
+                        TC_FF1[D触发器 // 状态标志]
+                        TC_ClockGen[时钟生成器 // 时序生成]
+                        TC_AND1[逻辑运算器 // 条件与门]
+                        TC_OR1[逻辑运算器 // 条件或门]
+                    end
+                    
+                    subgraph ControlBus[控制总线接口]
+                        direction TB
+                        CB_TriBuf1[三态缓冲器 // 控制信号输出]
+                        CB_TriBuf2[三态缓冲器 // 状态信号输入]
+                        CB_FF1[D触发器 // 控制信号锁存]
+                        CB_Decoder1[地址解码器 // 设备选择]
+                    end
+                end
+                
+                subgraph ALU[算术逻辑单元 ALU]
+                    direction TB
+                    
+                    subgraph AddSub[加法器/减法器]
+                        direction TB
+                        AS_Adder[加法器 // 二进制加法]
+                        AS_Subtractor[减法器 // 二进制减法]
+                        AS_XOR1[逻辑运算器 // 补码转换]
+                        AS_MUX1[多路复用器 // 运算选择]
+                        AS_FF1[D触发器 // 进位锁存]
+                    end
+                    
+                    subgraph LogicUnit[逻辑运算单元]
+                        direction TB
+                        LU_AND[逻辑运算器 // 与运算]
+                        LU_OR[逻辑运算器 // 或运算]
+                        LU_XOR[逻辑运算器 // 异或运算]
+                        LU_NOT[逻辑运算器 // 非运算]
+                        LU_MUX1[多路复用器 // 逻辑操作选择]
+                    end
+                    
+                    subgraph ShiftUnit[移位器]
+                        direction TB
+                        SU_ShifterL[移位器 // 左移]
+                        SU_ShifterR[移位器 // 右移]
+                        SU_ShifterA[移位器 // 算术移位]
+                        SU_MUX1[多路复用器 // 移位类型选择]
+                        SU_FF1[D触发器 // 移位位数锁存]
+                    end
+                    
+                    subgraph ALUControl[ALU控制器]
+                        direction TB
+                        AC_Decoder1[地址解码器 // ALU操作码解码]
+                        AC_FF1[D触发器 // 操作码锁存]
+                        AC_MUX1[多路复用器 // 功能选择]
+                        AC_TriBuf1[三态缓冲器 // 控制信号输出]
+                    end
+                    
+                    subgraph ALUFlags[ALU标志寄存器]
+                        direction TB
+                        AF_FF1[D触发器 // 进位标志]
+                        AF_FF2[D触发器 // 零标志]
+                        AF_FF3[D触发器 // 符号标志]
+                        AF_FF4[D触发器 // 溢出标志]
+                        AF_FF5[D触发器 // 奇偶标志]
+                        AF_TriBuf1[三态缓冲器 // 标志输出]
+                    end
+                end
+                
+                subgraph Registers[寄存器组]
+                    direction TB
+                    
+                    subgraph PC[程序计数器 PC]
+                        direction TB
+                        PC_FF1[D触发器 // PC低8位]
+                        PC_FF2[D触发器 // PC高8位]
+                        PC_Adder[加法器 // PC+1]
+                        PC_MUX1[多路复用器 // PC输入选择]
+                        PC_TriBuf1[三态缓冲器 // PC输出]
+                    end
+                    
+                    subgraph IR[指令寄存器 IR]
+                        direction TB
+                        IR_FF1[D触发器 // 操作码部分]
+                        IR_FF2[D触发器 // 地址部分]
+                        IR_TriBuf1[三态缓冲器 // 指令输出]
+                        IR_Decoder1[地址解码器 // 指令字段分离]
+                    end
+                    
+                    subgraph MAR[内存地址寄存器 MAR]
+                        direction TB
+                        MAR_FF1[D触发器 // 地址低8位]
+                        MAR_FF2[D触发器 // 地址高8位]
+                        MAR_TriBuf1[三态缓冲器 // 地址输出]
+                        MAR_MUX1[多路复用器 // 地址源选择]
+                    end
+                    
+                    subgraph MBR[内存缓冲寄存器 MBR]
+                        direction TB
+                        MBR_FF1[D触发器 // 数据输入锁存]
+                        MBR_FF2[D触发器 // 数据输出锁存]
+                        MBR_TriBuf1[三态缓冲器 // 数据输出]
+                        MBR_TriBuf2[三态缓冲器 // 数据输入]
+                    end
+                    
+                    subgraph ACC[累加器 ACC]
+                        direction TB
+                        ACC_FF1[D触发器 // 累加值存储]
+                        ACC_TriBuf1[三态缓冲器 // 累加值输出]
+                        ACC_MUX1[多路复用器 // 输入源选择]
+                    end
+                    
+                    subgraph GPR1[通用寄存器 R0-R7]
+                        direction TB
+                        GPR_FF[8xD触发器 // 寄存器存储]
+                        GPR_MUX1[多路复用器 // 寄存器选择]
+                        GPR_Decoder1[地址解码器 // 寄存器地址解码]
+                        GPR_TriBuf1[三态缓冲器 // 寄存器输出]
+                    end
+                    
+                    subgraph StatusReg[状态寄存器 Flags]
+                        direction TB
+                        SR_FF1[D触发器 // 中断使能]
+                        SR_FF2[D触发器 // 方向标志]
+                        SR_FF3[D触发器 // 系统模式]
+                        SR_TriBuf1[三态缓冲器 // 状态输出]
+                        SR_MUX1[多路复用器 // 状态输入选择]
+                    end
+                end
+                
+                subgraph InternalBus[内部数据总线]
+                    direction LR
+                    
+                    subgraph DataBus[内部数据总线]
+                        direction TB
+                        DB_Line[8x三态缓冲器 // 数据线驱动]
+                        DB_MUX1[多路复用器 // 数据源选择]
+                        DB_Decoder1[地址解码器 // 目标选择]
+                    end
+                    
+                    subgraph AddressBus[内部地址总线]
+                        direction TB
+                        AB_Line[16x三态缓冲器 // 地址线驱动]
+                        AB_MUX1[多路复用器 // 地址源选择]
+                        AB_Decoder1[地址解码器 // 地址范围解码]
+                    end
+                    
+                    subgraph ControlBusInt[内部控制总线]
+                        direction TB
+                        CB_Line[12x三态缓冲器 // 控制线驱动]
+                        CB_Decoder1[地址解码器 // 控制信号路由]
+                        CB_FF1[D触发器 // 控制信号同步]
+                    end
+                end
+            end
+            
+            subgraph CacheHierarchy[缓存层次]
+                direction LR
+                
+                subgraph L1Cache[L1缓存]
+                    direction TB
+                    L1_SRAM[SRAM阵列 // 数据存储]
+                    L1_TagRAM[SRAM阵列 // 标签存储]
+                    L1_ValidBits[D触发器阵列 // 有效位]
+                    L1_DirtyBits[D触发器阵列 // 脏位]
+                    L1_Comparator[比较器 // 标签比较]
+                    L1_Decoder[地址解码器 // 组选择]
+                    L1_MUX[多路复用器 // 路选择]
+                    L1_TriBuf[三态缓冲器 // 数据输出]
+                end
+                
+                subgraph L2Cache[L2缓存]
+                    direction TB
+                    L2_SRAM[SRAM阵列 // 数据存储]
+                    L2_TagRAM[SRAM阵列 // 标签存储]
+                    L2_ValidBits[D触发器阵列 // 有效位]
+                    L2_DirtyBits[D触发器阵列 // 脏位]
+                    L2_Comparator[比较器 // 标签比较]
+                    L2_Decoder[地址解码器 // 组选择]
+                    L2_MUX[多路复用器 // 路选择]
+                    L2_TriBuf[三态缓冲器 // 数据输出]
+                end
+                
+                subgraph L3Cache[L3缓存]
+                    direction TB
+                    L3_SRAM[SRAM阵列 // 数据存储]
+                    L3_TagRAM[SRAM阵列 // 标签存储]
+                    L3_ValidBits[D触发器阵列 // 有效位]
+                    L3_DirtyBits[D触发器阵列 // 脏位]
+                    L3_Comparator[比较器 // 标签比较]
+                    L3_Decoder[地址解码器 // 组选择]
+                    L3_MUX[多路复用器 // 路选择]
+                    L3_TriBuf[三态缓冲器 // 数据输出]
+                end
+                
+                subgraph CacheController[缓存控制器]
+                    direction TB
+                    CC_StateMachine[D触发器阵列 // 状态机]
+                    CC_AddressDecoder[地址解码器 // 地址解析]
+                    CC_Comparator[比较器 // 一致性检查]
+                    CC_MUX[多路复用器 // 缓存层级选择]
+                    CC_TriBuf[三态缓冲器 // 控制信号输出]
+                end
+            end
+            
+            subgraph MMU[内存管理单元 MMU]
+                direction TB
+                
+                subgraph TLB[转址旁路缓存 TLB]
+                    direction TB
+                    TLB_CAM[CAM阵列 // 虚拟地址匹配]
+                    TLB_RAM[SRAM阵列 // 物理地址存储]
+                    TLB_ValidBits[D触发器阵列 // 有效位]
+                    TLB_Comparator[比较器 // 地址匹配]
+                    TLB_Decoder[地址解码器 // TLB索引]
+                    TLB_MUX[多路复用器 // 输出选择]
+                end
+                
+                subgraph PageTable[页表寄存器]
+                    direction TB
+                    PTR_FF1[D触发器 // 页表基址]
+                    PTR_FF2[D触发器 // 页表长度]
+                    PTR_TriBuf1[三态缓冲器 // 基址输出]
+                    PTR_Adder[加法器 // 页表项计算]
+                end
+                
+                subgraph SegmentationUnit[分段单元]
+                    direction TB
+                    SU_Adder[加法器 // 段基址+偏移量]
+                    SU_Comparator[比较器 // 段界限检查]
+                    SU_MUX1[多路复用器 // 段选择器]
+                    SU_FF1[D触发器 // 段寄存器缓存]
+                end
+                
+                subgraph PagingUnit[分页单元]
+                    direction TB
+                    PU_Shifter[移位器 // 页表索引提取]
+                    PU_Adder[加法器 // 多级页表遍历]
+                    PU_MUX1[多路复用器 // 页大小选择]
+                    PU_Comparator[比较器 // 权限检查]
+                end
+            end
+            
+            subgraph BusInterface[CPU总线接口]
+                direction TB
+                BI_AddressLatch[D触发器阵列 // 地址锁存]
+                BI_DataLatch[D触发器阵列 // 数据锁存]
+                BI_ControlLatch[D触发器阵列 // 控制信号锁存]
+                BI_AddressDecoder[地址解码器 // 总线设备选择]
+                BI_Arbiter[逻辑运算器阵列 // 总线仲裁]
+                BI_TriBuf[三态缓冲器阵列 // 总线驱动]
+            end
+        end
+        
+        subgraph MemoryHierarchy[存储层次]
+            direction TB
+            
+            subgraph MainMemory[主内存 DRAM]
+                direction TB
+                
+                subgraph DRAMBank[DRAM存储体 Bank]
+                    direction TB
+                    DRAM_CellArray[电容-D触发器阵列 // 存储单元]
+                    DRAM_RowDecoder[地址解码器 // 行解码]
+                    DRAM_ColDecoder[地址解码器 // 列解码]
+                    DRAM_SenseAmp[比较器阵列 // 感应放大器]
+                    DRAM_Precharge[逻辑运算器 // 预充电控制]
+                end
+                
+                subgraph DRAMController[DRAM控制器]
+                    direction TB
+                    DRC_StateMachine[D触发器阵列 // 状态机]
+                    DRC_AddressDecoder[地址解码器 // 地址映射]
+                    DRC_TimingCounter[计数器 // 时序控制]
+                    DRC_RefreshCounter[计数器 // 刷新控制]
+                    DRC_MUX1[多路复用器 // 命令选择]
+                end
+                
+                subgraph RefreshCircuit[刷新电路]
+                    direction TB
+                    RFC_Counter[计数器 // 刷新地址]
+                    RFC_ClockGen[时钟生成器 // 刷新时钟]
+                    RFC_Comparator[比较器 // 刷新时机检测]
+                    RFC_FF1[D触发器 // 刷新状态]
+                end
+                
+                subgraph DataBuffer[数据缓冲器]
+                    direction TB
+                    DBF_FF[D触发器阵列 // 数据缓存]
+                    DBF_TriBuf[三态缓冲器阵列 // 数据驱动]
+                    DBF_MUX1[多路复用器 // 数据源选择]
+                end
+            end
+            
+            subgraph Storage[外部存储]
+                direction LR
+                
+                subgraph SSD[固态硬盘 SSD]
+                    direction TB
+                    
+                    subgraph NANDFlash[NAND闪存阵列]
+                        direction TB
+                        NAND_CellArray[浮栅MOSFET阵列 // 存储单元]
+                        NAND_RowDecoder[地址解码器 // 字线选择]
+                        NAND_ColDecoder[地址解码器 // 位线选择]
+                        NAND_SenseAmp[比较器阵列 // 页读取]
+                        NAND_ChargePump[逻辑控制器 // 编程电压]
+                    end
+                    
+                    subgraph SSDController[SSD控制器]
+                        direction TB
+                        SSDC_Processor[D触发器阵列 // 控制逻辑]
+                        SSDC_ECCEncoder[逻辑运算器 // 错误校正编码]
+                        SSDC_ECCDecoder[逻辑运算器 // 错误检测校正]
+                        SSDC_AddressTranslator[地址解码器 // FTL映射]
+                        SSDC_WearLeveling[计数器阵列 // 磨损均衡]
+                    end
+                    
+                    subgraph DRAMCache[DRAM缓存]
+                        direction TB
+                        SSDRAM_FF[D触发器阵列 // 缓存数据]
+                        SSDRAM_TagRAM[SRAM阵列 // 缓存标签]
+                        SSDRAM_Comparator[比较器 // 命中检测]
+                        SSDRAM_MUX[多路复用器 // 数据选择]
+                    end
+                end
+                
+                subgraph HDD[机械硬盘 HDD]
+                    direction TB
+                    
+                    subgraph Platters[盘片组]
+                        direction TB
+                        HDD_MagneticLayer[磁性材料 // 数据存储]
+                        HDD_ServoPattern[伺服信号 // 磁道定位]
+                    end
+                    
+                    subgraph ReadWriteHead[读/写磁头]
+                        direction TB
+                        RWH_Inductor[电感线圈 // 写入头]
+                        RWH_MagnetoResistor[磁阻元件 // 读取头]
+                        RWH_Preamplifier[比较器 // 信号放大]
+                    end
+                    
+                    subgraph ActuatorArm[音圈电机臂]
+                        direction TB
+                        AA_VoiceCoil[电磁线圈 // 电机驱动]
+                        AA_PositionSensor[比较器 // 位置反馈]
+                        AA_Driver[逻辑控制器 // 电机控制]
+                    end
+                    
+                    subgraph HDController[硬盘控制器]
+                        direction TB
+                        HDC_StateMachine[D触发器阵列 // 控制逻辑]
+                        HDC_DataSeparator[逻辑运算器 // 数据时钟分离]
+                        HDC_ECC[逻辑运算器 // 错误校正]
+                        HDC_Interface[三态缓冲器 // 主机接口]
+                    end
+                end
+            end
+        end
+        
+        subgraph Chipset[芯片组]
+            direction TB
+            
+            subgraph Northbridge[北桥 - 内存控制器]
+                direction TB
+                
+                subgraph MemCtrl[内存控制器]
+                    direction TB
+                    MC_Arbiter[逻辑运算器阵列 // 访问仲裁]
+                    MC_AddressMapper[地址解码器 // 地址映射]
+                    MC_CommandDecoder[地址解码器 // 命令解码]
+                    MC_StateReg[D触发器阵列 // 状态寄存器]
+                    MC_TimingGen[计数器 // 时序生成器]
+                end
+                
+                subgraph AddrDecoder[地址解码器]
+                    direction TB
+                    AD_DecoderLogic[地址解码器 // 设备选择]
+                    AD_RangeReg[D触发器阵列 // 地址范围寄存器]
+                    AD_Comparator[比较器 // 地址比较]
+                    AD_PriorityEncoder[逻辑运算器 // 优先级编码]
+                end
+                
+                subgraph DataPath[数据通路]
+                    direction TB
+                    DP_DataLatch[D触发器阵列 // 数据锁存]
+                    DP_DataMUX[多路复用器 // 路由选择]
+                    DP_ParityGen[逻辑运算器 // 奇偶校验生成]
+                    DP_ParityCheck[比较器 // 奇偶校验检查]
+                    DP_TriBuf[三态缓冲器阵列 // 数据驱动]
+                end
+                
+                subgraph Arbiter[仲裁器]
+                    direction TB
+                    ARB_PriorityLogic[逻辑运算器 // 优先级逻辑]
+                    ARB_StateFF[D触发器 // 仲裁状态]
+                    ARB_RequestLatch[D触发器阵列 // 请求锁存]
+                    ARB_GrantDecoder[地址解码器 // 授权解码]
+                end
+            end
+            
+            subgraph Southbridge[南桥 - I/O控制器]
+                direction TB
+                
+                subgraph IOControllers[I/O控制器]
+                    direction LR
+                    
+                    subgraph USBCtrl[USB控制器]
+                        direction TB
+                        
+                        subgraph UHCI[USB主机控制器接口]
+                            direction TB
+                            UHCI_FrameCounter[计数器 // 帧计数]
+                            UHCI_TransferDescRAM[SRAM // 传输描述符]
+                            UHCI_StateMachine[D触发器阵列 // 状态机]
+                            UHCI_DataFIFO[D触发器阵列 // 数据FIFO]
+                            UHCI_CRCGen[逻辑运算器 // CRC生成]
+                            UHCI_CRCCheck[比较器 // CRC校验]
+                        end
+                        
+                        subgraph RootHub[根集线器]
+                            direction TB
+                            RH_PortState[D触发器阵列 // 端口状态]
+                            RH_ConnectDetect[比较器 // 连接检测]
+                            RH_PowerControl[逻辑运算器 // 电源控制]
+                            RH_DataRouter[多路复用器 // 数据路由]
+                        end
+                        
+                        subgraph TransferScheduler[传输调度器]
+                            direction TB
+                            TS_PriorityEncoder[逻辑运算器 // 优先级编码]
+                            TS_TimeSlotCounter[计数器 // 时间片计数]
+                            TS_QueueRAM[SRAM // 传输队列]
+                            TS_Arbiter[逻辑运算器 // 调度仲裁]
+                        end
+                    end
+                    
+                    subgraph SATACtrl[SATA控制器]
+                        direction TB
+                        
+                        subgraph AHCI[高级主机控制器接口]
+                            direction TB
+                            AHCI_CmdListRAM[SRAM // 命令列表]
+                            AHCI_RecvFIFO[D触发器阵列 // 接收FIFO]
+                            AHCI_TransFIFO[D触发器阵列 // 发送FIFO]
+                            AHCI_StateMachine[D触发器阵列 // 端口状态机]
+                            AHCI_CRC32[逻辑运算器 // CRC32计算]
+                        end
+                        
+                        subgraph NCQ[Native Command Queuing]
+                            direction TB
+                            NCQ_QueueRAM[SRAM // 命令队列]
+                            NCQ_Optimizer[逻辑运算器 // 命令优化]
+                            NCQ_TagManager[D触发器阵列 // 标签管理]
+                            NCQ_CompletionSorter[逻辑运算器 // 完成排序]
+                        end
+                        
+                        subgraph PHY[SATA物理层]
+                            direction TB
+                            PHY_Encoder[逻辑运算器 // 8b/10b编码]
+                            PHY_Decoder[逻辑运算器 // 10b/8b解码]
+                            PHY_ClockDataRecovery[比较器 // 时钟数据恢复]
+                            PHY_Serializer[移位器 // 并串转换]
+                            PHY_Deserializer[移位器 // 串并转换]
+                        end
+                    end
+                    
+                    subgraph NetworkCtrl[网络控制器]
+                        direction TB
+                        
+                        subgraph MAC[媒体访问控制层]
+                            direction TB
+                            MAC_StateMachine[D触发器阵列 // 发送状态机]
+                            MAC_CRC32Gen[逻辑运算器 // CRC生成]
+                            MAC_AddressFilter[比较器 // 地址过滤]
+                            MAC_FrameBuffer[SRAM // 帧缓冲]
+                            MAC_FlowControl[逻辑运算器 // 流量控制]
+                        end
+                        
+                        subgraph PHYNet[网络物理层]
+                            direction TB
+                            PHY_LineEncoder[逻辑运算器 // 线路编码]
+                            PHY_LineDecoder[逻辑运算器 // 线路解码]
+                            PHY_AutoNegotiation[比较器 // 自动协商]
+                            PHY_LinkMonitor[D触发器 // 链路状态]
+                        end
+                        
+                        subgraph BufferMemory[缓冲存储器]
+                            direction TB
+                            BM_TxRAM[SRAM // 发送缓冲]
+                            BM_RxRAM[SRAM // 接收缓冲]
+                            BM_DMAEngine[逻辑运算器 // DMA控制]
+                            BM_QueueManager[多路复用器 // 队列管理]
+                        end
+                    end
+                    
+                    subgraph AudioCtrl[音频控制器]
+                        direction TB
+                        
+                        subgraph DAC[数模转换器]
+                            direction TB
+                            DAC_Ladder[R-2R梯型网络 // 电阻阵列]
+                            DAC_SampleHold[D触发器阵列 // 采样保持]
+                            DAC_ShiftRegister[移位器 // 数据移位]
+                            DAC_VoltageRef[比较器 // 电压参考]
+                        end
+                        
+                        subgraph ADC[模数转换器]
+                            direction TB
+                            ADC_Comparator[比较器 // 电压比较]
+                            ADC_SARRegister[D触发器阵列 // 逐次逼近寄存器]
+                            ADC_SampleHold[D触发器阵列 // 采样保持]
+                            ADC_VoltageLadder[电阻网络 // 参考电压生成]
+                        end
+                        
+                        subgraph Mixer[混音器]
+                            direction TB
+                            MIX_SummingAmp[运算放大器 // 信号叠加]
+                            MIX_VolumeControl[数字电位器 // 音量控制]
+                            MIX_SelectorMUX[多路复用器 // 输入选择]
+                            MIX_ToneControl[RC网络 // 音调控制]
+                        end
+                    end
+                end
+                
+                subgraph DMAController[DMA控制器]
+                    direction TB
+                    
+                    subgraph DMARegisters[DMA寄存器]
+                        direction TB
+                        DMAR_BaseAddress[D触发器阵列 // 基地址寄存器]
+                        DMAR_CountReg[D触发器阵列 // 计数寄存器]
+                        DMAR_ModeReg[D触发器阵列 // 模式寄存器]
+                        DMAR_StatusReg[D触发器阵列 // 状态寄存器]
+                        DMAR_AddrCounter[计数器 // 地址计数器]
+                    end
+                    
+                    subgraph DMAAribiter[DMA仲裁器]
+                        direction TB
+                        DMAA_PriorityLogic[逻辑运算器 // 优先级编码]
+                        DMAA_RequestFF[D触发器阵列 // 请求锁存]
+                        DMAA_GrantFF[D触发器阵列 // 授权锁存]
+                        DMAA_StateMachine[D触发器阵列 // 仲裁状态机]
+                    end
+                    
+                    subgraph ChannelController[通道控制器]
+                        direction TB
+                        DMC_StateMachine[D触发器阵列 // 通道状态机]
+                        DMC_AddressGenerator[加法器 // 地址生成]
+                        DMC_CountDecoder[地址解码器 // 计数检测]
+                        DMC_ControlLogic[逻辑运算器 // 控制逻辑]
+                    end
+                end
+                
+                subgraph InterruptController[中断控制器]
+                    direction TB
+                    
+                    subgraph PIC[可编程中断控制器]
+                        direction TB
+                        PIC_IRR[D触发器阵列 // 中断请求寄存器]
+                        PIC_ISR[D触发器阵列 // 中断服务寄存器]
+                        PIC_IMR[D触发器阵列 // 中断屏蔽寄存器]
+                        PIC_PriorityEncoder[逻辑运算器 // 优先级编码]
+                        PIC_VectorGenerator[地址解码器 // 向量生成]
+                    end
+                    
+                    subgraph APIC[高级可编程中断控制器]
+                        direction TB
+                        APIC_LocalUnit[D触发器阵列 // 本地单元寄存器]
+                        APIC_IOUnit[D触发器阵列 // I/O单元寄存器]
+                        APIC_Arbiter[逻辑运算器 // 仲裁逻辑]
+                        APIC_MessageEncoder[逻辑运算器 // 消息编码]
+                    end
+                    
+                    subgraph IVT[中断向量表]
+                        direction TB
+                        IVT_RAM[SRAM // 向量表存储]
+                        IVT_AddressCalc[加法器 // 向量地址计算]
+                        IVT_Decoder[地址解码器 // 向量选择]
+                    end
+                end
+            end
+        end
+        
+        subgraph Peripherals[外设]
+            direction TB
+            
+            subgraph InputDevices[输入设备]
+                direction LR
+                
+                subgraph Keyboard[键盘]
+                    direction TB
+                    
+                    subgraph KeyMatrix[键矩阵]
+                        direction TB
+                        KM_RowDriver[三态缓冲器 // 行驱动]
+                        KM_ColScanner[比较器 // 列扫描]
+                        KM_DebounceFF[D触发器阵列 // 按键状态]
+                        KM_Encoder[逻辑运算器 // 键值编码]
+                    end
+                    
+                    subgraph KbController[键盘控制器]
+                        direction TB
+                        KBC_StateMachine[D触发器阵列 // 状态机]
+                        KBC_ScanCounter[计数器 // 扫描计数]
+                        KBC_BufferRAM[SRAM // 键值缓冲]
+                        KBC_ProtocolEncoder[逻辑运算器 // 协议编码]
+                    end
+                    
+                    subgraph DebounceCircuit[去抖动电路]
+                        direction TB
+                        DBC_DelayFF[D触发器阵列 // 延时寄存器]
+                        DBC_SampleClock[时钟生成器 // 采样时钟]
+                        DBC_ConsistencyCheck[比较器 // 一致性检查]
+                    end
+                end
+                
+                subgraph Mouse[鼠标]
+                    direction TB
+                    
+                    subgraph OpticalSensor[光学传感器]
+                        direction TB
+                        OS_PixelArray[光电二极管阵列 // 图像采集]
+                        OS_ADC[比较器阵列 // 模数转换]
+                        OS_DSP[逻辑运算器 // 数字信号处理]
+                        OS_MotionCalc[加法器 // 运动向量计算]
+                    end
+                    
+                    subgraph MotionProcessor[运动处理器]
+                        direction TB
+                        MP_Accumulator[加法器 // 位移累加]
+                        MP_ScaleAdjust[逻辑运算器 // 灵敏度调整]
+                        MP_DataFormatter[逻辑运算器 // 数据格式化]
+                        MP_ReportGenerator[逻辑运算器 // 报告生成]
+                    end
+                    
+                    subgraph ButtonSwitches[按钮开关]
+                        direction TB
+                        BS_ContactMatrix[开关阵列 // 按钮矩阵]
+                        BS_StateFF[D触发器阵列 // 按钮状态]
+                        BS_Scanner[计数器 // 扫描计数器]
+                        BS_Debounce[D触发器 // 去抖动]
+                    end
+                end
+            end
+            
+            subgraph OutputDevices[输出设备]
+                direction LR
+                
+                subgraph GPU[显卡]
+                    direction TB
+                    
+                    subgraph ShaderCores[着色器核心]
+                        direction TB
+                        SC_ALUArray[ALU阵列 // 并行计算]
+                        SC_RegisterFile[SRAM // 寄存器文件]
+                        SC_InstructionDecoder[地址解码器 // 指令解码]
+                        SC_ThreadScheduler[逻辑运算器 // 线程调度]
+                    end
+                    
+                    subgraph VRAM[显存]
+                        direction TB
+                        VRAM_MemoryBank[SRAM阵列 // 存储体]
+                        VRAM_AddrDecoder[地址解码器 // 地址解码]
+                        VRAM_DataPath[多路复用器 // 数据通路]
+                        VRAM_RefreshCounter[计数器 // 刷新控制]
+                    end
+                    
+                    subgraph DisplayController[显示控制器]
+                        direction TB
+                        DC_LineCounter[计数器 // 行计数]
+                        DC_FrameCounter[计数器 // 帧计数]
+                        DC_PixelFIFO[D触发器阵列 // 像素FIFO]
+                        DC_TimingGen[时钟生成器 // 时序生成]
+                        DC_ColorPalette[SRAM // 调色板]
+                    end
+                    
+                    subgraph VideoEncoder[视频编码器]
+                        direction TB
+                        VE_ColorSpaceConv[逻辑运算器 // 色彩空间转换]
+                        VE_CompressionEngine[逻辑运算器 // 压缩引擎]
+                        VE_StreamFormatter[逻辑运算器 // 流格式化]
+                        VE_CRCGenerator[逻辑运算器 // CRC生成]
+                    end
+                end
+                
+                subgraph Display[显示器]
+                    direction TB
+                    
+                    subgraph LCDPanel[LCD面板]
+                        direction TB
+                        LCD_PixelMatrix[液晶单元阵列 // 像素矩阵]
+                        LCD_RowDriver[移位器 // 行驱动移位]
+                        LCD_ColDriver[移位器 // 列驱动移位]
+                        LCD_GateDriver[地址解码器 // 栅极驱动]
+                        LCD_SourceDriver[多路复用器 // 源极驱动]
+                    end
+                    
+                    subgraph Backlight[背光单元]
+                        direction TB
+                        BL_LEDArray[LED阵列 // 背光源]
+                        BL_Driver[逻辑控制器 // 驱动电路]
+                        BL_Dimmer[比较器 // 亮度调节]
+                        BL_Inverter[逻辑振荡器 // 逆变器]
+                    end
+                    
+                    subgraph TimingController[时序控制器]
+                        direction TB
+                        TC_SyncSeparator[比较器 // 同步分离]
+                        TC_PLL[锁相环 // 时钟同步]
+                        TC_PhaseAdjust[逻辑运算器 // 相位调整]
+                        TC_OverdriveCalc[逻辑运算器 // 过驱动计算]
+                    end
+                end
+                
+                subgraph AudioOut[音频输出]
+                    direction TB
+                    
+                    subgraph Amplifier[音频放大器]
+                        direction TB
+                        AMP_OpAmp[运算放大器 // 电压放大]
+                        AMP_BiasCircuit[偏置电路 // 工作点设置]
+                        AMP_FilterNetwork[RC网络 // 滤波电路]
+                        AMP_VolumeControl[数字电位器 // 音量控制]
+                    end
+                    
+                    subgraph SignalProcessor[信号处理器]
+                        direction TB
+                        SP_DigitalFilter[逻辑运算器 // 数字滤波]
+                        SP_SampleRateConv[逻辑运算器 // 采样率转换]
+                        SP_Equalizer[逻辑运算器 // 均衡器]
+                        SP_EffectsEngine[逻辑运算器 // 音效引擎]
+                    end
+                    
+                    subgraph Connectors[输出接口]
+                        direction TB
+                        CONN_JackDetect[比较器 // 插孔检测]
+                        CONN_ImpedanceMatch[阻抗匹配网络]
+                        CONN_ESDProtect[ESD保护二极管]
+                        CONN_GroundSwitch[逻辑开关 // 接地切换]
+                    end
+                end
+            end
+        end
+        
+        subgraph Buses[总线系统]
+            direction TB
+            
+            subgraph FSB[前端总线 FSB]
+                direction TB
+                FSB_AddressLine[16x三态缓冲器 // 地址线]
+                FSB_DataLine[32x三态缓冲器 // 数据线]
+                FSB_ControlLine[12x三态缓冲器 // 控制线]
+                FSB_Arbiter[逻辑运算器 // 总线仲裁]
+                FSB_ClockDist[时钟生成器 // 时钟分发]
+            end
+            
+            subgraph MemoryBus[内存总线]
+                direction TB
+                MB_AddressLine[16x三态缓冲器 // 地址线]
+                MB_DataLine[64x三态缓冲器 // 数据线]
+                MB_CommandLine[8x三态缓冲器 // 命令线]
+                MB_ClockLine[时钟生成器 // 时钟信号]
+                MB_Termination[终端电阻 // 阻抗匹配]
+            end
+            
+            subgraph PCIe_Bus[PCI Express总线]
+                direction TB
+                PCIE_LanePair[多组差分对 // 串行链路]
+                PCIE_SerDes[串行器/解串器 // 并串转换]
+                PCIE_ClockDataRec[比较器 // 时钟数据恢复]
+                PCIE_LinkTraining[逻辑运算器 // 链路训练]
+                PCIE_FlowControl[逻辑运算器 // 流量控制]
+            end
+            
+            subgraph InternalBuses[内部总线]
+                direction TB
+                IB_DataBus[8x三态缓冲器 // 内部数据总线]
+                IB_AddressBus[16x三态缓冲器 // 内部地址总线]
+                IB_ControlBus[8x三态缓冲器 // 内部控制总线]
+                IB_Decoder[地址解码器 // 内部设备选择]
+            end
+            
+            subgraph ExpansionBuses[扩展总线]
+                direction TB
+                EB_USB[差分串行总线 // USB]
+                EB_SATA[差分串行总线 // SATA]
+                EB_Audio[模拟音频总线 // 音频]
+                EB_Network[差分串行总线 // 网络]
+            end
+        end
+
+        %% === CPU内部连接 ===
+        %% 控制单元内部连接
+        IR_FF1 -- 指令操作码 --> ID_MUX1
+        ID_Decoder1 -- 解码信号 --> MC_AddrDecoder
+        MC_ROM -- 微指令字 --> MC_FF2
+        MC_FF2 -- 微指令 --> TC_Counter1
+        TC_ClockGen -- 时钟信号 --> TC_Decoder1
+        TC_Decoder1 -- 节拍信号 --> CB_TriBuf1
+        CB_TriBuf1 -- 控制信号 --> ALU
+        CB_TriBuf1 -- 控制信号 --> Registers
+        
+        %% 寄存器组连接
+        PC_Adder -- 下一指令地址 --> PC_MUX1
+        PC_TriBuf1 -- PC值 --> MAR_MUX1
+        IR_FF2 -- 操作数地址 --> MAR_FF1
+        MAR_TriBuf1 -- 内存地址 --> BusInterface
+        MBR_FF1 -- 指令数据 --> IR_FF1
+        MBR_FF1 -- 运算数据 --> ALU
+        MBR_FF1 -- 存储数据 --> GPR_MUX1
+        ALU -- 运算结果 --> ACC_MUX1
+        ALUFlags -- 状态标志 --> SR_FF1
+        ACC_TriBuf1 -- 累加值 --> ALU
+        ACC_TriBuf1 -- 累加值 --> MBR_FF2
+        GPR_TriBuf1 -- 寄存器值 --> ALU
+        GPR_TriBuf1 -- 寄存器值 --> MBR_FF2
+        
+        %% ALU内部连接
+        AC_Decoder1 -- ALU操作码 --> AS_MUX1
+        AC_Decoder1 -- ALU操作码 --> LU_MUX1
+        AC_Decoder1 -- ALU操作码 --> SU_MUX1
+        AS_Adder -- 算术标志 --> AF_FF1
+        LU_AND -- 逻辑标志 --> AF_FF2
+        SU_ShifterL -- 移位标志 --> AF_FF3
+        
+        %% 内部总线连接
+        DataBus -- 内部数据 --> Registers
+        AddressBus -- 内部地址 --> Registers
+        ControlBusInt -- 内部控制 --> CU
+        
+        %% === 缓存层次连接 ===
+        Core -- 访问请求 --> L1Cache
+        L1_TriBuf -- 缓存数据 --> L2Cache
+        L2_TriBuf -- 缓存数据 --> L3Cache
+        L3_TriBuf -- 内存请求 --> BusInterface
+        CC_AddressDecoder -- 虚拟地址映射 --> L1_Decoder
+        CC_AddressDecoder -- 物理地址映射 --> L2_Decoder
+        CC_Comparator -- 一致性控制 --> L3Cache
+        
+        %% === MMU连接 ===
+        MMU -- 地址转换 --> BusInterface
+        TLB_MUX -- 快速地址转换 --> MMU
+        PTR_TriBuf1 -- 页表信息 --> MMU
+        SegmentationUnit -- 线性地址 --> PagingUnit
+        PagingUnit -- 物理地址 --> TLB_CAM
+        
+        %% === CPU与外部连接 ===
+        BusInterface -- 地址/数据/控制 --> FSB_AddressLine
+        FSB_Arbiter -- 总线事务 --> Northbridge
+        
+        %% === 内存子系统连接 ===
+        MemCtrl -- 内存命令 --> MemoryBus
+        MemoryBus -- 读写操作 --> DRAMBank
+        MC_Arbiter -- 仲裁信号 --> DRC_StateMachine
+        AddrDecoder -- 片选信号 --> DRAM_RowDecoder
+        DataPath -- 数据交换 --> DataBuffer
+        Arbiter -- 访问优先级 --> MemCtrl
+        
+        %% === 芯片组内部连接 ===
+        Northbridge -- 高速IO --> PCIe_Bus
+        PCIe_Bus -- 扩展连接 --> Southbridge
+        PCIe_Bus -- 图形数据 --> GPU
+        
+        %% === 南桥内部连接 ===
+        Southbridge -- DMA控制 --> DMAController
+        Southbridge -- 中断管理 --> InterruptController
+        Southbridge -- IO管理 --> IOControllers
+        
+        %% === DMA连接 ===
+        DMAController -.->|DMA请求| MainMemory
+        DMAController -.->|DMA确认| IOControllers
+        DMAR_BaseAddress -- 传输参数 --> DMC_AddressGenerator
+        DMAA_PriorityLogic -- 优先级信号 --> DMC_StateMachine
+        
+        %% === 中断连接 ===
+        InterruptController -.->|中断信号| CPU
+        IOControllers -.->|中断请求| PIC_IRR
+        InputDevices -.->|硬件中断| PIC_IRR
+        PIC_VectorGenerator -- 中断向量 --> APIC_MessageEncoder
+        APIC_MessageEncoder -- 中断处理程序地址 --> IVT_AddressCalc
+        
+        %% === I/O设备连接 ===
+        IOControllers -- 外设协议 --> ExpansionBuses
+        ExpansionBuses -- 设备数据 --> InputDevices
+        ExpansionBuses -- 输出数据 --> OutputDevices
+        
+        USBCtrl -- USB数据 --> Keyboard
+        USBCtrl -- USB数据 --> Mouse
+        SATACtrl -- SATA数据 --> Storage
+        AudioCtrl -- 音频数据 --> AudioOut
+        
+        %% === 存储设备内部连接 ===
+        NANDFlash -- 闪存数据 --> SSDController
+        SSDController -- 映射表 --> DRAMCache
+        Platters -- 磁性数据 --> ReadWriteHead
+        ReadWriteHead -- 读写信号 --> ActuatorArm
+        ActuatorArm -- 控制信号 --> HDController
+        
+        %% === 显卡内部连接 ===
+        ShaderCores -- 渲染数据 --> VRAM
+        VRAM -- 帧缓冲数据 --> DisplayController
+        DisplayController -- 视频信号 --> LCDPanel
+        
+        %% === 显示器内部连接 ===
+        LCDPanel -- 显示数据 --> Backlight
+        Backlight -- 背光控制 --> TimingController
+        
+        %% === 音频输出内部连接 ===
+        DAC -- 模拟音频 --> Amplifier
+        Amplifier -- 放大信号 --> SignalProcessor
+        SignalProcessor -- 处理后的音频 --> Connectors
+        
+        %% === 同层级通信连接 ===
+        %% CPU内部核心间通信
+        CU -- 控制信号 --> ALU
+        ALU -- 状态反馈 --> CU
+        Registers -- 数据交换 --> InternalBus
+        InternalBus -- 路由控制 --> CU
+        
+        %% 缓存层次间通信
+        L1Cache -- 一致性协议 --> L2Cache
+        L2Cache -- 一致性协议 --> L3Cache
+        L3Cache -- 内存预取 --> MainMemory
+        
+        %% 芯片组内部通信
+        Northbridge -- 数据通路 --> Southbridge
+        Southbridge -- 中断通知 --> Northbridge
+        
+        %% I/O控制器间通信
+        USBCtrl -- 资源共享 --> SATACtrl
+        SATACtrl -- 带宽协调 --> NetworkCtrl
+        NetworkCtrl -- 数据同步 --> AudioCtrl
+        
+        %% 外设间通信
+        Keyboard -- 输入事件 --> Mouse
+        GPU -- 显示数据 --> Display
+        AudioOut -- 音频同步 --> Display
+        
+        %% 总线系统间通信
+        FSB -- 桥接 --> MemoryBus
+        MemoryBus -- 转换 --> PCIe_Bus
+        PCIe_Bus -- 扩展 --> ExpansionBuses
+        
+
+    end`;
+        /**
+         * 将 Mermaid 文本解析为树状结构
+         * 这是一个简化版的解析器，专门针对 subgraph 嵌套结构优化
+         */
+        function parseMermaidCode(code) {
+            // 清理代码：去除 标记，去除多余空格
+            const cleanCode = code.trim();
+            const lines = cleanCode.split('\n');
+            
+            const root = { id: 'Root', label: 'Root', children: [], links: [] };
+            const nodeStack = [root]; // 用于追踪 subgraph 嵌套
+            const allLinks = [];      // 存储所有解析到的连线
+            const nodeMap = {};       // ID -> Node 对象的映射
+            
+            // 简单的正则匹配
+            const subgraphRegex = /^\s*subgraph\s+(\w+)(?:\[(.*?)\])?/;
+            const endRegex = /^\s*end\s*$/;
+            const directionRegex = /^\s*direction\s+(TB|LR|BT|RL)/;
+            // 匹配节点: ID[Label] 或 ID
+            const nodeRegex = /^\s*(\w+)(?:\[(.*?)\])?(?:\s*:::.*)?$/; 
+            // 匹配连线: A --> B, A -- text --> B
+            // 注意：这里简单处理，假设一行主要是一个连线
+            const linkRegex = /^\s*(\w+)\s*-.->\s*(\w+)/; 
+            const linkWithTextRegex = /^\s*(\w+)\s*--.*?-->\s*(\w+)/;
+
+            lines.forEach(line => {
+                line = line.trim();
+                if (!line || line.startsWith('%%') || line.startsWith('flowchart') || line.startsWith('graph')) return;
+
+                const currentParent = nodeStack[nodeStack.length - 1];
+
+                // 1. 检测连线 (优先检测，防止误判为节点)
+                let linkMatch = line.match(linkWithTextRegex) || line.match(linkRegex);
+                if (linkMatch) {
+                    const from = linkMatch[1];
+                    const to = linkMatch[2];
+                    // 保存连线，去除样式定义等杂质
+                    const fullLink = line.split(':::')[0]; 
+                    allLinks.push({ from, to, raw: fullLink });
+                    return;
+                }
+
+                // 2. 检测 Subgraph 开始
+                const subMatch = line.match(subgraphRegex);
+                if (subMatch) {
+                    const id = subMatch[1];
+                    const label = subMatch[2] || id;
+                    const newNode = { 
+                        id, 
+                        label: label.replace(/["']/g, ""), // 去除引号
+                        children: [], 
+                        type: 'subgraph' 
+                    };
+                    
+                    currentParent.children.push(newNode);
+                    nodeStack.push(newNode);
+                    nodeMap[id] = newNode;
+                    return;
+                }
+
+                // 3. 检测 End
+                if (endRegex.test(line)) {
+                    if (nodeStack.length > 1) {
+                        nodeStack.pop();
+                    }
+                    return;
+                }
+
+                // 4. 检测 Direction
+                const dirMatch = line.match(directionRegex);
+                if (dirMatch) {
+                    currentParent.direction = dirMatch[1];
+                    return;
+                }
+
+                // 5. 检测普通节点 (叶子节点)
+                // 排除连线定义行，排除 subgraph 关键字
+                if (!line.includes('-->') && !line.includes('-.->') && !line.startsWith('subgraph')) {
+                    // 尝试提取 ID 和 Label
+                    // 简单的分割逻辑：先看有没有方括号
+                    let id, label;
+                    if (line.includes('[')) {
+                        const parts = line.split('[');
+                        id = parts[0].trim();
+                        label = parts[1].replace(']', '').trim();
+                    } else {
+                        id = line.split(':::')[0].trim(); // 去除样式类
+                        label = id;
+                    }
+
+                    if (id && /^\w+$/.test(id)) { // 确保ID有效
+                        const newNode = { id, label, children: [], type: 'leaf' };
+                        currentParent.children.push(newNode);
+                        nodeMap[id] = newNode;
+                    }
+                }
+            });
+
+            // 将全局连线挂载到 Root (渲染时会过滤)
+            root.links = allLinks;
+            
+            // 如果 Root 只有一个子节点且是 Computer，直接把 Computer 当作起始点更好看
+            if (root.children.length === 1) {
+                const actualRoot = root.children[0];
+                actualRoot.links = allLinks; // 传递连线
+                return actualRoot;
+            }
+
+            return root;
+        }
+
+        // ==========================================
+        // 2. 状态管理与渲染逻辑
+        // ==========================================
+        
+        let fullTree = null;
+        let historyStack = [];
+        let currentNode = null;
+        let viewDepth = 2;
+        let scale = 1;
+        let isDragging = false;
+        let startX, startY, offsetX = 0, offsetY = 0;
+
+        mermaid.initialize({ 
+            startOnLoad: false,
+            securityLevel: 'loose',
+            theme: 'base',
+            themeVariables: {
+                primaryColor: '#e1f5fe',
+                edgeLabelBackground: '#ffffff',
+                clusterBkg: '#ffffff',
+                clusterBorder: '#2c3e50'
+            }
+        });
+
+        // 绑定到 window 以便 HTML 调用
+        window.parseAndLoad = function() {
+            const code = document.getElementById('mermaidInput').value;
+            console.log(code);
+            if (!code.trim()) {
+                alert("请输入 Mermaid 代码");
+                return;
+            }
+            
+            try {
+                fullTree = parseMermaidCode(code);
+                console.log("Parsed Tree:", fullTree); // 调试用
+                
+                // 重置状态
+                historyStack = [];
+                currentNode = fullTree;
+                resetZoom();
+                renderGraph();
+            } catch (e) {
+                console.error(e);
+                alert("解析出错，请检查代码格式");
+            }
+        };
+
+        window.updateDepth = function() {
+            viewDepth = parseInt(document.getElementById('depthInput').value) || 2;
+            resetZoom();
+            renderGraph();
+        };
+
+        window.goBack = function() {
+            if (historyStack.length > 0) {
+                currentNode = historyStack.pop();
+                renderGraph();
+            }
+        };
+
+        window.handleNodeClick = function(nodeId) {
+            // 在全树中查找节点
+            const target = findNodeInTree(fullTree, nodeId);
+            
+            if (target && target.children && target.children.length > 0) {
+                historyStack.push(currentNode);
+                currentNode = target;
+                resetZoom();
+                renderGraph();
+            }
+        };
+
+        function findNodeInTree(node, id) {
+            if (node.id === id) return node;
+            if (node.children) {
+                for (let child of node.children) {
+                    const found = findNodeInTree(child, id);
+                    if (found) return found;
+                }
+            }
+            return null;
+        }
+
+        // ==========================================
+        // 3. 递归生成器 (核心逻辑)
+        // ==========================================
+
+        /**
+         * 递归生成 Mermaid 语法
+         * @param node 当前遍历到的节点
+         * @param currentDepth 当前递归深度 (相对渲染起点)
+         * @param maxDepth 最大允许显示的深度
+         * @param visibleNodeIds 用于收集所有渲染出来的节点ID (用于连线过滤)
+         */
+        function buildMermaidString(node, currentDepth, maxDepth, visibleNodeIds) {
+            let syntax = "";
+            const isLeaf = !node.children || node.children.length === 0;
+            const isMaxDepth = currentDepth >= maxDepth;
+
+            // 收集可见ID
+            visibleNodeIds.add(node.id);
+
+            // 1. 如果是叶子节点，或已达到显示深度上限，直接渲染为普通节点
+            if (isLeaf || isMaxDepth) {
+                // 判断是否还有隐藏的子节点 (用于决定是否显示为蓝色可点击)
+                const hasHiddenChildren = !isLeaf;
+                const styleClass = hasHiddenChildren ? "nav" : "leaf";
+                
+                // 生成节点语法: ID["Label"]:::class
+                syntax += `${node.id}["${node.label}"]:::${styleClass}\n`;
+                
+                if (hasHiddenChildren) {
+                    syntax += `click ${node.id} call handleNodeClick("${node.id}")\n`;
+                }
+                return syntax;
+            }
+
+            // 2. 如果是容器节点 (Subgraph) 且未达深度上限
+            // 注意：根节点通常不需要套 subgraph，除非它是嵌套在内部的
+            const isRootOfView = (currentDepth === 0);
+            
+            if (!isRootOfView) {
+                syntax += `subgraph ${node.id} ["${node.label}"]\n`;
+                if (node.direction) syntax += `direction ${node.direction}\n`;
+            }
+
+            // 递归处理子节点
+            node.children.forEach(child => {
+                syntax += buildMermaidString(child, currentDepth + 1, maxDepth, visibleNodeIds);
+            });
+
+            if (!isRootOfView) {
+                syntax += `end\n`;
+            }
+
+            return syntax;
+        }
+
+        async function renderGraph() {
+            const content = document.getElementById('diagram-content');
+            const backBtn = document.getElementById('backBtn');
+            const breadcrumbs = document.getElementById('breadcrumbs');
+            const loading = document.getElementById('loading');
+
+            loading.style.display = 'block';
+            
+            // 0. 准备数据
+            const visibleNodeIds = new Set();
+            
+            // 1. 生成节点结构
+            let graphDefinition = `graph ${currentNode.direction || 'TB'}\n`;
+            graphDefinition += `classDef nav fill:#e3f2fd,stroke:#2196f3,stroke-width:2px,cursor:pointer;\n`;
+            graphDefinition += `classDef leaf fill:#ffffff,stroke:#333,stroke-width:1px;\n`;
+
+            // 从 currentNode 开始递归构建，初始深度为 0
+            // viewDepth 是用户设定的显示层数
+            graphDefinition += buildMermaidString(currentNode, 0, viewDepth, visibleNodeIds);
+
+            // 2. 智能连线生成
+            // 遍历 fullTree 中的所有连线，如果 source 和 target 都在 visibleNodeIds 中，则添加
+            // 这是一个全局搜索，对于大型图表可能需要优化，但在前端万级以下节点没问题
+            // 优化：我们假设 parseMermaidCode 将所有连线存在了 Root (fullTree) 或者 currentNode 上
+            // 实际上连线是跨层级的。最简单的方法是使用全树的连线列表。
+            
+            const linksSource = fullTree.links || []; 
+            linksSource.forEach(link => {
+                if (visibleNodeIds.has(link.from) && visibleNodeIds.has(link.to)) {
+                    graphDefinition += `${link.raw}\n`;
+                }
+            });
+
+            // 3. 渲染
+            const uniqueId = 'graph-' + Date.now();
+            try {
+                const { svg, bindFunctions } = await mermaid.render(uniqueId, graphDefinition);
+                content.innerHTML = svg;
+                if (bindFunctions) bindFunctions(content);
+            } catch (error) {
+                console.error("Render Error", error);
+                // 容错处理：如果 Mermaid 渲染失败（通常是因为空图或语法冲突），显示提示
+                content.innerHTML = `<div style="color:red; padding:20px;">渲染错误: ${error.message} <br> 可能是当前视图没有子节点或深度过深。</div>`;
+            }
+
+            // 4. 更新 UI
+            loading.style.display = 'none';
+            backBtn.disabled = historyStack.length === 0;
+            
+            // 生成面包屑路径
+            let pathTxt = "Root";
+            if (historyStack.length > 0) {
+                // 简单展示当前节点名，也可以遍历 stack 生成完整路径
+                pathTxt = `... > ${currentNode.label}`;
+            } else if (currentNode.label) {
+                pathTxt = currentNode.label;
+            }
+            breadcrumbs.innerText = `当前位置: ${pathTxt} (当前显示层数: ${viewDepth})`;
+        }
+        
+        // ==========================================
+        // 4. 缩放和拖动功能 (已修改)
+        // ==========================================
+        
+        function zoomIn() {
+            // 获取鼠标位置
+            const wrapper = document.getElementById('diagram-wrapper');
+            const rect = wrapper.getBoundingClientRect();
+            const mouseX = lastMouseX - rect.left;
+            const mouseY = lastMouseY - rect.top;
+            
+            // 计算缩放前的鼠标位置相对于内容的比例
+            const contentX = (mouseX - offsetX) / scale;
+            const contentY = (mouseY - offsetY) / scale;
+            
+            // 更新缩放比例
+            scale += 0.1*scale;
+            
+            // 计算缩放后的偏移量，使鼠标下的点保持在同一位置
+            offsetX = mouseX - contentX * scale;
+            offsetY = mouseY - contentY * scale;
+            
+            updateZoom();
+        }
+        
+        function zoomOut() {
+            // 获取鼠标位置
+            const wrapper = document.getElementById('diagram-wrapper');
+            const rect = wrapper.getBoundingClientRect();
+            const mouseX = lastMouseX - rect.left;
+            const mouseY = lastMouseY - rect.top;
+            
+            // 计算缩放前的鼠标位置相对于内容的比例
+            const contentX = (mouseX - offsetX) / scale;
+            const contentY = (mouseY - offsetY) / scale;
+            
+            // 更新缩放比例
+            scale = Math.max(0.1, 0.9*scale);
+            
+            // 计算缩放后的偏移量，使鼠标下的点保持在同一位置
+            offsetX = mouseX - contentX * scale;
+            offsetY = mouseY - contentY * scale;
+            
+            updateZoom();
+        }
+        
+        function resetZoom() {
+            const wrapper = document.getElementById('diagram-wrapper');
+            const content = document.getElementById('diagram-content');
+            
+            // 重置缩放比例
+            scale = 1;
+            
+            // 计算居中偏移
+            const wrapperRect = wrapper.getBoundingClientRect();
+            const contentRect = content.getBoundingClientRect();
+            
+            // 将内容居中显示
+            offsetX = (wrapperRect.width - contentRect.width * scale) / 2;
+            offsetY = (wrapperRect.height - contentRect.height * scale) / 2;
+            
+            updateZoom();
+        }
+        
+        function updateZoom() {
+            const content = document.getElementById('diagram-content');
+            const indicator = document.getElementById('zoomIndicator');
+            
+            content.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
+            indicator.textContent = `${Math.round(scale * 100)}%`;
+        }
+        
+        // 记录鼠标位置
+        let lastMouseX = 0;
+        let lastMouseY = 0;
+        
+        // 初始化拖拽功能
+        function initDrag() {
+            const wrapper = document.getElementById('diagram-wrapper');
+            const content = document.getElementById('diagram-content');
+            
+            // 记录鼠标位置
+            wrapper.addEventListener('mousemove', (e) => {
+                lastMouseX = e.clientX;
+                lastMouseY = e.clientY;
+            });
+            
+            wrapper.addEventListener('mousedown', (e) => {
+                if (e.button !== 0) return; // 只处理左键
+                
+                isDragging = true;
+                startX = e.clientX - offsetX;
+                startY = e.clientY - offsetY;
+                wrapper.style.cursor = 'grabbing';
+            });
+            
+            wrapper.addEventListener('mouseleave', () => {
+                isDragging = false;
+                wrapper.style.cursor = 'grab';
+            });
+            
+            wrapper.addEventListener('mouseup', () => {
+                isDragging = false;
+                wrapper.style.cursor = 'grab';
+            });
+            
+            wrapper.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                e.preventDefault();
+                
+                offsetX = e.clientX - startX;
+                offsetY = e.clientY - startY;
+                
+                updateZoom();
+            });
+            
+            // 滚轮缩放功能
+            wrapper.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                
+                // 计算缩放前的鼠标位置
+                const rect = wrapper.getBoundingClientRect();
+                const mouseX = e.clientX - rect.left;
+                const mouseY = e.clientY - rect.top;
+                
+                // 计算鼠标位置相对于内容的比例
+                const contentX = (mouseX - offsetX) / scale;
+                const contentY = (mouseY - offsetY) / scale;
+                
+                // 更新缩放比例
+                if (e.deltaY < 0) {
+                    // 向上滚动，放大
+                    scale += 0.1*scale;
+                } else {
+                    // 向下滚动，缩小
+                    scale = Math.max(0.1, 0.9*scale);
+                }
+                
+                // 计算缩放后的偏移量，使鼠标下的点保持在同一位置
+                offsetX = mouseX - contentX * scale;
+                offsetY = mouseY - contentY * scale;
+                
+                // 应用缩放
+                updateZoom();
+            }, { passive: false });
+        }
+        
+        // 预置 Demo 加载逻辑
+        window.loadDemo = function() {
+            document.getElementById('mermaidInput').value = demoCode;
+            parseAndLoad();
+        }
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            // 自动加载一次 Demo 以便展示效果
+            updateDepth();
+            loadDemo();
+            resetZoom();
+            initDrag();
+        });
+
+    </script>
+</body>
+</html>

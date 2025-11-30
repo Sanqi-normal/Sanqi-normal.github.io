@@ -4,6 +4,79 @@
   
     
     <entry>
+      <title>github托管渲染后的但不被hexo主题捆绑的网页</title>
+      <link href="/2025/11/30/github%E6%89%98%E7%AE%A1%E6%B8%B2%E6%9F%93%E5%90%8E%E7%9A%84%E4%BD%86%E4%B8%8D%E8%A2%ABhexo%E4%B8%BB%E9%A2%98%E6%8D%86%E7%BB%91%E7%9A%84%E7%BD%91%E9%A1%B5/"/>
+      <url>/2025/11/30/github%E6%89%98%E7%AE%A1%E6%B8%B2%E6%9F%93%E5%90%8E%E7%9A%84%E4%BD%86%E4%B8%8D%E8%A2%ABhexo%E4%B8%BB%E9%A2%98%E6%8D%86%E7%BB%91%E7%9A%84%E7%BD%91%E9%A1%B5/</url>
+      
+        <content type="html"><![CDATA[<p>我只是忘了，因为需要插入网页（用&lt;iframe&gt;标签）用到，一时记不起来原来怎么弄的了</p><p>首先在hexo主题配置（_config.yml）里添加或修改<code>skip_render</code>:为</p><pre><code>skip_render:    - skiprender/**</code></pre><p>skiprender为你想要不被渲染的文件夹名，什么名都可以<br>然后将网页放到里面就可以了，引用或查找时使用路径 （根目录）&#x2F;skiprender（你的文件夹名）&#x2F;xx.html(你的纯净网页)</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 笔记 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>交互式计算机（CPU）组成结构图表</title>
+      <link href="/2025/11/30/%E4%BA%A4%E4%BA%92%E5%BC%8F%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E7%BB%93%E6%9E%84%E5%9B%BE%E8%A1%A8/"/>
+      <url>/2025/11/30/%E4%BA%A4%E4%BA%92%E5%BC%8F%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E7%BB%93%E6%9E%84%E5%9B%BE%E8%A1%A8/</url>
+      
+        <content type="html"><![CDATA[<p>点击块查看对应元件微观结构，调整不同深度以进一步直观理解结构，滚动缩放，图像消失点击刷新重置位置</p><style>        .iframe-container {            position: relative;            width: 100%;            height: 600px;            border: 1px solid #ddd;            border-radius: 10px;            overflow: hidden;            background: #f9f9f9;        }                iframe {            width: 100%;            height: 100%;            border: none;            transition: transform 0.3s ease;        }</style><div class="iframe-container">    <div class="loading">演示</div>    <iframe id="embedded-page" src="/skiprender/computer.html"></iframe></div>]]></content>
+      
+      
+      <categories>
+          
+          <category> 计算机 </category>
+          
+          <category> 硬件 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 计算机 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>针对flowchart动态调整层级并可交互的Mermaid编辑器（静态单页）</title>
+      <link href="/2025/11/30/%E5%8A%A8%E6%80%81%E8%B0%83%E6%95%B4%E5%B1%82%E7%BA%A7%E5%B9%B6%E5%8F%AF%E4%BA%A4%E4%BA%92%E7%9A%84Mermaid%E7%BC%96%E8%BE%91%E5%99%A8%EF%BC%88%E9%9D%99%E6%80%81%E5%8D%95%E9%A1%B5%EF%BC%89/"/>
+      <url>/2025/11/30/%E5%8A%A8%E6%80%81%E8%B0%83%E6%95%B4%E5%B1%82%E7%BA%A7%E5%B9%B6%E5%8F%AF%E4%BA%A4%E4%BA%92%E7%9A%84Mermaid%E7%BC%96%E8%BE%91%E5%99%A8%EF%BC%88%E9%9D%99%E6%80%81%E5%8D%95%E9%A1%B5%EF%BC%89/</url>
+      
+        <content type="html"><![CDATA[<p>以下是此编辑器的演示，功能如标题所述，它将绘制flowchart类型图表的代码结构进行转变，使其可以交互的同时自由变换层级数，这是为了方便展示层数较深的复杂的流程图或结构图<br>点击块查看对应元件微观结构，调整不同深度以进一步直观理解结构，滚动缩放，图像消失点击刷新重置位置<br>如果觉得操作不适，<a href="/skiprender/mermaid.html">跳转未进行主题渲染的页面</a><br>制作它的原因是希望详细直观地展示计算机组成结构，很显然此图表非常庞大太过复杂不够直观。此外，另外一个cpu结构图表细化到基础元件，对元件间的通信描述得更清楚，感观也更好，真正对搭建计算机有帮助，<a href="/skiprender/computer.html">点此跳转CPU组成结构图表</a></p><style>        .iframe-container {            position: relative;            width: 100%;            height: 800px;            border: 1px solid #ddd;            border-radius: 10px;            overflow: hidden;            background: #f9f9f9;        }                iframe {            width: 100%;            height: 100%;            border: none;            transition: transform 0.3s ease;        }</style><div class="iframe-container">    <div class="loading">演示</div>    <iframe id="embedded-page" src="/skiprender/mermaid.html"></iframe></div><p><a href="https://github.com/Sanqi-normal/tools/blob/main/%E9%92%88%E5%AF%B9flowchart%E5%8A%A8%E6%80%81%E8%B0%83%E6%95%B4%E5%B1%82%E7%BA%A7%E5%B9%B6%E5%8F%AF%E4%BA%A4%E4%BA%92%E7%9A%84Mermaid%E7%BC%96%E8%BE%91%E5%99%A8%EF%BC%88%E9%9D%99%E6%80%81%E5%8D%95%E9%A1%B5%EF%BC%89/mermaid.html">代码地址</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 计算机 </category>
+          
+          <category> 前端 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Mermaid </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>日志</title>
       <link href="/2025/11/26/%E6%97%A5%E5%BF%97-9/"/>
       <url>/2025/11/26/%E6%97%A5%E5%BF%97-9/</url>
@@ -2310,9 +2383,9 @@
       
         <tags>
             
-            <tag> 后端 </tag>
-            
             <tag> 日志 </tag>
+            
+            <tag> 后端 </tag>
             
         </tags>
       
