@@ -4,6 +4,32 @@
   
     
     <entry>
+      <title>家用ipv6搭建服务器网站</title>
+      <link href="/2025/12/01/%E5%AE%B6%E7%94%A8ipv6%E6%90%AD%E5%BB%BA%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BD%91%E7%AB%99/"/>
+      <url>/2025/12/01/%E5%AE%B6%E7%94%A8ipv6%E6%90%AD%E5%BB%BA%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BD%91%E7%AB%99/</url>
+      
+        <content type="html"><![CDATA[<p>略去本地端口托管网站教程，这个网上很多。</p><h3 id="ipv6公网地址获取"><a href="#ipv6公网地址获取" class="headerlink" title="ipv6公网地址获取"></a>ipv6公网地址获取</h3><p>之前本站一直托管到github上去就是因为没有国内公网的ip，想获取此ip还需要购买服务器，这让本地的服务器发挥不了价值。</p><p>现在让互联网三大运营商扯根家用wifi的线一般都带有ipv6地址，不需要再苦求一个ipv4地址了。</p><p>可以到此网站查看自己是否拥有ipv6地址以及是否能够访问ipv6地址的网站：<a href="https://ipv6ready.me/">https://ipv6ready.me/</a></p><p>ipv6地址格式示例：<code>0000:0000:0000:0000:0000:0000:0000:0001</code> (这是回环地址，也可简写为<code>::1</code>)</p><p>尝试断开wifi，ping此地址，如果连接正常那么可确信你有一个可以从公网访问的ip地址</p><p>ipv6地址访问的格式为：http:&#x2F;&#x2F;[0000:0000:0000:0000:0000:0000:0000:0001] (举例) 也可以添加端口号</p><h3 id="绑定域名"><a href="#绑定域名" class="headerlink" title="绑定域名"></a>绑定域名</h3><p>可以在<a href="https://dc.console.aliyun.com/next/#/overview">阿里云</a>上买个域名，然后有关域名认证审核以及解析为ip的引导阿里云做的很清楚，不再赘述</p><p>那么现在访问 http:&#x2F;&#x2F;你的域名:你的端口号 就已经能正确访问到你开放的端口了</p><p>如果访问被拒绝，可能 1 你在此端口并没有托管网站 2 你没有开放防火墙  开放防火墙方法可以自行寻找教程</p><p>除此以外，如果运营商封了80或其他端口（运营商会封掉ipv4很多常见端口），那就只能更换端口，因为这个封锁是在路由器处进行的，如果你的路由管理界面没有端口转发相关操作，那可能会很难</p><h3 id="nginx反向代理"><a href="#nginx反向代理" class="headerlink" title="nginx反向代理"></a>nginx反向代理</h3><p>它的作用是将80端口访问的请求转发到其他端口，比如说你的hexo博客传在4000，那么访问80端口就直接打开了博客主页</p><p>使用此代理的原因：1 访问某域名时默认访问的是80端口而不是其他端口 如果你不想始终后面添加 <code>:端口号</code>的话 2 将80端口直接开放危险性较高，使用反向代理避免赋予端口托管任务的权限 </p><p>看这一篇 <a href="https://zhuanlan.zhihu.com/p/451825018">https://zhuanlan.zhihu.com/p/451825018</a></p><p>但要注意我们的ipv6要使用<code>listen [::]:80;</code></p><p>可以对我以下内容稍作更改后粘贴到你的配置文件中</p><pre><code>server &#123;    listen 80;    listen [::]:80;    server_name sanqi.online; #这里改为你的域名    location / &#123;        proxy_pass http://localhost:4000;  #这里要写你的端口号                # 重要：设置代理头信息        proxy_set_header Host $host;        proxy_set_header X-Real-IP $remote_addr;        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;        proxy_set_header X-Forwarded-Proto $scheme;                # WebSocket支持（如果博客需要）        proxy_http_version 1.1;        proxy_set_header Upgrade $http_upgrade;        proxy_set_header Connection &quot;upgrade&quot;;                # 超时设置        proxy_connect_timeout 60s;        proxy_send_timeout 60s;        proxy_read_timeout 60s;    &#125;    # 可选的：静态文件缓存优化    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg)$ &#123;        proxy_pass http://localhost:4000;        proxy_set_header Host $host;        proxy_cache_valid 200 302 1h;        proxy_cache_valid 404 1m;    &#125;&#125;</code></pre><p>那么到这里已经可以直接访问域名来访问到网站了。</p><h3 id="其他问题"><a href="#其他问题" class="headerlink" title="其他问题"></a>其他问题</h3><p>家用ipv6地址是会变的，使用<a href="https://github.com/jeessy2/ddns-go?tab=readme-ov-file">DDNS—go</a>来动态调整域名解析地址</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>网站需知</title>
+      <link href="/2025/12/01/%E7%BD%91%E7%AB%99%E9%9C%80%E7%9F%A5/"/>
+      <url>/2025/12/01/%E7%BD%91%E7%AB%99%E9%9C%80%E7%9F%A5/</url>
+      
+        <content type="html"><![CDATA[<p>Github站点：<a href="https://sanqi-normal.github.io/">https://sanqi-normal.github.io/</a><br>国内站点：<a href="http://sanqi.online/">http://sanqi.online</a></p><p>国内站点连接容易且内容更新，但并非全天开放，在访问Github站点时如果国内站点可用会优先转到国内站点</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>github托管渲染后的但不被hexo主题捆绑的网页</title>
       <link href="/2025/11/30/github%E6%89%98%E7%AE%A1%E6%B8%B2%E6%9F%93%E5%90%8E%E7%9A%84%E4%BD%86%E4%B8%8D%E8%A2%ABhexo%E4%B8%BB%E9%A2%98%E6%8D%86%E7%BB%91%E7%9A%84%E7%BD%91%E9%A1%B5/"/>
       <url>/2025/11/30/github%E6%89%98%E7%AE%A1%E6%B8%B2%E6%9F%93%E5%90%8E%E7%9A%84%E4%BD%86%E4%B8%8D%E8%A2%ABhexo%E4%B8%BB%E9%A2%98%E6%8D%86%E7%BB%91%E7%9A%84%E7%BD%91%E9%A1%B5/</url>
@@ -81,7 +107,7 @@
       <link href="/2025/11/26/%E6%97%A5%E5%BF%97-9/"/>
       <url>/2025/11/26/%E6%97%A5%E5%BF%97-9/</url>
       
-        <content type="html"><![CDATA[<p>做了一个非常炫酷的蒸汽波主题</p><p>这真的非常酷吧……一种复古未来主义风格的美学</p><p>为什么忽然想翻修一下呢，因为看到了一个磁带复古主义风格设计的网页，非常羡慕，也受到启发</p><p>所以在右下角放了一个可以听歌的磁带</p><p>整个主题并非只有蒸汽波，实则也有后朋克风格，这两种年代和情绪都截然不同的风格，恰巧都有一种无法抵达真实的感觉</p>]]></content>
+        <content type="html"><![CDATA[<p>做了一个非常炫酷的蒸汽波主题</p><p>这真的非常酷吧……一种复古未来主义风格的美学</p><p>为什么忽然想翻修一下呢，因为看到了一个磁带复古主义风格设计的网页，非常羡慕，也受到启发</p><p>所以在右下角放了一个可以听歌的磁带</p><p>整个主题并非只有蒸汽波，实则也有后朋克风格，这两种年代和情绪都截然不同的风格，恰巧都有一种无法抵达真实的感觉</p><p>post页面是不是半透明更好不然看不清字，但说实话博客没有什么实用价值，尤其是我的，所以看着好看就好</p>]]></content>
       
       
       <categories>
@@ -2383,9 +2409,9 @@
       
         <tags>
             
-            <tag> 日志 </tag>
-            
             <tag> 后端 </tag>
+            
+            <tag> 日志 </tag>
             
         </tags>
       

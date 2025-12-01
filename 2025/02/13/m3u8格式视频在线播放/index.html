@@ -44,6 +44,39 @@
 
 <script src="/js/iconfont.js?v=1.1.0" ></script>
 
+      <script>
+    // 立即检查并重定向，不等待页面加载
+    (function() {
+      // 只在非sanqi.online域名下执行
+      if (window.location.hostname !== 'sanqi.online') {
+        var xhr = new XMLHttpRequest();
+        var targetUrl = 'http://sanqi.online' + window.location.pathname + window.location.search;
+        
+        // 测试sanqi.online是否可达
+        xhr.open('HEAD', 'http://sanqi.online', true);
+        xhr.timeout = 2000; // 2秒超时
+        
+        xhr.onload = function() {
+          if (xhr.status >= 200 && xhr.status < 400) {
+            // sanqi.online可达，进行跳转
+            window.location.replace(targetUrl);
+          }
+        };
+        
+        xhr.onerror = function() {
+          // 如果出错，留在当前页面
+          console.log('sanqi.online is not reachable');
+        };
+        
+        xhr.ontimeout = function() {
+          // 如果超时，留在当前页面
+          console.log('Connection to sanqi.online timed out');
+        };
+        
+        xhr.send();
+      }
+    })();
+  </script>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Press+Start+2P&family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/_partial/cyber-background.styl">
 <meta name="generator" content="Hexo 7.3.0"></head>
@@ -153,7 +186,7 @@
     <li>
         <div class="all active" data-rel="All">All
             
-                <small>(126)</small>
+                <small>(128)</small>
             
         </div>
     </li>
@@ -502,8 +535,8 @@
         
     </div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="126">
-<input type="hidden" id="yelog_site_word_count" value="125.3k">
+<input type="hidden" id="yelog_site_posts_number" value="128">
+<input type="hidden" id="yelog_site_word_count" value="126.1k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -808,6 +841,24 @@
            data-author="" >
             <span class="post-title" title="重要外链汇总">重要外链汇总</span>
             <span class="post-date" title="2025-02-16 18:59:13">2025/02/16</span>
+        </a>
+        
+        
+        <a id="top" class="All "
+           href="/2025/12/01/%E7%BD%91%E7%AB%99%E9%9C%80%E7%9F%A5/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="网站需知">网站需知</span>
+            <span class="post-date" title="2025-12-01 13:33:51">2025/12/01</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2025/12/01/%E5%AE%B6%E7%94%A8ipv6%E6%90%AD%E5%BB%BA%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BD%91%E7%AB%99/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="家用ipv6搭建服务器网站">家用ipv6搭建服务器网站</span>
+            <span class="post-date" title="2025-12-01 13:50:15">2025/12/01</span>
         </a>
         
         
@@ -1677,7 +1728,7 @@
         
         <a  class="All 计算机 后端 "
            href="/2024/12/17/%E6%9C%89%E5%85%B3ip%E8%BF%BD%E8%B8%AA%E5%AD%98%E5%82%A8%E7%9A%84%E5%85%A8%E7%A8%8B%E5%9B%9E%E9%A1%BE/"
-           data-tag="日志,后端"
+           data-tag="后端,日志"
            data-author="" >
             <span class="post-title" title="有关ip数据存储的全程回顾">有关ip数据存储的全程回顾</span>
             <span class="post-date" title="2024-12-17 21:13:53">2024/12/17</span>
