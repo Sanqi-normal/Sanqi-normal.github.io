@@ -1,0 +1,2663 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"> 
+  <title>日志 | 叁七のblog</title>
+  <meta name="keywords" content=" 日志 ">
+  <meta name="description" content="日志 | 叁七のblog">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="这是一个假装自己是命令行的AI，找出它的破绽                    Alice Shell：$~                      body {         font-family: &#39;Courier New&#39;, monospace;         background: #000 !important;         margin: 0;         padd">
+<meta property="og:type" content="website">
+<meta property="og:title" content="叁七のblog">
+<meta property="og:url" content="http://example.com/AI/index.html">
+<meta property="og:site_name" content="叁七のblog">
+<meta property="og:description" content="这是一个假装自己是命令行的AI，找出它的破绽                    Alice Shell：$~                      body {         font-family: &#39;Courier New&#39;, monospace;         background: #000 !important;         margin: 0;         padd">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-11-30T10:54:25.596Z">
+<meta property="article:modified_time" content="2025-11-30T10:54:25.596Z">
+<meta property="article:author" content="叁七">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="icon" href="https://testingcf.jsdelivr.net/gh/sanqi-normal/sanqi-normal.github.io/img/top.png">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-light.css?v=1.1.0" rel="stylesheet">
+
+<link href="//testingcf.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<link href="//testingcf.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css" rel="stylesheet">
+<link href="//testingcf.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css" rel="stylesheet">
+
+<script src="//testingcf.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//testingcf.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//testingcf.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+
+      <script>
+        (function() {
+          if (window.location.hostname !== 'sanqi.online') {
+            var targetUrl = 'http://sanqi.online' + window.location.pathname + window.location.search;
+            
+            // 不验证，直接跳转
+            try {
+              window.location.replace(targetUrl);
+            } catch(e) {
+              console.log('Redirect failed:', e);
+            }
+          }
+        })();
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Press+Start+2P&family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/_partial/cyber-background.styl">
+<meta name="generator" content="Hexo 7.3.0"></head>
+<div class="scanlines"></div>
+<div class="noise-overlay"></div>
+<div class="vignette"></div>
+<canvas id="sun-canvas"></canvas>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+  <input id="page_shortcut" value="false" /><!--我自己加的变量用来使某些页面禁用快捷键，传递到script的pageshortcut-->
+  <input id="theme_highlight_on" value="true" />
+  <input id="theme_code_copy" value="true" />
+</div>
+
+  
+<link rel="stylesheet" href="/css/cassette-player.css">
+
+
+<script src="/js/cyber-background.js"></script>
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <!--左侧栏模板逻辑-->
+<style>
+.blog-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  letter-spacing: -0.025em;
+  padding-left: 1rem;
+  font-family: var(--font-heading);
+}
+.blog-title-cyan {
+  color: #22d3ee;
+}
+.blog-title-fuchsia {
+  color: #d946ef;
+}
+</style>
+
+<h1 class="blog-title">
+    <span class="blog-title-cyan">S</span>ANQI
+    <span class="blog-title-fuchsia">B</span>LOG
+</h1>
+<!--头像与图标链接-->
+
+<a href="/"
+   class="avatar_target">
+    <img class="avatar"
+         src="https://testingcf.jsdelivr.net/gh/sanqi-normal/sanqi-normal.github.io/img/avatar_vaporwave_advanced.jpg"/>
+    <div class="retro-future-overlay"></div>
+</a>
+<div class="author">
+    <span>叁七</span>
+</div>
+
+<div class="icon">
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+</div>
+
+
+
+    <a class="more-menus">more</a>
+<!--以下为文章列表格式-->
+
+
+<ul>
+    <li>
+        <div class="all active" data-rel="All">All
+            
+                <small>(129)</small>
+            
+        </div>
+    </li>
+    
+        
+            
+                
+    <li>
+        <div data-rel="日志">
+            
+            日志
+            <small>(22)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="笔记">
+            
+            笔记
+            <small>(7)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="计算机">
+            <i class="fold iconfont icon-right"></i>
+            计算机
+            <small>(48)</small>
+        </div>
+        
+            <ul class="sub hide">
+                
+                    
+    <li>
+        <div data-rel="计算机&lt;---&gt;编程">
+            
+            编程
+            <small>(2)</small>
+        </div>
+        
+    </li>
+
+                
+                    
+    <li>
+        <div data-rel="计算机&lt;---&gt;操作系统">
+            
+            操作系统
+            <small>(2)</small>
+        </div>
+        
+    </li>
+
+                
+                    
+    <li>
+        <div data-rel="计算机&lt;---&gt;后端">
+            
+            后端
+            <small>(2)</small>
+        </div>
+        
+    </li>
+
+                
+                    
+    <li>
+        <div data-rel="计算机&lt;---&gt;前端">
+            
+            前端
+            <small>(3)</small>
+        </div>
+        
+    </li>
+
+                
+                    
+    <li>
+        <div data-rel="计算机&lt;---&gt;软件">
+            
+            软件
+            <small>(8)</small>
+        </div>
+        
+    </li>
+
+                
+                    
+    <li>
+        <div data-rel="计算机&lt;---&gt;渗透">
+            
+            渗透
+            <small>(5)</small>
+        </div>
+        
+    </li>
+
+                
+                    
+    <li>
+        <div data-rel="计算机&lt;---&gt;硬件">
+            
+            硬件
+            <small>(3)</small>
+        </div>
+        
+    </li>
+
+                
+                    
+    <li>
+        <div data-rel="计算机&lt;---&gt;AI">
+            
+            AI
+            <small>(10)</small>
+        </div>
+        
+    </li>
+
+                
+                    
+    <li>
+        <div data-rel="计算机&lt;---&gt;Web">
+            
+            Web
+            <small>(10)</small>
+        </div>
+        
+    </li>
+
+                
+            </ul>
+        
+    </li>
+
+            
+        
+    
+        
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="金融">
+            
+            金融
+            <small>(9)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="旅行">
+            
+            旅行
+            <small>(11)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="生活">
+            <i class="fold iconfont icon-right"></i>
+            生活
+            <small>(6)</small>
+        </div>
+        
+            <ul class="sub hide">
+                
+                    
+    <li>
+        <div data-rel="生活&lt;---&gt;记录">
+            
+            记录
+            <small>(1)</small>
+        </div>
+        
+    </li>
+
+                
+                    
+    <li>
+        <div data-rel="生活&lt;---&gt;文章">
+            
+            文章
+            <small>(1)</small>
+        </div>
+        
+    </li>
+
+                
+            </ul>
+        
+    </li>
+
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="游戏">
+            <i class="fold iconfont icon-right"></i>
+            游戏
+            <small>(9)</small>
+        </div>
+        
+            <ul class="sub hide">
+                
+                    
+    <li>
+        <div data-rel="游戏&lt;---&gt;创作">
+            
+            创作
+            <small>(1)</small>
+        </div>
+        
+    </li>
+
+                
+                    
+    <li>
+        <div data-rel="游戏&lt;---&gt;评测">
+            
+            评测
+            <small>(2)</small>
+        </div>
+        
+    </li>
+
+                
+            </ul>
+        
+    </li>
+
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+</ul>
+<!--以下为自定义菜单栏-->
+<div class="left-bottom">
+    <div class="menus">
+        
+            
+                <a class="dynamic-menu site_url"
+                   
+                   href="/photo">相册</a>
+        
+            
+                <a class="dynamic-menu site_url"
+                   
+                   href="/novel">小说</a>
+        
+            
+                <a class="dynamic-menu "
+                   target="_self"
+                   
+                   href="/AI">Ai</a>
+        
+            
+    </div>
+    <div>
+        
+            <a class="about  site_url"
+               
+               href="/about">About</a>
+        
+        
+    </div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="129">
+<input type="hidden" id="yelog_site_word_count" value="126.6k">
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        Links
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="search shortcut key i"></i>
+            <div class="right-title">All</div>
+            <i class="iconfont icon-file-tree" data-title="switch to outline view shortcut key w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="return"></i>
+            <input id="local-search-input" autocomplete="off"/>
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="case sensitive"></i>
+            <i class="iconfont icon-tag" data-title="label"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">outline</div>
+            <i class="iconfont icon-list" data-title="switch to article list"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>-- 期货 -- 笔记</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>安卓</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>笔记</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>编程</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>博客</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>操作系统</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>测试</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>代理</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>电路</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>端口</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>股市</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>后端</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>计算机</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>技术分析</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>镜像下载</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>框架</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>扩展</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>量化</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>旅行</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>评论</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>期货</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>前端</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>日志</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>深度学习</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>渗透</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>渗透笔记</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>视频</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>数据结构</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>投资</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>网络</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>小说</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>心理学</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>一篇流</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>游戏</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>游戏评测</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>语义检索</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>云服务器</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>长期记忆</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>主机</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>自动化</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>ai</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Ai</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>AI</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Alice</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Android</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Android Studio</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>AndroidStudio</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>api</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>css</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>deepseek</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Docker</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>github</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>json</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>linux</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>MarkDown</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Mermaid</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>python</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>shell</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>tts</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>unity</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Web</a>
+            </li>
+        
+    </div>
+
+</div>
+
+    
+    <div id="local-search-result">
+
+    </div>
+    
+    <nav id="title-list-nav">
+        
+        
+        <a id="top" class="All "
+           href="/2025/02/16/%E9%87%8D%E8%A6%81%E5%A4%96%E9%93%BE%E6%B1%87%E6%80%BB/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="重要外链汇总">重要外链汇总</span>
+            <span class="post-date" title="2025-02-16 18:59:13">2025/02/16</span>
+        </a>
+        
+        
+        <a id="top" class="All "
+           href="/2025/12/01/%E7%BD%91%E7%AB%99%E9%9C%80%E7%9F%A5/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="网站需知">网站需知</span>
+            <span class="post-date" title="2025-12-01 13:33:51">2025/12/01</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2025/12/03/%E6%97%A5%E5%BF%97-10/"
+           data-tag="日志"
+           data-author="" >
+            <span class="post-title" title="日志">日志</span>
+            <span class="post-date" title="2025-12-03 23:05:26">2025/12/03</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2025/12/01/%E5%AE%B6%E7%94%A8ipv6%E6%90%AD%E5%BB%BA%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BD%91%E7%AB%99/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="家用ipv6搭建服务器网站">家用ipv6搭建服务器网站</span>
+            <span class="post-date" title="2025-12-01 13:50:15">2025/12/01</span>
+        </a>
+        
+        
+        <a  class="All 笔记 "
+           href="/2025/11/30/github%E6%89%98%E7%AE%A1%E6%B8%B2%E6%9F%93%E5%90%8E%E7%9A%84%E4%BD%86%E4%B8%8D%E8%A2%ABhexo%E4%B8%BB%E9%A2%98%E6%8D%86%E7%BB%91%E7%9A%84%E7%BD%91%E9%A1%B5/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="github托管渲染后的但不被hexo主题捆绑的网页">github托管渲染后的但不被hexo主题捆绑的网页</span>
+            <span class="post-date" title="2025-11-30 20:49:58">2025/11/30</span>
+        </a>
+        
+        
+        <a  class="All 计算机 硬件 "
+           href="/2025/11/30/%E4%BA%A4%E4%BA%92%E5%BC%8F%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E7%BB%93%E6%9E%84%E5%9B%BE%E8%A1%A8/"
+           data-tag="计算机"
+           data-author="" >
+            <span class="post-title" title="交互式计算机（CPU）组成结构图表">交互式计算机（CPU）组成结构图表</span>
+            <span class="post-date" title="2025-11-30 20:09:05">2025/11/30</span>
+        </a>
+        
+        
+        <a  class="All 计算机 前端 "
+           href="/2025/11/30/%E5%8A%A8%E6%80%81%E8%B0%83%E6%95%B4%E5%B1%82%E7%BA%A7%E5%B9%B6%E5%8F%AF%E4%BA%A4%E4%BA%92%E7%9A%84Mermaid%E7%BC%96%E8%BE%91%E5%99%A8%EF%BC%88%E9%9D%99%E6%80%81%E5%8D%95%E9%A1%B5%EF%BC%89/"
+           data-tag="Mermaid"
+           data-author="" >
+            <span class="post-title" title="针对flowchart动态调整层级并可交互的Mermaid编辑器（静态单页）">针对flowchart动态调整层级并可交互的Mermaid编辑器（静态单页）</span>
+            <span class="post-date" title="2025-11-30 16:38:11">2025/11/30</span>
+        </a>
+        
+        
+        <a  class="All 日志 "
+           href="/2025/11/26/%E6%97%A5%E5%BF%97-9/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="日志">日志</span>
+            <span class="post-date" title="2025-11-26 20:59:40">2025/11/26</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2025/11/18/Unity%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BA%E4%B8%80%E5%8F%B0%E5%9B%BE%E7%81%B5%E5%AE%8C%E5%A4%87%E8%AE%A1%E7%AE%97%E6%9C%BA/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Unity从零搭建一台图灵完备计算机">Unity从零搭建一台图灵完备计算机</span>
+            <span class="post-date" title="2025-11-18 10:58:51">2025/11/18</span>
+        </a>
+        
+        
+        <a  class="All 笔记 "
+           href="/2025/11/17/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E7%AC%94%E8%AE%B0/"
+           data-tag="计算机"
+           data-author="" >
+            <span class="post-title" title="计算机组成原理笔记">计算机组成原理笔记</span>
+            <span class="post-date" title="2025-11-17 15:36:06">2025/11/17</span>
+        </a>
+        
+        
+        <a  class="All 笔记 "
+           href="/2025/11/12/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91%E7%94%B5%E8%B7%AF/"
+           data-tag="电路"
+           data-author="" >
+            <span class="post-title" title="数字逻辑电路笔记">数字逻辑电路笔记</span>
+            <span class="post-date" title="2025-11-12 11:43:56">2025/11/12</span>
+        </a>
+        
+        
+        <a  class="All 笔记 "
+           href="/2025/11/11/C%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E7%AC%94%E8%AE%B0/"
+           data-tag="编程"
+           data-author="" >
+            <span class="post-title" title="C程序设计笔记">C程序设计笔记</span>
+            <span class="post-date" title="2025-11-11 10:12:23">2025/11/11</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2025/11/03/%E4%BA%BA%E7%B1%BB%E6%8B%AF%E6%95%91%E8%AE%A1%E5%88%92/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="人类拯救计划">人类拯救计划</span>
+            <span class="post-date" title="2025-11-03 11:41:46">2025/11/03</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2025/11/03/%E6%97%A5%E5%BF%97-8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="日志">日志</span>
+            <span class="post-date" title="2025-11-03 11:26:31">2025/11/03</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2025/10/12/%E9%87%8F%E5%8C%96%E9%A1%B9%E7%9B%AE%E6%97%A5%E5%BF%97/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="量化项目日志">量化项目日志</span>
+            <span class="post-date" title="2025-10-12 16:32:59">2025/10/12</span>
+        </a>
+        
+        
+        <a  class="All 金融 "
+           href="/2025/10/11/%E9%87%8F%E5%8C%96%E5%B7%A5%E4%BD%9C%E5%AE%89%E6%8E%92/"
+           data-tag="量化"
+           data-author="" >
+            <span class="post-title" title="量化工作安排">量化工作安排</span>
+            <span class="post-date" title="2025-10-11 18:03:38">2025/10/11</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2025/10/10/%E9%AB%98%E6%94%B6%E7%9B%8A%E8%B5%B0%E5%8A%BF%E5%BD%A2%E6%80%81%E6%94%B6%E9%9B%86/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="高收益走势形态收集">高收益走势形态收集</span>
+            <span class="post-date" title="2025-10-10 21:10:13">2025/10/10</span>
+        </a>
+        
+        
+        <a  class="All 金融 "
+           href="/2025/10/10/%E6%9C%89%E5%85%B3%E5%9B%A0%E5%AD%90%E7%9A%84%E5%88%9D%E8%AE%A4%E8%AF%86/"
+           data-tag="量化"
+           data-author="" >
+            <span class="post-title" title="有关策略回测和因子的初认识">有关策略回测和因子的初认识</span>
+            <span class="post-date" title="2025-10-10 17:27:26">2025/10/10</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2025/10/09/%E6%9C%89%E5%85%B3%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93%E7%9A%84%E8%A7%84%E5%88%92/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="有关量化交易的规划">有关量化交易的规划</span>
+            <span class="post-date" title="2025-10-09 15:48:18">2025/10/09</span>
+        </a>
+        
+        
+        <a  class="All 金融 "
+           href="/2025/09/19/%E8%82%A1%E5%B8%82%E9%87%8F%E4%BB%B7%E5%85%B3%E7%B3%BB/"
+           data-tag="股市"
+           data-author="" >
+            <span class="post-title" title="股市量价关系">股市量价关系</span>
+            <span class="post-date" title="2025-09-19 20:03:26">2025/09/19</span>
+        </a>
+        
+        
+        <a  class="All 金融 "
+           href="/2025/09/16/%E5%9F%BA%E4%BA%8E%E5%BD%A2%E6%80%81%E5%AD%A6%E5%AF%B9%E4%B8%8A%E8%AF%81%E6%8C%87%E6%95%B0%E8%B5%B0%E5%90%91%E9%A2%84%E6%B5%8B/"
+           data-tag="股市"
+           data-author="" >
+            <span class="post-title" title="基于形态学对上证指数走向预测">基于形态学对上证指数走向预测</span>
+            <span class="post-date" title="2025-09-16 13:47:26">2025/09/16</span>
+        </a>
+        
+        
+        <a  class="All 金融 "
+           href="/2025/09/15/%E6%9C%9F%E8%B4%A7%E4%BA%A4%E6%98%93%E7%BB%83%E4%B9%A0%E7%AC%94%E8%AE%B0/"
+           data-tag="-- 期货 -- 笔记"
+           data-author="" >
+            <span class="post-title" title="期货交易练习笔记">期货交易练习笔记</span>
+            <span class="post-date" title="2025-09-15 20:01:25">2025/09/15</span>
+        </a>
+        
+        
+        <a  class="All 金融 "
+           href="/2025/09/14/%E6%9C%9F%E8%B4%A7%E6%8A%80%E6%9C%AF%E4%BA%A4%E6%98%93%E7%B3%BB%E7%BB%9F/"
+           data-tag="期货"
+           data-author="" >
+            <span class="post-title" title="期货技术交易系统">期货技术交易系统</span>
+            <span class="post-date" title="2025-09-14 20:39:08">2025/09/14</span>
+        </a>
+        
+        
+        <a  class="All 金融 "
+           href="/2025/09/12/%E6%9C%9F%E8%B4%A7%E5%B8%82%E5%9C%BA%E4%BA%A4%E6%98%93/"
+           data-tag="投资"
+           data-author="" >
+            <span class="post-title" title="期货市场交易">期货市场交易</span>
+            <span class="post-date" title="2025-09-12 20:35:14">2025/09/12</span>
+        </a>
+        
+        
+        <a  class="All 旅行 "
+           href="/2025/08/19/%E6%97%85%E7%A8%8B%E6%80%BB%E7%BB%93/"
+           data-tag="旅行"
+           data-author="" >
+            <span class="post-title" title="旅程总结">旅程总结</span>
+            <span class="post-date" title="2025-08-19 15:16:40">2025/08/19</span>
+        </a>
+        
+        
+        <a  class="All 旅行 "
+           href="/2025/08/18/%E5%85%B6%E4%BB%96%E5%9F%8E%E5%B8%82%E7%99%BD%E6%8F%8F/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="其他城市白描">其他城市白描</span>
+            <span class="post-date" title="2025-08-18 15:32:47">2025/08/18</span>
+        </a>
+        
+        
+        <a  class="All 旅行 "
+           href="/2025/08/14/%E8%A1%8C%E8%87%B3%E6%B9%96%E5%8C%97/"
+           data-tag="旅行"
+           data-author="" >
+            <span class="post-title" title="行至湖北">行至湖北</span>
+            <span class="post-date" title="2025-08-14 00:03:11">2025/08/14</span>
+        </a>
+        
+        
+        <a  class="All 旅行 "
+           href="/2025/08/01/%E8%A1%8C%E8%87%B3%E6%88%90%E9%83%BD/"
+           data-tag="旅行"
+           data-author="" >
+            <span class="post-title" title="行至川渝">行至川渝</span>
+            <span class="post-date" title="2025-08-01 22:38:50">2025/08/01</span>
+        </a>
+        
+        
+        <a  class="All 旅行 "
+           href="/2025/07/27/%E8%A1%8C%E8%87%B3%E4%B9%9D%E5%AF%A8%E6%B2%9F/"
+           data-tag="旅行"
+           data-author="" >
+            <span class="post-title" title="行至九寨沟">行至九寨沟</span>
+            <span class="post-date" title="2025-07-27 20:50:04">2025/07/27</span>
+        </a>
+        
+        
+        <a  class="All 旅行 "
+           href="/2025/07/26/%E8%A1%8C%E8%87%B3%E9%95%BF%E5%AE%89%E5%9F%8E/"
+           data-tag="旅行"
+           data-author="" >
+            <span class="post-title" title="行至陕西">行至陕西</span>
+            <span class="post-date" title="2025-07-26 20:17:32">2025/07/26</span>
+        </a>
+        
+        
+        <a  class="All 旅行 "
+           href="/2025/07/23/%E8%A1%8C%E8%87%B3%E6%B4%9B%E9%98%B3/"
+           data-tag="旅行"
+           data-author="" >
+            <span class="post-title" title="行至洛阳">行至洛阳</span>
+            <span class="post-date" title="2025-07-23 22:19:48">2025/07/23</span>
+        </a>
+        
+        
+        <a  class="All 旅行 "
+           href="/2025/07/22/%E8%A1%8C%E8%87%B3%E5%B0%91%E6%9E%97%E5%AF%BA/"
+           data-tag="旅行"
+           data-author="" >
+            <span class="post-title" title="行至少林寺">行至少林寺</span>
+            <span class="post-date" title="2025-07-22 23:44:12">2025/07/22</span>
+        </a>
+        
+        
+        <a  class="All 旅行 "
+           href="/2025/07/22/%E8%A1%8C%E8%87%B3%E5%BC%80%E5%B0%81/"
+           data-tag="旅行"
+           data-author="" >
+            <span class="post-title" title="行至开封">行至开封</span>
+            <span class="post-date" title="2025-07-22 21:27:36">2025/07/22</span>
+        </a>
+        
+        
+        <a  class="All 旅行 "
+           href="/2025/07/21/%E8%A1%8C%E8%87%B3%E9%83%91%E5%B7%9E/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="行至郑州">行至郑州</span>
+            <span class="post-date" title="2025-07-21 15:01:21">2025/07/21</span>
+        </a>
+        
+        
+        <a  class="All 旅行 "
+           href="/2025/07/21/%E5%91%A8%E6%B8%B8%E4%B8%AD%E5%9B%BD%EF%BC%8C%E5%87%BA%E5%8F%91/"
+           data-tag="旅行"
+           data-author="" >
+            <span class="post-title" title="周游中国，出发">周游中国，出发</span>
+            <span class="post-date" title="2025-07-21 14:20:13">2025/07/21</span>
+        </a>
+        
+        
+        <a  class="All 金融 "
+           href="/2025/07/19/%E9%81%93%E6%B0%8F%E7%90%86%E8%AE%BA/"
+           data-tag="技术分析"
+           data-author="" >
+            <span class="post-title" title="道氏理论">道氏理论</span>
+            <span class="post-date" title="2025-07-19 14:38:33">2025/07/19</span>
+        </a>
+        
+        
+        <a  class="All 金融 "
+           href="/2025/07/19/%E8%A1%8C%E4%B8%BA%E9%87%91%E8%9E%8D%E4%B8%8E%E6%8A%95%E8%B5%84%E5%BF%83%E7%90%86%E5%AD%A6%E7%AC%94%E8%AE%B0/"
+           data-tag="心理学"
+           data-author="" >
+            <span class="post-title" title="行为金融与投资心理学笔记">行为金融与投资心理学笔记</span>
+            <span class="post-date" title="2025-07-19 10:55:54">2025/07/19</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2025/06/15/%E6%9C%AA%E6%9D%A5%E7%9A%84%E9%80%89%E6%8B%A9/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="未来的选择">未来的选择</span>
+            <span class="post-date" title="2025-06-15 20:43:27">2025/06/15</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2025/06/10/%E3%80%82/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="、">、</span>
+            <span class="post-date" title="2025-06-10 15:45:02">2025/06/10</span>
+        </a>
+        
+        
+        <a  class="All 游戏 "
+           href="/2025/05/02/%E9%80%86%E5%90%91%E5%8A%A8%E5%8A%9B%E5%AD%A6%E4%BD%BF%E6%89%8B%E9%83%A8%E8%B7%9F%E9%9A%8F%E9%BC%A0%E6%A0%87%E7%A7%BB%E5%8A%A8/"
+           data-tag="unity"
+           data-author="" >
+            <span class="post-title" title="逆向动力学使手部跟随鼠标移动">逆向动力学使手部跟随鼠标移动</span>
+            <span class="post-date" title="2025-05-02 21:50:39">2025/05/02</span>
+        </a>
+        
+        
+        <a  class="All 日志 "
+           href="/2025/04/25/%E6%97%A5%E5%BF%97-7/"
+           data-tag="unity,游戏"
+           data-author="" >
+            <span class="post-title" title="日志">日志</span>
+            <span class="post-date" title="2025-04-25 22:25:18">2025/04/25</span>
+        </a>
+        
+        
+        <a  class="All 游戏 "
+           href="/2025/04/25/%E5%A4%9A%E4%B8%96%E7%95%8C%E3%80%81%E5%AD%90%E5%9C%BA%E6%99%AF%E3%80%81%E9%A2%84%E5%88%B6%E4%BD%93%E7%AE%A1%E7%90%86/"
+           data-tag="unity"
+           data-author="" >
+            <span class="post-title" title="多世界、子场景、预制体管理">多世界、子场景、预制体管理</span>
+            <span class="post-date" title="2025-04-25 17:44:27">2025/04/25</span>
+        </a>
+        
+        
+        <a  class="All 游戏 "
+           href="/2025/04/21/%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AF%AD%E6%B3%95%E4%B9%A6%E5%86%99%E8%A7%84%E8%8C%83/"
+           data-tag="unity"
+           data-author="" >
+            <span class="post-title" title="自定义语法书写规范">自定义语法书写规范</span>
+            <span class="post-date" title="2025-04-21 08:55:01">2025/04/21</span>
+        </a>
+        
+        
+        <a  class="All 游戏 "
+           href="/2025/04/21/%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AF%AD%E6%B3%95%E7%BC%96%E8%AF%91%E5%99%A8%E5%AE%9E%E7%8E%B0%E9%80%BB%E8%BE%91/"
+           data-tag="unity"
+           data-author="" >
+            <span class="post-title" title="unity自定义语法编译器最终实现逻辑">unity自定义语法编译器最终实现逻辑</span>
+            <span class="post-date" title="2025-04-21 08:45:52">2025/04/21</span>
+        </a>
+        
+        
+        <a  class="All 游戏 "
+           href="/2025/04/21/unity%E6%B8%B8%E6%88%8F%E5%86%85%E9%83%A8%E5%A4%9A%E4%B8%96%E7%95%8C%E7%AE%A1%E7%90%86%E9%80%BB%E8%BE%91/"
+           data-tag="unity"
+           data-author="" >
+            <span class="post-title" title="unity游戏内部多世界管理逻辑">unity游戏内部多世界管理逻辑</span>
+            <span class="post-date" title="2025-04-21 08:40:08">2025/04/21</span>
+        </a>
+        
+        
+        <a  class="All 游戏 "
+           href="/2025/04/09/2025-4-9/"
+           data-tag="日志"
+           data-author="" >
+            <span class="post-title" title="可编程游戏的设想与起步">可编程游戏的设想与起步</span>
+            <span class="post-date" title="2025-04-09 14:52:22">2025/04/09</span>
+        </a>
+        
+        
+        <a  class="All 计算机 编程 "
+           href="/2025/03/25/Numpy%E5%BA%93%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
+           data-tag="python,深度学习"
+           data-author="" >
+            <span class="post-title" title="Numpy库学习笔记">Numpy库学习笔记</span>
+            <span class="post-date" title="2025-03-25 15:34:04">2025/03/25</span>
+        </a>
+        
+        
+        <a  class="All 计算机 AI "
+           href="/2025/03/23/%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%A4%B1%E8%B4%A5/"
+           data-tag="日志,tts"
+           data-author="" >
+            <span class="post-title" title="记一次失败">记一次失败</span>
+            <span class="post-date" title="2025-03-23 14:46:38">2025/03/23</span>
+        </a>
+        
+        
+        <a  class="All 日志 "
+           href="/2025/03/19/%E6%97%A5%E5%BF%97-6/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="日志">日志</span>
+            <span class="post-date" title="2025-03-19 22:25:05">2025/03/19</span>
+        </a>
+        
+        
+        <a  class="All 计算机 软件 "
+           href="/2025/03/19/%E6%A1%8C%E9%9D%A2%E8%99%9A%E6%8B%9F%E5%BD%A2%E8%B1%A1/"
+           data-tag="Alice"
+           data-author="" >
+            <span class="post-title" title="桌面虚拟形象">桌面虚拟形象</span>
+            <span class="post-date" title="2025-03-19 14:13:27">2025/03/19</span>
+        </a>
+        
+        
+        <a  class="All 计算机 编程 "
+           href="/2025/03/19/%E4%B8%AD%E9%97%B4%E5%B1%82%E6%80%9D%E6%83%B3%E4%BC%98%E5%8C%96%E4%BB%BB%E5%8A%A1%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="中间层思想优化任务执行流程">中间层思想优化任务执行流程</span>
+            <span class="post-date" title="2025-03-19 12:26:53">2025/03/19</span>
+        </a>
+        
+        
+        <a  class="All 计算机 AI "
+           href="/2025/03/15/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/"
+           data-tag="笔记,深度学习"
+           data-author="" >
+            <span class="post-title" title="深度学习编程笔记">深度学习编程笔记</span>
+            <span class="post-date" title="2025-03-15 20:41:12">2025/03/15</span>
+        </a>
+        
+        
+        <a  class="All 日志 "
+           href="/2025/03/15/%E6%97%A5%E5%BF%97-5/"
+           data-tag="日志,Alice"
+           data-author="" >
+            <span class="post-title" title="日志">日志</span>
+            <span class="post-date" title="2025-03-15 16:54:36">2025/03/15</span>
+        </a>
+        
+        
+        <a  class="All 日志 "
+           href="/2025/03/12/%E6%97%A5%E5%BF%97-4/"
+           data-tag="日志"
+           data-author="" >
+            <span class="post-title" title="日志">日志</span>
+            <span class="post-date" title="2025-03-12 12:35:18">2025/03/12</span>
+        </a>
+        
+        
+        <a  class="All 计算机 AI "
+           href="/2025/03/10/AI%E5%9B%BE%E7%94%9F%E5%9B%BE%E3%80%81%E5%9B%BE%E7%94%9F%E8%A7%86%E9%A2%91%E9%89%B4%E8%B5%8F/"
+           data-tag="AI"
+           data-author="" >
+            <span class="post-title" title="AI图生图、图生视频鉴赏">AI图生图、图生视频鉴赏</span>
+            <span class="post-date" title="2025-03-10 13:19:34">2025/03/10</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2025/03/06/Alice%E5%BD%A2%E8%B1%A1%E7%BB%98%E5%88%B6/"
+           data-tag="Alice"
+           data-author="" >
+            <span class="post-title" title="Alice形象绘制">Alice形象绘制</span>
+            <span class="post-date" title="2025-03-06 17:01:14">2025/03/06</span>
+        </a>
+        
+        
+        <a  class="All 计算机 软件 "
+           href="/2025/03/04/%E6%88%91%E7%8B%AC%E7%AB%8B%E5%88%9B%E5%BB%BA%E7%9A%84%E7%AC%AC%E4%B8%80%E6%AC%BE%E6%89%8B%E6%9C%BA%E5%BA%94%E7%94%A8/"
+           data-tag="Alice,Android"
+           data-author="" >
+            <span class="post-title" title="独立制作的第一款手机应用">独立制作的第一款手机应用</span>
+            <span class="post-date" title="2025-03-04 10:53:07">2025/03/04</span>
+        </a>
+        
+        
+        <a  class="All 计算机 软件 "
+           href="/2025/03/04/%E5%AE%89%E5%8D%93%E5%BA%94%E7%94%A8%E5%86%85%E9%83%A8%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/"
+           data-tag="编程,安卓"
+           data-author="" >
+            <span class="post-title" title="安卓应用项目完整回顾">安卓应用项目完整回顾</span>
+            <span class="post-date" title="2025-03-04 10:48:31">2025/03/04</span>
+        </a>
+        
+        
+        <a  class="All 日志 "
+           href="/2025/02/27/%E6%97%A5%E5%BF%97-3/"
+           data-tag="日志"
+           data-author="" >
+            <span class="post-title" title="日志">日志</span>
+            <span class="post-date" title="2025-02-27 21:37:43">2025/02/27</span>
+        </a>
+        
+        
+        <a  class="All 计算机 Web "
+           href="/2025/02/27/%E6%B5%81%E5%BC%8F%E6%98%BE%E7%A4%BA%E5%86%85%E5%AE%B9%E7%9A%84md%E6%B8%B2%E6%9F%93/"
+           data-tag="MarkDown"
+           data-author="" >
+            <span class="post-title" title="流式显示内容的md渲染">流式显示内容的md渲染</span>
+            <span class="post-date" title="2025-02-27 18:15:35">2025/02/27</span>
+        </a>
+        
+        
+        <a  class="All 计算机 "
+           href="/2025/02/27/json%E6%A0%BC%E5%BC%8F%E7%AC%94%E8%AE%B0/"
+           data-tag="json,数据结构"
+           data-author="" >
+            <span class="post-title" title="json格式笔记">json格式笔记</span>
+            <span class="post-date" title="2025-02-27 14:04:59">2025/02/27</span>
+        </a>
+        
+        
+        <a  class="All 计算机 AI "
+           href="/2025/02/25/%E8%BD%BB%E9%87%8F%E9%AB%98%E6%95%88%E8%AF%AD%E4%B9%89%E6%A3%80%E7%B4%A2%E6%90%AD%E9%85%8D%E5%85%B3%E9%94%AE%E8%AF%8D%E8%A7%A3%E9%94%81AI%E9%95%BF%E6%9C%9F%E8%AE%B0%E5%BF%86/"
+           data-tag="Alice,语义检索,长期记忆"
+           data-author="" >
+            <span class="post-title" title="如何解锁AI长期记忆">如何解锁AI长期记忆</span>
+            <span class="post-date" title="2025-02-25 22:43:35">2025/02/25</span>
+        </a>
+        
+        
+        <a  class="All 日志 "
+           href="/2025/02/25/%E6%97%A5%E5%BF%97-2/"
+           data-tag="日志"
+           data-author="" >
+            <span class="post-title" title="日志">日志</span>
+            <span class="post-date" title="2025-02-25 18:43:48">2025/02/25</span>
+        </a>
+        
+        
+        <a  class="All 计算机 软件 "
+           href="/2025/02/25/AndroidStudio%E8%B0%83%E8%AF%95%E7%BA%A0%E9%94%99/"
+           data-tag="AndroidStudio"
+           data-author="" >
+            <span class="post-title" title="Android Studio调试纠错">Android Studio调试纠错</span>
+            <span class="post-date" title="2025-02-25 18:37:29">2025/02/25</span>
+        </a>
+        
+        
+        <a  class="All 计算机 软件 "
+           href="/2025/02/24/AndroidStudio%E9%A1%B9%E7%9B%AE%E5%90%8C%E6%AD%A5%E5%A4%B1%E8%B4%A5%E6%88%96gradle%E6%8F%92%E4%BB%B6%E5%87%BA%E7%8E%B0%E9%97%AE%E9%A2%98/"
+           data-tag="笔记,Android Studio"
+           data-author="" >
+            <span class="post-title" title="AndroidStudio项目安装中遇到的问题合集">AndroidStudio项目安装中遇到的问题合集</span>
+            <span class="post-date" title="2025-02-24 20:03:49">2025/02/24</span>
+        </a>
+        
+        
+        <a  class="All 计算机 软件 "
+           href="/2025/02/23/%E6%89%8B%E6%9C%BA%E5%BA%94%E7%94%A8%E7%9A%84%E5%88%9B%E5%BB%BA%E5%92%8C%E6%A1%86%E6%9E%B6/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="手机应用的创建从Android Studio到放弃">手机应用的创建从Android Studio到放弃</span>
+            <span class="post-date" title="2025-02-23 20:11:24">2025/02/23</span>
+        </a>
+        
+        
+        <a  class="All 计算机 AI "
+           href="/2025/02/23/AI%E5%93%8D%E5%BA%94%E4%B8%ADfunction-calling%E7%9A%84%E4%BD%BF%E7%94%A8/"
+           data-tag="AI,后端"
+           data-author="" >
+            <span class="post-title" title="AI响应中function_calling的使用">AI响应中function_calling的使用</span>
+            <span class="post-date" title="2025-02-23 16:50:37">2025/02/23</span>
+        </a>
+        
+        
+        <a  class="All 日志 "
+           href="/2025/02/19/%E6%97%A5%E5%BF%97-1/"
+           data-tag="Alice"
+           data-author="" >
+            <span class="post-title" title="日志">日志</span>
+            <span class="post-date" title="2025-02-19 23:23:49">2025/02/19</span>
+        </a>
+        
+        
+        <a  class="All 计算机 AI "
+           href="/2025/02/16/%E8%BF%91%E6%9C%9F%E5%8A%A8%E6%80%81%E6%95%B4%E7%90%86/"
+           data-tag="AI,自动化"
+           data-author="" >
+            <span class="post-title" title="近期动态整理">近期动态整理</span>
+            <span class="post-date" title="2025-02-16 17:28:50">2025/02/16</span>
+        </a>
+        
+        
+        <a  class="All 计算机 软件 "
+           href="/2025/02/15/%E9%95%9C%E5%83%8F%E4%B8%8B%E8%BD%BD%E9%80%94%E5%BE%84%E5%92%8C%E5%BA%94%E7%94%A8/"
+           data-tag="镜像下载"
+           data-author="" >
+            <span class="post-title" title="镜像下载途径和应用">镜像下载途径和应用</span>
+            <span class="post-date" title="2025-02-15 16:31:03">2025/02/15</span>
+        </a>
+        
+        
+        <a  class="All 计算机 Web "
+           href="/2025/02/13/m3u8%E6%A0%BC%E5%BC%8F%E8%A7%86%E9%A2%91%E5%9C%A8%E7%BA%BF%E6%92%AD%E6%94%BE/"
+           data-tag="视频"
+           data-author="" >
+            <span class="post-title" title="m3u8格式视频在线播放">m3u8格式视频在线播放</span>
+            <span class="post-date" title="2025-02-13 20:49:24">2025/02/13</span>
+        </a>
+        
+        
+        <a  class="All 计算机 Web "
+           href="/2025/02/12/%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%93%E7%9A%84%E9%82%A3%E4%BA%9B%E4%B8%93%E6%9C%89%E5%90%8D%E8%AF%8D%E9%83%BD%E6%98%AF%E7%94%A8%E6%9D%A5%E5%B9%B2%E4%BB%80%E4%B9%88%E7%9A%84/"
+           data-tag="网络"
+           data-author="" >
+            <span class="post-title" title="网络传输的那些专有名词都是用来干什么的">网络传输的那些专有名词都是用来干什么的</span>
+            <span class="post-date" title="2025-02-12 13:21:16">2025/02/12</span>
+        </a>
+        
+        
+        <a  class="All 计算机 软件 "
+           href="/2025/02/12/Docker%E5%AE%89%E8%A3%85%E5%B0%9D%E8%AF%95/"
+           data-tag="Docker"
+           data-author="" >
+            <span class="post-title" title="Docker安装尝试">Docker安装尝试</span>
+            <span class="post-date" title="2025-02-12 12:40:25">2025/02/12</span>
+        </a>
+        
+        
+        <a  class="All 计算机 硬件 "
+           href="/2025/02/09/%E6%97%A0%E5%86%85%E7%BD%AE%E7%BD%91%E5%8D%A1%E7%9A%84%E4%B8%BB%E6%9C%BA%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E7%BD%91%E7%BB%9C%E8%BF%9E%E6%8E%A5/"
+           data-tag="网络,主机"
+           data-author="" >
+            <span class="post-title" title="无内置网卡的主机如何进行网络连接">无内置网卡的主机如何进行网络连接</span>
+            <span class="post-date" title="2025-02-09 21:31:15">2025/02/09</span>
+        </a>
+        
+        
+        <a  class="All 生活 "
+           href="/2025/02/06/%E6%97%A5%E5%BF%97/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="日记">日记</span>
+            <span class="post-date" title="2025-02-06 00:10:53">2025/02/06</span>
+        </a>
+        
+        
+        <a  class="All 计算机 Web "
+           href="/2025/01/31/node%E4%B8%AD%E7%9A%84express%E6%A1%86%E6%9E%B6/"
+           data-tag="Web,框架"
+           data-author="" >
+            <span class="post-title" title="node中的express框架">node中的express框架</span>
+            <span class="post-date" title="2025-01-31 18:28:27">2025/01/31</span>
+        </a>
+        
+        
+        <a  class="All 计算机 Web "
+           href="/2025/01/30/%E5%89%8D%E5%90%8E%E7%AB%AF%E8%AF%B7%E6%B1%82%E7%9A%84%E5%8F%8C%E5%B1%82%E5%A4%84%E7%90%86/"
+           data-tag="后端,前端"
+           data-author="" >
+            <span class="post-title" title="前后端请求的双层处理:如何通过JavaScript实现简单通信">前后端请求的双层处理:如何通过JavaScript实现简单通信</span>
+            <span class="post-date" title="2025-01-30 01:17:49">2025/01/30</span>
+        </a>
+        
+        
+        <a  class="All 计算机 AI "
+           href="/2025/01/30/%E8%AE%B0deepseekAPI%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/"
+           data-tag="AI,deepseek"
+           data-author="" >
+            <span class="post-title" title="记deepseekAPI使用方法">记deepseekAPI使用方法</span>
+            <span class="post-date" title="2025-01-30 00:11:41">2025/01/30</span>
+        </a>
+        
+        
+        <a  class="All 计算机 "
+           href="/2025/01/17/%E5%B0%9D%E8%AF%95%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E4%B8%93%E5%B1%9E%E7%9A%84%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/"
+           data-tag="网络,云服务器"
+           data-author="" >
+            <span class="post-title" title="创建自己的云服务器">创建自己的云服务器</span>
+            <span class="post-date" title="2025-01-17 23:33:01">2025/01/17</span>
+        </a>
+        
+        
+        <a  class="All 日志 "
+           href="/2025/01/07/%E6%97%A5%E5%BF%97%EF%BC%8814%EF%BC%89/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="日志（14）">日志（14）</span>
+            <span class="post-date" title="2025-01-07 14:38:07">2025/01/07</span>
+        </a>
+        
+        
+        <a  class="All 生活 "
+           href="/2025/01/03/%E4%BE%BF%E7%AC%BA/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="随笔">随笔</span>
+            <span class="post-date" title="2025-01-03 17:22:01">2025/01/03</span>
+        </a>
+        
+        
+        <a  class="All 日志 "
+           href="/2024/12/31/%E6%97%A5%E5%BF%97%EF%BC%8813%EF%BC%89/"
+           data-tag="博客"
+           data-author="" >
+            <span class="post-title" title="日志（13）">日志（13）</span>
+            <span class="post-date" title="2024-12-31 22:47:05">2024/12/31</span>
+        </a>
+        
+        
+        <a  class="All 日志 "
+           href="/2024/12/31/%E6%97%A5%E5%BF%97%EF%BC%8812%EF%BC%89/"
+           data-tag="日志"
+           data-author="" >
+            <span class="post-title" title="日志（12）">日志（12）</span>
+            <span class="post-date" title="2024-12-31 14:00:05">2024/12/31</span>
+        </a>
+        
+        
+        <a  class="All 计算机 前端 "
+           href="/2024/12/30/css%E6%A0%B7%E5%BC%8F%E4%B9%A6%E5%86%99%E7%AC%94%E8%AE%B0/"
+           data-tag="前端,css"
+           data-author="" >
+            <span class="post-title" title="css样式书写笔记">css样式书写笔记</span>
+            <span class="post-date" title="2024-12-30 15:38:32">2024/12/30</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2024/12/30/powershell%E8%87%AA%E5%AE%9A%E4%B9%89%E5%91%BD%E4%BB%A4%E5%92%8C%E8%AF%AD%E6%B3%95/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="powershell自定义命令和语法">powershell自定义命令和语法</span>
+            <span class="post-date" title="2024-12-30 12:28:17">2024/12/30</span>
+        </a>
+        
+        
+        <a  class="All 生活 "
+           href="/2024/12/30/post/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="随笔">随笔</span>
+            <span class="post-date" title="2024-12-30 09:28:01">2024/12/30</span>
+        </a>
+        
+        
+        <a  class="All 生活 "
+           href="/2024/12/28/%E8%80%83%E8%AF%95%E5%91%A8%E9%9A%8F%E7%AC%94/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="考试周随笔">考试周随笔</span>
+            <span class="post-date" title="2024-12-28 22:08:45">2024/12/28</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2024/12/27/%E6%97%A5%E5%BF%97%EF%BC%8811%EF%BC%89/"
+           data-tag="ai"
+           data-author="" >
+            <span class="post-title" title="日志（11）">日志（11）</span>
+            <span class="post-date" title="2024-12-27 19:13:35">2024/12/27</span>
+        </a>
+        
+        
+        <a  class="All 计算机 Web "
+           href="/2024/12/25/fetch%E8%AF%B7%E6%B1%82%E6%A0%BC%E5%BC%8F%E5%8F%8A%E4%B8%AD%E6%96%AD%E6%96%B9%E6%B3%95/"
+           data-tag="笔记,Web"
+           data-author="" >
+            <span class="post-title" title="fetch请求格式及中断方法">fetch请求格式及中断方法</span>
+            <span class="post-date" title="2024-12-25 22:11:11">2024/12/25</span>
+        </a>
+        
+        
+        <a  class="All 计算机 前端 "
+           href="/2024/12/25/electron%E6%A1%86%E6%9E%B6/"
+           data-tag="编程,框架"
+           data-author="" >
+            <span class="post-title" title="electron框架">electron框架</span>
+            <span class="post-date" title="2024-12-25 17:07:11">2024/12/25</span>
+        </a>
+        
+        
+        <a  class="All 计算机 AI "
+           href="/2024/12/23/%E5%A6%82%E4%BD%95%E6%8F%90%E5%8D%87ai%E6%9D%83%E9%99%90/"
+           data-tag="AI"
+           data-author="" >
+            <span class="post-title" title="尝试在本地主机提升AI权限">尝试在本地主机提升AI权限</span>
+            <span class="post-date" title="2024-12-23 17:25:00">2024/12/23</span>
+        </a>
+        
+        
+        <a  class="All 日志 "
+           href="/2024/12/22/%E6%97%A5%E5%BF%97%EF%BC%8810%EF%BC%89/"
+           data-tag="博客"
+           data-author="" >
+            <span class="post-title" title="日志（10）">日志（10）</span>
+            <span class="post-date" title="2024-12-22 22:44:40">2024/12/22</span>
+        </a>
+        
+        
+        <a  class="All 计算机 操作系统 "
+           href="/2024/12/22/linux%E8%84%9A%E6%9C%AC%E4%B9%A6%E5%86%99/"
+           data-tag="笔记,linux,shell"
+           data-author="" >
+            <span class="post-title" title="linux系统shell脚本书写">linux系统shell脚本书写</span>
+            <span class="post-date" title="2024-12-22 20:22:36">2024/12/22</span>
+        </a>
+        
+        
+        <a  class="All 计算机 渗透 "
+           href="/2024/12/22/%E8%AE%B0nc%E5%B7%A5%E5%85%B7%E5%87%A0%E7%A7%8D%E7%94%A8%E6%B3%95/"
+           data-tag="笔记,渗透"
+           data-author="" >
+            <span class="post-title" title="记nc工具几种用法">记nc工具几种用法</span>
+            <span class="post-date" title="2024-12-22 19:52:28">2024/12/22</span>
+        </a>
+        
+        
+        <a  class="All 计算机 渗透 "
+           href="/2024/12/20/Earthworm-ProxyChains%E5%AE%9E%E7%8E%B0%E5%86%85%E7%BD%91%E4%BB%A3%E7%90%86/"
+           data-tag="代理,渗透"
+           data-author="" >
+            <span class="post-title" title="Earthworm+ProxyChains实现内网代理">Earthworm+ProxyChains实现内网代理</span>
+            <span class="post-date" title="2024-12-20 19:35:18">2024/12/20</span>
+        </a>
+        
+        
+        <a  class="All 计算机 操作系统 "
+           href="/2024/12/19/%E5%88%9B%E5%BB%BA%E7%B3%BB%E7%BB%9F%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8%E7%A8%8B%E5%BA%8F/"
+           data-tag="日志,操作系统"
+           data-author="" >
+            <span class="post-title" title="创建系统开机自启动程序">创建系统开机自启动程序</span>
+            <span class="post-date" title="2024-12-19 18:10:55">2024/12/19</span>
+        </a>
+        
+        
+        <a  class="All 计算机 AI "
+           href="/2024/12/19/Ai%E7%9A%84%E6%B5%81%E5%BC%8F%E8%BF%94%E5%9B%9E%E5%8F%8A%E5%A4%84%E7%90%86/"
+           data-tag="AI"
+           data-author="" >
+            <span class="post-title" title="Ai的流式返回及结果处理">Ai的流式返回及结果处理</span>
+            <span class="post-date" title="2024-12-19 18:10:17">2024/12/19</span>
+        </a>
+        
+        
+        <a  class="All 计算机 AI "
+           href="/2024/12/19/%E5%A6%82%E4%BD%95%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E5%88%9B%E5%BB%BA%E8%87%AA%E5%AE%9A%E4%B9%89ai%E5%8F%8Aapi%E6%8E%A5%E5%8F%A3/"
+           data-tag="AI,api,一篇流"
+           data-author="" >
+            <span class="post-title" title="如何从零开始创建自定义ai及api接口（梦想版）">如何从零开始创建自定义ai及api接口（梦想版）</span>
+            <span class="post-date" title="2024-12-19 18:09:43">2024/12/19</span>
+        </a>
+        
+        
+        <a  class="All 计算机 Web "
+           href="/2024/12/18/github%E7%BB%95%E8%BF%87%E7%A7%81%E5%AF%86%E6%89%AB%E6%8F%8F/"
+           data-tag="日志,github"
+           data-author="" >
+            <span class="post-title" title="github绕过私密扫描">github绕过私密扫描</span>
+            <span class="post-date" title="2024-12-18 13:17:38">2024/12/18</span>
+        </a>
+        
+        
+        <a  class="All 计算机 Web "
+           href="/2024/12/18/Http%E8%BF%94%E5%9B%9E%E7%8A%B6%E6%80%81%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%8E%E8%A7%A3%E5%86%B3/"
+           data-tag="笔记,Web"
+           data-author="" >
+            <span class="post-title" title="Http返回状态码分析与解决">Http返回状态码分析与解决</span>
+            <span class="post-date" title="2024-12-18 12:15:59">2024/12/18</span>
+        </a>
+        
+        
+        <a  class="All 计算机 后端 "
+           href="/2024/12/17/%E6%9C%89%E5%85%B3ip%E8%BF%BD%E8%B8%AA%E5%AD%98%E5%82%A8%E7%9A%84%E5%85%A8%E7%A8%8B%E5%9B%9E%E9%A1%BE/"
+           data-tag="日志,后端"
+           data-author="" >
+            <span class="post-title" title="有关ip数据存储的全程回顾">有关ip数据存储的全程回顾</span>
+            <span class="post-date" title="2024-12-17 21:13:53">2024/12/17</span>
+        </a>
+        
+        
+        <a  class="All 计算机 后端 "
+           href="/2024/12/17/github%E6%8B%89%E5%8F%96%E4%B8%8E%E6%8E%A8%E9%80%81%E6%93%8D%E4%BD%9C/"
+           data-tag="笔记,github"
+           data-author="" >
+            <span class="post-title" title="github拉取与推送等操作">github拉取与推送等操作</span>
+            <span class="post-date" title="2024-12-17 17:17:34">2024/12/17</span>
+        </a>
+        
+        
+        <a  class="All 日志 "
+           href="/2024/12/17/%E6%97%A5%E5%BF%97%EF%BC%889%EF%BC%89/"
+           data-tag="博客"
+           data-author="" >
+            <span class="post-title" title="日志（9）">日志（9）</span>
+            <span class="post-date" title="2024-12-17 12:58:04">2024/12/17</span>
+        </a>
+        
+        
+        <a  class="All 日志 "
+           href="/2024/12/16/%E6%97%A5%E5%BF%97%EF%BC%888%EF%BC%89/"
+           data-tag="博客,Ai"
+           data-author="" >
+            <span class="post-title" title="日志（8）">日志（8）</span>
+            <span class="post-date" title="2024-12-16 13:45:04">2024/12/16</span>
+        </a>
+        
+        
+        <a  class="All 日志 "
+           href="/2024/12/15/%E6%97%A5%E5%BF%97%EF%BC%887%EF%BC%89/"
+           data-tag="博客"
+           data-author="" >
+            <span class="post-title" title="日志（7）">日志（7）</span>
+            <span class="post-date" title="2024-12-15 13:38:31">2024/12/15</span>
+        </a>
+        
+        
+        <a  class="All 计算机 Web "
+           href="/2024/12/15/%E7%BD%91%E7%AB%99%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E6%98%BE%E7%A4%BA%E9%97%AE%E9%A2%98/"
+           data-tag="Web,博客"
+           data-author="" >
+            <span class="post-title" title="网站中的图片显示问题">网站中的图片显示问题</span>
+            <span class="post-date" title="2024-12-15 11:38:31">2024/12/15</span>
+        </a>
+        
+        
+        <a  class="All 日志 "
+           href="/2024/12/13/%E6%97%A5%E5%BF%97%EF%BC%886%EF%BC%89/"
+           data-tag="博客"
+           data-author="" >
+            <span class="post-title" title="日志（6）">日志（6）</span>
+            <span class="post-date" title="2024-12-13 20:21:17">2024/12/13</span>
+        </a>
+        
+        
+        <a  class="All 游戏 评测 "
+           href="/2024/12/13/%E5%85%B3%E4%BA%8Etga2024/"
+           data-tag="游戏"
+           data-author="" >
+            <span class="post-title" title="关于tga2024">关于tga2024</span>
+            <span class="post-date" title="2024-12-13 16:45:26">2024/12/13</span>
+        </a>
+        
+        
+        <a  class="All 日志 "
+           href="/2024/12/12/%E6%97%A5%E5%BF%97%EF%BC%885%EF%BC%89/"
+           data-tag="博客,评论"
+           data-author="" >
+            <span class="post-title" title="日志（5）评论测试">日志（5）评论测试</span>
+            <span class="post-date" title="2024-12-12 21:30:51">2024/12/12</span>
+        </a>
+        
+        
+        <a  class="All 计算机 Web "
+           href="/2024/12/12/%E7%94%B5%E8%84%91%E6%B5%8F%E8%A7%88%E6%89%8B%E6%9C%BA%E7%AB%AF%E7%BD%91%E9%A1%B5%E6%96%B9%E6%B3%95/"
+           data-tag="Web"
+           data-author="" >
+            <span class="post-title" title="电脑浏览手机端格式网页方法">电脑浏览手机端格式网页方法</span>
+            <span class="post-date" title="2024-12-12 15:35:48">2024/12/12</span>
+        </a>
+        
+        
+        <a  class="All 日志 "
+           href="/2024/12/12/%E6%97%A5%E5%BF%97%EF%BC%884%EF%BC%89/"
+           data-tag="测试,博客"
+           data-author="" >
+            <span class="post-title" title="日志（4）">日志（4）</span>
+            <span class="post-date" title="2024-12-12 14:36:06">2024/12/12</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2024/12/12/blog-theme/"
+           data-tag="笔记,前端"
+           data-author="" >
+            <span class="post-title" title="blog_theme">blog_theme</span>
+            <span class="post-date" title="2024-12-12 11:11:09">2024/12/12</span>
+        </a>
+        
+        
+        <a  class="All 计算机 "
+           href="/2024/12/12/%E6%89%A9%E5%B1%95/"
+           data-tag="扩展"
+           data-author="" >
+            <span class="post-title" title="扩展工具">扩展工具</span>
+            <span class="post-date" title="2024-12-12 10:43:31">2024/12/12</span>
+        </a>
+        
+        
+        <a  class="All 计算机 硬件 "
+           href="/2024/12/12/%E7%AB%AF%E5%8F%A3/"
+           data-tag="端口"
+           data-author="" >
+            <span class="post-title" title="端口笔记">端口笔记</span>
+            <span class="post-date" title="2024-12-12 10:18:56">2024/12/12</span>
+        </a>
+        
+        
+        <a  class="All 计算机 渗透 "
+           href="/2024/12/11/webst/"
+           data-tag="渗透笔记"
+           data-author="" >
+            <span class="post-title" title="Web渗透流程">Web渗透流程</span>
+            <span class="post-date" title="2024-12-11 21:52:23">2024/12/11</span>
+        </a>
+        
+        
+        <a  class="All 计算机 渗透 "
+           href="/2024/12/11/%E9%80%9A%E8%BF%87%E5%86%85%E7%BD%91dns%E6%AC%BA%E9%AA%97%E8%BF%9B%E8%A1%8C%E6%B5%81%E9%87%8F%E5%8A%AB%E6%8C%81/"
+           data-tag="渗透笔记"
+           data-author="" >
+            <span class="post-title" title="通过内网dns欺骗进行流量劫持">通过内网dns欺骗进行流量劫持</span>
+            <span class="post-date" title="2024-12-11 16:47:49">2024/12/11</span>
+        </a>
+        
+        
+        <a  class="All 计算机 渗透 "
+           href="/2024/12/11/%E6%B8%97%E9%80%8F%E7%AC%94%E8%AE%B0/"
+           data-tag="渗透笔记"
+           data-author="" >
+            <span class="post-title" title="渗透笔记(暂停更新)">渗透笔记(暂停更新)</span>
+            <span class="post-date" title="2024-12-11 16:32:43">2024/12/11</span>
+        </a>
+        
+        
+        <a  class="All 日志 "
+           href="/2024/12/11/%E6%97%A5%E5%BF%97%EF%BC%883%EF%BC%89/"
+           data-tag="日志"
+           data-author="" >
+            <span class="post-title" title="日志（3）">日志（3）</span>
+            <span class="post-date" title="2024-12-11 15:25:51">2024/12/11</span>
+        </a>
+        
+        
+        <a  class="All 生活 文章 "
+           href="/2024/12/11/%E6%9C%80%E5%90%8E%E7%9A%84%E5%91%8A%E5%88%AB/"
+           data-tag="小说"
+           data-author="" >
+            <span class="post-title" title="最后的告别">最后的告别</span>
+            <span class="post-date" title="2024-12-11 13:53:14">2024/12/11</span>
+        </a>
+        
+        
+        <a  class="All 笔记 "
+           href="/2024/12/11/%E5%BD%93%E4%BB%8A%E4%B8%AD%E5%9B%BD%E9%9D%92%E5%B9%B4%E9%98%B6%E5%B1%82%E5%88%86%E6%9E%90/"
+           data-tag="笔记"
+           data-author="" >
+            <span class="post-title" title="当今中国青年阶层分析">当今中国青年阶层分析</span>
+            <span class="post-date" title="2024-12-11 13:32:35">2024/12/11</span>
+        </a>
+        
+        
+        <a  class="All 笔记 "
+           href="/2024/12/11/%E4%B8%B9%E6%9F%AF/"
+           data-tag="笔记"
+           data-author="" >
+            <span class="post-title" title="丹柯">丹柯</span>
+            <span class="post-date" title="2024-12-11 11:35:50">2024/12/11</span>
+        </a>
+        
+        
+        <a  class="All 游戏 评测 "
+           href="/2024/12/11/%E3%80%8A%E6%9A%97%E5%96%BB%E5%B9%BB%E6%83%B3%E3%80%8B%E6%B8%B8%E6%88%8F%E8%AF%84%E6%B5%8B/"
+           data-tag="游戏评测"
+           data-author="" >
+            <span class="post-title" title="《暗喻幻想》游戏评测">《暗喻幻想》游戏评测</span>
+            <span class="post-date" title="2024-12-11 10:34:58">2024/12/11</span>
+        </a>
+        
+        
+        <a  class="All 笔记 "
+           href="/2024/12/11/%E5%89%AF%E5%8F%B8%E4%BB%A4%E9%A9%AC%E6%96%AF%E7%A7%91/"
+           data-tag="笔记"
+           data-author="" >
+            <span class="post-title" title="副司令马斯科">副司令马斯科</span>
+            <span class="post-date" title="2024-12-11 10:20:31">2024/12/11</span>
+        </a>
+        
+        
+        <a  class="All 日志 "
+           href="/2024/12/10/%E6%97%A5%E5%BF%97%EF%BC%882%EF%BC%89/"
+           data-tag="博客"
+           data-author="" >
+            <span class="post-title" title="日志（2）">日志（2）</span>
+            <span class="post-date" title="2024-12-10 20:23:27">2024/12/10</span>
+        </a>
+        
+        
+        <a  class="All 游戏 创作 "
+           href="/2024/12/10/%E5%88%86%E4%BA%AB%E6%88%91%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%AE%8C%E6%88%90%E5%88%9B%E4%BD%9C%E7%9A%84%E6%B8%B8%E6%88%8F/"
+           data-tag="游戏"
+           data-author="" >
+            <span class="post-title" title="分享我第一个完成创作的游戏">分享我第一个完成创作的游戏</span>
+            <span class="post-date" title="2024-12-10 18:31:38">2024/12/10</span>
+        </a>
+        
+        
+        <a  class="All 日志 "
+           href="/2024/12/10/%E5%8D%9A%E5%AE%A2%E6%97%A5%E5%BF%970/"
+           data-tag="测试"
+           data-author="" >
+            <span class="post-title" title="日志（0）">日志（0）</span>
+            <span class="post-date" title="2024-12-10 09:09:00">2024/12/10</span>
+        </a>
+        
+        
+        <a  class="All 日志 "
+           href="/2024/12/10/%E5%8D%9A%E5%AE%A2%E6%97%A5%E5%BF%97/"
+           data-tag="博客"
+           data-author="" >
+            <span class="post-title" title="日志（1）">日志（1）</span>
+            <span class="post-date" title="2024-12-10 09:02:02">2024/12/10</span>
+        </a>
+        
+        
+        <a  class="All 生活 记录 "
+           href="/2024/12/09/%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/"
+           data-tag="博客"
+           data-author="" >
+            <span class="post-title" title="第一篇文章">第一篇文章</span>
+            <span class="post-date" title="2024-12-09 22:10:00">2024/12/09</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2024/12/09/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/"
+           data-tag="测试"
+           data-author="" >
+            <span class="post-title" title="叁七的测试博客">叁七的测试博客</span>
+            <span class="post-date" title="2024-12-09 16:50:50">2024/12/09</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="Toggle full screen shortcut key s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-日志-10" class="article article-type-post" itemscope itemprop="blogPost" style="background: transparent;">
+    
+        <h1 class="article-title">日志</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color3">日志</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2025-12-03 23:28:21'>2025-12-03 23:05</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        <span>Count:454</span>
+        
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>出发点：想要一个AI驱动的自定义桌面（其实一开始是系统来着）</p>
+<p>linux不常用，在日常生活上也不够好用 windows是封闭的，有一些美化工具，但对其改造相当有限</p>
+<p>一个html自定义桌面方案：</p>
+<p>使用electron+autohotkey+shell</p>
+<p>electron：使能够用html编写桌面，全屏应用画面置于最底层，禁止获取焦点</p>
+<p>autohotkey：隐藏任务栏和win快捷键防止回到桌面</p>
+<p>shell：获取系统信息，执行指令</p>
+<p>构建了这样一个框架，components文件夹下放置多个html文件，每个文件对应一个组件，组件文件与框架完全解耦，因而可以仅通过添加html文件改造桌面</p>
+<p>对组件有一套常用的处理，如拖拽，取消文字选中，不需要每个组件内部写一遍逻辑，也可以添加标签来自定义取消</p>
+<p>整体桌面效果则放置于index.html</p>
+<p>效果：勉强可以达到效果，确实可以说是自定义了，但electron有太重以及太慢这两大痛点，点开个文件夹都慢得不得了，通过shell执行已经很慢了，主进程和子进程间的通信更是慢上加慢（被斥为电子垃圾不是没有道理）</p>
+<p>然而它只需要打开某个链接，后面实际是windows在操作了，如果不放快捷方式（本来就没必要），将内容集中在AI驱动上，那也不至于太糟糕</p>
+<p>另外诸如鼠标、窗口这类属于系统的东西都是无法改变的</p>
+<p>这样想的话，其实还是应该再试试的，因为还有很多设想的功能需要实现，起码要做完，再想怎么去优化。</p>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 此方悬停 </span>
+    </div>
+</article>
+
+
+
+
+
+<!--我可能把主页index元素误删了，所以添加了页面comments元素为false时不展示评论的功能-->
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    ©2017 叁七
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="Toggle full screen shortcut key s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="//testingcf.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="//testingcf.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<!-- 引入磁带播放器组件 -->
+
+  <!-- 简化版磁带按钮组件 -->
+<div class="cassette-button-container">
+    <button class="cassette-btn" id="playButton">
+        <span class="btn-text">插入磁带【start】</span>
+        <div class="tape-border">
+            <div class="tape-segment segment-1"></div>
+            <div class="tape-segment segment-2"></div>
+            <div class="tape-segment segment-3"></div>
+            <div class="tape-segment segment-4"></div>
+        </div>
+        <div class="led-indicator" id="statusLed"></div>
+    </button>
+</div>
+
+<audio id="audioPlayer" loop>
+    <!-- 替换为您的音乐文件路径 -->
+    <source src="/music/chill-synthwave-background-music-for-youtube-shorts-and-videos-345551.mp3" type="audio/mpeg">
+    您的浏览器不支持音频元素。
+</audio>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const playButton = document.getElementById('playButton');
+    const audioPlayer = document.getElementById('audioPlayer');
+    const statusLed = document.getElementById('statusLed');
+    let isPlaying = false;
+    AudioStart= new Audio('/music/cassette-eject-172757.mp3');
+    AudioStop= new Audio('/music/tape-cassette-insert-172758.mp3');
+    playButton.addEventListener('click', function() {
+        if (!isPlaying) {
+            // 播放音乐
+            AudioStart.play();
+            audioPlayer.play().then(() => {
+                isPlaying = true;
+                playButton.querySelector('.btn-text').textContent = '弹出磁带【stop】';
+                playButton.classList.add('playing');
+                statusLed.classList.add('active');
+            }).catch(error => {
+                console.error('播放失败:', error);
+                alert('音乐播放失败，请检查音频文件路径或浏览器权限设置。');
+            });
+        } else {
+            // 停止音乐
+            AudioStop.play();
+            audioPlayer.pause();
+            audioPlayer.currentTime = 0;
+            isPlaying = false;
+            playButton.querySelector('.btn-text').textContent = '插入磁带【start】';
+            playButton.classList.remove('playing');
+            statusLed.classList.remove('active');
+        }
+    });
+});
+</script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'photoSwipe';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+
+        // PhotoSwipe
+        $('article').each(function(i){
+            $(this).find('img').each(function(){
+                if ($(this).closest('figure').hasClass('article-gallery-img')) {
+                    return;
+                }
+                var alt = this.alt;
+                $(this)
+                    .wrap('<figure class="article-gallery-img" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject"></figure>')
+                    .wrap('<a href="' + this.src + '" title="' + alt + '"></a>');
+                $(this).after('<div class="img_alt"><span>' + (alt || '') + '</span></div>');
+            });
+        });
+
+        var pswpElement = document.querySelectorAll('.pswp')[0];
+        if (pswpElement) {
+            var gallerySelector = '.article-gallery, article';
+
+            var initPhotoSwipeFromDOM = function(gallerySelector) {
+
+                // parse slide data (url, title, size ...) from DOM elements
+                // (children of gallerySelector)
+                var parseThumbnailElements = function(el) {
+                    var thumbElements = $(el).find('figure.article-gallery-img').toArray(),
+                        numNodes = thumbElements.length,
+                        items = [],
+                        figureEl,
+                        linkEl,
+                        size,
+                        imgEl,
+                        item;
+
+                    for (var i = 0; i < numNodes; i++) {
+
+                        figureEl = thumbElements[i]; // <figure> element
+
+                        // include only element nodes
+                        if (figureEl.nodeType !== 1) {
+                            continue;
+                        }
+
+                        linkEl = figureEl.children[0]; // <a> element
+                        imgEl = linkEl.children[0]; // <img>
+
+                        size = linkEl.getAttribute('data-size');
+                        size = size && size.split('x');
+
+                        // create slide object
+                        item = {
+                            src: linkEl.getAttribute('href'),
+                            w: size && parseInt(size[0], 10) || imgEl.width,
+                            h: size && parseInt(size[1], 10) || imgEl.height
+                        };
+
+                        if (figureEl.children.length > 1) {
+                            // <figcaption> content
+                            item.title = figureEl.children[1].innerHTML;
+                        }
+
+                        if (linkEl.children.length > 0) {
+                            // <img> thumbnail element, retrieving thumbnail url
+                            item.msrc = linkEl.children[0].getAttribute('src');
+                        }
+
+                        item.el = figureEl; // save link to element for getThumbBoundsFn
+                        items.push(item);
+                    }
+
+                    return items;
+                };
+
+                // find nearest parent element
+                var closest = function closest(el, fn) {
+                    return el && (fn(el) ? el : closest(el.parentNode, fn));
+                };
+
+                // triggers when user clicks on thumbnail
+                var onThumbnailsClick = function(e) {
+                    e = e || window.event;
+
+                    var eTarget = e.target || e.srcElement;
+
+                    // find root element of slide
+                    var clickedListItem = closest(eTarget, function(el) {
+                        return (el.tagName && el.tagName.toUpperCase() === 'FIGURE');
+                    });
+
+                    if (!clickedListItem) {
+                        return;
+                    }
+
+                    if (e.preventDefault) {
+                        e.preventDefault();
+                    } else {
+                        e.returnValue = false;
+                    }
+
+                    // find index of clicked item by looping through all child nodes
+                    // alternatively, you may define index via data- attribute
+                    var clickedGallery = $(clickedListItem).closest(gallerySelector)[0],
+                        childNodes = $(clickedGallery).find('figure.article-gallery-img').toArray(),
+                        numChildNodes = childNodes.length,
+                        nodeIndex = 0,
+                        index;
+
+                    for (var i = 0; i < numChildNodes; i++) {
+                        if (childNodes[i].nodeType !== 1) {
+                            continue;
+                        }
+
+                        if (childNodes[i] === clickedListItem) {
+                            index = nodeIndex;
+                            break;
+                        }
+                        nodeIndex++;
+                    }
+
+
+
+                    if (index >= 0) {
+                        // open PhotoSwipe if valid index found
+                        openPhotoSwipe(index, clickedGallery);
+                    }
+                    return false;
+                };
+
+                // parse picture index and gallery index from URL (#&pid=1&gid=2)
+                var photoswipeParseHash = function() {
+                    var hash = window.location.hash.substring(1),
+                        params = {};
+
+                    if (hash.length < 5) {
+                        return params;
+                    }
+
+                    var vars = hash.split('&');
+                    for (var i = 0; i < vars.length; i++) {
+                        if (!vars[i]) {
+                            continue;
+                        }
+                        var pair = vars[i].split('=');
+                        if (pair.length < 2) {
+                            continue;
+                        }
+                        params[pair[0]] = pair[1];
+                    }
+
+                    if (params.gid) {
+                        params.gid = parseInt(params.gid, 10);
+                    }
+
+                    return params;
+                };
+
+                var openPhotoSwipe = function(index, galleryElement, disableAnimation, fromURL) {
+                    var pswpElement = document.querySelectorAll('.pswp')[0],
+                        gallery,
+                        options,
+                        items;
+
+                    items = parseThumbnailElements(galleryElement);
+
+                    // define options (if needed)
+                    options = {
+
+                        // define gallery index (for URL)
+                        galleryUID: galleryElement.getAttribute('data-pswp-uid'),
+
+                        getThumbBoundsFn: function(index) {
+                            // See Options -> getThumbBoundsFn section of documentation for more info
+                            var thumbnail = items[index].el.getElementsByTagName('img')[0], // find thumbnail
+                                pageYScroll = window.pageYOffset || document.documentElement.scrollTop,
+                                rect = thumbnail.getBoundingClientRect();
+
+                            return {
+                                x: rect.left,
+                                y: rect.top + pageYScroll,
+                                w: rect.width
+                            };
+                        }
+                    };
+
+                    // PhotoSwipe opened from URL
+                    if (fromURL) {
+                        if (options.galleryPIDs) {
+                            // parse real index when custom PIDs are used
+                            // http://photoswipe.com/documentation/faq.html#custom-pid-in-url
+                            for (var j = 0; j < items.length; j++) {
+                                if (items[j].pid == index) {
+                                    options.index = j;
+                                    break;
+                                }
+                            }
+                        } else {
+                            // in URL indexes start from 1
+                            options.index = parseInt(index, 10) - 1;
+                        }
+                    } else {
+                        options.index = parseInt(index, 10);
+                    }
+
+                    // exit if index not found
+                    if (isNaN(options.index)) {
+                        return;
+                    }
+
+                    if (disableAnimation) {
+                        options.showAnimationDuration = 0;
+                    }
+
+                    // Pass data to PhotoSwipe and initialize it
+                    gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, options);
+
+                    gallery.listen('imageLoadComplete', function(index, item) {
+                        var linkEl = item.el.children[0];
+                        var img = item.container.children[0];
+                        if (!linkEl.getAttribute('data-size')) {
+                            linkEl.setAttribute('data-size', img.naturalWidth + 'x' + img.naturalHeight);
+                            item.w = img.naturalWidth;
+                            item.h = img.naturalHeight;
+                            gallery.invalidateCurrItems();
+                            gallery.updateSize(true);
+                        }
+                    });
+
+                    gallery.init();
+                };
+
+                // loop through all gallery elements and bind events
+                var galleryElements = document.querySelectorAll(gallerySelector);
+
+                for (var i = 0, l = galleryElements.length; i < l; i++) {
+                    galleryElements[i].setAttribute('data-pswp-uid', i + 1);
+                    galleryElements[i].onclick = onThumbnailsClick;
+                }
+
+                // Parse URL and open gallery if it contains #&pid=3&gid=1
+                var hashData = photoswipeParseHash();
+                if (hashData.pid && hashData.gid) {
+                    openPhotoSwipe(hashData.pid, galleryElements[hashData.gid - 1], true, true);
+                }
+            };
+
+            // execute above function
+            initPhotoSwipeFromDOM(gallerySelector);
+        }
+        
+        
+        /* 渲染*/
+        function HTMLDecode(text) {
+            var temp = document.createElement("div");
+            temp.innerHTML = text;
+            var output = temp.innerText || temp.textContent;
+            temp = null;
+            return output;
+        }
+        if (window.mermaid){
+            window.mermaid = null
+        }
+        $.getScript("//testingcf.jsdelivr.net/npm/mermaid@8.4.2/dist/mermaid.min.js", function () {
+            var mermaidOptions = JSON.parse(HTMLDecode("{&#34;theme&#34;:&#34;default&#34;,&#34;startOnLoad&#34;:true,&#34;flowchart&#34;:{&#34;useMaxWidth&#34;:false,&#34;htmlLabels&#34;:true}}"))
+            if (window.mermaid) {
+                mermaid.initialize(mermaidOptions)
+                mermaid.contentLoaded()
+            }
+        })
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: rgba(198, 228, 0, 1);
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #40dcffff;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: rgba(131, 0, 160, 1);
+    }
+    
+    
+    .nav-right nav a.hover > span{
+        color: #ffffff !important;
+    }
+    
+
+    /*列表样式*/
+    
+    #post .pjax article .article-entry>ol, #post .pjax article .article-entry>ul, #post .pjax article>ol, #post .pjax article>ul{
+        border: #e2dede solid 1px;
+        border-radius: 10px;
+        padding: 10px 32px 10px 56px;
+    }
+    #post .pjax article .article-entry li>ol, #post .pjax article .article-entry li>ul,#post .pjax article li>ol, #post .pjax article li>ul{
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    #post .pjax article .article-entry>ol>li, #post .pjax article .article-entry>ul>li,#post .pjax article>ol>li, #post .pjax article>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    #post .pjax article .article-entry li>ol>li, #post .pjax article .article-entry li>ul>li,#post .pjax article li>ol>li, #post .pjax article li>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+    .nav-right:before {
+        content: ' ';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.1;
+        background: url("https://testingcf.jsdelivr.net/gh/sanqi-normal/sanqi-normal.github.io/img/vaporwave_advanced.jpg");
+        background-repeat: no-repeat;
+        background-position: 50% 0;
+        -ms-background-size: cover;
+        -o-background-size: cover;
+        -moz-background-size: cover;
+        -webkit-background-size: cover;
+        background-size: cover;
+    }
+    
+
+    
+</style>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+         It's a separate element, as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. PhotoSwipe keeps only 3 slides in DOM to save memory. -->
+        <!-- don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <!-- Preloader demo https://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+<div class="mobile-menus-out" >
+
+</div>
+<div class="mobile-menus">
+    
+    
+    <a class="dynamic-menu site_url"   href="/photo">相册</a>
+    
+    
+    <a class="dynamic-menu site_url"   href="/novel">小说</a>
+    
+    
+    <a class="dynamic-menu " target="_self"   href="/AI">Ai</a>
+    
+    
+</div>
+
+
+</html>
