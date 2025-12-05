@@ -167,7 +167,7 @@
     <li>
         <div class="all active" data-rel="All">All
             
-                <small>(129)</small>
+                <small>(130)</small>
             
         </div>
     </li>
@@ -225,7 +225,7 @@
         <div data-rel="计算机">
             <i class="fold iconfont icon-right"></i>
             计算机
-            <small>(48)</small>
+            <small>(49)</small>
         </div>
         
             <ul class="sub hide">
@@ -268,7 +268,7 @@
         <div data-rel="计算机&lt;---&gt;前端">
             
             前端
-            <small>(3)</small>
+            <small>(4)</small>
         </div>
         
     </li>
@@ -516,8 +516,8 @@
         
     </div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="129">
-<input type="hidden" id="yelog_site_word_count" value="126.6k">
+<input type="hidden" id="yelog_site_posts_number" value="130">
+<input type="hidden" id="yelog_site_word_count" value="127.5k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -831,6 +831,15 @@
            data-author="" >
             <span class="post-title" title="网站需知">网站需知</span>
             <span class="post-date" title="2025-12-01 13:33:51">2025/12/01</span>
+        </a>
+        
+        
+        <a  class="All 计算机 前端 "
+           href="/2025/12/05/Shadow-Dom/"
+           data-tag="前端"
+           data-author="" >
+            <span class="post-title" title="Shadow_Dom">Shadow_Dom</span>
+            <span class="post-date" title="2025-12-05 13:40:44">2025/12/05</span>
         </a>
         
         
@@ -1808,7 +1817,7 @@
         
         <a  class="All 日志 "
            href="/2024/12/12/%E6%97%A5%E5%BF%97%EF%BC%884%EF%BC%89/"
-           data-tag="测试,博客"
+           data-tag="博客,测试"
            data-author="" >
             <span class="post-title" title="日志（4）">日志（4）</span>
             <span class="post-date" title="2024-12-12 14:36:06">2024/12/12</span>
@@ -1995,6 +2004,8 @@
 <div id="post">
     <div class="pjax">
         <article id="post-AI响应中function-calling的使用" class="article article-type-post" itemscope itemprop="blogPost" style="background: transparent;">
+        <!-- 添加背景切换图标 -->
+    <div class="article-bg-toggle half-shadow" id="articleBgToggle" onclick="toggleArticleBackground()"></div>
     
         <h1 class="article-title">AI响应中function_calling的使用</h1>
     
@@ -2236,6 +2247,35 @@ const toolFunctions = require(&#39;./tool_functions&#39;);// js文件可以不�
 
     
 
+
+
+    
+
+
+<!-- 背景切换功能脚本 -->
+<script>
+// 文章背景切换功能
+function toggleArticleBackground() {
+    const toggleBtn = document.getElementById('articleBgToggle');
+    
+    if (toggleBtn.classList.contains('half-shadow')) {
+        // 切换到全阴影状态
+        toggleBtn.classList.remove('half-shadow');
+        toggleBtn.classList.add('full-shadow');
+        // 切换背景为全黑
+        document.documentElement.style.setProperty('--bg-color', '#000001');
+    } else {
+        // 切换回半阴影状态
+        toggleBtn.classList.remove('full-shadow');
+        toggleBtn.classList.add('half-shadow');
+        // 切换背景为半透明黑
+        document.documentElement.style.setProperty('--bg-color', '#00000010');
+    }
+
+}
+
+
+</script>
 
 
 

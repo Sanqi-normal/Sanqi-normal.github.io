@@ -2247,7 +2247,7 @@ body.vhs-glitch-effect::before {
   font-weight: 400;
   font-size: 16px;
   line-height: 1.75;
-  background: rgba(0,0,0,0.208);
+  background: rgba(36,36,36,0.184);
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
@@ -2497,7 +2497,7 @@ body.vhs-glitch-effect::before {
 }
 #post .pjax article ol {
   padding-left: 28px;
-  color: #0062ff;
+  color: #00fbff;
 }
 #post .pjax article ul:not(.pre-numbering)>li {
   margin-bottom: 10px;
@@ -2688,6 +2688,9 @@ body.vhs-glitch-effect::before {
   color: #f0f;
   text-decoration: underline;
 }
+:root {
+  --bg-color: rgba(0,0,0,0.063); /* 默认值 */
+}
 html,
 body {
   width: 100%;
@@ -2698,6 +2701,7 @@ body {
   -webkit-font-smoothing: subpixel-antialiased;
   -webkit-text-size-adjust: none;
   overflow: hidden;
+  background-color: var(--bg-color);
 }
 a {
   color: inherit;
@@ -2932,6 +2936,50 @@ img.pswp__img {
 }
 .mobile-menus .dynamic-menu:nth-child(1) {
   margin-top: 0;
+}
+.article-bg-toggle {
+  position: relative;
+  top: 20px;
+  right: -800px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 999;
+  transition: all 0.3s ease;
+}
+.article-bg-toggle.half-shadow::after {
+  content: "🌙";
+  font-size: 20px;
+  line-height: 40px;
+  text-align: center;
+  display: block;
+  color: rgba(255,255,255,0.8);
+}
+.article-bg-toggle.full-shadow::after {
+  content: "🔆";
+  font-size: 20px;
+  line-height: 40px;
+  text-align: center;
+  display: block;
+  color: rgba(255,255,255,0.9);
+}
+.article-bg-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+@media (max-width: 768px) {
+  .article-bg-toggle {
+    top: 15px;
+    right: 15px;
+    width: 36px;
+    height: 36px;
+  }
+  .article-bg-toggle.half-shadow::after,
+  .article-bg-toggle.full-shadow::after {
+    font-size: 18px;
+    line-height: 36px;
+  }
 }
 @media screen and (max-width: 1468px) {
   html,
