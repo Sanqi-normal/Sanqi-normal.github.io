@@ -4,6 +4,51 @@
   
     
     <entry>
+      <title>日志</title>
+      <link href="/2025/12/10/%E6%97%A5%E5%BF%97-11/"/>
+      <url>/2025/12/10/%E6%97%A5%E5%BF%97-11/</url>
+      
+        <content type="html"><![CDATA[<p>现在做的是mcp，接下来要做的是工具的动态发现</p><p><img src="/img/5e1c96a7052b518ce3acb137dd64105f.png" alt="天气查询工具调用"></p><p>天气查询的调用发生在ai对话内部，这和先前一直等到工具调用循环完成再返回对话不同。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 日志 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>3d可交互桌面最初版演示</title>
+      <link href="/2025/12/08/3d%E5%8F%AF%E4%BA%A4%E4%BA%92%E6%A1%8C%E9%9D%A2%E6%9C%80%E5%88%9D%E7%89%88%E6%BC%94%E7%A4%BA/"/>
+      <url>/2025/12/08/3d%E5%8F%AF%E4%BA%A4%E4%BA%92%E6%A1%8C%E9%9D%A2%E6%9C%80%E5%88%9D%E7%89%88%E6%BC%94%E7%A4%BA/</url>
+      
+        <content type="html"><![CDATA[<p>素材借用<br><video controls width='800px' height="600px" src="/video/aidesktop.mp4" title="素材为借用"></video></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Rust基础语法一览</title>
+      <link href="/2025/12/05/Rust%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E4%B8%80%E8%A7%88/"/>
+      <url>/2025/12/05/Rust%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E4%B8%80%E8%A7%88/</url>
+      
+        <content type="html"><![CDATA[<p>先解释一下为什么学Rust，因为先前构造webview应用时使用electron有运行慢、占用高的难点，而Tauri作为另一款实现webview的框架就具有轻量（使用系统自带webview2）高效（rust作为后端语言）的优点，因而我将项目转移到了Tauri，因而Rust成了学习的一部分。</p><p>参考教程 <a href="https://www.runoob.com/rust/rust-tutorial.html">https://www.runoob.com/rust/rust-tutorial.html</a></p><blockquote><p>输出</p></blockquote><p>println!(“text{}”,para) 其中{}指向para,也可写为{0}，数字0表示参数数组下标</p><p><code>&#123;&#123;&#125;&#125;</code>表示输出<code>&#123;&#125;</code>字符，其他转义字符都以\开头</p><blockquote><p>变量</p></blockquote><p>rust为强语言类型，但又可自行判断参数类型<br>rust变量默认不可变</p><p>let a &#x3D; 1;&#x2F;&#x2F;默认不可变 赋为其他值报错<br>let mut a &#x3D; 1;&#x2F;&#x2F;a可变<br>let a: i32 &#x3D; 1;&#x2F;&#x2F;:i32表示指定int32类型</p><p>不可变变量与常量区别：可以对不可变变量重新绑定<br>let a &#x3D;1 ;let a &#x3D;2;正确执行 但let a &#x3D;1; a&#x3D;2 ;错误</p><p>这是rust为高并发安全所设的机制：尽量少的让变量改变</p><blockquote><p>数据类型<br>Rust 是静态类型语言，在变量声明时可以显式指定类型，但通常可以依赖类型推断。</p></blockquote><p>基本类型: i32 (32位有符号整数), u32 (32位无符号整数), f64 (64位浮点数), bool (布尔类型), char (字符),&amp;str(字符串字面量)</p><p>&amp;str与string不同，前者存储在二进制文件中，大小确定，是只读内存，生命周期为&#96;static(程序运行始终有效) 这使它具有安全高效的特性<br>而string动态分配内存，存储在堆上，由所有权系统管理生命周期</p><pre><code class="rust">let s = String::from(&quot;Hello&quot;);//String::from() 是 Rust 中创建字符串的常用方法，它会将一个字符串字面量（&amp;str类型）转换为可变的、堆分配的 String 类型。let s:&amp;str=&amp;string;//借用，不需要分配内存</code></pre><blockquote><p>::</p></blockquote><p>我感觉<code>::</code>这个东西就有点像<code>.</code>和<code>-&gt;</code>，各种不知道用什么符号连接的地方就用一下,让rust有自己的风格</p><p>rust整体来看也没那么可读，不像js那样趋近自然语言 我尤其不喜欢一行里一堆特殊符号 一个点，它既可以表示from 也可以表示to，那完全可以把from 和to写出来</p><blockquote><p>特殊控制流</p></blockquote><p>loop{break;}loop内语句会一直循环直到break</p><blockquote><p>所有权</p></blockquote><p>每个值都有且只有一个所有者，当所有权被转移时，不仅新的所有者被赋值，过去的所有者则会被删除。同时离开作用域，值会被删除</p><p>这就像商品在市场中流通，商品不变但交易者一直在变化，而离开市场后不再存在交易者</p><p>let a &#x3D;1;let b &#x3D;a;println!(“{}”,a)会报错——a的值已经消失了</p><p><strong>借用</strong>： &amp;引用数据而不夺取所有权 同时，如果所有者无论以哪种情况消失，则所有借用者都消失</p><p>类比C的话，借用应该是指向了所有者变量的指针</p><blockquote><p>函数<br>fn 函数关键字</p></blockquote>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Shadow_Dom</title>
       <link href="/2025/12/05/Shadow-Dom/"/>
       <url>/2025/12/05/Shadow-Dom/</url>
@@ -2723,9 +2768,9 @@
       
         <tags>
             
-            <tag> 博客 </tag>
-            
             <tag> 测试 </tag>
+            
+            <tag> 博客 </tag>
             
         </tags>
       

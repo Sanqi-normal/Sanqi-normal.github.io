@@ -1,0 +1,315 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>GLB Viewer</title>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        #renderCanvas {
+            width: 100%;
+            height: 100%;
+            outline: none;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="renderCanvas" touch-action="none"></canvas>
+
+    <script src="https://cdn.babylonjs.com/babylon.js"></script>
+    <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+    const canvas = document.getElementById('renderCanvas');
+    if (!canvas) {
+        console.error('Canvas element not found');
+        return;
+    }
+
+    // 创建引擎
+    const engine = new BABYLON.Engine(canvas, true, {
+        preserveDrawingBuffer: true,
+        stencil: true
+    });
+
+    // 创建场景
+    const scene = new BABYLON.Scene(engine);
+    scene.clearColor = new BABYLON.Color3(0.1, 0.1, 0.1);
+
+    // 临时相机
+    const tempCam = new BABYLON.UniversalCamera('tempCam', new BABYLON.Vector3(0, 0, -10), scene);
+    tempCam.setTarget(BABYLON.Vector3.Zero());
+    scene.activeCamera = tempCam;
+
+    // 关键：确保canvas可以获取焦点
+    canvas.setAttribute('tabindex', '1');
+    canvas.style.outline = 'none';
+    canvas.focus();
+
+    const modelUrl = `http://localhost:4000/model/room1.glb`;
+
+    // 加载GLB
+    BABYLON.SceneLoader.Append('', modelUrl, scene, onSceneLoaded, onProgress, onError);
+
+    function onSceneLoaded() {
+        // 移除临时相机
+        tempCam.dispose();
+
+        // 查找导入的相机
+        let importedCamera = null;
+        if (scene.cameras.length > 0) {
+            if (scene.cameras.length === 1) {
+                importedCamera = scene.cameras[0];
+            } else {
+                if (scene.activeCamera) {
+                    importedCamera = scene.activeCamera;
+                } else {
+                    importedCamera = scene.cameras.find(cam =>
+                        cam.name && cam.name.toLowerCase().includes('camera')
+                    ) || scene.cameras[0];
+                }
+            }
+        }
+
+        // 相机初始参数
+        let startPosition = new BABYLON.Vector3(0, 0, 0);
+        let startRotation = new BABYLON.Vector3(0, 0, 0);
+        let fov = 0.8;
+        let minZ = 0.1;
+        let maxZ = 1000;
+
+        if (importedCamera) {
+            startPosition = importedCamera.position.clone();
+            startRotation = importedCamera.rotation.clone();
+            fov = importedCamera.fov;
+            minZ = importedCamera.minZ;
+            maxZ = importedCamera.maxZ;
+            importedCamera.dispose();
+        }
+
+        // 创建第一人称相机 - 使用FreeCamera而不是UniversalCamera
+        const camera = new BABYLON.FreeCamera('playerCamera', startPosition, scene);
+        camera.rotation = startRotation;
+        camera.fov = fov;
+        camera.minZ = minZ;
+        camera.maxZ = maxZ;
+        
+        // 设置相机参数
+        camera.speed = 0.5;                // 移动速度
+        camera.inertia = 0.0;              // 关闭惯性
+        camera.angularSensibility = 1500;  // 鼠标旋转灵敏度
+        camera.applyGravity = false;       // 关闭重力
+        camera.checkCollisions = false;    // 关闭碰撞检测
+
+        // 关键：附加输入控制
+        camera.keysUp = [87];      // W
+        camera.keysDown = [83];    // S
+        camera.keysLeft = [65];    // A
+        camera.keysRight = [68];   // D
+        camera.keysUpward = [32];  // Space
+        camera.keysDownward = [16]; // Shift
+        
+        // 附加鼠标输入
+        camera.attachControl(canvas, true);
+        
+        scene.activeCamera = camera;
+        // 页面卸载时自动保存
+        window.addEventListener('beforeunload', () => {
+            saveCameraState(camera);
+        });
+        
+        // 尝试加载自动保存的状态
+        setTimeout(() => {
+            loadCameraState(camera);
+        }, 100);
+
+
+
+
+
+
+        createLightingSystem(scene, startPosition);
+        
+        // 自定义按键状态用于QE旋转
+        const keyState = {};
+        scene.onKeyboardObservable.add((kbInfo) => {
+            const key = kbInfo.event.key.toLowerCase();
+            if (kbInfo.type === BABYLON.KeyboardEventTypes.KEYDOWN) {
+                keyState[key] = true;
+                console.log('Key down:', key);
+            } else if (kbInfo.type === BABYLON.KeyboardEventTypes.KEYUP) {
+                keyState[key] = false;
+                console.log('Key up:', key);
+            }
+        });
+
+        // 窗口焦点处理
+        window.addEventListener('blur', () => {
+            console.log('Window lost focus');
+            for (let key in keyState) keyState[key] = false;
+        });
+
+        // 点击canvas获取焦点
+        canvas.addEventListener('click', () => {
+            canvas.focus();
+            console.log('Canvas focused');
+        });
+
+        // QE旋转
+        const qeRotationSpeed = 1.0; // 弧度/秒
+        scene.onBeforeRenderObservable.add(() => {
+            const deltaTime = engine.getDeltaTime() / 1000;
+            if (keyState['q']) {
+                camera.rotation.y -= qeRotationSpeed * deltaTime;
+            }
+            if (keyState['e']) {
+                camera.rotation.y += qeRotationSpeed * deltaTime;
+            }
+        });
+
+        // 动态计算远裁剪平面
+        const worldExtends = scene.getWorldExtends();
+        const sceneSize = worldExtends.max.subtract(worldExtends.min).length();
+        camera.maxZ = Math.max(camera.maxZ, sceneSize * 2);
+
+        // 调试信息
+        console.log('Camera attached:', camera);
+        console.log('Camera inputs:', camera.inputs);
+        
+        // 打开调试层（可选）
+        //scene.debugLayer.show({ embedMode: false }).catch(console.error);
+    }
+
+        // 保存相机状态
+    function saveCameraState(camera) {
+        const cameraData = {
+            position: camera.position.asArray(),
+            rotation: camera.rotation.asArray(),
+            fov: camera.fov,
+            name: camera.name,
+            timestamp: new Date().toISOString()
+        };
+        
+        localStorage.setItem('cameraState', JSON.stringify(cameraData));
+        console.log('相机状态已保存:', cameraData);
+    }
+
+    // 读取相机状态
+    function loadCameraState(camera) {
+        const savedData = localStorage.getItem('cameraState');
+        if (savedData) {
+            try {
+                const cameraData = JSON.parse(savedData);
+                
+                camera.position = BABYLON.Vector3.FromArray(cameraData.position);
+                camera.rotation = BABYLON.Vector3.FromArray(cameraData.rotation);
+                camera.fov = cameraData.fov || 0.8;
+                
+                console.log('相机状态已加载:', cameraData);
+                return true;
+            } catch (error) {
+                console.error('加载相机状态失败:', error);
+            }
+        }
+        return false;
+    }
+
+    function createLightingSystem(scene, cameraPosition) {
+        console.log("创建光源系统...");
+        
+        // 1. 先检查场景中是否已有光源
+        const existingLights = scene.lights.length;
+        
+        if (existingLights === 0) {
+            console.log("场景中没有光源，创建新光源");
+            
+            // 创建主方向光（模拟太阳光）
+            const mainLight = new BABYLON.DirectionalLight("MainLight", 
+                new BABYLON.Vector3(-1, -2, -1), scene);
+            mainLight.position = new BABYLON.Vector3(
+                cameraPosition.x + 20, 
+                cameraPosition.y + 40, 
+                cameraPosition.z + 20
+            );
+            mainLight.intensity = 0.9;
+            
+            // 创建半球光（环境光）
+            const ambientLight = new BABYLON.HemisphericLight("AmbientLight", 
+                new BABYLON.Vector3(0, 1, 0), scene);
+            ambientLight.intensity = 0.4;
+            ambientLight.groundColor = new BABYLON.Color3(0.3, 0.3, 0.3);
+            ambientLight.diffuse = new BABYLON.Color3(0.8, 0.8, 0.8);
+            
+            // 创建填充光
+            const fillLight = new BABYLON.PointLight("FillLight", 
+                new BABYLON.Vector3(
+                    cameraPosition.x - 10,
+                    cameraPosition.y + 5,
+                    cameraPosition.z + 10
+                ), scene);
+            fillLight.intensity = 0.4;
+            fillLight.range = 50;
+            
+            // 设置场景环境色
+            scene.ambientColor = new BABYLON.Color3(0.4, 0.4, 0.4);
+            
+        } else {
+            console.log(`场景中已有 ${existingLights} 个光源，增强现有光源`);
+            
+            // 增强现有光源
+            scene.lights.forEach((light, index) => {
+                console.log(`光源 ${index}: ${light.name}, 强度: ${light.intensity}`);
+                
+                // 如果光源强度太低，增强它
+                if (light.intensity !== undefined && light.intensity < 0.5) {
+                    light.intensity = Math.max(light.intensity * 2, 0.7);
+                    console.log(`  增强光源 ${light.name} 强度至 ${light.intensity}`);
+                }
+                
+                // 对于点光源，确保范围足够
+                if (light instanceof BABYLON.PointLight && light.range < 50) {
+                    light.range = 100;
+                }
+            });
+            
+            // 如果只有一个光源，添加补充光源
+            if (existingLights < 2) {
+                const extraLight = new BABYLON.HemisphericLight("ExtraAmbient", 
+                    new BABYLON.Vector3(0, 1, 0), scene);
+                extraLight.intensity = 0.5;
+                extraLight.groundColor = new BABYLON.Color3(0.2, 0.2, 0.2);
+            }
+            
+            // 确保有环境光
+            if (!scene.ambientColor) {
+                scene.ambientColor = new BABYLON.Color3(0.3, 0.3, 0.3);
+            }
+        }
+        
+        console.log(`最终光源数量: ${scene.lights.length}`);
+    }
+    function onProgress(progress) {
+        console.log(`加载进度: ${progress.lengthComputable ? (progress.loaded / progress.total * 100).toFixed(2) : '未知'}%`);
+    }
+
+    function onError(error) {
+        console.error('模型加载失败:', error);
+        alert('模型加载失败: ' + error.message);
+    }
+
+    // 窗口大小变化
+    window.addEventListener('resize', () => engine.resize());
+
+    // 渲染循环
+    engine.runRenderLoop(() => {
+        scene.render();
+    });
+});
+    </script>
+</body>
+</html>
