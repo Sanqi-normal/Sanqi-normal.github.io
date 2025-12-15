@@ -4,6 +4,51 @@
   
     
     <entry>
+      <title>unity构建为webgl网页项目并与外部通信</title>
+      <link href="/2025/12/16/unity%E9%80%9A%E8%BF%87webgl%E6%9E%84%E5%BB%BA%E4%B8%BA%E7%BD%91%E9%A1%B5%E9%A1%B9%E7%9B%AE%E5%B9%B6%E9%80%9A%E4%BF%A1/"/>
+      <url>/2025/12/16/unity%E9%80%9A%E8%BF%87webgl%E6%9E%84%E5%BB%BA%E4%B8%BA%E7%BD%91%E9%A1%B5%E9%A1%B9%E7%9B%AE%E5%B9%B6%E9%80%9A%E4%BF%A1/</url>
+      
+        <content type="html"><![CDATA[<p>放一个tauri桌面应用和unity3D场景内部通信的视频</p><p><video controls src="/video/94bac9f1674cf6b3110873e1af2d4f52.mp4" width="800px" title="AliceDesktop"></video></p><p>这里这个AI对话框是桌面组件，画面是包含unity游戏的背景窗口，AI对话返回的内容会交给本地tts生成音频，然后再发送音频和文本给unity</p><p>费了不小功夫，既然最后做成了，那也还算顺利。</p><p>unity本身可以选择Webgl平台，虽然网页渲染能力有限，但它也有优点：可移植性，可以灵活地嵌入其他网页</p><p>构建完的项目会生成一个index.html 这是此unity项目的模板网页文件，不能直接用浏览器启动，需要通过本地服务器来启动。</p><p>构建好的webgl与外部项目如何通信——</p><p>以我当前的Tauri项目为例，我需要在unity里创建的3D场景作为我电脑的壁纸背景，所以我将webgl的index网页插入到外部项目的网页中。</p><p>首先填写配置</p><pre><code class="js">// 插入形如以下的内容，这些内容是webgl的配置，会自动生成在模板文件中，直接复制过来不要其他部分var buildUrl = &quot;Build&quot;;var loaderUrl = buildUrl + &quot;/build.loader.js&quot;;var config = &#123;dataUrl: buildUrl + &quot;/build.data&quot;,frameworkUrl: buildUrl + &quot;/build.framework.js&quot;,codeUrl: buildUrl + &quot;/build.wasm&quot;,streamingAssetsUrl: &quot;StreamingAssets&quot;,companyName: &quot;DefaultCompany&quot;,productName: &quot;项目名&quot;,productVersion: &quot;0.1.0&quot;,&#125;;</code></pre><p>然后创建并获取实例</p><pre><code class="js">let unityInstance  = null;//这是在通过配置创建unity实例的同时获取到实例createUnityInstance(document.querySelector(&quot;#unity-canvas&quot;), config, (progress) =&gt; &#123;        &#125;).then((instance) =&gt; &#123;          unityInstance = instance;          console.log(&quot;Bridge: Unity实例加载完成&quot;);        &#125;).catch((message) =&gt; &#123;          alert(message);        &#125;);</code></pre><p>特别注意这个实例的上下文只在此窗口&#x2F;网页，因此如果别的标签页&#x2F;窗口想要获取实例或者发送消息则需要和实例所在窗口通信</p><p>向unity实例发送消息</p><pre><code class="js">unityInstance.SendMessage(&quot;Server&quot;, &quot;ReceiveTTSData&quot;, jsonStr);//这里的这几个参数都是和unity内部的脚本相呼应的而不是照抄我的就行// 标准语法unityInstance.SendMessage(objectName, methodName, value);//可以无参数，则不带value，如果是数字参数，可以不带引号，其余一般写为string// 参数说明：// objectName: Unity 场景中的 GameObject 名称// methodName: 该 GameObject 上挂载的脚本中的方法名// value: 传递给方法的参数（可选，可以是字符串或数字）</code></pre><p>unity内部的接收消息的方法</p><pre><code class="cs">// 我只是在拿我的举例子方便你对照着上面的发送信息理解public void ReceiveTTSData(string jsonPayload)&#123;    Debug.Log(&quot;Unity: 收到TTS数据&quot;);    try    &#123;        TTSPayload payload = JsonUtility.FromJson&lt;TTSPayload&gt;(jsonPayload);//所以我这里也只是把string解析为了json格式而不是传了json格式数据        EnqueuePayload(payload);    &#125;    catch (Exception e)    &#123;        Debug.LogError($&quot;Unity解析TTS数据失败: &#123;e.Message&#125;&quot;);        // 如果当前正在播放，不要直接通知结束，因为可能还在播放        if (!isPlaying)        &#123;            NotifyPlaybackComplete();        &#125;    &#125;&#125;</code></pre><p>有关通信，我一开始觉得调用实例麻烦，就在unity内部开了http服务器，结果发现非常慢，也容易出问题，尽管我这个项目在实现通信时好多层到处跑，但也比http快</p><p>这里还有个小巧思，unity接收到音频播放完会给外部传一个信号表示播放完了，这样外部会再传个音频进来，来保持队列，但是这个过程会导致像视频里那样的每句间有几秒静默，我修复了这个问题，使unity在音频即将播放完前几秒就提前发送音频结束信号，这样让外部等待提前进入，然后内部保持一个实际最多只有两个对象的队列，上一个播放完下一个播放，这样消除了这个等待静默。</p><p>你可能会觉得外面建了队列怎么里面还建队列，这不逻辑上的浪费吗，直接在unity里管理队列不行吗，其实这里面还有一个顺序的问题，就是我虽然第二句和第三句都加入了队列，但是我有可能第三句提前加入，尽管我是按顺序进行的，但是通信这个东西，它就是有可能打乱顺序，导致排到前面，因而外部保持队列排序，内部只建个队列而无需进行顺序逻辑管理。当然也可以多传顺序id参数，但那就真的没必要了。</p><p>似乎还有更快的，就是共享内存机制，这样不用传递音频数据，我没有试，目前响应还算可靠，就是webgl导致内存压力很大，看后续怎么优化。</p><p>提一嘴对口型，用的是uLipSync，直接适配vrm文件，简直不要太方便</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>日志</title>
+      <link href="/2025/12/15/%E6%97%A5%E5%BF%97-15/"/>
+      <url>/2025/12/15/%E6%97%A5%E5%BF%97-15/</url>
+      
+        <content type="html"><![CDATA[<p>我初始考虑到3D桌面性能问题，先尝试了使用babylon，然而它的学习门槛有点高，又没有找到像unity那样集成的操作面板，于是在忙完AI组件外迁到新窗口后，我又尝试了unity构建WebGL。</p><p>这种方法导出的结果会生成一个包含网页文件的项目。这契合我tauri将其插入到网页中。</p><p>但由于打包了文件，一是担心交互怕会存在问题，二是和项目的其他部分比如chat窗口通信可能会困难。</p><p>话说我什么时候打算继续学rust…为什么总是不断地开头而不去完成…</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>日志</title>
+      <link href="/2025/12/12/%E6%97%A5%E5%BF%97-14/"/>
+      <url>/2025/12/12/%E6%97%A5%E5%BF%97-14/</url>
+      
+        <content type="html"><![CDATA[<p>将插入网页的方式由原有的shadowDom扩增为shadowDom和子窗口两种。这是为了克服组件因为获取焦点而将整体页面上移和无法出现在原生窗口上方的缺点。</p><p>带来新的问题，如data:url格式无法正确响应，以及引入module依赖需要做出的变动。如果最终实现随意将html文件移动于两个文件夹（component和window，由此生成组件或是窗口）而无需做出对应适配最好。</p><p>使用了GLM的免费api处理视觉理解，效果很好（而且它还提供了免费的常规问答甚至是深度思考问答api，这使整个项目完全无成本、不需要搭建服务器成为可能，赞美GLM）。将视觉处理过程分别放入了上传图片和工具调用过程。</p><p>由此又为工具调用添加了一些常用工具比如fetch，还有截屏，这使AI越来越像智能体。</p><p>还记得我最初尝试AI时就萌生了利用AI回复执行命令的想法，我那时把它称作“本地提权”，实际上就是现在相当成熟并广泛应用的工具调用。事实证明你与最前沿的思维差距往往只在你所不了解的，简单说就是见识。</p><p>“AI这么厉害，怎样让它不只是说，而且能实际地做呢？” 这是一切尝试的起源。</p><p>12.13.2.12 其实完全不用专门克隆来的，浏览器自带的速度又快，然后专门进行一个音色音调调整就可以了，这样速度就很快了。那这就是一觉醒来的工作了。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 日志 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>日志</title>
       <link href="/2025/12/11/%E6%97%A5%E5%BF%97-13/"/>
       <url>/2025/12/11/%E6%97%A5%E5%BF%97-13/</url>
