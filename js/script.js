@@ -23,25 +23,26 @@ blog_path= blog_path.lastIndexOf("/") === blog_path.length-1?blog_path.slice(0, 
 
 /*使用pjax加载页面，速度更快，交互更友好*/
 var content = $(".pjax");
-var container = $("#post");
+var container = $(".main-wrapper");
 var $searchInput = $("#local-search-input");
-var $tagSearchInput = $("#tag-search");
 var $outlineList = $('#outline-list');
-var $fullBtn = $(".full-toc .full");
-var $titleList = $("nav");
 var $localSearchResult = $("#local-search-result")
 var isFullScreen = $(window).width() <= 1024
-var isFriend = false
 var shortcutKey = $('#theme_shortcut').val() !== 'false'
-var pageshortcut = $('#page_shortcut').val() !== 'true' /*为了让某些页面禁用快捷键而单独增加了变量*/
-$(document).pjax('.nav-right nav a,.nav-left .avatar_target,.site_url', '.pjax', {fragment: '.pjax', timeout: 8000});
-$(document).on({
+var pageshortcut = $('#page_shortcut').val() !== 'true'
+$(document).pjax('.site_url,.nav-item a,.post-card,.hero-btn', '.pjax', {fragment: '.pjax', timeout: 8000});$(document).on({
     /*点击链接后触发的事件*/
     'pjax:click': function () {
         /*原有内容淡出*/
         content.removeClass('fadeIns').addClass('fadeOuts');
         /*请求进度条*/
         NProgress.start();
+        updateTopProgress(0);
+
+        // 1/10 概率触发赛博故障效果
+        if (Math.random() < 0.1) {
+            triggerCyberGlitch($('.pjax'));
+        }
     },
 
     /*pjax开始请求页面时触发的事件*/
@@ -49,34 +50,71 @@ $(document).on({
         content.css({'opacity': 0});
     },
 
+    /*进度更新*/
+    'pjax:send': function() {
+        // 模拟进度更新，因为 pjax 没有真实的百分比回调，我们配合 NProgress 的节奏
+        let prog = 0;
+        const interval = setInterval(() => {
+            prog += (Math.random() * 10);
+            if (prog >= 90) {
+                clearInterval(interval);
+                updateTopProgress(90);
+            } else {
+                updateTopProgress(prog);
+            }
+        }, 200);
+        $(document).one('pjax:end', () => clearInterval(interval));
+    },
+
     /*pjax请求回来页面后触发的事件*/
     'pjax:end': function () {
         NProgress.done();
+        updateTopProgress(100);
+        setTimeout(() => updateTopProgress(-1), 500); // 隐藏
         container.scrollTop(0);
         afterPjax();
-
-        /*移动端打开文章后，自动隐藏文章列表*/
-        if ($(window).width() <= 1024) {
-            if ($fullBtn.children().hasClass("max")) {
-                $fullBtn.trigger("click");
-            } else if ($(".nav").hasClass("mobile")) {
-                $(".nav").removeClass("mobile");
-                $fullBtn.children().removeClass("mobile");
-            }
-        }
-    },
-    'click': function (e) {
-        $(".nav-right .tags-list").hide()
     }
 });
-function afterPjax() {
 
-    // 文章默认背景
-    if (blog_path===''?location.pathname==='/':blog_path === location.pathname.split('/')[1]) {
-        container.addClass('index')
-    } else {
-        container.removeClass('index')
+function updateTopProgress(percent) {
+    const $bar = $('#top-progress-bar');
+    const $num = $('#top-progress-num');
+    const $container = $('#top-progress-container');
+
+    if (percent < 0) {
+        $container.fadeOut(300);
+        return;
     }
+
+    $container.show();
+    $bar.css('width', percent + '%');
+    $num.text(Math.round(percent) + '%');
+}
+function afterPjax() {
+    // 文章默认背景
+    var path = window.location.pathname;
+    var blog_path = $('.theme_blog_path').val() || '';
+    if (blog_path === '' ? path === '/' : path === blog_path || path === blog_path + '/') {
+        container.addClass('index');
+    } else {
+        container.removeClass('index');
+    }
+
+    // 导航栏高亮更新
+    $('.nav-item').removeClass('active');
+    $('.nav-item a').each(function() {
+        var href = $(this).attr('href');
+        // 处理各种路径匹配情况，确保高亮正确
+        if (path === href || 
+            path === href + 'index.html' || 
+            (href !== '/' && href !== blog_path && path.indexOf(href) === 0)) {
+            $(this).parent().addClass('active');
+        }
+    });
+
+    // 搜索结果清空
+    $localSearchResult.hide().html('');
+    $searchInput.val('');
 
     /*渲染MathJax数学公式*/
     if($("script[type='text/x-mathjax-config']").length>0){
@@ -91,60 +129,9 @@ function afterPjax() {
     /*新内容淡入*/
     content.css({'opacity': 1}).removeClass('fadeOuts').addClass('fadeIns');
     bind();
-    /*discus获取评论数*/
-    if ($(".theme_disqus_on").val() === "true") {
-        DISQUSWIDGETS.getCount({reset: true});
-    }
-    if ($("#comments").hasClass("disqus")) {
-        setTimeout(function () {
-            if ($(".count-comment").text().trim() === "") {
-                $(".count-comment").text(0);
-            }
-        }, 300);
-    }
+    initEffects();
 }
 
-/*切换文章分类*/
-$(".nav-left ul li>div").on("click", function (e) {
-    $('.friend').removeClass('friend'); // 如果当前正在友链页，则先回显
-    $(".nav-left li>div.active").removeClass("active");
-    $(this).addClass("active");
-    $searchInput.val("").change();
-    var categories = String($(this).data('rel')).split('<--->');
-    $('#default-panel > .right-title').text(categories[categories.length - 1]);
-    $('#default-panel').show().siblings().hide();
-    $outlineList.hide()
-});
-
-/* 渲染子类高度 */
-$('.nav-left ul.sub').each(function () {
-    $(this).height($(this).children().length * 26 - 1)
-})
-
-/* 展开子类 */
-$('.nav-left ul>li>div>.fold').on('click', function (e) {
-    var _this = this;
-    e.stopPropagation();
-    $(_this).toggleClass('unfold')
-    $(_this).parent().next().toggleClass('hide')
-    $(_this).parents('ul.sub').each(function () {
-        if ($(_this).hasClass('unfold')) {
-            $(this).height($(this).height() + parseInt($(_this).parent().next().attr('style').match(/\d+/g)[0]) + 1)
-        } else {
-            $(this).height($(this).height() - parseInt($(_this).parent().next().attr('style').match(/\d+/g)[0]) - 1)
-        }
-    })
-
-})
-
-/*鼠标移出文章列表后，去掉文章标题hover样式*/
-$(".nav-right nav a").mouseenter(function (e) {
-    $(".nav-right nav a.hover").removeClass("hover");
-    $(this).addClass("hover");
-});
-$(".nav-right nav a").mouseleave(function (e) {
-    $(this).removeClass("hover");
-});
 
 /*快捷键/组合键*/
 var publickey = {"shift": false, "ctrl": false, "alt": false, "last": 0};
@@ -152,7 +139,7 @@ if (shortcutKey && pageshortcut) {
     $(document).keydown(function (e) {
         var tobottom = container.prop("scrollHeight") - container.scrollTop() - container.height();
         var totop = container.scrollTop();
-        if (!$searchInput.is(":focus") && !$tagSearchInput.is(':focus') && !$('#comments textarea').is(':focus')) {
+        if (!$searchInput.is(":focus")) {
             if (e.keyCode === 74) { /* J */
                 container.animate({scrollTop: container.prop("scrollHeight") - container.height()}, tobottom, "linear");
             } else if (e.keyCode === 75) { /* K */
@@ -170,36 +157,8 @@ if (shortcutKey && pageshortcut) {
     })
 
     $(document).keyup(function (e) {
-        if (!$searchInput.is(":focus") && !$tagSearchInput.is(':focus') && !$('#comments textarea').is(':focus')) {
-            if (e.which === 83) { /* S - 显示/隐藏文章列表 */
-                $fullBtn.trigger("click");
-            } else if ((e.which === 73 || e.which === 105) && ($(".nav").css('margin-left')==='0px') && !$('.title-list').hasClass('friend')) { /* I */
-                 inputChange() //这里禁用了i快捷键
-            } else if (e.which === 87) { /* W - 切换大纲视图 */
-                if ($outlineList.is(':visible')) {
-                    $('#outline-panel > .icon-list').trigger('click')
-                } else {
-                    if ($('#local-search-result').is(":visible")) {
-                        $searchInput.val('')
-                        inputChange()
-                    }
-                    $('#default-panel').hide()
-                    $('#title-list-nav').hide()
-                    $('#search-panel').hide()
-                    $('#outline-panel').show()
-                    $outlineList.show()
-                    syncOutline(container[0])
-                }
-                // 如果是全屏，则推出全屏
-                if (isFullScreen) {
-                    $fullBtn.trigger("click");
-                }
-                // 如果在友链界面，则推出友链
-                if (isFriend) {
-                    $('.friends-area .icon-left').trigger('click')
-                }
-
-            } else if (e.which === 74 || e.which === 75) { /* J K - 上滑/下滑*/
+        if (!$searchInput.is(":focus")) {
+            if (e.which === 74 || e.which === 75) { /* J K - 上滑/下滑*/
                 container.stop(true);
             } else if (e.which === 16) {
                 publickey.shift = false;
@@ -210,231 +169,19 @@ if (shortcutKey && pageshortcut) {
 }
 
 
-$searchInput.blur(function (e) {
-    $(".nav-right nav a.hover").removeClass("hover");
-})
-/*输入框焦点时的快捷键捕获*/
+/*搜索输入框: 回车跳转到第一个搜索结果*/
 $searchInput.keydown(function (e) {
-    if ($(".nav-right nav a:not(:hidden), #local-search-result a:not(:hidden)").length > 0) {
-        if (e.which === 13) { /* 回车 */
-            var $handle = $(".nav-right nav a.hover:not(:hidden), #local-search-result a.hover:not(:hidden)");
-            if ($handle.length === 0) {
-                $(".nav-right nav a:not(:hidden):first, #local-search-result a:not(:hidden):first").trigger("click");
-            } else {
-                $handle.trigger("click");
-            }
-            $(':focus').blur();
-        } else if (e.which === 38) { /* 上 */
-            if (!$('nav').is(':visible')) {
-                if ($('#local-search-result a.hover').length === 0 || $('#local-search-result a.hover').parent().prevAll(":visible").length === 0) {
-                    $localSearchResult.scrollTop($localSearchResult.prop("scrollHeight"));
-                    $("#local-search-result a.hover").removeClass("hover");
-                    $("#local-search-result a:visible:last").addClass("hover");
-                } else {
-                    $("#local-search-result a.hover").parent().prevAll().each(function () {
-                        if ($(this).is(":visible")) {
-                            $("#local-search-result a.hover").removeClass("hover");
-                            $(this).children().addClass("hover");
-                            if ($(this).offset().top - $(".nav-right .right-top").height() < 0) {
-                                $localSearchResult.scrollTop($localSearchResult.scrollTop() - $(this).height());
-                            }
-                            return false;
-                        }
-                    })
-                }
-            } else {
-                if ($("nav a:visible.hover").length === 0 || $("nav a:visible.hover").prevAll(":visible").length === 0) {
-                    $titleList.scrollTop($titleList.prop("scrollHeight"));
-                    $(".nav-right nav a.hover").removeClass("hover");
-                    $(".nav-right nav a:visible:last").addClass("hover");
-                } else {
-                    $("nav a.hover").prevAll().each(function () {
-                        if ($(this).is(":visible")) {
-                            $(".nav-right nav a.hover").removeClass("hover");
-                            $(this).addClass("hover");
-                            if ($(this).offset().top - $(".nav-right .right-top").height() < 0) {
-                                $titleList.scrollTop($titleList.scrollTop() - $(this).height());
-                            }
-                            return false;
-                        }
-                    })
-                }
-            }
-        } else if (e.which===9 || e.which === 40) { /* 下 */
-            if ($('nav').is(':visible')) {
-                if ($("nav a:visible.hover").length === 0 || $("nav a:visible.hover").nextAll(":visible").length === 0) {
-                    $titleList.scrollTop(0);
-                    $(".nav-right nav a.hover").removeClass("hover");
-                    $(".nav-right nav a:visible:first").addClass("hover");
-                } else {
-                    $("nav a.hover").nextAll().each(function () {
-                        if ($(this).is(":visible")) {
-                            $(".nav-right nav a.hover").removeClass("hover");
-                            $(this).addClass("hover");
-                            if (($titleList.height() + $(".nav-right .right-top").height() - $(this).offset().top) < 20) {
-                                $titleList.scrollTop($titleList.scrollTop() + $(this).height());
-                            }
-                            return false;
-                        }
-                    })
-                }
-            } else {
-                if ($("#local-search-result a:visible.hover").length === 0 || $("#local-search-result a:visible.hover").parent().nextAll(":visible").length === 0) {
-                    $localSearchResult.scrollTop(0);
-                    $("#local-search-result a.hover").removeClass("hover");
-                    $("#local-search-result a:visible:first").addClass("hover");
-                } else {
-                    $("#local-search-result a.hover").parent().nextAll().each(function () {
-                        if ($(this).is(":visible")) {
-                            $("#local-search-result a.hover").removeClass("hover");
-                            $(this).children().addClass("hover");
-                            if (($localSearchResult.height() + $(".nav-right .right-top").height() - $(this).offset().top) < 20) {
-                                $localSearchResult.scrollTop($localSearchResult.scrollTop() + $(this).prev().height());
-                            }
-                            return false;
-                        }
-                    })
-                }
-            }
-            if (e.which === 9) {
-                return false;
-            }
+    if (e.which === 13) { /* 回车 */
+        var $firstResult = $("#local-search-result a:visible:first");
+        if ($firstResult.length > 0) {
+            $firstResult.trigger("click");
         }
-    }
-    if (e.which === 27) { /* esc */
-        if ($searchInput.val() === '') {
-            $('#search-panel > .icon-left').trigger('click')
-        } else {
-            $searchInput.val('').change()
-        }
+        $(':focus').blur();
+    } else if (e.which === 27) { /* esc */
+        $(this).val('').blur();
+        $("#local-search-result").hide().html('');
     }
 });
-$searchInput.on("input", function (e) {
-    inputChange();
-});
-$searchInput.on("change", function (e) {
-    inputChange();
-});
-/*根据搜索条件，过滤文章列表*/
-function inputChange() {
-    var i;
-    setTimeout(function () {
-        $searchInput.focus()
-    }, 50)
-    var val = $searchInput.val().trim();
-    $('#search-panel').show().siblings().hide()
-    $outlineList.hide();
-    if ($('#local-search-result').length>0) {
-        if (val.length>3 && (val.substr(0,3).toLowerCase() === 'in:' || val.substr(0,3).toLowerCase()==='in：')) {
-            $outlineList.hide();
-            $('#title-list-nav').hide()
-            $('#local-search-result').show();
-            searchAll(val.substr(3))
-        } else {
-            $('#title-list-nav').show();
-            $('#local-search-result').hide();
-        }
-    } else {
-        $outlineList.hide();
-        $('#title-list-nav').show();
-    }
-    var categories = String($(".nav-left ul li>div.active").data('rel')).split('<--->')
-    // 处理特殊字符
-    for (i = 0; i < categories.length; i++) {
-        categories[i] =  categories[i]
-          .replace(/(?=\/|\\|#|\(|\)|\[|\]|\.)/g, "\\")
-    }
-    var activeTitle = categories.join('.');
-    var searchType = '';
-    var containType = '';
-    $('#no-item-tips').hide()
-    $(".nav-right nav a .post-title .search-keyword").each(function () {
-        $(this).parent().html($(this).parent().attr('title'))
-    })
-    if (val === "") {
-        $(".nav-right nav a").css("display", "none");
-        $(".nav-right nav a." + activeTitle).css("display", "block");
-    } else if (val.substr(0, 1) === "#") {
-        searchType = '标签'
-        containType = '为'
-        if (val.substr(1).length !== 0) {
-            $(".nav-right nav a").css("display", "none");
-            $(".nav-right nav").find("a." + activeTitle + ":contains_tag('" + val.substr(1) + "')").css("display", "block");
-        }
-    } else if (val.substr(0, 1) === "@") {
-        searchType = '作者'
-        containType= '为'
-        if (val.substr(1).length !== 0) {
-            $(".nav-right nav a").css("display", "none");
-            $(".nav-right nav").find("a." + activeTitle + ":contains_author('" + val.substr(1) + "')").css("display", "block");
-        }
-    } else {
-        searchType = '标题'
-        containType = '包含'
-        // $(".nav-right nav a").css("display", "none");
-        $(".nav-right nav").find("a." + activeTitle + ":"+ ($('#search-panel > .icon-case-sensitive').hasClass('active') ? 'containsSensitive' : 'contains') + "('" + val + "')").css("display", "block");
-        $(".nav-right nav a").each(function () {
-            var title = $(this).children('.post-title').attr('title');
-            for (i = 0; i < categories.length; i++) {
-                if (!$(this).hasClass(categories[i])) {
-                    $(this).css('display', 'none').children('.post-title').html(title)
-                    return true;
-                }
-            }
-
-            var caseSensitive = $('#search-panel > .icon-case-sensitive').hasClass('active');
-            var vals = (caseSensitive ? val : val.toUpperCase()).split('');
-            var inputReg = new RegExp(vals.join('[\\s\\S]*'));
-            if (inputReg.test(caseSensitive ? title : title.toUpperCase())) {
-                // 给匹配到的字符添加高亮
-                var nowPos = 0;
-                var titleHtml = title.split('')
-                var titleCase = (caseSensitive ? title : title.toUpperCase()).split('')
-                for (i = 0; i < vals.length; i++) {
-                    nowPos = titleCase.indexOf(vals[i], nowPos)
-                    titleHtml[nowPos] = ['<span class="search-keyword">', titleHtml[nowPos], '</span>'].join('')
-                }
-                $(this).css('display', 'block').children('.post-title').html(titleHtml.join(''))
-            } else {
-                $(this).css('display', 'none').children('.post-title').html(title)
-            }
-        })
-    }
-    if (val !== '') {
-        $('#default-panel .icon-search').addClass('active')
-        if (val === 'in:') {
-            $('#no-item-tips').show().html('正在进行全局关键字搜索，请输入关键字');
-        } else if (!val.startsWith('in:') && $(".nav-right nav a:visible").length === 0) {
-            $('#no-item-tips').show().html('未在 <span>' + activeTitle + '</span> 分类中找到'+ searchType + containType + ' <span>' + val.replace(/^[@|#]/g,'') + '</span> 的文章');
-        }
-    } else {
-        $('#default-panel .icon-search').removeClass('active')
-    }
-}
-
-/*隐藏/显示 文章列表*/
-$(".full-toc .full,.semicircle").click(function (e) {
-    isFullScreen = !isFullScreen
-    if ($fullBtn.children().hasClass("min")) {
-        $fullBtn.children().removeClass("min").addClass("max");
-        $(".nav, .hide-list").addClass("fullscreen");
-        content.delay(200).queue(function () {
-            $fullBtn.addClass('fullscreen').dequeue();
-        });
-    } else {
-        $fullBtn.children().removeClass("max").addClass("min");
-        $(".nav, .hide-list").removeClass("fullscreen");
-        content.delay(300).queue(function () {
-            $fullBtn.removeClass('fullscreen').dequeue();
-        });
-    }
-});
-
-container.hover(function () {
-    $(".semicircle").css("margin-left", "-43px");
-},function () {
-    $(".semicircle").css("margin-left", "0");
-})
 var clickScrollTo = false
 function syncOutline(_this) {
     try{
@@ -466,9 +213,8 @@ function syncOutline(_this) {
 
 $(function () {
     bind();
-    $('[data-title]').quberTip({
-        speed: 200
-    });
+    initEffects(); // 初始化特效
+
     // 监测滚动，同步大纲
     container.on('scroll', function () {
         var _this = this
@@ -481,97 +227,10 @@ $(function () {
         syncOutline(_this)
     })
 
-    $('.more-menus').on('click', function () {
-        $('.mobile-menus-out').addClass('show');
-        $('.mobile-menus').addClass('show');
-    })
-    $('.mobile-menus-out,.mobile-menus a').on('click', function () {
-        $('.mobile-menus-out').removeClass('show');
-        $('.mobile-menus').removeClass('show');
-    })
-
-    // 显示输入框面板
-    $('#default-panel > .icon-search').on('click', function (e) {
-        $(this).parent().hide()
-        $('#search-panel').show()
-        $searchInput.select()
-    })
-    /** tag - start **/
-    // 切换 tag 面板
-    $('#search-panel > .icon-tag').on('click', function (e) {
-        e.stopPropagation()
-        var _offset = $(this).offset();
-        var isPhone = $(window).width() <= 426
-        $(".nav-right .tags-list").css({'left': isPhone ? 'auto' : (_offset.left - 95) + 'px', 'top': (_offset.top + 30) + 'px', 'right': isPhone ? '0' : 'auto'}).toggle(100);
-        setTimeout(function () {
-            $tagSearchInput.val('').change().focus()
-        }, 150)
-    })
-    // 选择 tag
-    $(".nav-right .tags-list li").on("click", function (e) {
-        $searchInput.val("#" + $(this).text().trim()).change();
-    });
-    // 阻止冒泡
-    $(".nav-right .tags-list").on('click',function (e) {
-        e.stopPropagation()
-    })
-
-    $tagSearchInput.on('change', function () {
-        tagSearchChange()
-    }).on('input', function () {
-        tagSearchChange()
-    })
-    function tagSearchChange() {
-        var tagFilter = $tagSearchInput.val().trim()
-        if (tagFilter === '') {
-            $('.tags-list li').show()
-        } else {
-            $('.tags-list li').hide()
-            $('.tags-list li:contains("'+ tagFilter +'")').show()
-        }
-
-    }
-    /** tag - end **/
-
-
-    // 回到默认面板
-    $('#search-panel > .icon-left').on('click', function () {
-        if ($('#local-search-result').is(":visible")) {
-            $searchInput.val('')
-            inputChange()
-        }
-        $(this).parent().hide()
-        $('#default-panel').show()
-    })
-
-    $('#search-panel > .icon-case-sensitive').on('click', function () {
-        $(this).toggleClass('active')
-        inputChange()
-    })
-
-    // 切换到大纲视图
-    $('#default-panel > .icon-file-tree').on('click', function (e) {
-        $(this).parent().hide()
-        $('#title-list-nav').hide()
-        $('#local-search-result').hide() // 隐藏全文搜索面板
-        $('#outline-panel').show()
-        $outlineList.show()
-        syncOutline(container[0])
-    })
-
-    // 回到默认面板
-    $('#outline-panel > .icon-list').on('click', function (e) {
-        $(this).parent().hide()
-        $outlineList.hide()
-        $('#default-panel').show()
-        $('#title-list-nav').show()
-    })
-
-    $('.nav-left>ul').css('height', 'calc(100vh - '+($('.avatar_target img').outerHeight(true) + $('.author').outerHeight(true)+$('.nav-left .icon').outerHeight(true)+$('.left-bottom').outerHeight(true))+'px)');
+    // 全文搜索初始化
     if ($('#local-search-result').length>0) {
-        // 全文搜索
         $.getScript(blog_path + '/js/search.js', function () {
-            searchFunc(blog_path + "/search.xml", 'local-search-input', 'local-search-result');
+            searchFunc(blog_path + "/search.json", 'local-search-input', 'local-search-result');
         })
     }
 
@@ -581,28 +240,6 @@ $(function () {
         container.animate({scrollTop: 0}, 500);
     });
 
-    if ($("#comments").hasClass("disqus")) {
-        setTimeout(function () {
-            if ($(".count-comment").text().trim() === "") {
-                $(".count-comment").text(0);
-            }
-        }, 1500);
-    }
-    if ($(window).width() > 414) {
-        /*设置文章列表title宽度*/
-        $('.nav-right>nav>a>.post-title').css('width',$('.nav-right>nav>a').width() - $('.nav-right>nav>a>.post-date:first').width() - 40)
-    }
-
-    /*友情链接*/
-    $('.friends').on('click',function () {
-        isFriend = !isFriend
-        $('.friends-area,.title-list').toggleClass('friend');
-    })
-    /* 退出友情链接 */
-    $('.friends-area .icon-left').on('click', function () {
-        isFriend = false
-        $('.friends-area,.title-list').removeClass('friend');
-    })
 });
 
 /*绑定新加载内容的点击事件*/
@@ -610,68 +247,94 @@ function bind() {
     /*渲染高亮代码块结构与样式*/
     if ($('#theme_highlight_on').val() === 'true') {
         $('pre code').each(function (i, block) {
-            var codeClass = $(this).attr('class') || ''
-            var hasCopy = $('#theme_code_copy').val() !== 'false'
-            // 添加复制功能
-            $(this).after('<div class="code-embed"><span class="code-embed-type">'+ (codeClass.indexOf('hljs') === -1 ? codeClass : codeClass.indexOf('hljs') === 0 ? '' : codeClass.replace(/[\s]?hljs/g, ''))+'</span>'+(hasCopy ? '<span class="code-embed-copy" onclick="copyCode(this)">复制代码</span>' : '')+'</div>')
-            // 渲染样式
+            var $pre = $(this).parent('pre');
+            if ($pre.find('.copy-btn').length === 0) {
+                var hasCopy = $('#theme_code_copy').val() !== 'false';
+                if (hasCopy) {
+                    $pre.append('<div class="copy-btn" onclick="copyCode(this)">COPY</div>');
+                }
+            }
+            var codeClass = $(this).attr('class') || '';
             if (codeClass.indexOf('hljs') === -1) {
-                hljs.highlightBlock(block);
+                hljs.highlightElement(block);
             }
         });
     }
+
+    // 文章列表排序
+    $('.sort-btn').on('click', function() {
+        var $btn = $(this);
+        var sortType = $btn.data('sort');
+        var $grid = $('#home-post-grid');
+        var $items = $grid.children('.post-card');
+
+        if ($btn.hasClass('active')) {
+            // 切换升降序
+            if ($btn.hasClass('desc')) {
+                $btn.removeClass('desc').addClass('asc');
+            } else {
+                $btn.removeClass('asc').addClass('desc');
+            }
+        } else {
+            $('.sort-btn').removeClass('active');
+            $btn.addClass('active');
+        }
+
+        var isDesc = $btn.hasClass('desc');
+
+        $items.sort(function(a, b) {
+            var valA, valB;
+            if (sortType === 'date') {
+                valA = $(a).data('date');
+                valB = $(b).data('date');
+                return isDesc ? valB - valA : valA - valB;
+            } else if (sortType === 'title') {
+                valA = $(a).data('title').toString();
+                valB = $(b).data('title').toString();
+                return isDesc ? valB.localeCompare(valA, 'zh-CN') : valA.localeCompare(valB, 'zh-CN');
+            }
+            return 0;
+        });
+
+        $grid.append($items);
+    });
+
+    // 公告更多展示
+    $('#show-more-announce').on('click', function() {
+        $('.announce-box').show();
+        $(this).hide();
+    });
 
     initArticle();
     $(".article_number").text($("#yelog_site_posts_number").val());
     $(".site_word_count").text($("#yelog_site_word_count").val());
     $(".site_uv").text($("#busuanzi_value_site_uv").text());
-    $("#busuanzi_value_site_uv").bind("DOMNodeInserted", function (e) {
-        $(".site_uv").text($(this).text())
+    $(".site_pv").text($("#busuanzi_value_site_pv").text());
+
+    // 使用 MutationObserver 替代废弃的 DOMNodeInserted
+    var uvObserver = new MutationObserver(function() {
+        $(".site_uv").text($("#busuanzi_value_site_uv").text());
     });
-    $(".site_pv").text($("#busuanzi_value_site_pv").text())
-    $("#busuanzi_value_site_pv").bind("DOMNodeInserted", function (e) {
-        $(".site_pv").text($(this).text())
+    var pvObserver = new MutationObserver(function() {
+        $(".site_pv").text($("#busuanzi_value_site_pv").text());
     });
-    $("#post .pjax .index").find("br").remove();
-    $("#post .pjax .index h1:eq(0)").addClass("article-title");
+    var uvEl = document.getElementById('busuanzi_value_site_uv');
+    var pvEl = document.getElementById('busuanzi_value_site_pv');
+    if (uvEl) uvObserver.observe(uvEl, { childList: true, characterData: true, subtree: true });
+    if (pvEl) pvObserver.observe(pvEl, { childList: true, characterData: true, subtree: true });
     //绑定文章内tag的搜索事件
-    $("#post .pjax article .article-meta .tag a").on("click", function (e) {
-        $searchInput.val("#" + $(this).text().trim()).change();
-        if ($(window).width() <= 1024) {
-            $fullBtn.trigger("click");
-        } else if ($(".full-toc .full span").hasClass("max")) {
-            $fullBtn.trigger("click");
-        }
-    });
-    //绑定文章内分类的点击事件
-    $("#post .pjax article .article-meta .book a").on("click", function (e) {
-        $(".nav-left ul li>div[data-rel='" + $(this).data("rel") + "']").parents('.hide').each(function () {
-            var _this = this;
-            $(_this).removeClass('hide').prev().children('.fold').addClass('unfold');
-            $(_this).parents('ul.sub').each(function () {
-                $(this).height(parseInt($(this).attr('style').match(/\d+/g)[0]) + parseInt($(_this).attr('style').match(/\d+/g)[0]) + 1)
-            })
-        })
-        $(".nav-left ul li>div[data-rel='" + $(this).data("rel") + "']").trigger("click");
-        if ($(window).width() <= 1024) {
-            $fullBtn.trigger("click");
-        } else if ($(".full-toc .full span").hasClass("max")) {
-            $fullBtn.trigger("click");
-        }
+    $(".pjax article .article-meta .tag a").on("click", function (e) {
+        $searchInput.val("#" + $(this).text().trim());
+        $searchInput.trigger('input');
     });
     //绑定文章内作者的点击事件
-    $("#post .pjax article .article-meta .author").on("click", function (e) {
-        $searchInput.val("@" + $(this).text().trim()).change();
-        if ($(window).width() <= 1024) {
-            $fullBtn.trigger("click");
-        } else if ($(".full-toc .full span").hasClass("max")) {
-            $fullBtn.trigger("click");
-        }
+    $(".pjax article .article-meta .author").on("click", function (e) {
+        $searchInput.val("@" + $(this).text().trim());
+        $searchInput.trigger('input');
     });
     //初始化文章toc
-    // $(".post-toc-content").html($("#post .pjax article .toc-ref .toc").clone());
-    $("#outline-list").html($("#post .pjax article .toc-ref .toc").clone());
-    $("#outline-list .toc").append($("#post .pjax article .toc-ref > .toc-item").clone());
+    $("#outline-list").html($(".pjax article .toc-ref .toc").clone());
+    $("#outline-list .toc").append($(".pjax article .toc-ref > .toc-item").clone());
     // 修复自定义标题的关联关系
     $("#outline-list").find('.toc-link').each(function() {
         if (!$(this).attr('href')) {
@@ -679,7 +342,7 @@ function bind() {
             $(this).attr('href', '#' + encodeURIComponent(tocText))
             $(this).parent().attr('class').split(' ').forEach(function (item) {
                 if (item.indexOf('toc-level-') !== -1) {
-                    $('#post').find('h'+item.replace('toc-level-', '')).each(function () {
+                    $('.main-wrapper').find('h'+item.replace('toc-level-', '')).each(function () {
                         if ($(this).text().replaceAll(/[^a-zA-Z0-9]/g, '') === tocText) {
                             $(this).attr('id', encodeURIComponent(tocText))
                         }
@@ -703,16 +366,8 @@ function bind() {
         });
         return false;
     });
-    if ($("#comments").hasClass("disqus")) {
-        var $disqusCount = $(".disqus-comment-count");
-        $disqusCount.bind("DOMNodeInserted", function (e) {
-            $(".count-comment").text(
-                $this.text().replace(/[^0-9]/ig, "")
-            )
-        });
-    }
     /*给文章中的站内跳转绑定pjax*/
-    $(document).pjax('#post .pjax article a[target!=_blank]', '.pjax', {fragment: '.pjax', timeout: 8000});
+    $(document).pjax('.pjax article a[target!=_blank]', '.pjax', {fragment: '.pjax', timeout: 8000});
 
     /*初始化 img*/
     if (img_resize !== 'photoSwipe') {
@@ -785,31 +440,214 @@ function bind() {
  * 复制代码
  */
 function copyCode(e) {
-    $(e).parent().prev().text()
-    if (copy($(e).parent().prev().text())) {
-        $(e).html('复制成功')
+    var $code = $(e).siblings('code');
+    if (copy($code.text())) {
+        $(e).addClass('success').html('SUCCESS');
         setTimeout(function () {
-            $(e).html('复制代码')
-        }, 1000)
+            $(e).removeClass('success').html('COPY');
+        }, 1500);
     }
 }
 
-// 复制功能1
-function copy (text) {
-    var isSuccess = false
-    var target;
-    if (text) {
-        target = document.createElement('textarea');
-        target.id = 'tempTarget';
-        target.style.opacity = '0';
-        target.value = text;
-        document.body.appendChild(target);
-        target.select();
-        document.execCommand('copy', true);
-        document.body.removeChild(target)
-        isSuccess = true
-    } else {
-        isSuccess = false
+function copy(text) {
+    if (text && navigator.clipboard) {
+        navigator.clipboard.writeText(text).catch(function() {
+            // fallback for older browsers
+            var target = document.createElement('textarea');
+            target.style.opacity = '0';
+            target.value = text;
+            document.body.appendChild(target);
+            target.select();
+            document.execCommand('copy', true);
+            document.body.removeChild(target);
+        });
+        return true;
     }
-    return isSuccess
+    return false;
+}
+
+/**
+ * 赛博故障核心逻辑：随机切片与位移 (Cyber Glitch)
+ * @param {jQuery} $target 目标容器，需包含 .layer-pink 和 .layer-cyan
+ */
+function triggerCyberGlitch($target, duration = 1000) {
+    const $pink = $target.find('.layer-pink');
+    const $cyan = $target.find('.layer-cyan');
+    const $main = $target.find('.avatar, .pjax-content'); // 适配头像或全屏
+    
+    let startTime = Date.now();
+
+    function glitchLoop() {
+        if (Date.now() - startTime > duration) {
+            $pink.hide();
+            $cyan.hide();
+            $main.css('transform', 'none');
+            return;
+        }
+
+        if (Math.random() > 0.3) {
+            const top1 = Math.floor(Math.random() * 80);
+            const bottom1 = Math.floor(Math.random() * (100 - top1));
+            const top2 = Math.floor(Math.random() * 80);
+            const bottom2 = Math.floor(Math.random() * (100 - top2));
+
+            const x1 = (Math.random() * 10 - 5) + 'px';
+            const y1 = (Math.random() * 6 - 3) + 'px';
+            const x2 = (Math.random() * 10 - 5) + 'px';
+            const y2 = (Math.random() * 6 - 3) + 'px';
+
+            $pink.show().css({
+                'clip-path': `inset(${top1}% 0 ${bottom1}% 0)`,
+                'transform': `translate(${x1}, ${y1})`
+            });
+
+            $cyan.show().css({
+                'clip-path': `inset(${top2}% 0 ${bottom2}% 0)`,
+                'transform': `translate(${x2}, ${y2})`
+            });
+
+            $main.css('transform', `translate(${(Math.random() * 4 - 2)}px, 0)`);
+        } else {
+            $pink.hide();
+            $cyan.hide();
+            $main.css('transform', 'none');
+        }
+
+        setTimeout(glitchLoop, Math.random() * 150 + 50);
+    }
+
+    glitchLoop();
+}
+
+/**
+ * 初始化特效
+ */
+function initEffects() {
+    // 1. 博客名乱码闪烁
+    // ... (rest of methods)
+    const $brandTitle = $('.brand-text h1');
+    if ($brandTitle.length > 0) {
+        const originalText = $brandTitle.text();
+        const letters = "!@#$%^&*()_+{}[]|;:,.<>?/0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        let isGlitching = false;
+
+        $brandTitle.on('mouseenter', function() {
+            if (isGlitching) return;
+            isGlitching = true;
+            $(this).addClass('glitching');
+            
+            let iteration = 0;
+            const interval = setInterval(() => {
+                $(this).text(originalText.split("").map((letter, index) => {
+                    if (index < iteration) return originalText[index];
+                    return letters[Math.floor(Math.random() * letters.length)];
+                }).join(""));
+
+                if (iteration >= originalText.length) {
+                    clearInterval(interval);
+                    $(this).text(originalText).removeClass('glitching');
+                    isGlitching = false;
+                }
+                iteration += originalText.length / 10;
+            }, 40);
+        });
+    }
+
+    // 2. 导航栏文字逐字符跳动
+    $('.nav-item-text .zh, .top-links a.site_url').each(function() {
+        const $this = $(this);
+        const text = $this.text().trim();
+        if (text) {
+            const html = text.split('').map((char, i) => 
+                `<span class="jump-char" style="animation-delay: ${i * 0.05}s">${char}</span>`
+            ).join('');
+            $this.html(html);
+        }
+    });
+
+    // 3. Hero View More 波动
+    $('.hero-btn').each(function() {
+        const $this = $(this);
+        const $arrow = $this.find('span');
+        const originalText = $this.contents().filter(function() {
+            return this.nodeType === 3; // 文本节点
+        }).text().trim();
+        
+        if (originalText) {
+            const html = originalText.split('').map((char, i) => 
+                `<span class="wave-char" style="animation-delay: ${i * 0.05}s">${char === ' ' ? '&nbsp;' : char}</span>`
+            ).join('') + ` <span>${$arrow.text()}</span>`;
+            $this.html(html);
+        }
+    });
+
+    // 4. 顶部系统状态数字乱跳
+    const $sysStatus = $('#sys-status');
+    if ($sysStatus.length > 0) {
+        const $bigDate = $sysStatus.find('.big');
+        const $month = $sysStatus.find('.sys-month');
+        const $year = $sysStatus.find('.sys-year');
+        const $blogCountSpan = $sysStatus.find('.sys-text > span:last-child'); // 使用 > 确保只选中外层的第二个 span
+
+        // 暂存原始值
+        const originalDate = $bigDate.text();
+        const originalMonth = $month.text();
+        const originalYear = $year.text();
+        const originalBlogHtml = $blogCountSpan.html();
+        
+        // 预提取数字：匹配并提取 HTML 中的第一个数字位
+        const matchBlog = originalBlogHtml.match(/\d+/);
+        const originalBlogNum = matchBlog ? parseInt(matchBlog[0]) : 0;
+
+        let glitchInterval;
+        let isGlitching = false;
+
+        $sysStatus.on('mouseenter', function() {
+            if (isGlitching) return;
+            isGlitching = true;
+
+            let count = 0;
+            const maxGlitches = 8; // 跳动次数
+
+            glitchInterval = setInterval(() => {
+                // 1. 日期随机 (1-28)
+                $bigDate.text(Math.floor(Math.random() * 28) + 1);
+                // 2. 月份随机 (01-12)
+                $month.text('/' + (Math.floor(Math.random() * 12) + 1).toString().padStart(2, '0'));
+                // 3. 年份随机 (2000-2050)
+                $year.text('/' + (Math.floor(Math.random() * 51) + 2000));
+                
+                // 4. 博客数随机 (基于原始数字浮动)
+                const randomBlogNum = Math.max(0, originalBlogNum + Math.floor(Math.random() * 20) - 10);
+                // 仅替换数字部分，保留 " BLOG" 后缀
+                $blogCountSpan.html(originalBlogHtml.replace(/\d+/, randomBlogNum));
+
+                count++;
+                if (count >= maxGlitches) {
+                    clearInterval(glitchInterval);
+                    restore();
+                }
+            }, 60);
+        });
+
+        $sysStatus.on('mouseleave', function() {
+            if (isGlitching) {
+                clearInterval(glitchInterval);
+                restore();
+            }
+        });
+
+        function restore() {
+            $bigDate.text(originalDate);
+            $month.text(originalMonth);
+            $year.text(originalYear);
+            $blogCountSpan.html(originalBlogHtml);
+            isGlitching = false;
+        }
+    }
+
+    // 5. 头像故障效果
+    $('.user-info').on('mouseenter', function() {
+        triggerCyberGlitch($(this).find('.avatar-container'), 500);
+    });
 }

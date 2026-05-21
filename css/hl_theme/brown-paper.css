@@ -2,7 +2,7 @@
   display: block;
   overflow-x: auto;
   padding: 0.5em;
-  background: #b7a68e url("../../img/brown-papersq.png");
+  background: #b7a68e;
 }
 .hljs-keyword,
 .hljs-selector-tag,
