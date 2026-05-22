@@ -39,6 +39,8 @@ $(document).pjax('.site_url,.nav-item a,.post-card,.hero-btn', '.pjax', {fragmen
         NProgress.start();
         updateTopProgress(0);
 
+        if (window.uiSounds) window.uiSounds.transition.play();
+
         // 1/10 概率触发赛博故障效果
         if (Math.random() < 0.1) {
             triggerCyberGlitch($('.pjax'));
@@ -126,10 +128,11 @@ function afterPjax() {
         });
     }
 
-    /*新内容淡入*/
+    /* 新内容淡入 */
     content.css({'opacity': 1}).removeClass('fadeOuts').addClass('fadeIns');
     bind();
     initEffects();
+    initScrollObserver();
 }
 
 
@@ -214,6 +217,8 @@ function syncOutline(_this) {
 $(function () {
     bind();
     initEffects(); // 初始化特效
+    initSoundEffects(); // 初始化音效
+    initScrollObserver(); // 初始化滚动观察
 
     // 监测滚动，同步大纲
     container.on('scroll', function () {
@@ -256,17 +261,23 @@ function bind() {
             }
             var codeClass = $(this).attr('class') || '';
             if (codeClass.indexOf('hljs') === -1) {
-                hljs.highlightElement(block);
+                if (hljs.highlightElement) {
+                    hljs.highlightElement(block);
+                } else if (hljs.highlightBlock) {
+                    hljs.highlightBlock(block);
+                }
             }
         });
     }
 
-    // 文章列表排序
+    // 文章列表排序 (FLIP 动效)
     $('.sort-btn').on('click', function() {
         var $btn = $(this);
         var sortType = $btn.data('sort');
         var $grid = $('#home-post-grid');
         var $items = $grid.children('.post-card');
+
+        if ($items.length === 0) return;
 
         if ($btn.hasClass('active')) {
             // 切换升降序
@@ -282,7 +293,19 @@ function bind() {
 
         var isDesc = $btn.hasClass('desc');
 
-        $items.sort(function(a, b) {
+        // 1. First: 记录初始位置
+        var firstStates = [];
+        $items.each(function() {
+            var rect = this.getBoundingClientRect();
+            firstStates.push({
+                el: this,
+                top: rect.top,
+                left: rect.left
+            });
+        });
+
+        // 2. Last: 执行排序并重新渲染 DOM
+        var sortedArr = $items.get().sort(function(a, b) {
             var valA, valB;
             if (sortType === 'date') {
                 valA = $(a).data('date');
@@ -296,7 +319,39 @@ function bind() {
             return 0;
         });
 
-        $grid.append($items);
+        $grid.append(sortedArr);
+
+        // 3. Invert & Play
+        requestAnimationFrame(() => {
+            firstStates.forEach(state => {
+                var el = state.el;
+                var lastRect = el.getBoundingClientRect();
+                
+                var deltaX = state.left - lastRect.left;
+                var deltaY = state.top - lastRect.top;
+
+                if (deltaX !== 0 || deltaY !== 0) {
+                    // Invert: 瞬间拉回原位
+                    el.style.transition = 'none';
+                    el.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+                    
+                    // 强制重绘
+                    el.offsetHeight;
+
+                    // Play: 开启动画滑向新位
+                    el.style.transition = 'transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)';
+                    el.style.transform = 'none';
+                }
+            });
+
+            // 动画结束后清理 inline style
+            setTimeout(() => {
+                $items.each(function() {
+                    this.style.transition = '';
+                    this.style.transform = '';
+                });
+            }, 600);
+        });
     });
 
     // 公告更多展示
@@ -359,6 +414,12 @@ function bind() {
             $('#outline-list .toc-link[href!="#"].active').removeClass('active')
             $this.addClass('active')
         }
+        
+        // 播放齿轮滚动音效
+        if (window.uiSounds && window.uiSounds.gear) {
+            window.uiSounds.gear.play();
+        }
+
         clickScrollTo = true
 		    var targetOffsetTop = $(decodeURI($this.attr("href")))[0].offsetTop
         container.animate({scrollTop: container.scrollTop > targetOffsetTop ? (targetOffsetTop + 20) : (targetOffsetTop - 20)}, 500, 'swing', function () {
@@ -533,6 +594,7 @@ function initEffects() {
 
         $brandTitle.on('mouseenter', function() {
             if (isGlitching) return;
+            if (window.uiSounds) window.uiSounds.glitch.play();
             isGlitching = true;
             $(this).addClass('glitching');
             
@@ -650,4 +712,154 @@ function initEffects() {
     $('.user-info').on('mouseenter', function() {
         triggerCyberGlitch($(this).find('.avatar-container'), 500);
     });
+}
+
+/**
+ * 初始化鼠标交互音效 (Arknights / Tech Style)
+ */
+function initSoundEffects() {
+    if (typeof Howl === 'undefined' || !window.sound_effect) return;
+
+    var audioPath = blog_path + '/audio/';
+    const sounds = {
+        hover: new Howl({
+            src: [audioPath + 'hover.mp3'],
+            volume: 0.3,
+            preload: true
+        }),
+        click: new Howl({
+            src: [audioPath + 'click.mp3'],
+            volume: 0.5,
+            preload: true
+        }),
+        glitch: new Howl({
+            src: [audioPath + 'glitch.mp3'],
+            volume: 0.05,
+            preload: true
+        }),
+        transition: new Howl({
+            src: [audioPath + 'select.mp3'], 
+            volume: 0.5,
+            preload: true
+        }),
+        toc_select: new Howl({
+            src: [audioPath + 'select.mp3'],
+            volume: 0.5,
+            preload: true
+        }),
+        gear: new Howl({
+            src: [audioPath + 'gear.mp3'],
+            volume: 0.3,
+            loop: false,
+            preload: true
+        })
+    };
+
+    window.uiSounds = sounds;
+
+    // 1. 批量绑定悬停音效 (采用事件委托)
+    // 覆盖范围：仅保留导航菜单项和顶部选项栏元素
+    $(document).on('mouseenter', '.nav-item a, .sidebar-menu a, .menu-item, .dynamic-menu, .top-bar-item, .top-links a', function() {
+        sounds.hover.play();
+    });
+
+    // 2. 批量绑定点击音效
+    $(document).on('click', 'a, button, #rocket, .search-btn, .copy-btn', function(e) {
+        // 如果是目录点击，使用 toc_select 音效，否则使用普通 click
+        if ($(this).hasClass('toc-link') || $(this).parents('#outline-list').length > 0) {
+            sounds.toc_select.play();
+        } else {
+            sounds.click.play();
+        }
+    });
+}
+
+/**
+ * 初始化滚动交错入场观察者
+ */
+var globalScrollObserver = null;
+function initScrollObserver() {
+    if (globalScrollObserver) {
+        globalScrollObserver.disconnect();
+    }
+
+    if (!window.IntersectionObserver) {
+        // 降级处理：直接显示
+        $('.fade-up-wait, .fade-up-fast-wait').addClass('fade-up-play');
+        return;
+    }
+
+    const observerOptions = {
+        root: null, // 默认浏览器视口
+        threshold: 0, // 只要出现一点就触发，防止超长元素（如长代码块）永远无法达到 10%
+        rootMargin: '0px 0px -20px 0px' 
+    };
+
+    let staggeredQueue = [];
+    let staggeredTimer = null;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                staggeredQueue.push(entry.target);
+                observer.unobserve(entry.target); // 只观察一次
+
+                // 防抖编组，按垂直位置排序后依次播放
+                if (!staggeredTimer) {
+                    staggeredTimer = setTimeout(() => {
+                        // 性能优化：先一次性获取所有位置，避免在 sort 中反复触发重绘 (Layout Thrashing)
+                        const elementsWithPos = staggeredQueue.map(el => ({
+                            el,
+                            top: el.getBoundingClientRect().top
+                        }));
+
+                        elementsWithPos.sort((a, b) => a.top - b.top);
+
+                        elementsWithPos.forEach((item, index) => {
+                            const el = item.el;
+                            const isFast = el.classList.contains('fade-up-fast-wait');
+                            const delay = isFast ? index * 50 : index * 100;
+                            
+                            setTimeout(() => {
+                                if (isFast) {
+                                    el.classList.add('fade-up-fast-play');
+                                } else {
+                                    el.classList.add('fade-up-play');
+                                }
+                            }, delay);
+                        });
+
+                        staggeredQueue = [];
+                        staggeredTimer = null;
+                    }, 30);
+                }
+            }
+        });
+    }, observerOptions);
+
+    globalScrollObserver = observer;
+
+    // 扫描所有标记元素
+    $('.fade-up-wait, .fade-up-fast-wait').each(function() {
+        observer.observe(this);
+    });
+
+    // 针对文章详情页正文，动态添加观察标记
+    const $artContent = $('.art-content');
+    if ($artContent.length > 0) {
+        // 选取正文中的块级元素：段落、标题、列表、图片、代码块、引用
+        const $blocks = $artContent.find('> p, > h1, > h2, > h3, > h4, > h5, > h6, > ul, > ol, > .div_img, > blockquote, > pre');
+        
+        // 性能保护：如果文章极其长（如超过 300 个区块），则只对前 100 个应用交错动效，其余直接显示或批量显示
+        if ($blocks.length > 300) {
+            $blocks.slice(0, 100).addClass('fade-up-fast-wait').each(function() {
+                observer.observe(this);
+            });
+            $blocks.slice(100).addClass('fade-up-fast-play'); // 其余直接显示，防止性能崩溃
+        } else {
+            $blocks.addClass('fade-up-fast-wait').each(function() {
+                observer.observe(this);
+            });
+        }
+    }
 }

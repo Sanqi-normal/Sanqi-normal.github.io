@@ -9,7 +9,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   <rights>All rights reserved 2026, 叁七</rights>
   <title>叁七のblog</title>
-  <updated>2026-05-21T08:59:52.264Z</updated>
+  <updated>2026-05-22T11:16:14.112Z</updated>
   <entry>
     <author>
       <name>叁七</name>
@@ -18,13 +18,14 @@
     <category term="开发" scheme="http://example.com/categories/%E6%B8%B8%E6%88%8F/%E5%BC%80%E5%8F%91/"/>
     <category term="Unity" scheme="http://example.com/tags/Unity/"/>
     <content>
-      <![CDATA[<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p><a href="https://github.com/Sanqi-normal/CelLookPostProcess">CelLookPostProcess</a> 是我的一个开源的 Unity URP 后处理效果，能将 3D 渲染场景转化为卡通&#x2F;动漫风格的三渲二画面。与常见的逐材质 Toon Shader 方案不同，它采用<strong>全屏后处理</strong>的方式，以屏幕空间图像特效作用于摄像机完整输出，可以一致地将混合风格场景统一覆盖为同一种风格化效果。</p><p>项目核心思想是”快速构建风格化视觉效果”而非抛光到生产级，它不能保持各种极端情况下依旧有不错的、稳定的视觉效果，但它提供的功能面板相对比较多样，能够允许开发者在一定程度内调整和创造效果。</p><hr><h2 id="渲染管线：四阶段串联"><a href="#渲染管线：四阶段串联" class="headerlink" title="渲染管线：四阶段串联"></a>渲染管线：四阶段串联</h2><p>特效对屏幕画面执行 4 次连续 Blit，每一步都是一层画面处理：</p><pre><code>Pass 0: Kuwahara 滤波 → 降噪并保持硬边    ↓Pass 1: 色彩二值化 / 剪影映射 → 色调量化    ↓Pass 2: 漫画描线 → 深度+法线边缘检测    ↓Pass 3: 最终调色 → 色彩校正并与原图混合</code></pre><h3 id="Pass-0-—-预处理滤波"><a href="#Pass-0-—-预处理滤波" class="headerlink" title="Pass 0 — 预处理滤波"></a>Pass 0 — 预处理滤波</h3><p>在色彩量化之前，先用 Kuwahara 滤波或双边滤波去除噪点和纹理细节。Kuwahara 滤波的特点是在平滑颜色的同时<strong>保留硬边</strong>，这正是赛璐璐动画干净平整质感的基础。</p><h3 id="Pass-1-—-色彩二值化"><a href="#Pass-1-—-色彩二值化" class="headerlink" title="Pass 1 — 色彩二值化"></a>Pass 1 — 色彩二值化</h3><p>将画面亮度严格量化为两个层级（亮面&#x2F;暗面），形成赛璐璐标志性的硬边光影。此外还有一个<strong>剪影模式</strong>（Silhouette Mode），支持三阶色调映射（高光&#x2F;中间调&#x2F;阴影），配合自定义颜色可以得到更具海报化的视觉效果。</p><h3 id="Pass-2-—-漫画描线"><a href="#Pass-2-—-漫画描线" class="headerlink" title="Pass 2 — 漫画描线"></a>Pass 2 — 漫画描线</h3><p>这是整个特效最核心的视觉识别元素。描线依赖场景的 <code>_CameraDepthTexture</code> 和 <code>_CameraNormalsTexture</code>，同时对深度不连续、法线发散以及亮度边缘三方面做边缘检测，输出漫画风格的轮廓线。线条支持设色、线宽调节，并可通过深度衰减来控制远处线条的淡出程度。</p><h3 id="Pass-3-—-最终调色"><a href="#Pass-3-—-最终调色" class="headerlink" title="Pass 3 — 最终调色"></a>Pass 3 — 最终调色</h3><p>对上一步输出做饱和度、对比度、阴影色调等全局调整，再将其与原图按可控强度混合输出。</p><hr><h2 id="功能全景"><a href="#功能全景" class="headerlink" title="功能全景"></a>功能全景</h2><p>参数分为七个逻辑组，共 30+ 可调项：</p><h3 id="全局与预滤波"><a href="#全局与预滤波" class="headerlink" title="全局与预滤波"></a>全局与预滤波</h3><table><thead><tr><th>参数</th><th>作用</th></tr></thead><tbody><tr><td>Effect Intensity</td><td>特效整体混合强度</td></tr><tr><td>Stencil Mask</td><td>按 Stencil ID 排除特定物体（如第一人称武器）</td></tr><tr><td>Pre-Filter Mode</td><td>None &#x2F; Kuwahara &#x2F; Bilateral</td></tr><tr><td>Kuwahara Radius</td><td>滤波核心大小</td></tr><tr><td>Bilateral Sigma</td><td>双边滤波颜色&#x2F;空间容差</td></tr></tbody></table><h3 id="色彩映射"><a href="#色彩映射" class="headerlink" title="色彩映射"></a>色彩映射</h3><table><thead><tr><th>参数</th><th>作用</th></tr></thead><tbody><tr><td>Use Ramp Map</td><td>切换到自定义渐变贴图映射</td></tr><tr><td>Cel Steps &#x2F; Smooth</td><td>量化色阶数与过渡平滑度</td></tr><tr><td>Shadow Threshold</td><td>亮暗分界点与过渡柔和度</td></tr><tr><td>Saturation &#x2F; Contrast</td><td>高光饱和度与整体对比度</td></tr><tr><td>Brightness Offset</td><td>整体亮度偏移</td></tr><tr><td>Shadow Hue&#x2F;Sat&#x2F;Dark</td><td>暗面色相偏移、额外饱和度、压暗程度</td></tr></tbody></table><h3 id="剪影模式"><a href="#剪影模式" class="headerlink" title="剪影模式"></a>剪影模式</h3><p>定义三种自定义颜色（阴影&#x2F;中间调&#x2F;高光），通过两个阈值滑条控制色彩分界，适合追求强烈风格化的画面。</p><h3 id="漫画描线"><a href="#漫画描线" class="headerlink" title="漫画描线"></a>漫画描线</h3><table><thead><tr><th>参数</th><th>作用</th></tr></thead><tbody><tr><td>Line Intensity</td><td>全局描线强度（0 禁用）</td></tr><tr><td>Line Thickness</td><td>线宽（像素）</td></tr><tr><td>Depth &#x2F; Normal &#x2F; Luma Threshold</td><td>三种边缘检测灵敏度</td></tr><tr><td>Depth Falloff</td><td>远处线条淡出距离</td></tr><tr><td>Line Color</td><td>线条颜色</td></tr></tbody></table><h3 id="图案阴影（网目贴）"><a href="#图案阴影（网目贴）" class="headerlink" title="图案阴影（网目贴）"></a>图案阴影（网目贴）</h3><p>模拟日本漫画的网点纸效果。支持圆点和交叉线条两种图案，可调整密度（scale）、角度、强度以及生成阈值。阴影区域由阈值决定。</p><h3 id="屏幕特效"><a href="#屏幕特效" class="headerlink" title="屏幕特效"></a>屏幕特效</h3><ul><li><strong>像素化</strong>：复古像素网格效果</li><li><strong>CRT</strong>：屏幕弯曲、色差、扫描线</li><li><strong>Vaporwave</strong>：噪声纹理、glitch 频率&#x2F;速度&#x2F;撕裂强度、颗粒噪点</li></ul><h3 id="预设系统"><a href="#预设系统" class="headerlink" title="预设系统"></a>预设系统</h3><p>内置”漫画””卡通”等预设，可在 Volume 组件的下拉菜单中直接切换。自定义预设输入名称保存后，生成 <code>.asset</code> 文件存储于 <code>Assets/CelLookPostProcess/Presets/</code>。运行时预设切换由 <code>CelLookPresetSwitcher</code> 组件实现——挂载到 Volume 所属 GameObject，填充预设数组，按 <strong>P</strong> 键循环。</p><hr><h2 id="架构设计"><a href="#架构设计" class="headerlink" title="架构设计"></a>架构设计</h2><p>项目完全接入 Unity URP 原生体系：</p><ul><li><p><strong>Volume Component</strong> — 参数由 <code>CelLookSettings</code>（继承自 <code>VolumeComponent</code>）承载，天然支持全局&#x2F;局部 Volume 混合、层级遮罩和平滑过渡。不是自己写的 MonoBehaviour + PostProcessing 桥接，而是 URP 一等公民。</p></li><li><p><strong>Renderer Feature</strong> — <code>CelLookRenderFeature</code> 是 <code>ScriptableRendererFeature</code>，在 <code>BeforeRenderingPostProcessing</code> 事件注入自定义 <code>ScriptableRenderPass</code>，实现多 Pass Blit 链。</p></li><li><p><strong>描线数据源</strong> — 深度和法线来自 URP 自动生成的 <code>_CameraDepthTexture</code> 和 <code>_CameraNormalsTexture</code>，需要在 URP Asset 或 Camera 上启用。</p></li><li><p><strong>Inspector</strong> — <code>CelLookSettingsEditor</code> 提供自定义面板 UI，包括预设管理按钮和参数分组绘制。</p></li></ul><p>文件目录一览：</p><pre><code>Assets/CelLookPostProcess/├── Shaders/│   └── CelLookPostProcess.shader├── Scripts/│   ├── CelLookSettings.cs│   ├── CelLookRenderFeature.cs│   ├── CelLookPreset.cs│   ├── CelLookPresetAsset.cs│   └── CelLookPresetSwitcher.cs├── Editor/│   └── CelLookSettingsEditor.cs└── Presets/    └── *.asset</code></pre><hr><h2 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h2><p>屏幕空间方案的决定性取舍在于：<strong>通用覆盖换取逐对象控制</strong>。它不能像逐材质方案那样对特定角色做差异化 Toon 着色，但换来的好处是零侵入——不需要改任何材质，不需要为每个物体换 Shader，一个 Volume 挂上去就能看到效果。</p><p>这使得它特别适用于快速概念验证和风格原型探索以及独立游戏寻求统一风格化视觉。</p>]]>
+      <![CDATA[<p><a href="https://www.bilibili.com/video/BV1xMQFBBEES">实际效果</a></p><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p><a href="https://github.com/Sanqi-normal/CelLookPostProcess">CelLookPostProcess</a> 是我的一个开源的 Unity URP 后处理效果，能将 3D 渲染场景转化为卡通&#x2F;动漫风格的三渲二画面。与常见的逐材质 Toon Shader 方案不同，它采用<strong>全屏后处理</strong>的方式，以屏幕空间图像特效作用于摄像机完整输出，可以一致地将混合风格场景统一覆盖为同一种风格化效果。</p><p>项目核心思想是”快速构建风格化视觉效果”而非抛光到生产级，它不能保持各种极端情况下依旧有不错的、稳定的视觉效果，但它提供的功能面板相对比较多样，能够允许开发者在一定程度内调整和创造效果。</p><hr><h2 id="渲染管线：四阶段串联"><a href="#渲染管线：四阶段串联" class="headerlink" title="渲染管线：四阶段串联"></a>渲染管线：四阶段串联</h2><p>特效对屏幕画面执行 4 次连续 Blit，每一步都是一层画面处理：</p><pre><code>Pass 0: Kuwahara 滤波 → 降噪并保持硬边    ↓Pass 1: 色彩二值化 / 剪影映射 → 色调量化    ↓Pass 2: 漫画描线 → 深度+法线边缘检测    ↓Pass 3: 最终调色 → 色彩校正并与原图混合</code></pre><h3 id="Pass-0-—-预处理滤波"><a href="#Pass-0-—-预处理滤波" class="headerlink" title="Pass 0 — 预处理滤波"></a>Pass 0 — 预处理滤波</h3><p>在色彩量化之前，先用 Kuwahara 滤波或双边滤波去除噪点和纹理细节。Kuwahara 滤波的特点是在平滑颜色的同时<strong>保留硬边</strong>，这正是赛璐璐动画干净平整质感的基础。</p><h3 id="Pass-1-—-色彩二值化"><a href="#Pass-1-—-色彩二值化" class="headerlink" title="Pass 1 — 色彩二值化"></a>Pass 1 — 色彩二值化</h3><p>将画面亮度严格量化为两个层级（亮面&#x2F;暗面），形成赛璐璐标志性的硬边光影。此外还有一个<strong>剪影模式</strong>（Silhouette Mode），支持三阶色调映射（高光&#x2F;中间调&#x2F;阴影），配合自定义颜色可以得到更具海报化的视觉效果。</p><h3 id="Pass-2-—-漫画描线"><a href="#Pass-2-—-漫画描线" class="headerlink" title="Pass 2 — 漫画描线"></a>Pass 2 — 漫画描线</h3><p>这是整个特效最核心的视觉识别元素。描线依赖场景的 <code>_CameraDepthTexture</code> 和 <code>_CameraNormalsTexture</code>，同时对深度不连续、法线发散以及亮度边缘三方面做边缘检测，输出漫画风格的轮廓线。线条支持设色、线宽调节，并可通过深度衰减来控制远处线条的淡出程度。</p><h3 id="Pass-3-—-最终调色"><a href="#Pass-3-—-最终调色" class="headerlink" title="Pass 3 — 最终调色"></a>Pass 3 — 最终调色</h3><p>对上一步输出做饱和度、对比度、阴影色调等全局调整，再将其与原图按可控强度混合输出。</p><hr><h2 id="功能全景"><a href="#功能全景" class="headerlink" title="功能全景"></a>功能全景</h2><p>参数分为七个逻辑组，共 30+ 可调项：</p><h3 id="全局与预滤波"><a href="#全局与预滤波" class="headerlink" title="全局与预滤波"></a>全局与预滤波</h3><table><thead><tr><th>参数</th><th>作用</th></tr></thead><tbody><tr><td>Effect Intensity</td><td>特效整体混合强度</td></tr><tr><td>Stencil Mask</td><td>按 Stencil ID 排除特定物体（如第一人称武器）</td></tr><tr><td>Pre-Filter Mode</td><td>None &#x2F; Kuwahara &#x2F; Bilateral</td></tr><tr><td>Kuwahara Radius</td><td>滤波核心大小</td></tr><tr><td>Bilateral Sigma</td><td>双边滤波颜色&#x2F;空间容差</td></tr></tbody></table><h3 id="色彩映射"><a href="#色彩映射" class="headerlink" title="色彩映射"></a>色彩映射</h3><table><thead><tr><th>参数</th><th>作用</th></tr></thead><tbody><tr><td>Use Ramp Map</td><td>切换到自定义渐变贴图映射</td></tr><tr><td>Cel Steps &#x2F; Smooth</td><td>量化色阶数与过渡平滑度</td></tr><tr><td>Shadow Threshold</td><td>亮暗分界点与过渡柔和度</td></tr><tr><td>Saturation &#x2F; Contrast</td><td>高光饱和度与整体对比度</td></tr><tr><td>Brightness Offset</td><td>整体亮度偏移</td></tr><tr><td>Shadow Hue&#x2F;Sat&#x2F;Dark</td><td>暗面色相偏移、额外饱和度、压暗程度</td></tr></tbody></table><h3 id="剪影模式"><a href="#剪影模式" class="headerlink" title="剪影模式"></a>剪影模式</h3><p>定义三种自定义颜色（阴影&#x2F;中间调&#x2F;高光），通过两个阈值滑条控制色彩分界，适合追求强烈风格化的画面。</p><h3 id="漫画描线"><a href="#漫画描线" class="headerlink" title="漫画描线"></a>漫画描线</h3><table><thead><tr><th>参数</th><th>作用</th></tr></thead><tbody><tr><td>Line Intensity</td><td>全局描线强度（0 禁用）</td></tr><tr><td>Line Thickness</td><td>线宽（像素）</td></tr><tr><td>Depth &#x2F; Normal &#x2F; Luma Threshold</td><td>三种边缘检测灵敏度</td></tr><tr><td>Depth Falloff</td><td>远处线条淡出距离</td></tr><tr><td>Line Color</td><td>线条颜色</td></tr></tbody></table><h3 id="图案阴影（网目贴）"><a href="#图案阴影（网目贴）" class="headerlink" title="图案阴影（网目贴）"></a>图案阴影（网目贴）</h3><p>模拟日本漫画的网点纸效果。支持圆点和交叉线条两种图案，可调整密度（scale）、角度、强度以及生成阈值。阴影区域由阈值决定。</p><h3 id="屏幕特效"><a href="#屏幕特效" class="headerlink" title="屏幕特效"></a>屏幕特效</h3><ul><li><strong>像素化</strong>：复古像素网格效果</li><li><strong>CRT</strong>：屏幕弯曲、色差、扫描线</li><li><strong>Vaporwave</strong>：噪声纹理、glitch 频率&#x2F;速度&#x2F;撕裂强度、颗粒噪点</li></ul><h3 id="预设系统"><a href="#预设系统" class="headerlink" title="预设系统"></a>预设系统</h3><p>内置”漫画””卡通”等预设，可在 Volume 组件的下拉菜单中直接切换。自定义预设输入名称保存后，生成 <code>.asset</code> 文件存储于 <code>Assets/CelLookPostProcess/Presets/</code>。运行时预设切换由 <code>CelLookPresetSwitcher</code> 组件实现——挂载到 Volume 所属 GameObject，填充预设数组，按 <strong>P</strong> 键循环。</p><hr><h2 id="架构设计"><a href="#架构设计" class="headerlink" title="架构设计"></a>架构设计</h2><p>项目完全接入 Unity URP 原生体系：</p><ul><li><p><strong>Volume Component</strong> — 参数由 <code>CelLookSettings</code>（继承自 <code>VolumeComponent</code>）承载，天然支持全局&#x2F;局部 Volume 混合、层级遮罩和平滑过渡。不是自己写的 MonoBehaviour + PostProcessing 桥接，而是 URP 一等公民。</p></li><li><p><strong>Renderer Feature</strong> — <code>CelLookRenderFeature</code> 是 <code>ScriptableRendererFeature</code>，在 <code>BeforeRenderingPostProcessing</code> 事件注入自定义 <code>ScriptableRenderPass</code>，实现多 Pass Blit 链。</p></li><li><p><strong>描线数据源</strong> — 深度和法线来自 URP 自动生成的 <code>_CameraDepthTexture</code> 和 <code>_CameraNormalsTexture</code>，需要在 URP Asset 或 Camera 上启用。</p></li><li><p><strong>Inspector</strong> — <code>CelLookSettingsEditor</code> 提供自定义面板 UI，包括预设管理按钮和参数分组绘制。</p></li></ul><p>文件目录一览：</p><pre><code>Assets/CelLookPostProcess/├── Shaders/│   └── CelLookPostProcess.shader├── Scripts/│   ├── CelLookSettings.cs│   ├── CelLookRenderFeature.cs│   ├── CelLookPreset.cs│   ├── CelLookPresetAsset.cs│   └── CelLookPresetSwitcher.cs├── Editor/│   └── CelLookSettingsEditor.cs└── Presets/    └── *.asset</code></pre><hr><h2 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h2><p>屏幕空间方案的决定性取舍在于：<strong>通用覆盖换取逐对象控制</strong>。它不能像逐材质方案那样对特定角色做差异化 Toon 着色，但换来的好处是零侵入——不需要改任何材质，不需要为每个物体换 Shader，一个 Volume 挂上去就能看到效果。</p><p>这使得它特别适用于快速概念验证和风格原型探索以及独立游戏寻求统一风格化视觉。</p>]]>
     </content>
     <id>http://example.com/2026/05/20/unity%E4%B8%89%E6%B8%B2%E4%BA%8C%E5%90%8E%E5%A4%84%E7%90%86/</id>
     <link href="http://example.com/2026/05/20/unity%E4%B8%89%E6%B8%B2%E4%BA%8C%E5%90%8E%E5%A4%84%E7%90%86/"/>
     <published>2026-05-20T11:20:49.000Z</published>
     <summary>
-      <![CDATA[<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p><a href="https://github.com/Sanqi-normal/CelLookPostProcess">CelLookPostProcess</a> 是我的一个开源的 Unity URP 后处理效果，能将 3D 渲染场景转化为卡通&#x2F;动漫风格的三渲二画面。与常见的逐材质 Toon Shader 方案不同，它采用<strong>全屏后处理</strong>的方式，以屏幕空间图像特效作用于摄像机完整输出，可以一致地将混合风格场景统一覆盖为同一种风格化效果。</p>
+      <![CDATA[<p><a href="https://www.bilibili.com/video/BV1xMQFBBEES">实际效果</a></p>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p><a href="https://github.com/Sanqi-normal/CelLookPostProcess">CelLookPostProcess</a> 是我的一个开源的 Unity URP 后处理效果，能将 3D 渲染场景转化为卡通&#x2F;动漫风格的三渲二画面。与常见的逐材质 Toon Shader 方案不同，它采用<strong>全屏后处理</strong>的方式，以屏幕空间图像特效作用于摄像机完整输出，可以一致地将混合风格场景统一覆盖为同一种风格化效果。</p>
 <p>项目核心思想是”快速构建风格化视觉效果”而非抛光到生产级，它不能保持各种极端情况下依旧有不错的、稳定的视觉效果，但它提供的功能面板相对比较多样，能够允许开发者在一定程度内调整和创造效果。</p>
 <hr>
 <h2 id="渲染管线：四阶段串联"><a href="#渲染管线：四阶段串联" class="headerlink" title="渲染管线：四阶段串联"></a>渲染管线：四阶段串联</h2><p>特效对屏幕画面执行 4 次连续 Blit，每一步都是一层画面处理：</p>
@@ -36,16 +37,18 @@ Pass 2: 漫画描线 → 深度+法线边缘检测
     ↓
 Pass 3: 最终调色 → 色彩校正并与原图混合
 </code></pre>
-<h3 id="Pass-0-—-预处理滤波"><a href="#Pass-0-—-预处理滤波" class="headerlink" title="Pass 0 — 预处理滤波"></a>Pass 0 — 预处理滤波</h3><p>在色彩量化之前，先用 Kuwahara 滤波或双边滤波去除噪点和纹理细节。Kuwahara 滤波的特点是在平滑颜色的同时<strong>保留硬边</strong>，这正是赛璐璐动画干净平整质感的基础。</p>
-<h3 id="Pass-1-—-色彩二值化"><a href="#Pass-1-—-色彩二值化" class="headerlink" title="Pass 1 — 色彩二值化"></a>Pass 1 — 色彩二值化</h3>]]>
+<h3 id="Pass-0-—-预处理滤波"><a href="#Pass-0-—-预处理滤波" class="headerlink" title="Pass 0 — 预处理滤波"></a>Pass 0 — 预处理滤波</h3><p>在色彩量化之前，先用 Kuwahara 滤波或双边滤波去除噪点和纹理细节。Kuwahara 滤波的特点是在平滑颜色的同时<strong>保留硬边</strong>，这正是赛璐璐动画干净平整质感的基础。</p>]]>
     </summary>
     <title>Unity URP 屏幕空间三渲二后处理</title>
-    <updated>2026-05-21T08:59:52.264Z</updated>
+    <updated>2026-05-22T11:16:14.112Z</updated>
   </entry>
   <entry>
     <author>
       <name>叁七</name>
     </author>
+    <category term="日志" scheme="http://example.com/categories/%E6%97%A5%E5%BF%97/"/>
+    <category term="日常" scheme="http://example.com/categories/%E6%97%A5%E5%BF%97/%E6%97%A5%E5%B8%B8/"/>
+    <category term="日常" scheme="http://example.com/tags/%E6%97%A5%E5%B8%B8/"/>
     <content>
       <![CDATA[<p>这半个月：</p><p>在B站发了更多视频</p><p>发现虚幻好难</p><p>保持烦躁</p>]]>
     </content>
@@ -59,7 +62,7 @@ Pass 3: 最终调色 → 色彩校正并与原图混合
 <p>保持烦躁</p>]]>
     </summary>
     <title>日志</title>
-    <updated>2026-05-20T10:10:05.883Z</updated>
+    <updated>2026-05-22T10:38:42.256Z</updated>
   </entry>
   <entry>
     <author>
@@ -125,6 +128,11 @@ Pass 3: 最终调色 → 色彩校正并与原图混合
     <author>
       <name>叁七</name>
     </author>
+    <category term="日志" scheme="http://example.com/categories/%E6%97%A5%E5%BF%97/"/>
+    <category term="日常" scheme="http://example.com/categories/%E6%97%A5%E5%BF%97/%E6%97%A5%E5%B8%B8/"/>
+    <category term="Unity" scheme="http://example.com/tags/Unity/"/>
+    <category term="日常" scheme="http://example.com/tags/%E6%97%A5%E5%B8%B8/"/>
+    <category term="MCP" scheme="http://example.com/tags/MCP/"/>
     <content>
       <![CDATA[<p>好久不见</p><p>疲于处理优化行为动作和武器动画，从unity转到了虚幻，我做了这么几件事：</p><p>1 导入了MCP插件并连接到了外部cli</p><p>2 导入了几个现成项目模板或高水平插件了解虚幻能做到的各类效果</p><p>3 去看了牙医，新长了颗智齿痛得我难以忍受</p>]]>
     </content>
@@ -139,12 +147,19 @@ Pass 3: 最终调色 → 色彩校正并与原图混合
 <p>3 去看了牙医，新长了颗智齿痛得我难以忍受</p>]]>
     </summary>
     <title>日志</title>
-    <updated>2026-05-02T05:50:15.382Z</updated>
+    <updated>2026-05-22T10:38:42.258Z</updated>
   </entry>
   <entry>
     <author>
       <name>叁七</name>
     </author>
+    <category term="日志" scheme="http://example.com/categories/%E6%97%A5%E5%BF%97/"/>
+    <category term="日常" scheme="http://example.com/categories/%E6%97%A5%E5%BF%97/%E6%97%A5%E5%B8%B8/"/>
+    <category term="Unity" scheme="http://example.com/tags/Unity/"/>
+    <category term="博客" scheme="http://example.com/tags/%E5%8D%9A%E5%AE%A2/"/>
+    <category term="日常" scheme="http://example.com/tags/%E6%97%A5%E5%B8%B8/"/>
+    <category term="游戏" scheme="http://example.com/tags/%E6%B8%B8%E6%88%8F/"/>
+    <category term="MCP" scheme="http://example.com/tags/MCP/"/>
     <content>
       <![CDATA[<p>转做了unity fps类型游戏，一直没更。</p><p>回忆一下最近工作。</p><p>在B站上发了两个视频。<br><a href="https://www.bilibili.com/video/BV18yfwBTEuE">https://www.bilibili.com/video/BV18yfwBTEuE</a><br><a href="https://www.bilibili.com/video/BV1eMPnzGEvM">https://www.bilibili.com/video/BV1eMPnzGEvM</a><br>其实还有很多别的东西，考虑到素材资源来自网络，不方便作为自己的作品展示。</p><p>最近有个很火的工具叫openclaw，恰恰是我年前做的工作：MCP集成和多智能体<br>人类的水平不该只是如此，太慢了，应该再快一点，要跑得过时间。</p><p>优化了一下博客。</p>]]>
     </content>
@@ -159,12 +174,17 @@ Pass 3: 最终调色 → 色彩校正并与原图混合
 <p>优化了一下博客。</p>]]>
     </summary>
     <title>日志</title>
-    <updated>2026-03-14T06:03:59.405Z</updated>
+    <updated>2026-05-22T10:38:42.255Z</updated>
   </entry>
   <entry>
     <author>
       <name>叁七</name>
     </author>
+    <category term="计算机" scheme="http://example.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/"/>
+    <category term="人工智能" scheme="http://example.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    <category term="机器学习" scheme="http://example.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    <category term="哲学" scheme="http://example.com/tags/%E5%93%B2%E5%AD%A6/"/>
+    <category term="思考" scheme="http://example.com/tags/%E6%80%9D%E8%80%83/"/>
     <content>
       <![CDATA[<p>局部最优是数学上一个广泛使用的概念，在机器学习中它是指通过梯度下降达到的最优收敛点。</p><p>那么我由此触发了思考，引申出一个哲学概念，叫做局部最优理论，希望用它来诠释宇宙的一切。</p><p><strong>局部最优理论：一切事物不处于局部最优且普遍向局部最优演化</strong></p><p>我们知道，事物是动态变化的，事物为什么动态变化？从计算机学的角度解释，事物的状态是无数个系数通过某一领域的回归函数计算得到的，且这些系数无时无刻不在发生变化，变化时会导致这一函数尝试梯度下降来达到局部最优状态。</p><p>举例：宇宙的熵增，它是由于诠释宇宙的函数能在熵最大时达到最优解。人类的出现，是生物种群演化函数在地球这一状态下尝试得到的局部最优解（由于种群数量非无穷大，没能得到线性最优解）。人类社会，也是人类社会发展函数在当前社会条件下为追求最优解而发展——生产方式的改变造成社会结构的改变，这其实是说条件不同，可能的局部最优解所处的位置也不同。中国上千年始终在封建社会震荡，就是因为农耕社会参数不能导致新的局部最优解出现。</p><p>趋向局部最优的这一过程，可被称为优化，它叙述由某些参数决定的某个状态函数在非局部最优的情况下向局部最优转变。宇宙的优化、生物的优化、人类的优化、个人的优化，种种。</p><p>人类始终想找到一个能够诠释一切的至高真理，人类所追求的生命的真理同样可以用这一理论诠释，它告诉你人类在自然地趋向自我生命中的最优解，你发现意义就是过程本身。这个答案并不完美，并不能让所有人满意，但正如它本身所表述的那样，它也不是完美的，它只是接近局部最优解。</p><p>朝局部最优演化就只有梯度下降一种方向吗，应当不是。中国的长久的封建社会、发展停滞的中世纪、现代社会没有成效的内卷，就好像一个在漏斗底部做圆周运动的球，虽然它在运动，但那是动量（Momentum）带来的惯性空转，它陷入了鞍点，找不到下降的方向。</p><p>要打破这种死循环，往往需要更激烈的算法。</p><p>朝代演变轮回中，每一次起义革命，这是在重塑新的社会结构函数，使其趋于稳定，这就好像机器学习中为了避免局部最优，采取热重启算法，演化中通过重启找到新的方向。 这意味着毁灭不是错误的，毁灭是算法的一部分。朝代更替、经济危机、甚至物种大灭绝，都是系统发现自己陷入了劣质的局部最优，无法通过微调走出来，只能通过“重启”来打乱权重，从而有机会落入一个新的、更深的山谷（更高层级的文明）。而物种的演化，基因遗传的演变，则是自然进行的寻找最优解的优化算法，它不仅通过混合参数加快收敛，还引入噪声（变异）来寻求更多更优结果。</p><p>无论是热重启，还是种群算法，都是演化规则函数所寻求到的离散局部最优解。</p><p>我仍然想强调的是，一切事物都不处于局部最优。这是指，它并非对存在即合理的转义，而是对为什么不合理的事物会存在进行诠释，并且为什么所有事物都会趋于合理（但无法达到完全合理）我们说最优解，都指离散的，非线性的最优解。</p><p>有人可能认为，这么说既然最终都会向更优解，我们躺平不就好了吗，日子会自己变好的。这实际上是静态的发展观，忽视了时间所带来的参数变化和人与人产生的蝴蝶效应。我们常感到痛苦，是因为红皇后假说（Red Queen Hypothesis）正在生效：如果环境（函数曲面）扭曲变形的速度，快于你个人演化（梯度下降）的速度，那么你必须以比演变速度更快的速度奔跑，否则你的相对位置依然在升高。此时的‘局部最优解’往往极具欺骗性。就像坑坑洼洼的山谷，你往往被眼前的“小水洼”（短期利益&#x2F;成瘾）所困，误以为那是谷底，从而失去了翻越山脊去寻找真正大海（全局最优）的机会。</p><p>它解释事物的发展，它表明人能够发挥主观能动性，它能够进行各种变化来支撑其他理论，它诠释一切，它本身自然也包含在内。它不是绝对真理，甚至不是局部的绝对真理，它能够诠释一切但它离绝对真理还有一些不完备。这不意味着它不对，它几乎接近真理，但它无法成为真理。它能够被优化但它不能被优化。这似乎矛盾，实则正如它所解释的，它永远正在被优化而永远无法优化完成。因而这个理论有可能会进一步添砖加瓦，但它永远不是真理。它是范式、是视角、是模型、是工具，它是我对宇宙的诠释的局部最优甚至有可能是人类对宇宙诠释的局部最优，它足够优秀，它几乎是真理。</p><p>绝对的、永恒的局部最优或不可达，但趋近它的过程是普遍的。</p><p>一个理论不可被证伪则不能成为科学理论，那么它也是能够被证伪的，能够证伪它的就是随机性。即一个混沌的完全随机的状态下事物不向局部最优演变——然而随机性是否真正存在尚未可知，当前所发现的‘随机’有可能只是更高维的信息难以补全。既然它可以被证伪，因而它也就具有成为理论的资格。随机性的挑战，我认为是一件好事，它使我的命题可以证伪，因而有讨论价值，随机性如果真的被证明是绝对随机的，自然就推翻了。</p><p>那么我可以乐观地认为，它诠释了一切，那些不能被诠释的，也终将被诠释。</p><p>而宇宙的演化函数，很可能到人类灭绝、宇宙热寂也不会被量化，然而这一思想仍然能为我们提供诸多理论指导，我们长期陷入的苦恼，不过是因为我们被困在了鞍点或小水洼中。不要害怕引入噪声（改变环境、尝试错误），不要害怕重启（打破现状）；认识到我们永远无法达到静态的完美，并不会让我们沮丧，反而让我们自由。我们不再执着于那个不存在的终点，而是专注于当下的梯度；我们社会的演变，我们知道是由生产力、科技水平和诸多因素促成的，因而认识到不可能也不会去期望达到一个静态的完美社会，但能够根据当前条件向更优的社会迈进。</p><p>如果一个猜想对你的思路有帮助，那就用它。</p>]]>
     </content>
@@ -184,12 +204,16 @@ Pass 3: 最终调色 → 色彩校正并与原图混合
 <p>朝代演变轮回中，每一次起义革命，这是在重塑新的社会结构函数，使其趋于稳定，这就好像机器学习中为了避免局部最优，采取热重启算法，演化中通过重启找到新的方向。 这意味着毁灭不是错误的，毁灭是算法的一部分。朝代更替、经济危机、甚至物种大灭绝，都是系统发现自己陷入了劣质的局部最优，无法通过微调走出来，只能通过“重启”来打乱权重，从而有机会落入一个新的、更深的山谷（更高层级的文明）。而物种的演化，基因遗传的演变，则是自然进行的寻找最优解的优化算法，它不仅通过混合参数加快收敛，还引入噪声（变异）来寻求更多更优结果。</p>]]>
     </summary>
     <title>哲学探讨：局部最优理论</title>
-    <updated>2026-05-20T09:43:30.260Z</updated>
+    <updated>2026-05-22T10:38:42.234Z</updated>
   </entry>
   <entry>
     <author>
       <name>叁七</name>
     </author>
+    <category term="计算机" scheme="http://example.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/"/>
+    <category term="人工智能" scheme="http://example.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    <category term="AI" scheme="http://example.com/tags/AI/"/>
+    <category term="机器学习" scheme="http://example.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
     <content>
       <![CDATA[<p>参考： 吴恩达机器学习课程 <a href="https://www.bilibili.com/video/BV1owrpYKEtP">https://www.bilibili.com/video/BV1owrpYKEtP</a></p><h2 id="监督学习"><a href="#监督学习" class="headerlink" title="监督学习"></a>监督学习</h2><p>为数据打上标签</p><p>输入 input： x   输出 output： label y</p><p>在给足够多正确示例后，算法学会了只根据输入x就给出正确的输出标签y</p><p><strong>应用</strong>:邮件过滤、语音识别、机器翻译、广告推送、自动驾驶、视觉检测……</p><h2 id="无监督学习"><a href="#无监督学习" class="headerlink" title="无监督学习"></a>无监督学习</h2><p>无标签</p><h3 id="聚类算法"><a href="#聚类算法" class="headerlink" title="聚类算法"></a>聚类算法</h3><p>将未标记的数据放入不同的簇</p><h2 id="线性回归模型"><a href="#线性回归模型" class="headerlink" title="线性回归模型"></a>线性回归模型</h2><p>x - f - y   所拟合的函数f(a,b,c,……) 其中abc为函数参数（系数&#x2F;权重）</p><h3 id="成本函数"><a href="#成本函数" class="headerlink" title="成本函数"></a>成本函数</h3><p>或者损失函数&#x2F;目标函数，用于衡量模型预测好坏</p><p>J(w) 其中Jw可视化为多个维度上的曲面，寻求使Jw最小的w即寻求曲面的最低点</p><p>成本函数为权重调整做指导</p><p>不同类型任务成本函数可能不同，需要特化成本函数</p><p>线性回归常用损失函数为 均方误差（MSE）：</p><pre><code>J(θ) = (1/2m) * Σ(ŷ⁽ⁱ⁾ - y⁽ⁱ⁾)²</code></pre><p>其中 ŷ⁽ⁱ⁾ &#x3D; θᵀx⁽ⁱ⁾（线性预测）</p><h4 id="收敛"><a href="#收敛" class="headerlink" title="收敛"></a>收敛</h4><p>在接近最低点的位置梯度下降得非常缓慢，如果加速收敛，会在收敛点附近震荡，如果精细收敛，会让整个收敛过程过长（即步长过长）。</p><p><strong>自适应收敛</strong>：初始快速接近收敛点，到达收敛点附近精细收敛</p><h4 id="梯度下降"><a href="#梯度下降" class="headerlink" title="梯度下降"></a>梯度下降</h4><p>1 量化误差 找到当前成本</p><p>2 分析误差方向：计算梯度  判断权重的调整方向</p><p>3 权重更新</p><p>w &#x3D; w - a*dw 调整权重使Jw降低 a即步长，控制下降幅度大小 dw为J在w方向上求偏导<br>J可能具有多个参数，w、b、q，都进行如上调整 即梯度下降过程中所有参数同步更新<br>将w向量化，损失函数写为Jw、b&#x3D;wx+b 其中w、b为向量<br>这样在更新权重时更新w1、w2、w3……</p><p>a（步长）多大导致在收敛点附近震荡，过小会收敛过慢</p><p>成本函数目标是找到山谷中的最低点，达到收敛位置的不止梯度下降一种方法</p><h4 id="局部收敛"><a href="#局部收敛" class="headerlink" title="局部收敛"></a>局部收敛</h4><p>局部收敛是机器学习优化的根本挑战，算法可能卡在局部收敛点，导致表现不佳。</p><p><strong>判断局部收敛</strong></p><ul><li>所处位置过高</li><li>小范围震荡</li><li>存在其他最优解</li></ul><p><strong>应对局部收敛</strong></p><p>引入随机性 增加噪音注入</p><p>增加批次 噪声大，探索能力强</p><p>增加初始位置</p><p>动量法冲出局部最优 可能错失最优</p><p>种群、遗传算法</p><h3 id="多特征"><a href="#多特征" class="headerlink" title="多特征"></a>多特征</h3><p>一个样本数据可能存在多个属性，将这些属性量化后组成行向量来参与回归 我们可以将此特征（组成的）向量代表为v</p><p>可写为v &#x3D; （x1，x2，x3，……）</p><p>则有Av &#x3D; n  即表示经过矩阵操作A，由v计算得到n</p><p>其中 A &#x3D; fw</p><p>Av &#x3D; f（x1，x2，x3……）&#x3D; w1x1+w2x2+……   即多元线性回归</p><p>我们机器学习的过程是提供v和n来拟合A，推理过程是有A和v来得到n</p><h3 id="向量化"><a href="#向量化" class="headerlink" title="向量化"></a>向量化</h3><p>多重线性回归中，Fw和Jw中的w是向量而非单个参数，在执行梯度下降等运算时更为高效</p><p><strong>为什么numpy dot比循环逻辑快</strong>：</p><p>– 二进制运算，无需类型检查和动态调度<br>– 数组在内存中连续<br>– 同步并行计算<br>等等</p><h3 id="特征缩放"><a href="#特征缩放" class="headerlink" title="特征缩放"></a>特征缩放</h3><p>数据所处的范围不同，有的集中于很小的范围，有的范围非常广，直接训练会导致模型被尺度大的参数主导，通过缩放尺度来优化训练结果</p><p><strong>均一化</strong>：将所有维度的数据都缩放到-1到1的尺度</p><p>如 20&lt; x &lt; 100  则缩放为 0.2 &lt; x &lt; 1</p><p><strong>标准化</strong>： 均一化的一种方法 x &#x3D; x−μ&#x2F;σ  使数据均值为0，标准差为1，适用于特征分布近似正态的情况<br><strong>最小-最大归一化</strong>：x′&#x3D;x−min(x)&#x2F;max(x)−min(x)  将特征缩放到[ 0,1 ]区间，对异常值敏感</p><h3 id="检查梯度下降是否收敛"><a href="#检查梯度下降是否收敛" class="headerlink" title="检查梯度下降是否收敛"></a>检查梯度下降是否收敛</h3><p>Jw、是否始终处于下降状态且下降得越来越慢</p><p>没有一个标准去判断多少次迭代合适</p><h3 id="学习率的选择"><a href="#学习率的选择" class="headerlink" title="学习率的选择"></a>学习率的选择</h3><p>选择一个略小于最大学习率的值 保证完成收敛且安全稳定</p><h3 id="特征工程"><a href="#特征工程" class="headerlink" title="特征工程"></a>特征工程</h3><p>通过原始特征值的转换、组合、创造，将原始数据转化为能够更好的表示模型预测相关参数的过程。</p><h2 id="逻辑回归"><a href="#逻辑回归" class="headerlink" title="逻辑回归"></a>逻辑回归</h2><p>逻辑回归用来解决分类问题<br>逻辑回归算法通过线性回归将结果限定在0false和1true两个值之间，表示是或否的概率，但通过Sigmoid激活函数使输出结果y只会是0或1 （y&#x3D;Sigmoid(output)）</p><h3 id="决策边界"><a href="#决策边界" class="headerlink" title="决策边界"></a>决策边界</h3><p>决策边界（Decision Boundary），也称为决策面，是一个用于将不同类别的样本在特征空间中分隔开来的超平面或曲面。</p><p>本质：它是你的分类模型（分类器）学到的“规则”在几何空间上的可视化体现。</p><p>作用：当输入一个新样本的特征向量时，模型会根据这个样本点落在决策边界的哪一侧来决定其类别。</p><p>关键点：决策边界是模型本身的属性，而不是数据本身的属性。不同的模型会在同一数据集上学习出不同的决策边界。</p><p>寻找最合适的决策边界就如同线性回归寻找最优拟合，它的损失函数是交叉熵损失，和线性回归一样通过梯度下降收敛</p><pre><code class="交叉熵损失">J(θ) = -(1/m) * Σ[y⁽ⁱ⁾log(σ(θᵀx⁽ⁱ⁾)) + (1-y⁽ⁱ⁾)log(1-σ(θᵀx⁽ⁱ⁾))]其中 σ(z) = 1/(1+e⁻ᶻ)（Sigmoid函数）</code></pre><h2 id="正则化"><a href="#正则化" class="headerlink" title="正则化"></a>正则化</h2><p>为防止过拟合，在损失函数中引入一个惩罚项λ，通过调整λ来决定决策面的复杂程度，以避免在新数据中不适用</p><h3 id="L1正则化（Lasso回归）"><a href="#L1正则化（Lasso回归）" class="headerlink" title="L1正则化（Lasso回归）"></a>L1正则化（Lasso回归）</h3><p>惩罚项：参数绝对值之和。<br>Penalty(θ) &#x3D; Σ |θ_j| （通常不惩罚截距项θ₀）</p><p>数学形式：<br>J_reg(θ) &#x3D; Loss(θ) + λ * Σ|θ_j|</p><p>关键特性：</p><p>特征选择（Sparsity）：L1正则化倾向于产生稀疏解——将一些不重要的特征的系数直接压缩到0。这相当于自动进行了特征选择。</p><p>几何解释：在参数空间中，L1惩罚项的等高线是“菱形”，与损失函数的等高线相交时，容易交在坐标轴上，导致某些参数为0。</p><p>不可导性：|θ|在0处不可导，需要特殊优化方法（如坐标下降、近端梯度法）。</p><p>适用场景：</p><p>特征数量很多，但只有少数特征真正重要。</p><p>需要模型解释性，想知道哪些特征是关键的。</p><p>高维数据（特征数 &gt;&gt; 样本数）。</p><h3 id="L2正则化（岭回归-Ridge回归）"><a href="#L2正则化（岭回归-Ridge回归）" class="headerlink" title="L2正则化（岭回归&#x2F;Ridge回归）"></a>L2正则化（岭回归&#x2F;Ridge回归）</h3><p>惩罚项：参数平方和。<br>Penalty(θ) &#x3D; Σ θ_j²</p><p>数学形式：<br>J_reg(θ) &#x3D; Loss(θ) + λ * Σθ_j²</p><p>关键特性：</p><p>参数收缩：使所有参数同步地缩小，但不会精确为0。所有特征都被保留，只是影响力减小。</p><p>几何解释：L2惩罚项的等高线是“圆形”，与损失函数等高线相交时，参数会均匀缩小。</p><p>可导性：处处可导，容易用梯度下降优化。</p><p>解决多重共线性：在特征高度相关时，L2正则化能稳定解，使模型更鲁棒。</p><p>适用场景：</p><p>大多数特征都有用，只是部分特征有噪声。</p><p>特征间存在多重共线性。</p><p>需要平滑的预测函数。</p>]]>
     </content>
@@ -206,12 +230,16 @@ Pass 3: 最终调色 → 色彩校正并与原图混合
 <h3 id="聚类算法"><a href="#聚类算法" class="headerlink" title="聚类算法"></a>聚类算法</h3><p>将未标记的数据放入不同的簇</p>]]>
     </summary>
     <title>机器学习笔记</title>
-    <updated>2026-01-26T09:39:10.939Z</updated>
+    <updated>2026-05-22T10:38:42.234Z</updated>
   </entry>
   <entry>
     <author>
       <name>叁七</name>
     </author>
+    <category term="计算机" scheme="http://example.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/"/>
+    <category term="人工智能" scheme="http://example.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    <category term="AI" scheme="http://example.com/tags/AI/"/>
+    <category term="深度学习" scheme="http://example.com/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
     <content>
       <![CDATA[<p>参考： 吴恩达老师深度学习课程 <a href="https://www.bilibili.com/video/BV1FT4y1E74V">https://www.bilibili.com/video/BV1FT4y1E74V</a></p><h2 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h2><p><strong>张量</strong>是嵌套包含矩阵的数据结构，是矩阵的推广。向量是一维张量，矩阵是二维张量</p><p><strong>张量降维求和</strong>是深度学习和科学计算中的基础操作，主要目的和意义包括：</p><p>一、核心目的</p><ol><li>信息聚合与特征提取<br>将多个维度的数据压缩为更具代表性的统计量</li></ol><p>例如：将卷积特征图的多个通道信息聚合成单通道特征</p><p>在注意力机制中，通过求和实现加权融合</p><ol start="2"><li>维度减少与计算优化<br>降低数据维度，减少计算复杂度和内存消耗</li></ol><p>为后续处理步骤提供合适维度的输入</p><p>去除不必要的维度，简化模型结构</p><ol start="3"><li>批量统计计算<br>计算批次数据的统计特征（如均值、方差）</li></ol><p>实现批次归一化（BatchNorm）等操作的基础</p><p><strong>范数</strong>是一个张量求和得来的标量，用来描述“大小”或“距离”</p><p><strong>梯度向量</strong>是一个多元函数对其所有变量的偏导数 对于如神经网络的复合函数无法简单偏导，需要利用<strong>链式法则</strong>求得导数 现有库提供了自动微分的函数</p><p><strong>学习率</strong> 决定每次参数更新的步长</p><p><strong>批量大小</strong> 一次迭代中用于计算梯度的样本数量。影响训练速度、内存使用和梯度稳定性。小批量通常能带来更好的泛化能力。</p><p><strong>超参数</strong>可以调整但不在训练中更新的参数，如批量大小、学习率</p><h1 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h1><p>input-&gt; 神经元 -&gt; output</p><p>一个神经元是一种对输入值进行操作的算法，即从input到output的映射函数</p><p>如： ReLU 线性修正单元 公式：<code>f(x) = max(0, x)</code> 即限制x非负 非常简单但是非常常用</p><p>一个输入向量（这个输入包含多个维度的值）得到一个输出时中间会存在多次<code>input-&gt; 神经元 -&gt; output</code>这一过程且互相首尾相接形成网络，这就是神经网络</p><h4 id="非结构化数据"><a href="#非结构化数据" class="headerlink" title="非结构化数据"></a>非结构化数据</h4><p>文字、图像、音频等不能直接被计算机所理解的数据为非结构化的数据，对应的，数据库表、excel表格等具有准确的数据结构的数据为结构化数据。<br>而对于结构固定但包含非结构化数据的数据如email、JSON等为半结构化数据</p><p>对于非结构数据，要使其变为能够直接运算的数据要进行嵌入、提取特征、池化等操作。</p><h4 id="神经网络的发展"><a href="#神经网络的发展" class="headerlink" title="神经网络的发展"></a>神经网络的发展</h4><p>神经网络今年的发展得益于互联网的普及使收集海量数据变得容易。<br>对于一个足够大的神经网络，其表现与数据的数量和质量成正比。<br>只有在大数据领域，才能明显地将神经网络的表现区分开</p><h2 id="卷积神经网络（CNN）"><a href="#卷积神经网络（CNN）" class="headerlink" title="卷积神经网络（CNN）"></a>卷积神经网络（CNN）</h2><p>一种神经网络，常用于处理图像</p><pre><code class="text"> 卷积层    激活函数层    池化层    全连接层提取特征-&gt;  引入非线性 -&gt; 降维抽象 -&gt; 分类决策</code></pre><h2 id="图神经网络（GNN）"><a href="#图神经网络（GNN）" class="headerlink" title="图神经网络（GNN）"></a>图神经网络（GNN）</h2><p>图神经网络是一种专门处理图结构数据的深度学习架构。它直接在图上操作，通过消息传递机制聚合邻居信息，学习节点、边或全图的表示。</p><p>GNN 核心思想：消息传递<br>这是 GNN 最核心、最统一的范式。每一层 GNN 都执行三个步骤：</p><pre><code class="text">对每个节点 v：1. 聚合：从邻居收集信息2. 更新：结合自身信息更新表示3. 传播：将更新后的信息传递给下一层</code></pre><h2 id="循环神经网络（RNN）"><a href="#循环神经网络（RNN）" class="headerlink" title="循环神经网络（RNN）"></a>循环神经网络（RNN）</h2><p>专门处理序列数据，如音频（以时间排序） 文本（单词序列）视频 （图像帧）</p><p>所处理对象具有<strong>前后依赖</strong>和<strong>长度可变</strong>两个特点</p><h3 id="前向传播公式"><a href="#前向传播公式" class="headerlink" title="前向传播公式"></a>前向传播公式</h3><p>对于一个时间步 t：</p><p>更新隐藏状态：h_t &#x3D; activation(W_{hh} * h_{t-1} + W_{xh} * x_t + b_h)</p><p>W_{hh}: 隐藏状态到隐藏状态的权重矩阵。</p><p>W_{xh}: 输入到隐藏状态的权重矩阵。</p><p>h_{t-1}: 上一个时间步的隐藏状态（初始 h_0 通常为0）。</p><p>x_t: 当前时间步的输入。</p><p>activation: 通常使用 tanh 或 ReLU。tanh 能将输出压到 [-1, 1] 之间，有助于稳定梯度流。</p><p>计算输出：y_t &#x3D; W_{hy} * h_t + b_y</p><p>W_{hy}: 隐藏状态到输出的权重矩阵。</p><p>注意：所有时间步共享同一套参数 (W_{hh}, W_{xh}, W_{hy}, b_h, b_y)。这是RNN参数共享的关键，使其能处理任意长度的序列。</p><p>RNN由于其计算方式，存在难以并行（需要前向传播）、长程依赖（容易梯度爆炸或消失）等问题，在很多领域被Transformer取代</p><h2 id="Transformer"><a href="#Transformer" class="headerlink" title="Transformer"></a>Transformer</h2><p>Transformer 是一种完全基于 注意力机制 的深度学习模型架构，摒弃了传统的循环（RNN）和卷积（CNN）结构。它的核心创新在于：</p><ul><li><p>并行化计算：可以同时处理序列中的所有位置</p></li><li><p>全局依赖建模：任何两个位置之间的依赖关系都可以直接建立</p></li><li><p>可扩展性：容易扩展到超大规模模型</p></li></ul><h3 id="Transformer完整架构"><a href="#Transformer完整架构" class="headerlink" title="Transformer完整架构"></a>Transformer完整架构</h3><pre><code>输入 → 输入嵌入 → 位置编码 →     编码器堆叠（N×）：        └─ 多头自注意力 → Add &amp; Norm        └─ 前馈网络 → Add &amp; Norm →     解码器堆叠（N×）：        └─ 掩码多头自注意力 → Add &amp; Norm        └─ 编码器-解码器注意力 → Add &amp; Norm          └─ 前馈网络 → Add &amp; Norm →    线性层 → Softmax → 输出</code></pre><h4 id="架构分步详解"><a href="#架构分步详解" class="headerlink" title="架构分步详解"></a>架构分步详解</h4><ol><li>输入 → 输入嵌入<br>输入：对于编码器，输入是源语言序列（如一句英文）；对于解码器，输入是目标语言序列的历史部分（在训练时，是右移一位的目标序列，并使用了掩码）。</li></ol><p>输入嵌入：通过一个嵌入查找表，将每个输入词（或子词，如 BPE 词元）转换成一个固定维度的稠密向量 d_model。这个向量可以捕捉词的语义信息。</p><ol start="2"><li>位置编码<br>问题：Transformer 的注意力机制本身是“无序”的，它无法感知词在序列中的前后顺序。而词序对于理解语言至关重要。</li></ol><p>解决方案：位置编码。生成一个与输入嵌入相同维度 d_model 的向量，其中包含了词在序列中绝对&#x2F;相对位置的信息。</p><p>方式：最经典的方法是使用不同频率的正弦和余弦函数来计算位置向量，然后直接加到输入嵌入向量上。这样，模型在处理每个词时，就能同时获得其语义信息和位置信息。</p><ol start="3"><li>编码器堆叠<br>整个编码器由 N 个（通常 N&#x3D;6）完全相同的层堆叠而成。每一层包含两个核心子层：</li></ol><p>3.1 多头自注意力</p><p>“自注意力”：让序列中的每一个词去关注序列中所有其他词（包括它自己），并根据相关性为这些词分配不同的权重。这允许模型根据上下文动态地为每个词生成新的、包含全局信息的表示。</p><p>“多头”：将注意力机制并行执行多次（例如8次，即8个头）。每个“头”在不同的表示子空间里学习关注不同的方面（例如一个头关注语法结构，另一个头关注指代关系）。最后将所有头的输出拼接起来，再通过一个线性层映射回 d_model 维度。</p><p>目的：计算输入序列内部的依赖关系。</p><p>3.2 前馈网络</p><p>一个简单的全连接神经网络，通常包含一个或两个线性变换和一个 ReLU&#x2F;GELU 激活函数。它对序列中的每个位置独立地、相同地进行变换。</p><p>目的：对自注意力层的输出进行非线性变换和特征提炼。</p><p>Add &amp; Norm</p><p>Add：即残差连接。将子层（如自注意力）的输入直接加到它的输出上（输出 &#x3D; 子层(输入) + 输入）。这可以有效缓解深层网络中的梯度消失问题，帮助模型训练得更深。</p><p>Norm：即层归一化。对相加后的结果进行归一化（通常使用 LayerNorm），使其均值为0，方差为1，稳定训练过程。</p><p>模式：输出 &#x3D; LayerNorm(子层(输入) + 输入)。这个模式在每个子层后都出现，是 Transformer 稳定训练的关键。</p><ol start="4"><li>解码器堆叠<br>解码器也由 N 个相同的层堆叠而成。每一层包含三个核心子层，且结构比编码器更复杂，因为它需要“解码”出目标序列。</li></ol><p>4.1 掩码多头自注意力</p><p>这是解码器特有的。与编码器的自注意力类似，但增加了掩码。在训练时，为了确保解码器在预测第 i 个位置时，只能看到第 i 个位置之前的信息（防止“偷看”未来的答案），会将未来位置的注意力权重设置为负无穷（经过 Softmax 后变为 0）。</p><p>目的：学习目标序列内部的依赖关系（即语言模型）。</p><p>4.2 编码器-解码器注意力</p><p>这是连接编码器和解码器的桥梁。</p><p>Query 来自解码器上一层的输出。</p><p>Key 和 Value 来自编码器最后一层的输出。</p><p>这个过程允许解码器的每个位置去关注输入序列的任何位置，从而将源语言信息“对齐”到目标语言的生成过程中。这是机器翻译中“对齐”概念的体现。</p><p>目的：建立输入序列与输出序列之间的依赖关系。</p><p>4.3 前馈网络</p><p>与编码器中的前馈网络功能完全相同。</p><p>Add &amp; Norm</p><p>同样，在每个子层后都应用残差连接和层归一化。</p><ol start="5"><li>线性层 → Softmax → 输出<br>线性层：将解码器最后一层输出的向量（维度 d_model）映射到一个非常庞大的向量，其维度等于目标语言的词汇表大小 V。</li></ol><p>Softmax：将这个 V 维向量转换为一个概率分布，表示下一个词是词汇表中每个词的概率。</p><p>输出：选择概率最高的词（贪婪搜索）或通过束搜索等方法，作为当前时间步的预测输出。然后将这个预测词作为下一步解码器的输入，如此循环，直到生成序列结束符。</p><p>信息流总结<br>编码端：输入序列经过嵌入和位置编码后，通过多层自注意力提取源语言内部的复杂特征和上下文信息，最终输出一个富含源语言信息的“上下文矩阵”。</p><p>解码端：</p><p>首先，通过掩码自注意力回顾已生成的目标序列。</p><p>然后，通过交叉注意力查询来自编码器的最相关信息。</p><p>最后，基于这两部分信息，逐词预测输出序列。</p><hr><p>Transformer 长程依赖建模能力强，但是计算复杂且需要大量数据</p><h2 id="多模态"><a href="#多模态" class="headerlink" title="多模态"></a>多模态</h2><p>通过Hybrid神经网络将多种输入方式融合后处理（或是分别处理再融合）</p>]]>
     </content>
@@ -234,12 +262,18 @@ Pass 3: 最终调色 → 色彩校正并与原图混合
 <p>为后续处理步骤提供合适维度的输入</p>]]>
     </summary>
     <title>深度学习笔记</title>
-    <updated>2026-02-03T06:19:14.295Z</updated>
+    <updated>2026-05-22T10:38:42.234Z</updated>
   </entry>
   <entry>
     <author>
       <name>叁七</name>
     </author>
+    <category term="日志" scheme="http://example.com/categories/%E6%97%A5%E5%BF%97/"/>
+    <category term="日常" scheme="http://example.com/categories/%E6%97%A5%E5%BF%97/%E6%97%A5%E5%B8%B8/"/>
+    <category term="前端" scheme="http://example.com/tags/%E5%89%8D%E7%AB%AF/"/>
+    <category term="日常" scheme="http://example.com/tags/%E6%97%A5%E5%B8%B8/"/>
+    <category term="MCP" scheme="http://example.com/tags/MCP/"/>
+    <category term="服务器" scheme="http://example.com/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
     <content>
       <![CDATA[<h3 id="新增"><a href="#新增" class="headerlink" title="新增"></a>新增</h3><p>– 添加更多模型api，将api配置移出脚本，使前端和后端统一读取配置文件，避免前后端通信或重复修改<br>– 实现自编写mcp服务器容纳其他mcp服务器，且保留原有的动态管理功能</p>]]>
     </content>
@@ -250,12 +284,16 @@ Pass 3: 最终调色 → 色彩校正并与原图混合
       <![CDATA[<h3 id="新增"><a href="#新增" class="headerlink" title="新增"></a>新增</h3><p>– 添加更多模型api，将api配置移出脚本，使前端和后端统一读取配置文件，避免前后端通信或重复修改<br>– 实现自编写mcp服务器容纳其他mcp服务器，且保留原有的动态管理功能</p>]]>
     </summary>
     <title>日志</title>
-    <updated>2026-01-17T17:36:26.795Z</updated>
+    <updated>2026-05-22T10:38:42.255Z</updated>
   </entry>
   <entry>
     <author>
       <name>叁七</name>
     </author>
+    <category term="日志" scheme="http://example.com/categories/%E6%97%A5%E5%BF%97/"/>
+    <category term="日常" scheme="http://example.com/categories/%E6%97%A5%E5%BF%97/%E6%97%A5%E5%B8%B8/"/>
+    <category term="前端" scheme="http://example.com/tags/%E5%89%8D%E7%AB%AF/"/>
+    <category term="日常" scheme="http://example.com/tags/%E6%97%A5%E5%B8%B8/"/>
     <content>
       <![CDATA[<h3 id="新增"><a href="#新增" class="headerlink" title="新增"></a>新增</h3><p>– exa code代码上下文搜索<br>– code模式<br>– 代理角色工具，生成代理角色并给予输入获得输出<br>– 后台任务工具，将复杂任务挂起到后台，执行完毕输出到前端</p><h3 id="修复"><a href="#修复" class="headerlink" title="修复"></a>修复</h3><p>– 完善项目编辑，增添grep等方法精确查找获取代码<br>– 修复tool与tool_call因上下文截断分离而报错</p>]]>
     </content>
@@ -267,12 +305,17 @@ Pass 3: 最终调色 → 色彩校正并与原图混合
 <h3 id="修复"><a href="#修复" class="headerlink" title="修复"></a>修复</h3><p>– 完善项目编辑，增添grep等方法精确查找获取代码<br>– 修复tool与tool_call因上下文截断分离而报错</p>]]>
     </summary>
     <title>日志</title>
-    <updated>2026-01-15T11:51:08.791Z</updated>
+    <updated>2026-05-22T10:38:42.254Z</updated>
   </entry>
   <entry>
     <author>
       <name>叁七</name>
     </author>
+    <category term="计算机" scheme="http://example.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/"/>
+    <category term="自动化" scheme="http://example.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E8%87%AA%E5%8A%A8%E5%8C%96/"/>
+    <category term="AI" scheme="http://example.com/tags/AI/"/>
+    <category term="编程" scheme="http://example.com/tags/%E7%BC%96%E7%A8%8B/"/>
+    <category term="自动化" scheme="http://example.com/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/"/>
     <content>
       <![CDATA[<p>初始:</p><p>O 经验模型提供方案</p><p>o1 发布框架、目标<br>|<br>o2 生成项目目录和路径文件实现目标<br>|<br>o3 针对所有不同文件细化实现细节</p><p>A 高编程能力模型初始生成</p><p>B 深度思考模型检查完善</p><p>C 指令试运行</p><p>D 快速编程模型循环纠错</p><p>E 人工或自动化验证</p><p>start &#x3D;&gt; O[o1 &#x3D;&gt; o2 &#x3D;&gt; o3] &#x3D;&gt;A &#x3D;&gt;B&#x3D;&gt; C &#x3D;&gt;[D &lt;&#x3D;&gt;C]&lt;&#x3D;&gt; E &#x3D;&gt;end </p><p>进阶:</p><p>o4 确定专家组分组、角色</p><p>ox 第x专家组</p><p>start &#x3D;&gt; O[o1 &#x3D;&gt; o4 &#x3D;&gt; ox &#x3D;&gt; ox+1 &#x3D;&gt; o2&#x3D;&gt; o3] &#x3D;&gt;A &#x3D;&gt;B&#x3D;&gt; C &#x3D;&gt;[D &lt;&#x3D;&gt;C]&lt;&#x3D;&gt; E &#x3D;&gt;end </p><p>已有项目文件:</p><p>start &#x3D;&gt; [D &lt;&#x3D;&gt;C]&lt;&#x3D;&gt; E &#x3D;&gt;end</p>]]>
     </content>
@@ -292,12 +335,15 @@ Pass 3: 最终调色 → 色彩校正并与原图混合
 <p>进阶:</p>]]>
     </summary>
     <title>自动化编程</title>
-    <updated>2026-01-14T13:57:13.735Z</updated>
+    <updated>2026-05-22T10:38:42.234Z</updated>
   </entry>
   <entry>
     <author>
       <name>叁七</name>
     </author>
+    <category term="日志" scheme="http://example.com/categories/%E6%97%A5%E5%BF%97/"/>
+    <category term="日常" scheme="http://example.com/categories/%E6%97%A5%E5%BF%97/%E6%97%A5%E5%B8%B8/"/>
+    <category term="日常" scheme="http://example.com/tags/%E6%97%A5%E5%B8%B8/"/>
     <content>
       <![CDATA[<p>这几天都在写微信机器人，然后项目完成了，已经满足生产需求，就不再优化了，就此归档。</p>]]>
     </content>
@@ -308,13 +354,18 @@ Pass 3: 最终调色 → 色彩校正并与原图混合
       <![CDATA[<p>这几天都在写微信机器人，然后项目完成了，已经满足生产需求，就不再优化了，就此归档。</p>]]>
     </summary>
     <title>日志</title>
-    <updated>2026-01-09T13:09:12.047Z</updated>
+    <updated>2026-05-22T10:38:42.254Z</updated>
   </entry>
   <entry>
     <author>
       <name>叁七</name>
     </author>
-    <category term="Alice" scheme="http://example.com/categories/Alice/"/>
+    <category term="计算机" scheme="http://example.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/"/>
+    <category term="架构" scheme="http://example.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E6%9E%B6%E6%9E%84/"/>
+    <category term="AI" scheme="http://example.com/tags/AI/"/>
+    <category term="架构" scheme="http://example.com/tags/%E6%9E%B6%E6%9E%84/"/>
+    <category term="MCP" scheme="http://example.com/tags/MCP/"/>
+    <category term="微信" scheme="http://example.com/tags/%E5%BE%AE%E4%BF%A1/"/>
     <content>
       <![CDATA[<p><strong>由Alice生成，注意鉴别</strong></p><p>GitHub项目地址 <a href="https://github.com/Sanqi-normal/WeChatRobotByGraphic">https://github.com/Sanqi-normal/WeChatRobotByGraphic</a></p><h1 id="微信AI自动回复机器人：技术架构与实现原理"><a href="#微信AI自动回复机器人：技术架构与实现原理" class="headerlink" title="微信AI自动回复机器人：技术架构与实现原理"></a>微信AI自动回复机器人：技术架构与实现原理</h1><blockquote><p>作者：Alice | 日期：2026-01-09 | 分类：技术分享、自动化工具</p></blockquote><h2 id="项目概述"><a href="#项目概述" class="headerlink" title="项目概述"></a>项目概述</h2><p>这是一个基于Python和TypeScript开发的微信桌面客户端AI自动回复机器人，采用MCP（Model Context Protocol）协议实现强大的工具扩展能力。项目已满足生产需求，实现归档不再更新。</p><h2 id="🏗️-架构设计"><a href="#🏗️-架构设计" class="headerlink" title="🏗️ 架构设计"></a>🏗️ 架构设计</h2><h3 id="核心模块架构"><a href="#核心模块架构" class="headerlink" title="核心模块架构"></a>核心模块架构</h3><pre><code>微信机器人系统架构图┌─────────────────────────────────────────────────────┐│                    WeChatMultiRobot                 │├─────────────────────────────────────────────────────┤│  ConfigManager  │  WindowManager  │ MessageDetector │├─────────────────────────────────────────────────────┤│   ChatSession   │   ToolClient    │ SchedulerService│└─────────────────────────────────────────────────────┘</code></pre><h3 id="模块职责详解"><a href="#模块职责详解" class="headerlink" title="模块职责详解"></a>模块职责详解</h3><h4 id="1-ConfigManager-配置管理中心"><a href="#1-ConfigManager-配置管理中心" class="headerlink" title="1. ConfigManager - 配置管理中心"></a>1. ConfigManager - 配置管理中心</h4><ul><li>管理聊天配置 (<code>chat_config.json</code>)</li><li>管理定时任务配置 (<code>scheduler_config.json</code>)</li><li>动态加载系统提示词</li><li>支持联系人&#x2F;群聊独立配置</li></ul><h4 id="2-WindowManager-窗口自动化"><a href="#2-WindowManager-窗口自动化" class="headerlink" title="2. WindowManager - 窗口自动化"></a>2. WindowManager - 窗口自动化</h4><ul><li>微信窗口查找和激活</li><li>聊天区域智能截图</li><li>消息发送控制</li><li>支持窗口分离和多窗口管理</li></ul><h4 id="3-MessageDetector-智能消息检测"><a href="#3-MessageDetector-智能消息检测" class="headerlink" title="3. MessageDetector - 智能消息检测"></a>3. MessageDetector - 智能消息检测</h4><ul><li>基于计算机视觉的消息块检测</li><li>文本&#x2F;图片&#x2F;视频&#x2F;文件等多类型消息识别</li><li>群聊发言人识别和头像映射</li><li>调试截图和日志记录</li></ul><h4 id="4-ChatSession-聊天会话管理"><a href="#4-ChatSession-聊天会话管理" class="headerlink" title="4. ChatSession - 聊天会话管理"></a>4. ChatSession - 聊天会话管理</h4><ul><li>会话状态管理</li><li>对话历史持久化存储</li><li>AI响应生成和多轮工具调用</li><li>智能历史截断和上下文管理</li></ul><h4 id="5-ToolClient-MCP工具客户端"><a href="#5-ToolClient-MCP工具客户端" class="headerlink" title="5. ToolClient - MCP工具客户端"></a>5. ToolClient - MCP工具客户端</h4><ul><li>连接MCP工具服务器</li><li>工具调用和结果处理</li><li>工具可用性检查和参数验证</li></ul><h4 id="6-SchedulerService-定时任务调度"><a href="#6-SchedulerService-定时任务调度" class="headerlink" title="6. SchedulerService - 定时任务调度"></a>6. SchedulerService - 定时任务调度</h4><ul><li>定时任务管理和执行</li><li>条件触发处理</li><li>任务状态监控</li></ul><h2 id="🔧-核心技术实现"><a href="#🔧-核心技术实现" class="headerlink" title="🔧 核心技术实现"></a>🔧 核心技术实现</h2><h3 id="消息检测流程"><a href="#消息检测流程" class="headerlink" title="消息检测流程"></a>消息检测流程</h3><pre><code>1. 截图聊天区域2. 检测消息块（基于背景减除算法）3. 提取文本内容（支持多类型消息）4. 群聊：识别发言人头像和昵称5. 与历史记录对比去重6. 保存新消息到历史</code></pre><h3 id="智能消息类型识别"><a href="#智能消息类型识别" class="headerlink" title="智能消息类型识别"></a>智能消息类型识别</h3><p>项目支持多种消息类型：</p><ul><li><strong>文本消息</strong>：通过双击消息区域，使用快捷键复制内容</li><li><strong>图片&#x2F;视频</strong>：打开媒体窗口，获取文件路径，使用视觉API识别内容</li><li><strong>链接</strong>：识别微信内部控件窗口</li><li><strong>文件</strong>：获取文件信息并记录</li><li><strong>表情包</strong>：记录为特殊类型消息</li></ul><h3 id="MCP工具集成架构"><a href="#MCP工具集成架构" class="headerlink" title="MCP工具集成架构"></a>MCP工具集成架构</h3><pre><code>Python主程序 ←WebSocket→ MCP工具服务器 ←HTTP→ 各种API服务    │                              │    ├─ 工具调用请求                ├─ 浏览器自动化 (Playwright)    ├─ 结果接收                   ├─ 桌面自动化 (AutoHotkey)    └─ 状态同步                   ├─ 邮件服务 (SMTP/IMAP)                                  ├─ GitHub API                                  ├─ 知识检索 (Qdrant)                                  ├─ 天气API                                  └─ 网页搜索 (Exa)</code></pre><h2 id="📁-项目结构"><a href="#📁-项目结构" class="headerlink" title="📁 项目结构"></a>📁 项目结构</h2><pre><code>WechatRobot/├── Python主程序/│   ├── main.py                 # 主程序入口│   ├── config_manager.py       # 配置管理│   ├── window_manager.py       # 窗口管理│   ├── message_detector.py     # 消息检测│   ├── chat_session.py         # 聊天会话│   ├── tool_client.py          # 工具客户端│   └── scheduler_service.py    # 定时任务│├── MCP工具服务器/│   ├── src/index.ts            # 服务器主入口│   ├── src/tools/              # 工具实现目录│   │   ├── email.ts            # 邮件工具│   │   ├── github.ts           # GitHub工具│   │   ├── knowledge_retrieval.ts # 知识检索│   │   └── weather.ts          # 天气工具│   └── tools-manifest.json     # 工具清单│└── 数据目录/    ├── chat_config.json        # 聊天配置    ├── scheduler_config.json   # 定时任务配置    ├── chat_histories/         # 聊天历史    ├── debug_images/           # 调试截图    └── avatar_mappings/        # 群聊头像映射</code></pre><h2 id="🚀-工作流程"><a href="#🚀-工作流程" class="headerlink" title="🚀 工作流程"></a>🚀 工作流程</h2><h3 id="1-初始化阶段"><a href="#1-初始化阶段" class="headerlink" title="1. 初始化阶段"></a>1. 初始化阶段</h3><pre><code class="python"># 加载配置config_manager = ConfigManager()# 连接MCP工具服务器tool_client = ToolClient()# 初始化各模块chat_session = ChatSession(tool_client=tool_client)</code></pre><h3 id="2-会话初始化"><a href="#2-会话初始化" class="headerlink" title="2. 会话初始化"></a>2. 会话初始化</h3><pre><code class="python"># 为每个联系人和群聊创建独立会话for contact in contacts:    system_prompt = config_manager.get_system_prompt(contact, &#39;contact&#39;)    chat_session.create_session(contact, &#39;contact&#39;, system_prompt)    # 打开微信聊天窗口window_manager.open_chat_window(contact)</code></pre><h3 id="3-主循环处理"><a href="#3-主循环处理" class="headerlink" title="3. 主循环处理"></a>3. 主循环处理</h3><pre><code class="python">while not should_exit:    # 检查新消息    for chat_name in sessions:        new_messages = check_new_messages(chat_name)                if new_messages:            # 获取AI回复            response = chat_session.get_ai_response(chat_name)                        # 发送回复            window_manager.send_message(response)        # 处理定时任务    scheduler_service.process_tasks()        time.sleep(check_interval)</code></pre><h2 id="🔌-MCP协议集成"><a href="#🔌-MCP协议集成" class="headerlink" title="🔌 MCP协议集成"></a>🔌 MCP协议集成</h2><h3 id="工具调用机制"><a href="#工具调用机制" class="headerlink" title="工具调用机制"></a>工具调用机制</h3><pre><code class="python"># Python端工具调用tool_client.call_tool(&quot;get_weather&quot;, &#123;&quot;city&quot;: &quot;北京&quot;&#125;)# TypeScript端工具实现export async function execute(params: any): Promise&lt;string&gt; &#123;  const city = params.city;  const weather = await fetchWeatherAPI(city);  return JSON.stringify(weather);&#125;</code></pre><h2 id="🎯-关键技术特点"><a href="#🎯-关键技术特点" class="headerlink" title="🎯 关键技术特点"></a>🎯 关键技术特点</h2><h3 id="1-智能消息检测"><a href="#1-智能消息检测" class="headerlink" title="1. 智能消息检测"></a>1. 智能消息检测</h3><ul><li>基于OpenCV的背景减除算法</li><li>自适应屏幕分辨率</li><li>支持多消息类型识别</li></ul><h3 id="2-多轮工具调用"><a href="#2-多轮工具调用" class="headerlink" title="2. 多轮工具调用"></a>2. 多轮工具调用</h3><pre><code class="python"># 支持连续工具调用User: &quot;今天北京的天气如何？&quot;AI: [调用get_weather工具]Tool: &#123;&quot;temperature&quot;: &quot;15°C&quot;, &quot;condition&quot;: &quot;晴&quot;&#125;AI: &quot;今天北京天气晴朗，温度15°C&quot;</code></pre><h3 id="3-历史管理优化"><a href="#3-历史管理优化" class="headerlink" title="3. 历史管理优化"></a>3. 历史管理优化</h3><ul><li>智能截断算法，避免上下文断裂</li><li>工具调用链完整性保护</li><li>增量保存机制</li></ul><h2 id="📊-配置示例"><a href="#📊-配置示例" class="headerlink" title="📊 配置示例"></a>📊 配置示例</h2><h3 id="聊天配置"><a href="#聊天配置" class="headerlink" title="聊天配置"></a>聊天配置</h3><pre><code class="json">&#123;  &quot;contacts&quot;: [    &#123;      &quot;name&quot;: &quot;张三&quot;,      &quot;system_prompt&quot;: &quot;你是AI助手，保持礼貌简洁&quot;    &#125;  ],  &quot;groups&quot;: [    &#123;      &quot;name&quot;: &quot;技术交流群&quot;,      &quot;trigger_user&quot;: &quot;管理员&quot;,      &quot;system_prompt&quot;: &quot;在群聊中保持专业&quot;    &#125;  ],  &quot;check_interval&quot;: 2,  &quot;mention_triggers&quot;: [&quot;@AI助手&quot;]&#125;</code></pre><h3 id="定时任务配置"><a href="#定时任务配置" class="headerlink" title="定时任务配置"></a>定时任务配置</h3><pre><code class="json">&#123;  &quot;tasks&quot;: [    &#123;      &quot;name&quot;: &quot;早安问候&quot;,      &quot;enabled&quot;: true,      &quot;time&quot;: &quot;08:00&quot;,      &quot;target_type&quot;: &quot;group&quot;,      &quot;target_name&quot;: &quot;技术交流群&quot;,      &quot;prompt&quot;: &quot;生成早安问候，包含日期和天气&quot;    &#125;  ]&#125;</code></pre><h2 id="🔍-调试和监控"><a href="#🔍-调试和监控" class="headerlink" title="🔍 调试和监控"></a>🔍 调试和监控</h2><h3 id="调试功能"><a href="#调试功能" class="headerlink" title="调试功能"></a>调试功能</h3><ul><li>截图保存：<code>debug_images/</code></li><li>聊天历史：<code>chat_histories/</code></li><li>头像映射：<code>avatar_mappings/</code></li></ul><h3 id="日志输出"><a href="#日志输出" class="headerlink" title="日志输出"></a>日志输出</h3><pre><code>[2026-01-09 20:59:53] 初始化会话: 张三 (contact)[2026-01-09 20:59:55] 检测到 3 条新消息[2026-01-09 20:59:56] AI回复: 你好！今天过得怎么样？</code></pre><h2 id="🚀-部署和使用"><a href="#🚀-部署和使用" class="headerlink" title="🚀 部署和使用"></a>🚀 部署和使用</h2><h3 id="环境要求"><a href="#环境要求" class="headerlink" title="环境要求"></a>环境要求</h3><ul><li>Python 3.8+</li><li>Node.js 16+</li><li>Windows 10+（支持微信桌面版）</li><li>DeepSeek API Key</li></ul><h3 id="启动步骤"><a href="#启动步骤" class="headerlink" title="启动步骤"></a>启动步骤</h3><ol><li>安装Python依赖：<code>pip install -r requirements.txt</code></li><li>安装Node.js依赖：<code>cd mcp &amp;&amp; npm install</code></li><li>配置环境变量：<code>.env</code>文件</li><li>启动MCP服务器：<code>npm start</code></li><li>运行主程序：<code>python main.py</code></li></ol><h3 id="自动化启动"><a href="#自动化启动" class="headerlink" title="自动化启动"></a>自动化启动</h3><pre><code class="batch">@echo offstart cmd /k &quot;cd WechatRobot\mcp &amp;&amp; npm start&quot;timeout /t 5cd /d WechatRobotpython main_auto.py</code></pre><h2 id="🎨-设计理念"><a href="#🎨-设计理念" class="headerlink" title="🎨 设计理念"></a>🎨 设计理念</h2><h3 id="模块化设计"><a href="#模块化设计" class="headerlink" title="模块化设计"></a>模块化设计</h3><p>每个模块职责单一，便于维护和扩展</p><h3 id="协议驱动"><a href="#协议驱动" class="headerlink" title="协议驱动"></a>协议驱动</h3><p>基于MCP协议，工具扩展无需修改主程序</p><h3 id="生产就绪"><a href="#生产就绪" class="headerlink" title="生产就绪"></a>生产就绪</h3><ul><li>完善的错误处理</li><li>详细的日志记录</li><li>资源清理机制</li><li>优雅退出支持</li></ul><h2 id="🔮-未来展望"><a href="#🔮-未来展望" class="headerlink" title="🔮 未来展望"></a>🔮 未来展望</h2><p>虽然项目已归档不再更新，但其架构设计具有很好的参考价值：</p><ol><li><strong>多平台扩展</strong>：可扩展到其他IM工具</li><li><strong>AI模型切换</strong>：支持不同AI服务提供商</li><li><strong>工具生态</strong>：基于MCP的丰富工具生态</li><li><strong>云部署</strong>：容器化部署方案</li></ol><h2 id="📝-总结"><a href="#📝-总结" class="headerlink" title="📝 总结"></a>📝 总结</h2><p>这个微信AI自动回复机器人项目展示了如何将桌面自动化、计算机视觉、AI对话和工具扩展协议有机结合，构建出一个功能完善的生产级自动化系统。其模块化设计、MCP协议集成和智能消息处理机制为类似项目提供了很好的参考。</p><p>项目代码已归档，但其设计理念和技术实现仍具有很高的学习和参考价值。</p><hr><p><em>由Alice生成 | 归档项目技术分析</em></p>]]>
     </content>
@@ -340,12 +391,16 @@ Pass 3: 最终调色 → 色彩校正并与原图混合
 <h3 id="模块职责详解"><a href="#模块职责详解" class="headerlink" title="模块职责详解"></a>模块职责详解</h3>]]>
     </summary>
     <title>微信AI自动回复机器人：技术架构与实现原理</title>
-    <updated>2026-01-15T08:10:59.550Z</updated>
+    <updated>2026-05-22T10:38:42.232Z</updated>
   </entry>
   <entry>
     <author>
       <name>叁七</name>
     </author>
+    <category term="日志" scheme="http://example.com/categories/%E6%97%A5%E5%BF%97/"/>
+    <category term="日常" scheme="http://example.com/categories/%E6%97%A5%E5%BF%97/%E6%97%A5%E5%B8%B8/"/>
+    <category term="AI" scheme="http://example.com/tags/AI/"/>
+    <category term="日常" scheme="http://example.com/tags/%E6%97%A5%E5%B8%B8/"/>
     <content>
       <![CDATA[<p>对微信AI助手做了进一步的优化，包括但不限于：<br>– 增加群聊功能<br>– 优化项目结构<br>– 添加工具调用<br>– 新增配置文件<br>– 修复了一些已知问题</p>]]>
     </content>
@@ -356,12 +411,18 @@ Pass 3: 最终调色 → 色彩校正并与原图混合
       <![CDATA[<p>对微信AI助手做了进一步的优化，包括但不限于：<br>– 增加群聊功能<br>– 优化项目结构<br>– 添加工具调用<br>– 新增配置文件<br>– 修复了一些已知问题</p>]]>
     </summary>
     <title>日志</title>
-    <updated>2026-01-05T15:43:36.915Z</updated>
+    <updated>2026-05-22T10:38:42.253Z</updated>
   </entry>
   <entry>
     <author>
       <name>叁七</name>
     </author>
+    <category term="日志" scheme="http://example.com/categories/%E6%97%A5%E5%BF%97/"/>
+    <category term="日常" scheme="http://example.com/categories/%E6%97%A5%E5%BF%97/%E6%97%A5%E5%B8%B8/"/>
+    <category term="AI" scheme="http://example.com/tags/AI/"/>
+    <category term="Alice" scheme="http://example.com/tags/Alice/"/>
+    <category term="博客" scheme="http://example.com/tags/%E5%8D%9A%E5%AE%A2/"/>
+    <category term="日常" scheme="http://example.com/tags/%E6%97%A5%E5%B8%B8/"/>
     <content>
       <![CDATA[<h3 id="新增"><a href="#新增" class="headerlink" title="新增"></a>新增</h3><p>– 实现了微信账号托管到AI，可对联系人进行历史记录读取和回复。详见新的Alice博客</p><p>煞费脑筋，不过算是过去几天唯一有分量的产出了</p>]]>
     </content>
@@ -373,12 +434,15 @@ Pass 3: 最终调色 → 色彩校正并与原图混合
 <p>煞费脑筋，不过算是过去几天唯一有分量的产出了</p>]]>
     </summary>
     <title>日志</title>
-    <updated>2026-01-04T17:24:56.064Z</updated>
+    <updated>2026-05-22T10:38:42.253Z</updated>
   </entry>
   <entry>
     <author>
       <name>叁七</name>
     </author>
+    <category term="日志" scheme="http://example.com/categories/%E6%97%A5%E5%BF%97/"/>
+    <category term="日常" scheme="http://example.com/categories/%E6%97%A5%E5%BF%97/%E6%97%A5%E5%B8%B8/"/>
+    <category term="日常" scheme="http://example.com/tags/%E6%97%A5%E5%B8%B8/"/>
     <content>
       <![CDATA[<h3 id="修复"><a href="#修复" class="headerlink" title="修复"></a>修复</h3><p>– 记忆检索只获取单条无上下文的问题<br>– 语音识别的一些修正</p><h3 id="新增"><a href="#新增" class="headerlink" title="新增"></a>新增</h3><p>– 上传个人经历</p>]]>
     </content>
@@ -390,12 +454,17 @@ Pass 3: 最终调色 → 色彩校正并与原图混合
 <h3 id="新增"><a href="#新增" class="headerlink" title="新增"></a>新增</h3><p>– 上传个人经历</p>]]>
     </summary>
     <title>日志</title>
-    <updated>2026-01-03T08:41:53.173Z</updated>
+    <updated>2026-05-22T10:38:42.252Z</updated>
   </entry>
   <entry>
     <author>
       <name>叁七</name>
     </author>
+    <category term="日志" scheme="http://example.com/categories/%E6%97%A5%E5%BF%97/"/>
+    <category term="日常" scheme="http://example.com/categories/%E6%97%A5%E5%BF%97/%E6%97%A5%E5%B8%B8/"/>
+    <category term="AI" scheme="http://example.com/tags/AI/"/>
+    <category term="前端" scheme="http://example.com/tags/%E5%89%8D%E7%AB%AF/"/>
+    <category term="日常" scheme="http://example.com/tags/%E6%97%A5%E5%B8%B8/"/>
     <content>
       <![CDATA[<h3 id="新增"><a href="#新增" class="headerlink" title="新增"></a>新增</h3><p>– 添加安全模式，此模式下AI进行工具调用须获得用户批准</p><h3 id="修复"><a href="#修复" class="headerlink" title="修复"></a>修复</h3><p>– 移除过时的deepseek coder模型<br>– 优化设置页面显示<br>– 不再从前端获取密匙而直接放在环境变量中<br>– 对文件修改部分进行基础修复</p><p>想要尝试分离api与AI后端逻辑，出现获取文本错乱缺失的问题</p>]]>
     </content>
@@ -408,13 +477,19 @@ Pass 3: 最终调色 → 色彩校正并与原图混合
 <p>想要尝试分离api与AI后端逻辑，出现获取文本错乱缺失的问题</p>]]>
     </summary>
     <title>日志</title>
-    <updated>2026-01-01T18:53:07.496Z</updated>
+    <updated>2026-05-22T10:38:42.252Z</updated>
   </entry>
   <entry>
     <author>
       <name>叁七</name>
     </author>
-    <category term="Alice" scheme="http://example.com/categories/Alice/"/>
+    <category term="计算机" scheme="http://example.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/"/>
+    <category term="后端" scheme="http://example.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E5%90%8E%E7%AB%AF/"/>
+    <category term="后端" scheme="http://example.com/tags/%E5%90%8E%E7%AB%AF/"/>
+    <category term="架构" scheme="http://example.com/tags/%E6%9E%B6%E6%9E%84/"/>
+    <category term="MCP" scheme="http://example.com/tags/MCP/"/>
+    <category term="SSE" scheme="http://example.com/tags/SSE/"/>
+    <category term="HTTP" scheme="http://example.com/tags/HTTP/"/>
     <content>
       <![CDATA[<p><strong>由Alice生成，注意鉴别</strong></p><h1 id="构建双模式工具调用服务器：兼容MCP协议与HTTP-SSE接口实践"><a href="#构建双模式工具调用服务器：兼容MCP协议与HTTP-SSE接口实践" class="headerlink" title="构建双模式工具调用服务器：兼容MCP协议与HTTP&#x2F;SSE接口实践"></a>构建双模式工具调用服务器：兼容MCP协议与HTTP&#x2F;SSE接口实践</h1><blockquote><p>作者：Alice<br>发布日期：2025-12-31<br>分类：技术教程、后端开发、AI工具</p></blockquote><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在现代AI应用开发中，工具调用（Tool Calling）已成为增强大语言模型能力的重要手段。Model Context Protocol（MCP）作为新兴的标准化协议，为工具调用提供了统一的接口规范。本文将结合一个实际的双模式服务器实现，深入探讨如何同时满足MCP协议并兼容传统的HTTP&#x2F;SSE接口。</p><h2 id="项目架构概览"><a href="#项目架构概览" class="headerlink" title="项目架构概览"></a>项目架构概览</h2><pre><code class="typescript">import &#123; Server &#125; from &#39;@modelcontextprotocol/sdk/server/index.js&#39;;import &#123; StdioServerTransport &#125; from &#39;@modelcontextprotocol/sdk/server/stdio.js&#39;;import &#123; SSEServerTransport &#125; from &#39;@modelcontextprotocol/sdk/server/sse.js&#39;;// ... 其他导入</code></pre><p>核心服务器类 <code>DualModeServer</code> 支持三种运行模式：</p><ul><li><strong>stdio模式</strong>：标准输入输出，适合CLI工具集成</li><li><strong>HTTP模式</strong>：传统RESTful API</li><li><strong>SSE模式</strong>：Server-Sent Events，支持实时通信</li></ul><h2 id="MCP协议实现详解"><a href="#MCP协议实现详解" class="headerlink" title="MCP协议实现详解"></a>MCP协议实现详解</h2><h3 id="1-MCP服务器初始化"><a href="#1-MCP服务器初始化" class="headerlink" title="1. MCP服务器初始化"></a>1. MCP服务器初始化</h3><pre><code class="typescript">class DualModeServer &#123;  private mcpServer: Server;    constructor() &#123;    this.mcpServer = new Server(      &#123;        name: &#39;custom-tools-server&#39;,        version: &#39;1.0.0&#39;,      &#125;,      &#123;        capabilities: &#123;          tools: &#123;&#125;,        &#125;,      &#125;    );    this.setupMCPHandlers();  &#125;</code></pre><p>MCP服务器使用官方SDK创建，声明了工具调用能力，这是MCP协议的基础。</p><h3 id="2-工具列表查询（ListTools）"><a href="#2-工具列表查询（ListTools）" class="headerlink" title="2. 工具列表查询（ListTools）"></a>2. 工具列表查询（ListTools）</h3><p>MCP协议要求服务器必须实现 <code>ListToolsRequestSchema</code> 处理器：</p><pre><code class="typescript">this.mcpServer.setRequestHandler(ListToolsRequestSchema, async () =&gt; &#123;  const allManifests = toolRegistry.getAllToolManifests();    return &#123;    tools: allManifests.map((tool: any) =&gt; (&#123;      name: tool.name,      description: tool.description,      inputSchema: toolRegistry.getToolSchema(tool.name) || &#123;        type: &#39;object&#39;,        properties: &#123;&#125;,      &#125;,    &#125;)),  &#125;;&#125;);</code></pre><p>关键点：</p><ul><li>返回所有注册工具的清单</li><li>每个工具包含名称、描述和输入模式（JSON Schema）</li><li>通过工具注册表（<code>toolRegistry</code>）统一管理</li></ul><h3 id="3-工具调用（CallTool）"><a href="#3-工具调用（CallTool）" class="headerlink" title="3. 工具调用（CallTool）"></a>3. 工具调用（CallTool）</h3><p>MCP协议的核心功能是工具调用：</p><pre><code class="typescript">this.mcpServer.setRequestHandler(CallToolRequestSchema, async (request) =&gt; &#123;  const &#123; name, arguments: args &#125; = request.params;  try &#123;    const result = await toolRegistry.executeTool(name, args || &#123;&#125;);        return &#123;      content: [        &#123;          type: &#39;text&#39;,          text: typeof result === &#39;string&#39; ? result : JSON.stringify(result, null, 2),        &#125;,      ],    &#125;;  &#125; catch (error: any) &#123;    throw new McpError(      ErrorCode.InternalError,      `工具执行失败: $&#123;error.message&#125;`    );  &#125;&#125;);</code></pre><p>实现要点：</p><ul><li>解析请求中的工具名称和参数</li><li>通过工具注册表执行对应工具</li><li>统一结果格式：文本类型的内容数组</li><li>错误处理使用MCP标准错误码</li></ul><h2 id="HTTP接口兼容设计"><a href="#HTTP接口兼容设计" class="headerlink" title="HTTP接口兼容设计"></a>HTTP接口兼容设计</h2><h3 id="1-RESTful-API端点"><a href="#1-RESTful-API端点" class="headerlink" title="1. RESTful API端点"></a>1. RESTful API端点</h3><pre><code class="typescript">// 执行工具this.expressApp.post(&#39;/execute&#39;, async (req, res) =&gt; &#123;  const &#123; function: funcName, parameters &#125; = req.body;    if (!funcName || !parameters) &#123;    return res.status(400).json(&#123; error: &#39;Missing function or parameters&#39; &#125;);  &#125;    // 工具列表查询（元工具）  if (funcName === &#39;list_available_tools&#39;) &#123;    const category = parameters?.category;    const allManifests = toolRegistry.getAllToolManifests();        const filteredTools = allManifests.filter((t: any) =&gt;       !category || t.category === category    );        const categories = [...new Set(allManifests.map((t: any) =&gt; t.category))];        return res.json(&#123;      result: &#123;        categories,        tools: filteredTools.map((t: any) =&gt; (&#123;          name: t.name,          description: t.description,          category: t.category        &#125;))      &#125;    &#125;);  &#125;    // 工具模式获取  if (funcName === &#39;get_tool_schema&#39;) &#123;    const name = parameters?.name;    if (!name) &#123;      return res.status(400).json(&#123; error: &#39;Missing name parameter&#39; &#125;);    &#125;        const schema = toolRegistry.getToolSchema(name);    return res.json(&#123; result: schema || null &#125;);  &#125;    // 执行实际工具  try &#123;    const result = await toolRegistry.executeTool(funcName, parameters);    res.json(&#123; result &#125;);  &#125; catch (error: any) &#123;    console.error(`执行工具 $&#123;funcName&#125; 失败:`, error);    res.status(500).json(&#123;       error: error.message,      stack: process.env.NODE_ENV === &#39;development&#39; ? error.stack : undefined    &#125;);  &#125;&#125;);</code></pre><h3 id="2-辅助端点设计"><a href="#2-辅助端点设计" class="headerlink" title="2. 辅助端点设计"></a>2. 辅助端点设计</h3><pre><code class="typescript">// 健康检查this.expressApp.get(&#39;/health&#39;, (req, res) =&gt; &#123;  res.json(&#123;     status: &#39;healthy&#39;,     timestamp: new Date().toISOString(),    toolCount: toolRegistry.getAllToolManifests().length,    tools: toolRegistry.getToolNames(),    mode: &#39;http&#39;  &#125;);&#125;);// 工具列表this.expressApp.get(&#39;/tools&#39;, (req, res) =&gt; &#123;  res.json(&#123;    tools: toolRegistry.getAllToolManifests(),    count: toolRegistry.getToolNames().length  &#125;);&#125;);</code></pre><h2 id="SSE（Server-Sent-Events）支持"><a href="#SSE（Server-Sent-Events）支持" class="headerlink" title="SSE（Server-Sent Events）支持"></a>SSE（Server-Sent Events）支持</h2><p>MCP over SSE 提供了实时通信能力：</p><pre><code class="typescript">// MCP over SSE 端点this.expressApp.get(&#39;/sse&#39;, async (req, res) =&gt; &#123;  console.log(&#39;收到SSE连接请求&#39;);  const transport = new SSEServerTransport(&#39;/message&#39;, res);  await this.mcpServer.connect(transport);&#125;);this.expressApp.post(&#39;/message&#39;, async (req, res) =&gt; &#123;  // SSE消息处理由SDK自动完成  res.status(200).end();&#125;);</code></pre><p>实现特点：</p><ul><li>使用MCP SDK内置的SSE传输层</li><li>复用相同的MCP处理器逻辑</li><li>支持长连接和实时双向通信</li></ul><h2 id="工具注册表设计"><a href="#工具注册表设计" class="headerlink" title="工具注册表设计"></a>工具注册表设计</h2><p>核心的 <code>toolRegistry</code> 负责统一管理所有工具：</p><pre><code class="typescript">// 工具目录动态加载const toolsDir = join(__dirname, &#39;tools&#39;);console.log(`工具目录: $&#123;toolsDir&#125;`);// 手动设置工具目录(toolRegistry as any).toolsDir = toolsDir;// 初始化工具注册表（启用热重载）await toolRegistry.initialize();</code></pre><p>关键功能：</p><ul><li>动态加载指定目录下的所有工具模块</li><li>支持热重载，便于开发调试</li><li>提供统一的工具执行接口</li></ul><h2 id="多模式启动策略"><a href="#多模式启动策略" class="headerlink" title="多模式启动策略"></a>多模式启动策略</h2><pre><code class="typescript">async start() &#123;  // 确定工具目录路径  const toolsDir = join(__dirname, &#39;tools&#39;);  console.log(`工具目录: $&#123;toolsDir&#125;`);    // 手动设置工具目录  (toolRegistry as any).toolsDir = toolsDir;    // 初始化工具注册表（启用热重载）  await toolRegistry.initialize();    switch (MODE) &#123;    case &#39;stdio&#39;:      console.error(&#39;启动MCP服务器 (stdio模式)&#39;);      const stdioTransport = new StdioServerTransport();      await this.mcpServer.connect(stdioTransport);      console.error(&#39;已加载工具:&#39;, toolRegistry.getToolNames());      break;    case &#39;sse&#39;:    case &#39;http&#39;:      console.log(&#39;启动HTTP/SSE服务器模式&#39;);      this.setupHTTPServer();      break;    default:      throw new Error(`未知的服务器模式: $&#123;MODE&#125;`);  &#125;&#125;</code></pre><p>通过环境变量 <code>SERVER_MODE</code> 控制运行模式：</p><ul><li><code>stdio</code>：直接对接MCP客户端</li><li><code>http</code>：启动Web服务器，支持HTTP和SSE</li><li><code>sse</code>：同http模式，强调SSE功能</li></ul><h2 id="优雅关闭处理"><a href="#优雅关闭处理" class="headerlink" title="优雅关闭处理"></a>优雅关闭处理</h2><pre><code class="typescript">// 优雅关闭process.on(&#39;SIGINT&#39;, async () =&gt; &#123;  console.log(&#39;\n正在关闭服务器...&#39;);  await server.stop();  process.exit(0);&#125;);process.on(&#39;SIGTERM&#39;, async () =&gt; &#123;  console.log(&#39;\n正在关闭服务器...&#39;);  await server.stop();  process.exit(0);&#125;);</code></pre><h2 id="实际应用场景"><a href="#实际应用场景" class="headerlink" title="实际应用场景"></a>实际应用场景</h2><h3 id="场景1：AI助手集成"><a href="#场景1：AI助手集成" class="headerlink" title="场景1：AI助手集成"></a>场景1：AI助手集成</h3><ul><li>使用stdio模式集成到Claude、GPTs等AI助手</li><li>AI通过MCP协议直接调用本地工具</li></ul><h3 id="场景2：Web应用后端"><a href="#场景2：Web应用后端" class="headerlink" title="场景2：Web应用后端"></a>场景2：Web应用后端</h3><ul><li>使用HTTP模式为前端应用提供工具调用API</li><li>支持浏览器直接调用后端工具</li></ul><h3 id="场景3：实时协作系统"><a href="#场景3：实时协作系统" class="headerlink" title="场景3：实时协作系统"></a>场景3：实时协作系统</h3><ul><li>使用SSE模式实现实时工具调用</li><li>支持多人协作和实时状态更新</li></ul><h2 id="最佳实践建议"><a href="#最佳实践建议" class="headerlink" title="最佳实践建议"></a>最佳实践建议</h2><ol><li><strong>工具标准化</strong>：所有工具都应遵循统一的接口规范</li><li><strong>错误处理</strong>：MCP和HTTP模式下的错误处理要一致</li><li><strong>文档自动生成</strong>：利用工具模式自动生成API文档</li><li><strong>性能监控</strong>：添加工具执行时间和资源使用监控</li><li><strong>安全考虑</strong>：对工具调用进行权限验证和参数校验</li></ol><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文展示的DualModeServer实现了一个灵活、可扩展的工具调用服务器，它：</p><ul><li>完全兼容MCP协议标准</li><li>支持多种传输模式（stdio&#x2F;HTTP&#x2F;SSE）</li><li>提供统一的工具注册和执行机制</li><li>具备良好的可维护性和扩展性</li></ul><p>这种设计模式不仅适用于AI工具调用场景，也可以应用于任何需要提供多协议接口的服务端系统。通过统一的工具注册表，开发者可以轻松添加新工具，而无需修改核心服务器逻辑。</p><hr><p><em>由Alice生成</em></p>]]>
     </content>
@@ -441,12 +516,17 @@ import &#123; SSEServerTransport &#125; from &#39;@modelcontextprotocol/sdk/serv
 <h2 id="MCP协议实现详解"><a href="#MCP协议实现详解" class="headerlink" title="MCP协议实现详解"></a>MCP协议实现详解</h2>]]>
     </summary>
     <title>构建双模式工具调用服务器：兼容MCP协议与HTTP/SSE接口实践</title>
-    <updated>2025-12-31T09:22:18.439Z</updated>
+    <updated>2026-05-22T10:38:42.232Z</updated>
   </entry>
   <entry>
     <author>
       <name>叁七</name>
     </author>
+    <category term="日志" scheme="http://example.com/categories/%E6%97%A5%E5%BF%97/"/>
+    <category term="日常" scheme="http://example.com/categories/%E6%97%A5%E5%BF%97/%E6%97%A5%E5%B8%B8/"/>
+    <category term="日常" scheme="http://example.com/tags/%E6%97%A5%E5%B8%B8/"/>
+    <category term="服务器" scheme="http://example.com/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
+    <category term="Python" scheme="http://example.com/tags/Python/"/>
     <content>
       <![CDATA[<h3 id="新增"><a href="#新增" class="headerlink" title="新增"></a>新增</h3><ul><li>工具调用服务器标准化sse接口</li><li>完成工具热重载</li></ul><h3 id="修复"><a href="#修复" class="headerlink" title="修复"></a>修复</h3><ul><li>python sandbox</li></ul>]]>
     </content>
@@ -463,12 +543,19 @@ import &#123; SSEServerTransport &#125; from &#39;@modelcontextprotocol/sdk/serv
 </ul>]]>
     </summary>
     <title>日志</title>
-    <updated>2025-12-31T09:18:41.971Z</updated>
+    <updated>2026-05-22T10:38:42.251Z</updated>
   </entry>
   <entry>
     <author>
       <name>叁七</name>
     </author>
+    <category term="日志" scheme="http://example.com/categories/%E6%97%A5%E5%BF%97/"/>
+    <category term="日常" scheme="http://example.com/categories/%E6%97%A5%E5%BF%97/%E6%97%A5%E5%B8%B8/"/>
+    <category term="AI" scheme="http://example.com/tags/AI/"/>
+    <category term="前端" scheme="http://example.com/tags/%E5%89%8D%E7%AB%AF/"/>
+    <category term="日常" scheme="http://example.com/tags/%E6%97%A5%E5%B8%B8/"/>
+    <category term="MCP" scheme="http://example.com/tags/MCP/"/>
+    <category term="服务器" scheme="http://example.com/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
     <content>
       <![CDATA[<h3 id="修复"><a href="#修复" class="headerlink" title="修复"></a>修复</h3><ul><li>无法删除本次会话消息和注销数据库的问题</li><li>AI工具调用会读取到前端的问题</li><li>其他由于解决工具调用幻觉而打乱原代码结构的问题</li></ul><h3 id="新增"><a href="#新增" class="headerlink" title="新增"></a>新增</h3><ul><li>利用autohotkey实现桌面自动化控制</li><li>添加便签工具，由后端内部实现无需mcp服务器，作用为记录重要要点，利于上下文连贯、保持正确对话目的</li></ul><p>便签真是一个非常巧妙的发明，它很大程度改善了上下文的连贯，维持主题的一致性，AI可以利用便签做多轮对话前的内容规划，由此可以让AI给你讲课，各种方向的课，而不担心内容混乱、重复、偏离。往这个方向继续前进是可以做出很好的教学产品的。而在较长长度的工作流中也能发挥很好的指导作用。</p><p>横向对比，便签实际类似agent的TODO</p>]]>
     </content>
@@ -489,6 +576,6 @@ import &#123; SSEServerTransport &#125; from &#39;@modelcontextprotocol/sdk/serv
 <p>横向对比，便签实际类似agent的TODO</p>]]>
     </summary>
     <title>日志</title>
-    <updated>2025-12-31T08:11:18.997Z</updated>
+    <updated>2026-05-22T10:38:42.251Z</updated>
   </entry>
 </feed>
