@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="utf-8">
   <title>叁七のblog</title>
@@ -11,7 +11,7 @@
 <meta property="og:url" content="http://example.com/AI/index.html">
 <meta property="og:site_name" content="叁七のblog">
 <meta property="og:description" content="这是一个假装自己是命令行的AI，找出它的破绽                    Alice Shell：$~                      body {         font-family: &#39;Courier New&#39;, monospace;         background: #000 !important;         margin: 0;         padd">
-<meta property="og:locale" content="en_US">
+<meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-11-30T10:54:25.596Z">
 <meta property="article:modified_time" content="2025-11-30T10:54:25.596Z">
 <meta property="article:author" content="叁七">
@@ -47,7 +47,8 @@
 
 <script src="//testingcf.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
 
-<script src="/js/iconfont.js?v=1.1.0" ></script>
+
+    <!--[if lt IE 9]>
 
 
   
@@ -66,18 +67,22 @@
         <span id="top-progress-num">0%</span>
     </div>
 </div>
-<div style="display: none">
-  <input class="theme_blog_path" value="">
-  <input id="theme_shortcut" value="true" />
-  <input id="page_shortcut" value="false" />
-  <input id="theme_highlight_on" value="true" />
-  <input id="theme_code_copy" value="true" />
-</div>
+<script>
+  window.THEME_CONFIG = {
+    blog_path: "/",
+    highlight_on: true,
+    highlight_copy: true,
+    i18n_search_empty: "没有找到内容，更换下搜索词试试吧~"
+  };
+</script>
 
-  <!-- 磁带播放器样式由 arknights.styl 统一处理 -->
+  <!-- 磁带播放器样式统一处理 -->
 
 <div class="layout-container">
     <aside class="sidebar">
+    <div class="sidebar-close" id="sidebar-close">
+        <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+    </div>
     <a class="brand site_url" href="/">
         <svg class="brand-icon" viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2zm0 4l6 14H6l6-14z"/><path d="M11 10h2v4h-2zm0 5h2v2h-2z"/></svg>
         <div class="brand-text">
@@ -91,7 +96,7 @@
         
         <li class="nav-item ">
             <a class="site_url" href="/">
-                <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                <img class="nav-icon" src="/img/navigation/%E9%A6%96%E9%A1%B5.svg" alt="首页">
                 <div class="nav-item-text">
                     <span class="zh">首页</span>
                     <span class="en">HOME</span>
@@ -101,7 +106,7 @@
         
         <li class="nav-item ">
             <a class="site_url" href="/photo">
-                <svg viewBox="0 0 24 24"><path d="M22 16V4c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2zm-11-4l2.03 2.71L16 11l4 5H8l3-4zM2 6v14c0 1.1.9 2 2 2h14v-2H4V6H2z"/></svg>
+                <img class="nav-icon" src="/img/navigation/%E7%9B%B8%E5%86%8C.svg" alt="相册">
                 <div class="nav-item-text">
                     <span class="zh">相册</span>
                     <span class="en">PHOTO</span>
@@ -111,7 +116,7 @@
         
         <li class="nav-item ">
             <a class="site_url" href="/novel">
-                <svg viewBox="0 0 24 24"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
+                <img class="nav-icon" src="/img/navigation/%E5%B0%8F%E8%AF%B4.svg" alt="小说">
                 <div class="nav-item-text">
                     <span class="zh">小说</span>
                     <span class="en">NOVEL</span>
@@ -121,7 +126,7 @@
         
         <li class="nav-item ">
             <a class="site_url" href="/AI">
-                <svg viewBox="0 0 24 24"><path d="M19 8h-1.07A4.48 4.48 0 0 0 13 4.07V3h2V1h-2v1.07A4.49 4.49 0 0 0 9 2.07V1H7v2h2v1.07A4.48 4.48 0 0 0 6.07 8H5a3 3 0 0 0-3 3v6a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-6a3 3 0 0 0-3-3zM8 14a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z m8 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/></svg>
+                <img class="nav-icon" src="/img/navigation/AI.svg" alt="AI">
                 <div class="nav-item-text">
                     <span class="zh">AI</span>
                     <span class="en">AI</span>
@@ -144,21 +149,30 @@
                 <div class="user-id">#2026</div>
             </div>
         </div>
+        
         <div class="user-desc">计算机专业本科生，<br>每天不知道在忙什么。</div>
 
         <div class="social-label">你也能在以下地方遇到我</div>
         <div class="social-links">
-            <a class="social-btn" title="GitHub" href="https://github.com/Sanqi-normal" target="_blank">
-                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12c0-5.52-4.48-10-10-10z"/></svg>
-            </a>
-            <a class="social-btn" title="Bilibili" href="https://space.bilibili.com/2140541511" target="_blank">
-                <svg viewBox="0 0 24 24"><path d="M7 2l-1 2H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3l-1-2H7zm1 6h8c.55 0 1 .45 1 1v4c0 .55-.45 1-1 1H8c-.55 0-1-.45-1-1V9c0-.55.45-1 1-1zm1 2v2h2v-2H9zm4 0v2h2v-2h-2z"/></svg>
-            </a>
+            
+                
+                    <a class="social-btn" title="github" href="https://github.com/Sanqi-normal" target="_blank">
+                        <img src="/img/social/github.svg" alt="github">
+                    </a>
+                
+                    <a class="social-btn" title="bilibili" href="https://space.bilibili.com/2140541511" target="_blank">
+                        <img src="/img/social/bilibili.svg" alt="bilibili">
+                    </a>
+                
+            
         </div>
     </div>
 </aside>
 
     <header class="top-bar">
+    <div class="menu-toggle" id="menu-toggle">
+        <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+    </div>
     <div class="search-box fade-up-wait">
         <div class="search-filter-container">
             <svg class="search-filter-icon" viewBox="0 0 24 24"><path d="M3 18h6v-2H3v2zM3 6v2h18V6H3zm0 7h12v-2H3v2z"/></svg>
@@ -182,7 +196,7 @@
         
             <a class="site_url" href="/categories/%E6%97%A5%E5%BF%97/">日志</a>
         
-        <a class="site_url" href="/about">关于</a>
+        <a class="site_url" href="/about/">关于</a>
     </div>
     <div class="sys-status fade-up-wait" id="sys-status">
         <svg viewBox="0 0 100 30" id="visualizer-svg" style="cursor: pointer;" data-title="播放音乐">
@@ -202,8 +216,10 @@
         </div>
         <div class="sys-text">
             <span><span class="big">23</span><span class="sys-month">/05</span><span class="sys-year">/2026</span></span>
-            
             <span>169 BLOG</span>
+            
+            <span id="busuanzi_container_site_uv" style="display:none"><span id="busuanzi_value_site_uv"></span> VISITORS</span>
+            
         </div>
     </div>
 </header>
@@ -734,9 +750,9 @@ Hoffen的博客
                                     
                                         
                         <li class="cat-list-item">
-                            <a class="site_url" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E6%B8%97%E9%80%8F/">
-                                <span class="cat-list-link">渗透</span>
-                                <span class="cat-list-count">5</span>
+                            <a class="site_url" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/Web/">
+                                <span class="cat-list-link">Web</span>
+                                <span class="cat-list-count">10</span>
                             </a>
                             
                         </li>
@@ -754,9 +770,19 @@ Hoffen的博客
                                     
                                         
                         <li class="cat-list-item">
-                            <a class="site_url" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/Web/">
-                                <span class="cat-list-link">Web</span>
-                                <span class="cat-list-count">10</span>
+                            <a class="site_url" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%BC%96%E7%A8%8B/">
+                                <span class="cat-list-link">编程</span>
+                                <span class="cat-list-count">3</span>
+                            </a>
+                            
+                        </li>
+                    
+                                    
+                                        
+                        <li class="cat-list-item">
+                            <a class="site_url" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E6%B8%97%E9%80%8F/">
+                                <span class="cat-list-link">渗透</span>
+                                <span class="cat-list-count">5</span>
                             </a>
                             
                         </li>
@@ -777,16 +803,6 @@ Hoffen的博客
                             <a class="site_url" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">
                                 <span class="cat-list-link">编程语言</span>
                                 <span class="cat-list-count">1</span>
-                            </a>
-                            
-                        </li>
-                    
-                                    
-                                        
-                        <li class="cat-list-item">
-                            <a class="site_url" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%BC%96%E7%A8%8B/">
-                                <span class="cat-list-link">编程</span>
-                                <span class="cat-list-count">3</span>
                             </a>
                             
                         </li>
@@ -995,8 +1011,6 @@ Hoffen的博客
                             
                         
                             
-                        
-                            
                                 
                         <li class="cat-list-item">
                             <a class="site_url" href="/categories/%E6%97%85%E8%A1%8C/">
@@ -1042,6 +1056,10 @@ Hoffen的博客
                             
                         </li>
                     
+                            
+                        
+                            
+                        
                             
                         
                             
@@ -1100,8 +1118,6 @@ Hoffen的博客
                         
                             
                         
-                            
-                        
                     </ul>
                 </div>
             </div>
@@ -1118,9 +1134,9 @@ Hoffen的博客
     <div class="footer-logo">
         <svg viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2zm0 4l6 14H6l6-14z"/></svg>
     </div>
-    <div class="footer-right">POWERED BY HEXO | THEME: 3-HEXO (ARKNIGHTS-INSPIRED)</div>
+    <div class="footer-right">POWERED BY HEXO | THEME: TECH</div>
     
-    <input type="hidden" id="yelog_site_word_count" value="156k">
+    <input type="hidden" id="tech_site_word_count" value="156k">
     <div style="display: none">
         <span id="busuanzi_value_site_uv"></span>
         <span id="busuanzi_value_site_pv"></span>
@@ -1196,7 +1212,9 @@ Hoffen的博客
     </div>
     
     <!-- 侧边指示器/感应区 -->
-    <div class="toolbar-trigger"></div>
+    <div class="toolbar-trigger">
+        <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+    </div>
 </div>
 
 <script src="/js/toolbar.js?v=1.1.0" ></script>
@@ -1208,9 +1226,6 @@ Hoffen的博客
         /*渲染对应的表格样式*/
         
             $("#post .pjax table").addClass("green_title");
-        
-
-        /*渲染打赏样式*/
         
 
         /*高亮代码块行号*/
@@ -1495,9 +1510,6 @@ Hoffen的博客
         
     }
 
-    /*打赏页面隐藏与展示*/
-    
-
 </script>
 
 <!--加入行号的高亮代码块样式-->
@@ -1526,13 +1538,13 @@ Hoffen的博客
     }
     
 
-    /* 背景图样式 — 已由arknights主题管理 */
+    /* 背景图样式 */
 
 
     /*引用块样式*/
     
 
-    /*文章列表背景图 — 已由arknights主题管理*/
+    /*文章列表背景图*/
 
     
 </style>
@@ -1610,13 +1622,16 @@ Hoffen的博客
 <div class="mobile-menus">
     
     
+    <a class="dynamic-menu "   href="/">首页</a>
+    
+    
     <a class="dynamic-menu site_url"   href="/photo">相册</a>
     
     
     <a class="dynamic-menu site_url"   href="/novel">小说</a>
     
     
-    <a class="dynamic-menu " target="_self"   href="/AI">Ai</a>
+    <a class="dynamic-menu " target="_self"   href="/AI">AI</a>
     
     
 </div>

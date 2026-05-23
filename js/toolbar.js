@@ -3,16 +3,39 @@
         var $toolbar = $('#right-toolbar');
         var $container = $('.main-wrapper');
         
-        // 1. 鼠标位置检测 (边缘呼出)
+        // 1. 鼠标位置检测 (边缘呼出) - 仅限桌面端
+        var toolbarTicking = false;
         $(document).on('mousemove', function(e) {
-            var screenWidth = $(window).width();
-            var mouseX = e.pageX;
-            
-            // 进入右侧极窄区域 (例如 40px) 或悬停在工具栏上时展开
-            if (mouseX > screenWidth - 40 || $toolbar.is(':hover')) {
-                $toolbar.addClass('active');
-            } else {
-                $toolbar.removeClass('active');
+            if ($(window).width() <= 768) return;
+            if (!toolbarTicking) {
+                window.requestAnimationFrame(function() {
+                    var screenWidth = $(window).width();
+                    var mouseX = e.pageX;
+                    
+                    // 进入右侧极窄区域 (例如 40px) 或悬停在工具栏上时展开
+                    if (mouseX > screenWidth - 40 || $toolbar.is(':hover')) {
+                        $toolbar.addClass('active');
+                    } else {
+                        $toolbar.removeClass('active');
+                    }
+                    toolbarTicking = false;
+                });
+                toolbarTicking = true;
+            }
+        });
+
+        // 移动端悬浮球点击
+        $('.toolbar-trigger').on('click', function(e) {
+            e.stopPropagation();
+            $toolbar.toggleClass('active');
+        });
+
+        // 点击其他地方收起工具栏 (移动端)
+        $(document).on('click', function(e) {
+            if ($(window).width() <= 768) {
+                if (!$toolbar.is(e.target) && $toolbar.has(e.target).length === 0) {
+                    $toolbar.removeClass('active');
+                }
             }
         });
 

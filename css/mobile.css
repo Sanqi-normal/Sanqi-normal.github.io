@@ -1,4 +1,28 @@
 /* ================= 移动端响应式 ================= */
+/* 基础移动端组件样式 */
+.menu-toggle {
+  display: none;
+  cursor: pointer;
+  padding: 5px;
+}
+.menu-toggle svg {
+  width: 24px;
+  height: 24px;
+  fill: var(--text-main);
+}
+.sidebar-close {
+  display: none;
+  cursor: pointer;
+  padding: 5px;
+}
+.sidebar-close svg {
+  width: 24px;
+  height: 24px;
+  fill: var(--text-main);
+}
+.right-toolbar .toolbar-trigger {
+  display: none;
+}
 @media screen and (max-width: 1024px) {
   .sidebar {
     width: 220px;
@@ -40,20 +64,33 @@
   .top-bar {
     padding: 0 20px;
     gap: 20px;
+    left: 220px !important;
   }
   article {
     padding: 1em;
   }
 }
 @media screen and (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+    margin-right: 15px;
+  }
   .sidebar {
     width: 0;
     overflow: hidden;
     transition: width 0.3s ease;
-    z-index: 200;
+    z-index: 2000;
+    left: 0 !important;
   }
   .sidebar.mobile-open {
     width: 260px;
+  }
+  .sidebar-close {
+    display: block;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    z-index: 10;
   }
   .main-wrapper {
     margin-left: 0;
@@ -73,15 +110,29 @@
     padding: 0 15px;
     gap: 10px;
     height: 60px;
+    left: 0 !important;
+    width: 100% !important;
+    justify-content: flex-start;
+  }
+  .top-bar #visualizer-svg {
+    width: 60px;
+    margin-left: auto;
+  }
+  .top-bar .music-controls {
+    display: none;
   }
   .search-box {
-    width: 150px;
+    width: 120px;
   }
   .top-links {
     gap: 15px;
     font-size: 12px;
+    display: none;
   }
   .sys-status {
+    display: flex;
+  }
+  .sys-status .sys-text {
     display: none;
   }
   .post-card {
@@ -108,6 +159,68 @@
   }
   .home-content-section {
     padding: 20px;
+  }
+  .right-toolbar {
+    display: flex !important;
+    position: fixed !important;
+    right: 20px !important;
+    bottom: 20px !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    width: 50px !important;
+    height: 50px !important;
+    z-index: 2100 !important;
+  }
+  .right-toolbar .toolbar-items {
+    position: absolute;
+    bottom: 70px;
+    right: 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    background: var(--bg-panel);
+    border-radius: 20px;
+    padding: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+  }
+  .right-toolbar.active {
+    right: 20px !important;
+  }
+  .right-toolbar.active .toolbar-items {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+  .right-toolbar .toolbar-trigger {
+    display: flex !important;
+    width: 50px;
+    height: 50px;
+    background: var(--color-orange);
+    border-radius: 50%;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  .right-toolbar .toolbar-trigger svg {
+    width: 24px;
+    height: 24px;
+    fill: rgba(255,255,255,0.8);
+  }
+}
+@media screen and (min-width: 480px) and (max-width: 768px) {
+  .top-bar .music-controls {
+    display: flex !important;
+  }
+  .top-bar .search-box {
+    width: 150px;
+  }
+}
+@media screen and (min-width: 640px) and (max-width: 768px) {
+  .top-bar .top-links {
+    display: flex !important;
   }
 }
 @media screen and (max-width: 426px) {
@@ -150,7 +263,7 @@
     padding: 0 10px;
   }
   .search-box {
-    width: 120px;
+    width: 100px;
   }
   .top-links {
     gap: 10px;

@@ -18,7 +18,8 @@ jQuery.expr[':'].contains_author = function (a, i, m) {
     var tags = String(jQuery(a).data("author")).split(",");
     return $.inArray(m[3], tags) !== -1;
 };
-var blog_path = $('.theme_blog_path').val();
+var THEME_CONFIG = window.THEME_CONFIG || {};
+var blog_path = THEME_CONFIG.blog_path || '';
 blog_path= blog_path.lastIndexOf("/") === blog_path.length-1?blog_path.slice(0, blog_path.length-1):blog_path;
 
 /*使用pjax加载页面，速度更快，交互更友好*/
@@ -28,11 +29,12 @@ var $searchInput = $("#local-search-input");
 var $outlineList = $('#outline-list');
 var $localSearchResult = $("#local-search-result")
 var isFullScreen = $(window).width() <= 1024
-var shortcutKey = $('#theme_shortcut').val() !== 'false'
-var pageshortcut = $('#page_shortcut').val() !== 'true'
 $(document).pjax('.site_url,.nav-item a,.post-card,.hero-btn', '.pjax', {fragment: '.pjax', timeout: 8000});$(document).on({
     /*点击链接后触发的事件*/
     'pjax:click': function () {
+        // 清理全局特效定时器避免泄漏
+        if (window.brandGlitchInterval) clearInterval(window.brandGlitchInterval);
+
         /*原有内容淡出*/
         content.removeClass('fadeIns').addClass('fadeOuts');
         /*请求进度条*/
@@ -136,42 +138,6 @@ function afterPjax() {
 }
 
 
-/*快捷键/组合键*/
-var publickey = {"shift": false, "ctrl": false, "alt": false, "last": 0};
-if (shortcutKey && pageshortcut) {
-    $(document).keydown(function (e) {
-        var tobottom = container.prop("scrollHeight") - container.scrollTop() - container.height();
-        var totop = container.scrollTop();
-        if (!$searchInput.is(":focus")) {
-            if (e.keyCode === 74) { /* J */
-                container.animate({scrollTop: container.prop("scrollHeight") - container.height()}, tobottom, "linear");
-            } else if (e.keyCode === 75) { /* K */
-                container.animate({scrollTop: 0}, totop, "linear");
-            } else if (e.keyCode === 71) { /* G */
-                if (publickey.shift) {
-                    container.animate({scrollTop: container.prop("scrollHeight")}, 800);
-                } else if (publickey.last === 71) { /* G */
-                    container.animate({scrollTop: 0}, 800);
-                }
-            } else if (e.keyCode === 16) { /* shift */
-                publickey.shift = true;
-            }
-        }
-    })
-
-    $(document).keyup(function (e) {
-        if (!$searchInput.is(":focus")) {
-            if (e.which === 74 || e.which === 75) { /* J K - 上滑/下滑*/
-                container.stop(true);
-            } else if (e.which === 16) {
-                publickey.shift = false;
-            }
-        }
-        publickey.last = e.keyCode;
-    })
-}
-
-
 /*搜索输入框: 回车跳转到第一个搜索结果*/
 $searchInput.keydown(function (e) {
     if (e.which === 13) { /* 回车 */
@@ -245,16 +211,41 @@ $(function () {
         container.animate({scrollTop: 0}, 500);
     });
 
+    // 移动端侧边栏切换
+    $('#menu-toggle').on('click', function(e) {
+        e.stopPropagation();
+        $('.sidebar').addClass('mobile-open');
+    });
+
+    $('#sidebar-close').on('click', function(e) {
+        e.stopPropagation();
+        $('.sidebar').removeClass('mobile-open');
+    });
+
+    // 移动端导航跳转后自动收起
+    $('.sidebar .site_url, .sidebar .nav-item a').on('click', function() {
+        if ($(window).width() <= 768) {
+            $('.sidebar').removeClass('mobile-open');
+        }
+    });
+
+    // 点击主体区域收起侧边栏
+    $('.main-wrapper').on('click', function() {
+        if ($(window).width() <= 768 && $('.sidebar').hasClass('mobile-open')) {
+            $('.sidebar').removeClass('mobile-open');
+        }
+    });
+
 });
 
 /*绑定新加载内容的点击事件*/
 function bind() {
     /*渲染高亮代码块结构与样式*/
-    if ($('#theme_highlight_on').val() === 'true') {
+    if (THEME_CONFIG.highlight_on !== false) {
         $('pre code').each(function (i, block) {
             var $pre = $(this).parent('pre');
             if ($pre.find('.copy-btn').length === 0) {
-                var hasCopy = $('#theme_code_copy').val() !== 'false';
+                var hasCopy = THEME_CONFIG.highlight_copy !== false;
                 if (hasCopy) {
                     $pre.append('<div class="copy-btn" onclick="copyCode(this)">COPY</div>');
                 }
@@ -361,8 +352,8 @@ function bind() {
     });
 
     initArticle();
-    $(".article_number").text($("#yelog_site_posts_number").val());
-    $(".site_word_count").text($("#yelog_site_word_count").val());
+    $(".article_number").text($("#tech_site_posts_number").val());
+    $(".site_word_count").text($("#tech_site_word_count").val());
     $(".site_uv").text($("#busuanzi_value_site_uv").text());
     $(".site_pv").text($("#busuanzi_value_site_pv").text());
 
@@ -643,71 +634,6 @@ function initEffects() {
         }
     });
 
-    // 4. 顶部系统状态数字乱跳
-    const $sysStatus = $('#sys-status');
-    if ($sysStatus.length > 0) {
-        const $bigDate = $sysStatus.find('.big');
-        const $month = $sysStatus.find('.sys-month');
-        const $year = $sysStatus.find('.sys-year');
-        const $blogCountSpan = $sysStatus.find('.sys-text > span:last-child'); // 使用 > 确保只选中外层的第二个 span
-
-        // 暂存原始值
-        const originalDate = $bigDate.text();
-        const originalMonth = $month.text();
-        const originalYear = $year.text();
-        const originalBlogHtml = $blogCountSpan.html();
-        
-        // 预提取数字：匹配并提取 HTML 中的第一个数字位
-        const matchBlog = originalBlogHtml.match(/\d+/);
-        const originalBlogNum = matchBlog ? parseInt(matchBlog[0]) : 0;
-
-        let glitchInterval;
-        let isGlitching = false;
-
-        $sysStatus.on('mouseenter', function() {
-            if (isGlitching) return;
-            isGlitching = true;
-
-            let count = 0;
-            const maxGlitches = 8; // 跳动次数
-
-            glitchInterval = setInterval(() => {
-                // 1. 日期随机 (1-28)
-                $bigDate.text(Math.floor(Math.random() * 28) + 1);
-                // 2. 月份随机 (01-12)
-                $month.text('/' + (Math.floor(Math.random() * 12) + 1).toString().padStart(2, '0'));
-                // 3. 年份随机 (2000-2050)
-                $year.text('/' + (Math.floor(Math.random() * 51) + 2000));
-                
-                // 4. 博客数随机 (基于原始数字浮动)
-                const randomBlogNum = Math.max(0, originalBlogNum + Math.floor(Math.random() * 20) - 10);
-                // 仅替换数字部分，保留 " BLOG" 后缀
-                $blogCountSpan.html(originalBlogHtml.replace(/\d+/, randomBlogNum));
-
-                count++;
-                if (count >= maxGlitches) {
-                    clearInterval(glitchInterval);
-                    restore();
-                }
-            }, 60);
-        });
-
-        $sysStatus.on('mouseleave', function() {
-            if (isGlitching) {
-                clearInterval(glitchInterval);
-                restore();
-            }
-        });
-
-        function restore() {
-            $bigDate.text(originalDate);
-            $month.text(originalMonth);
-            $year.text(originalYear);
-            $blogCountSpan.html(originalBlogHtml);
-            isGlitching = false;
-        }
-    }
-
     // 5. 头像故障效果
     $('.user-info').on('mouseenter', function() {
         triggerCyberGlitch($(this).find('.avatar-container'), 500);
@@ -715,7 +641,7 @@ function initEffects() {
 }
 
 /**
- * 初始化鼠标交互音效 (Arknights / Tech Style)
+ * 初始化鼠标交互音效 (Tech Style)
  */
 function initSoundEffects() {
     if (typeof Howl === 'undefined' || !window.sound_effect) return;
