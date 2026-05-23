@@ -24,9 +24,12 @@ var searchFunc = function (path, search_id, content_id) {
         // perform local searching
         datas.forEach(function (data) {
           var isMatch = true;
-          if (!data.title || data.title.trim() === '') {
+          if (!data.title || String(data.title).trim() === '') {
             data.title = "Untitled";
           }
+          data.title = String(data.title);
+          data.content = String(data.content || "");
+          
           var data_title = data.title.trim().toLowerCase();
           var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
           var data_categories = (data.categories || []).join(" ").toLowerCase();

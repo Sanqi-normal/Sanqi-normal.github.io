@@ -1,1 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 8h-1.07A4.48 4.48 0 0 0 13 4.07V3h2V1h-2v1.07A4.49 4.49 0 0 0 9 2.07V1H7v2h2v1.07A4.48 4.48 0 0 0 6.07 8H5a3 3 0 0 0-3 3v6a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-6a3 3 0 0 0-3-3zM8 14a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z m8 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- 两根天线 -->
+  <path d="M9 3v3M15 3v3" />
+  <!-- 机器人头部/身体 -->
+  <rect x="4" y="6" width="16" height="14" rx="4" />
+  <!-- 眼睛 -->
+  <circle cx="8.5" cy="12" r="1" fill="currentColor" />
+  <circle cx="15.5" cy="12" r="1" fill="currentColor" />
+  <!-- 微笑嘴巴 (比原版生硬的方块更具亲和力) -->
+  <path d="M10 16h4" />
+</svg>
