@@ -184,8 +184,8 @@ Pass 3: 最终调色 → 色彩校正并与原图混合
     </author>
     <category term="日志" scheme="http://example.com/categories/%E6%97%A5%E5%BF%97/"/>
     <category term="日常" scheme="http://example.com/categories/%E6%97%A5%E5%BF%97/%E6%97%A5%E5%B8%B8/"/>
-    <category term="Unity" scheme="http://example.com/tags/Unity/"/>
     <category term="博客" scheme="http://example.com/tags/%E5%8D%9A%E5%AE%A2/"/>
+    <category term="Unity" scheme="http://example.com/tags/Unity/"/>
     <category term="日常" scheme="http://example.com/tags/%E6%97%A5%E5%B8%B8/"/>
     <category term="游戏" scheme="http://example.com/tags/%E6%B8%B8%E6%88%8F/"/>
     <category term="MCP" scheme="http://example.com/tags/MCP/"/>
@@ -300,8 +300,8 @@ Pass 3: 最终调色 → 色彩校正并与原图混合
     <category term="日常" scheme="http://example.com/categories/%E6%97%A5%E5%BF%97/%E6%97%A5%E5%B8%B8/"/>
     <category term="前端" scheme="http://example.com/tags/%E5%89%8D%E7%AB%AF/"/>
     <category term="日常" scheme="http://example.com/tags/%E6%97%A5%E5%B8%B8/"/>
-    <category term="MCP" scheme="http://example.com/tags/MCP/"/>
     <category term="服务器" scheme="http://example.com/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
+    <category term="MCP" scheme="http://example.com/tags/MCP/"/>
     <content>
       <![CDATA[<h3 id="新增"><a href="#新增" class="headerlink" title="新增"></a>新增</h3><p>– 添加更多模型api，将api配置移出脚本，使前端和后端统一读取配置文件，避免前后端通信或重复修改<br>– 实现自编写mcp服务器容纳其他mcp服务器，且保留原有的动态管理功能</p>]]>
     </content>
@@ -513,8 +513,8 @@ Pass 3: 最终调色 → 色彩校正并与原图混合
     </author>
     <category term="计算机" scheme="http://example.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/"/>
     <category term="后端" scheme="http://example.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E5%90%8E%E7%AB%AF/"/>
-    <category term="架构" scheme="http://example.com/tags/%E6%9E%B6%E6%9E%84/"/>
     <category term="后端" scheme="http://example.com/tags/%E5%90%8E%E7%AB%AF/"/>
+    <category term="架构" scheme="http://example.com/tags/%E6%9E%B6%E6%9E%84/"/>
     <category term="MCP" scheme="http://example.com/tags/MCP/"/>
     <category term="SSE" scheme="http://example.com/tags/SSE/"/>
     <category term="HTTP" scheme="http://example.com/tags/HTTP/"/>

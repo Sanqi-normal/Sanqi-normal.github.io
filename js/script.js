@@ -584,7 +584,7 @@ function initEffects() {
         let isGlitching = false;
 
         $brandTitle.on('mouseenter', function() {
-            if (isGlitching) return;
+            if (isGlitching || $('html').attr('data-theme') === 'light') return;
             if (window.uiSounds) window.uiSounds.glitch.play();
             isGlitching = true;
             $(this).addClass('glitching');
@@ -636,6 +636,8 @@ function initEffects() {
 
     // 5. 头像故障效果
     $('.user-info').on('mouseenter', function() {
+        const theme = $('html').attr('data-theme');
+        if (theme === 'light' || theme === 'street') return;
         triggerCyberGlitch($(this).find('.avatar-container'), 500);
     });
 }

@@ -5,15 +5,15 @@
   <title>叁七のblog</title>
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="只是在尝试活着 想在有限时间里做更多的事 很高兴与你相遇    qq邮箱：&#x32;&#x38;&#49;&#x37;&#x31;&#53;&#50;&#x39;&#50;&#x35;&#x40;&#x71;&#113;&#46;&#x63;&#111;&#109;githubbilibli如有侵权请联系我删除">
+<meta name="description" content="小说 虽然写了不少，留存下来并且尚可一看的居然少得可怜，无怪乎水平不精却自视甚高了    网文  众神之谕  短篇  第一天 最后的告别  中篇  临渊信步">
 <meta property="og:type" content="website">
-<meta property="og:title" content="关于我">
-<meta property="og:url" content="http://example.com/about/index.html">
+<meta property="og:title" content="叁七のblog">
+<meta property="og:url" content="http://example.com/novel/index.html">
 <meta property="og:site_name" content="叁七のblog">
-<meta property="og:description" content="只是在尝试活着 想在有限时间里做更多的事 很高兴与你相遇    qq邮箱：&#x32;&#x38;&#49;&#x37;&#x31;&#53;&#50;&#x39;&#50;&#x35;&#x40;&#x71;&#113;&#46;&#x63;&#111;&#109;githubbilibli如有侵权请联系我删除">
+<meta property="og:description" content="小说 虽然写了不少，留存下来并且尚可一看的居然少得可怜，无怪乎水平不精却自视甚高了    网文  众神之谕  短篇  第一天 最后的告别  中篇  临渊信步">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-12-09T09:51:04.000Z">
-<meta property="article:modified_time" content="2026-05-23T16:41:31.322Z">
+<meta property="article:published_time" content="2026-05-21T17:23:10.294Z">
+<meta property="article:modified_time" content="2026-05-21T17:23:10.294Z">
 <meta property="article:author" content="叁七">
 <meta name="twitter:card" content="summary">
 
@@ -30,6 +30,17 @@
 <link href="//testingcf.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css" rel="stylesheet">
 
 <script src="//testingcf.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script>
+    // 立即初始化主题，防止闪烁
+    (function() {
+        var savedTheme = localStorage.getItem('theme') || 'tech';
+        var dataTheme = 'dark';
+        if (savedTheme === 'simple') dataTheme = 'light';
+        else if (savedTheme === 'manga') dataTheme = 'manga';
+        else if (savedTheme === 'street') dataTheme = 'street';
+        document.documentElement.setAttribute('data-theme', dataTheme);
+    })();
+</script>
 <script src="/js/titleTip.js?v=" ></script>
 
 <script src="//testingcf.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
@@ -79,7 +90,14 @@
         <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
     </div>
     <a class="brand site_url" href="/">
-        <svg class="brand-icon" viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2zm0 4l6 14H6l6-14z"/><path d="M11 10h2v4h-2zm0 5h2v2h-2z"/></svg>
+        <svg class="brand-icon" viewBox="0 0 24 24">
+            <g fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" />
+                <path d="M7 7h10" />
+                <path d="M7 12h10" />
+                <path d="M7 16h6" />
+            </g>
+        </svg>
         <div class="brand-text">
             <h1>叁七のblog</h1>
             <span>- LOGOS -</span>
@@ -210,7 +228,7 @@
             </svg>
         </div>
         <div class="sys-text">
-            <span><span class="big">24</span><span class="sys-month">/05</span><span class="sys-year">/2026</span></span>
+            <span><span class="big">25</span><span class="sys-month">/05</span><span class="sys-year">/2026</span></span>
             <span>170 BLOG</span>
             
             <span id="busuanzi_container_site_uv" style="display:none"><span id="busuanzi_value_site_uv"></span> VISITORS</span>
@@ -690,16 +708,6 @@ document.addEventListener('DOMContentLoaded', function() {
             </svg>
         </div>
 
-        <!-- 3. 切换亮暗 -->
-        <div class="toolbar-item" id="tool-theme" data-title="切换主题">
-            <svg class="icon-sun" viewBox="0 0 24 24" style="display: none;">
-                <path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41l-1.06-1.06zm1.06-12.37c-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06c.39-.38.39-1.02 0-1.41zM5.99 19.42c.39.39 1.03.39 1.41 0l1.06-1.06c.39-.39.39-1.03 0-1.41s-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41z"/>
-            </svg>
-            <svg class="icon-moon" viewBox="0 0 24 24">
-                <path d="M12.1,20.9c-4.9,0-8.9-4-8.9-8.9c0-4.9,4-8.9,8.9-8.9c0.4,0,0.8,0,1.2,0.1c-1.3,1.1-2.1,2.8-2.1,4.6c0,3.4,2.8,6.2,6.2,6.2c1.8,0,3.5-0.8,4.6-2.1c0.1,0.4,0.1,0.8,0.1,1.2C21,16.9,17,20.9,12.1,20.9z"/>
-            </svg>
-        </div>
-
         <!-- 4. 沉浸模式 -->
         <div class="toolbar-item" id="tool-immersive" data-title="沉浸模式">
             <svg class="icon-expand" viewBox="0 0 24 24">
@@ -723,7 +731,27 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
         </div>
 
-        <!-- 6. 滚动到底部 -->
+        <!-- 6. 切换风格 -->
+        <div class="toolbar-item" id="tool-theme" data-title="切换风格">
+            <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9s1.5.67 1.5 1.5S7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5S18.33 12 17.5 12z"/></svg>
+            
+            <div class="theme-palette">
+                <div class="palette-item" data-theme-style="tech" data-title="机能风">
+                    <img src="/img/feature/tech.svg">
+                </div>
+                <div class="palette-item" data-theme-style="simple" data-title="简约风">
+                    <img src="/img/feature/simple.svg">
+                </div>
+                <div class="palette-item" data-theme-style="manga" data-title="漫画风">
+                    <img src="/img/feature/manga.svg">
+                </div>
+                <div class="palette-item" data-theme-style="street" data-title="街头风">
+                    <img src="/img/feature/street.svg">
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. 滚动到底部 -->
         <div class="toolbar-item" id="tool-tobottom" data-title="滚动到底部">
             <svg viewBox="0 0 24 24">
                 <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>

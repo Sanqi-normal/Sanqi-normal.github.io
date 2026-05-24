@@ -11,9 +11,11 @@
                 window.requestAnimationFrame(function() {
                     var screenWidth = $(window).width();
                     var mouseX = e.pageX;
+                    var isPaletteActive = $('.theme-palette').hasClass('active');
                     
                     // 进入右侧极窄区域 (例如 40px) 或悬停在工具栏上时展开
-                    if (mouseX > screenWidth - 40 || $toolbar.is(':hover')) {
+                    // 如果调色板正处于激活展开状态，则强制保持工具栏不收回
+                    if (mouseX > screenWidth - 40 || $toolbar.is(':hover') || isPaletteActive) {
                         $toolbar.addClass('active');
                     } else {
                         $toolbar.removeClass('active');
@@ -79,25 +81,42 @@
             }
         });
 
-        // [3] 切换亮暗 (默认暗色)
-        var currentTheme = localStorage.getItem('theme') || 'dark';
+        // [3] 切换风格 (Palette 模式)
+        var currentTheme = localStorage.getItem('theme') || 'tech'; // 修正默认值为 tech
         applyTheme(currentTheme);
 
-        $('#tool-theme').on('click', function() {
-            var theme = $('html').attr('data-theme') === 'light' ? 'dark' : 'light';
+        // 点击主按钮展开/收起调色板
+        $('#tool-theme').on('click', function(e) {
+            e.stopPropagation();
+            $(this).find('.theme-palette').toggleClass('active');
+        });
+
+        // 点击调色板项切换主题
+        $('.palette-item').on('click', function(e) {
+            e.stopPropagation();
+            var theme = $(this).data('theme-style');
             applyTheme(theme);
         });
 
+        // 点击外部关闭调色板
+        $(document).on('click', function() {
+            $('.theme-palette').removeClass('active');
+        });
+
         function applyTheme(theme) {
-            $('html').attr('data-theme', theme);
+            // 注意：原有逻辑中 light 对应 simple，dark 对应 tech
+            // 为了保持数据属性的一致性，我们将 data-theme 设置为对应的名称
+            var dataTheme = 'dark';
+            if (theme === 'simple') dataTheme = 'light';
+            if (theme === 'manga') dataTheme = 'manga';
+            if (theme === 'street') dataTheme = 'street';
+
+            $('html').attr('data-theme', dataTheme);
             localStorage.setItem('theme', theme);
-            if (theme === 'light') {
-                $('#tool-theme .icon-sun').hide();
-                $('#tool-theme .icon-moon').show();
-            } else {
-                $('#tool-theme .icon-sun').show();
-                $('#tool-theme .icon-moon').hide();
-            }
+            
+            // 高亮当前选中的图标
+            $('.palette-item').removeClass('active');
+            $('.palette-item[data-theme-style="' + theme + '"]').addClass('active');
         }
 
         // [4] 沉浸模式
