@@ -1,7 +1,16 @@
 (function($) {
     $(function() {
         var $toolbar = $('#right-toolbar');
-        var $container = $('.main-wrapper');
+        // .main-wrapper 在部分主题下是滚动容器（height:100vh + overflow-y:auto），
+        // 在 fantasy 主题下已改为自然撑高，实际滚动容器退回到 window/documentElement。
+        // 用一个函数动态取当前真实的滚动容器，兼容两种情况。
+        function getScrollContainer() {
+            var $mw = $('.main-wrapper');
+            if ($mw.length > 0 && $mw[0].scrollHeight > $mw[0].clientHeight && $mw.css('overflow-y') !== 'visible') {
+                return $mw;
+            }
+            return $('html, body');
+        }
         
         // 1. 鼠标位置检测 (边缘呼出) - 仅限桌面端
         var toolbarTicking = false;
@@ -63,7 +72,7 @@
 
         // [1] 回到顶部
         $('#tool-totop').on('click', function() {
-            $container.animate({scrollTop: 0}, 500);
+            getScrollContainer().animate({scrollTop: 0}, 500);
         });
 
         // [2] 刷新页面 (站内 PJAX 刷新)
@@ -82,8 +91,16 @@
         });
 
         // [3] 切换风格 (Palette 模式)
-        var currentTheme = localStorage.getItem('theme') || 'tech'; // 修正默认值为 tech
-        applyTheme(currentTheme);
+        var currentTheme = localStorage.getItem('theme');
+        var $paletteItem = currentTheme
+            ? $('.palette-item[data-theme-style="' + currentTheme + '"]')
+            : $();
+        if (!$paletteItem.length) {
+            $paletteItem = $('.palette-item').first();
+            currentTheme = $paletteItem.data('theme-style');
+        }
+        var currentDataTheme = $paletteItem.data('theme-value') || 'dark';
+        applyTheme(currentTheme, currentDataTheme);
 
         // 点击主按钮展开/收起调色板
         $('#tool-theme').on('click', function(e) {
@@ -95,7 +112,8 @@
         $('.palette-item').on('click', function(e) {
             e.stopPropagation();
             var theme = $(this).data('theme-style');
-            applyTheme(theme);
+            var dataTheme = $(this).data('theme-value');
+            applyTheme(theme, dataTheme);
         });
 
         // 点击外部关闭调色板
@@ -103,17 +121,10 @@
             $('.theme-palette').removeClass('active');
         });
 
-        function applyTheme(theme) {
-            // 注意：原有逻辑中 light 对应 simple，dark 对应 tech
-            // 为了保持数据属性的一致性，我们将 data-theme 设置为对应的名称
-            var dataTheme = 'dark';
-            if (theme === 'simple') dataTheme = 'light';
-            if (theme === 'manga') dataTheme = 'manga';
-            if (theme === 'street') dataTheme = 'street';
-
+        function applyTheme(theme, dataTheme) {
             $('html').attr('data-theme', dataTheme);
             localStorage.setItem('theme', theme);
-            
+
             // 高亮当前选中的图标
             $('.palette-item').removeClass('active');
             $('.palette-item[data-theme-style="' + theme + '"]').addClass('active');
@@ -149,7 +160,8 @@
 
         // [6] 滚动到底部
         $('#tool-tobottom').on('click', function() {
-            $container.animate({scrollTop: $container.prop("scrollHeight")}, 500);
+            var $c = getScrollContainer();
+            $c.animate({scrollTop: $c.prop("scrollHeight")}, 500);
         });
 
         // 针对 PJAX 的兼容

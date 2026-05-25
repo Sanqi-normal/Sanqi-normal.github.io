@@ -181,7 +181,6 @@ input {
   min-height: 100vh;
   position: relative;
   overflow-y: auto;
-  height: 100vh;
 }
 .top-bar {
   position: fixed;
@@ -2269,178 +2268,1164 @@ input {
     opacity: 1;
   }
 }
-[data-theme='light'] {
-  --bg-sidebar: #fff;
-  --bg-main: #f8f9fa;
-  --bg-content: #fff;
-  --bg-panel: #fff;
-  --text-main: #2c3e50;
-  --text-sub: #7f8c8d;
-  --border: #e0e0e0;
-  --color-orange: #3498db; /* 简约风改用蓝色作为主色调 */
-  --font-zh: 'Inter', 'Source Sans Pro', 'PingFang SC', sans-serif;
-  --font-en: 'Montserrat', sans-serif;
+[data-theme='fantasy'] {
+/* --- 核心色彩与排版体系 --- */
+  --bg-main: #fcf6e8;
+  --bg-sidebar: #f2e3be;
+  --bg-panel: #f7edcf;
+  --text-main: #1c1a16;
+  --text-sub: #4a4338;
+  --border: #2c251e;
+  --font-zh: 'Kaiti', 'STKaiti', 'Noto Serif SC', serif;
+  --font-en: 'Cinzel', 'Spectral', 'Georgia', serif;
+  --sidebar-width: 290px;
+  --top-bar-height: 100px;
+  --content-padding: 50px;
+/* --- 独有主题变量 --- */
+  --ink-black: #1a1612;
+  --charcoal-grey: #3d352e;
+  --blood-red: #721c1c;
+  --old-gold: #aa7c11;
+  --mystic-purple: #3b2f4c;
+/* 模拟手绘线条的多次不规则变形轨迹 */
+  --hand-drawn-border: 2px solid var(--ink-black);
+  --sketch-radius-lg: 255px 25px 225px 30px/25px 225px 30px 255px;
+  --sketch-radius-md: 125px 15px 115px 12px/15px 115px 12px 125px;
+  --sketch-radius-sm: 45px 8px 35px 5px/8px 35px 5px 45px;
+/* 极致优化：交错的不规则圆角变体，用于实现手绘线条抖动特效 */
+  --sketch-radius-sm-v2: 35px 5px 45px 8px/12px 40px 8px 35px;
+  --sketch-radius-md-v2: 115px 12px 125px 15px/20px 120px 15px 110px;
+/* 羊皮纸微弱噪点与污渍多重叠加层 */
+  --parchment-grain: radial-gradient(circle at 50% 50%, rgba(0,0,0,0.015) 1px, transparent 0), radial-gradient(ellipse at 15% 25%, rgba(139,69,19,0.04) 0%, transparent 60%), radial-gradient(ellipse at 85% 75%, rgba(115,74,18,0.05) 0%, transparent 50%);
 }
-[data-theme='light'] .sidebar {
-  background-color: var(--bg-sidebar);
-  border-right: 1px solid var(--border);
-  box-shadow: none;
-  padding: 60px 0;
-}
-[data-theme='light'] .brand-icon {
-  fill: var(--color-orange);
-}
-[data-theme='light'] .nav-item::before,
-[data-theme='light'] .nav-item::after {
-  display: none;
-}
-[data-theme='light'] .nav-item .zh {
-  font-weight: 500;
-}
-[data-theme='light'] .nav-item.active .zh,
-[data-theme='light'] .nav-item:hover .zh {
-  color: var(--color-orange);
-}
-[data-theme='light'] .nav-item.active,
-[data-theme='light'] .nav-item:hover {
-  background: rgba(52,152,219,0.05);
-}
-[data-theme='light'] .post-card-inner {
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-  background: #fff;
-}
-[data-theme='light'] .post-card:hover .post-card-inner {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-}
-[data-theme='light'] .post-card-bg {
-  filter: brightness(1);
-}
-[data-theme='light'] .post-card-overlay {
-  background: linear-gradient(to top, rgba(255,255,255,0.9) 0%, transparent 100%);
-}
-[data-theme='light'] .card-title,
-[data-theme='light'] .card-desc,
-[data-theme='light'] .card-meta {
+[data-theme='fantasy'] body {
+  background-color: var(--bg-main);
   color: var(--text-main);
-}
-[data-theme='light'] .card-title {
-  color: #2c3e50;
-}
-[data-theme='light'] .card-desc {
-  color: #7f8c8d;
-}
-[data-theme='light'] .top-bar {
-  background: rgba(255,255,255,0.8);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border);
-}
-[data-theme='light'] .search-box {
-  background: #f1f3f5;
-  border-radius: 20px;
-}
-[data-theme='light'] .search-box:hover,
-[data-theme='light'] .search-box:focus-within {
-  border-color: var(--color-orange);
-  background: #fff;
-}
-[data-theme='light'] .hero-section {
-  background: #fff;
-}
-[data-theme='light'] .hero-overlay {
-  background: linear-gradient(90deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.6) 50%, transparent 100%);
-}
-[data-theme='light'] .hero-title {
-  color: #2c3e50;
-  text-shadow: 0 0 30px #fff;
-}
-[data-theme='light'] .hero-date {
-  border-left-color: var(--color-orange);
-  background: rgba(255,255,255,0.7);
-  backdrop-filter: blur(8px);
-  padding: 10px 20px;
-  border-radius: 0 10px 10px 0;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-}
-[data-theme='light'] .hero-date-num {
-  color: #2c3e50;
-}
-[data-theme='light'] .hero-btn {
-  background: var(--color-orange);
-  color: #fff !important;
-  border-radius: 30px;
-  padding: 12px 30px;
-  border: none;
-  box-shadow: 0 6px 20px rgba(52,152,219,0.3);
-}
-[data-theme='light'] .hero-btn:hover {
-  background: #2980b9;
-  color: #fff !important;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(52,152,219,0.4);
-}
-[data-theme='light'] .art-content h1 {
-  border-bottom: 2px solid var(--color-orange);
-  color: #2c3e50;
-}
-[data-theme='light'] .art-content h2 {
-  border-bottom: none;
-  color: #34495e;
-  background: #f8f9fa;
-  padding: 10px 15px;
-  border-left: 4px solid var(--color-orange);
-}
-[data-theme='light'] .art-content blockquote {
-  background: #f8f9fa;
-  border-left-color: #bdc3c7;
-}
-[data-theme='light'] .art-content pre {
-  background: #fdfdfd;
-  border: 1px solid #eee;
-}
-[data-theme='light'] .art-content pre code {
-  color: #444;
-}
-[data-theme='light'] .app-footer {
-  background: #fff;
-  border-top: 1px solid var(--border);
-}
-[data-theme='light'] .glitch-layer,
-[data-theme='light'] .pjax-glitch-layer {
-  display: none !important;
-}
-[data-theme='light'] .jump-char,
-[data-theme='light'] .wave-char {
-  animation: none !important;
-}
-[data-theme='light'] .brand:hover {
-  transform: scale(1.02);
-  filter: drop-shadow(0 0 8px rgba(52,152,219,0.3));
-}
-[data-theme='light'] .user-info:hover .avatar {
-  transform: scale(1.05);
-  box-shadow: 0 0 15px rgba(52,152,219,0.4);
-  transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-[data-theme='light'] .nav-item.active .nav-icon,
-[data-theme='light'] .nav-item:hover .nav-icon {
-  filter: invert(53%) sepia(82%) saturate(3015%) hue-rotate(180deg) brightness(95%) contrast(92%) !important;
-}
-[data-theme='light'] .hero-subtitle {
-  color: #2c3e50; /* 加深颜色 */
-  background: none; /* 去掉突兀背景 */
-  backdrop-filter: none;
-  padding: 0;
-  margin-left: 0;
+  font-family: var(--font-zh), var(--font-en);
+  background-image: var(--parchment-grain);
+  background-size: 120px 120px, 100% 100%, 100% 100%;
+  background-attachment: fixed;
   line-height: 1.8;
-  font-weight: 400;
-  max-width: 600px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
-[data-theme='light'] .card-desc {
-  color: #34495e !important;
-  font-weight: 400;
+[data-theme='fantasy'] .main-wrapper {
+  background-color: transparent;
+  height: auto;
+  overflow-y: visible;
+}
+[data-theme='fantasy'] .main-wrapper::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+/* 增强：结合边缘轻微模糊，模拟古旧镜片的视觉衰减 */
+  box-shadow: inset 0 0 140px rgba(92,53,20,0.22), inset 0 0 40px rgba(0,0,0,0.06);
+  border: 24px solid transparent;
+  border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath d='M0,0 Q25,8 50,0 Q75,12 100,0 Q88,25 100,50 Q92,75 100,100 Q75,92 50,100 Q25,88 0,100 Q8,75 0,50 Q12,25 0,0' fill='none' stroke='%231a1612' stroke-width='2.5'/%3E%3C/svg%3E") 24 stretch;
+}
+[data-theme='fantasy'] ::-webkit-scrollbar {
+  width: 12px; /* 略微加宽，增强存在感 */
+}
+[data-theme='fantasy'] ::-webkit-scrollbar-track {
+  background: var(--bg-sidebar);
+  border-left: 2px solid var(--border); /* 加粗铁线边 */
+}
+[data-theme='fantasy'] ::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border: 3px solid var(--bg-sidebar);
+  border-radius: 0; /* 抛弃现代圆角，改为方切块 */
+  box-shadow: inset 1px 1px 0px rgba(255,255,255,0.2);
+}
+[data-theme='fantasy'] ::-webkit-scrollbar-thumb:hover {
+  background: var(--blood-red);
+}
+[data-theme='fantasy'] .sidebar {
+  background-color: var(--bg-sidebar);
+  background-image: var(--parchment-grain);
+  border-right: 3px double var(--ink-black);
+  box-shadow: 8px 0 25px rgba(44,37,30,0.15);
+  padding: 50px 0 30px 0;
+}
+[data-theme='fantasy'] .sidebar::after {
+  content: "";
+  position: absolute;
+  bottom: -40px;
+  right: -40px;
+  width: 220px;
+  height: 220px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='none' stroke='%231a1612' stroke-width='0.5' stroke-dasharray='1,2' opacity='0.15'/%3E%3Cpolygon points='50,12 83,70 17,70' fill='none' stroke='%231a1612' stroke-width='0.5' opacity='0.12'/%3E%3Cpolygon points='50,88 83,30 17,30' fill='none' stroke='%231a1612' stroke-width='0.5' opacity='0.12'/%3E%3Ccircle cx='50' cy='50' r='8' fill='none' stroke='%231a1612' stroke-width='0.4' opacity='0.2'/%3E%3C/svg%3E");
+  pointer-events: none;
+  transform: rotate(15deg);
+}
+[data-theme='fantasy'] .brand {
+  margin-bottom: 60px;
+}
+[data-theme='fantasy'] .brand-text h1 {
+  font-family: var(--font-en);
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--ink-black);
+  text-transform: uppercase;
+  border-bottom: 2px dashed var(--ink-black);
+  padding-bottom: 8px;
+  text-shadow: 1px 1px 0px rgba(255,255,255,0.6);
+}
+[data-theme='fantasy'] .brand-text span {
+  font-family: var(--font-en);
+  font-size: 11px;
+  color: var(--text-sub);
+  letter-spacing: 2px;
+  margin-top: 6px;
+}
+[data-theme='fantasy'] .nav-label {
+  font-family: var(--font-en);
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--blood-red);
+  font-weight: bold;
+  opacity: 0.75;
+}
+[data-theme='fantasy'] .nav-item {
+  margin: 6px 20px; /* 略微拉大间距 */
+  height: 46px;
+  border-radius: var(--sketch-radius-sm);
+  border: 1px solid transparent;
+  transition: background 0.2s, border 0.2s; /* 抛弃现代平滑 all */
+}
+[data-theme='fantasy'] .nav-item a {
+  padding: 0 20px;
+}
+[data-theme='fantasy'] .nav-item .zh {
+  font-family: var(--font-zh);
+  font-size: 16px;
+  color: var(--text-sub);
+  font-weight: 600;
+}
+[data-theme='fantasy'] .nav-item .en {
+  font-family: var(--font-en);
+  font-size: 11px;
+  color: rgba(74,67,56,0.6);
+  margin-left: auto;
+}
+[data-theme='fantasy'] .nav-item:hover,
+[data-theme='fantasy'] .nav-item.active {
+  background: rgba(44,37,30,0.05);
+  border: var(--hand-drawn-border);
+  animation: sketchMicroShake 0.3s steps(2) infinite; /* 模拟手绘不确定线条的动态 */
+}
+[data-theme='fantasy'] .nav-item:hover .zh,
+[data-theme='fantasy'] .nav-item.active .zh {
+  color: var(--blood-red);
+}
+[data-theme='fantasy'] .nav-item:hover .en,
+[data-theme='fantasy'] .nav-item.active .en {
+  color: var(--ink-black);
+}
+[data-theme='fantasy'] .nav-item:hover::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 8px;
+  width: 16px;
+  height: 16px;
+  background: radial-gradient(circle, var(--ink-black) 30%, transparent 75%);
+  transform: translateY(-50%);
+  animation: inkSplatterPlay 0.4s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+}
+[data-theme='fantasy'] .avatar {
+  border: 2px solid var(--ink-black);
+  border-radius: var(--sketch-radius-md);
+/* 极致优化：使用混合模式让头像完美融入背景纸张的纹理中 */
+  filter: sepia(0.75) contrast(1.2) brightness(0.9);
+  mix-blend-mode: multiply;
+  box-shadow: 3px 3px 0px rgba(0,0,0,0.15);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.15), filter 0.3s;
+}
+[data-theme='fantasy'] .avatar:hover {
+  filter: sepia(0.3) contrast(1.1) brightness(0.95);
+  transform: scale(1.08) rotate(3deg);
+  box-shadow: 5px 5px 0px rgba(114,28,28,0.2);
+}
+[data-theme='fantasy'] .user-id {
+  font-family: var(--font-en);
+  color: var(--text-sub);
+  letter-spacing: 1px;
+}
+[data-theme='fantasy'] .social-btn {
+  background: transparent;
+  border: var(--hand-drawn-border);
+  border-radius: var(--sketch-radius-sm);
+  transition: transform 0.2s steps(3);
+}
+[data-theme='fantasy'] .social-btn img {
+  filter: brightness(0) invert(0.1);
+}
+[data-theme='fantasy'] .social-btn:hover {
+  background: var(--ink-black);
+  transform: translateY(-2px) rotate(-4px);
+}
+[data-theme='fantasy'] .social-btn:hover img {
+  filter: brightness(0) invert(1);
+}
+[data-theme='fantasy'] .top-bar {
+  background: linear-gradient(to bottom, var(--bg-main) 40%, rgba(252,246,232,0) 100%);
+  border-bottom: none;
+  padding: 0 50px;
+}
+[data-theme='fantasy'] .search-box {
+  background: rgba(255,255,255,0.35);
+  border: var(--hand-drawn-border);
+  border-radius: var(--sketch-radius-sm);
+  box-shadow: inset 1px 2px 5px rgba(0,0,0,0.08);
+  transition: width 0.3s cubic-bezier(0.2, 1, 0.2, 1), background 0.3s;
+}
+[data-theme='fantasy'] .search-box:focus-within,
+[data-theme='fantasy'] .search-box.expanded {
+  width: 260px;
+  background: rgba(255,255,255,0.8);
+  animation: sketchMicroShake 0.4s steps(2) infinite;
+}
+[data-theme='fantasy'] .search-box input {
+  color: var(--ink-black);
+  font-family: var(--font-zh);
+}
+[data-theme='fantasy'] .search-box svg {
+  fill: var(--text-sub);
+}
+[data-theme='fantasy'] .search-box svg:hover {
+  fill: var(--blood-red);
+}
+[data-theme='fantasy'] .top-links a {
+  color: var(--charcoal-grey);
+  font-family: var(--font-zh);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-style: wavy;
+  text-decoration-color: var(--old-gold);
+  text-underline-offset: 6px;
+  transition: color 0.2s, text-decoration-color 0.2s;
+}
+[data-theme='fantasy'] .top-links a:hover {
+  color: var(--blood-red);
+  text-decoration-color: var(--blood-red);
+}
+[data-theme='fantasy'] .sys-text {
+  font-family: var(--font-en);
+  color: var(--ink-black);
+}
+[data-theme='fantasy'] .sys-text .big {
+  font-size: 18px;
+  font-weight: 700;
+}
+[data-theme='fantasy'] #visualizer-svg {
+  stroke: var(--ink-black);
+  opacity: 0.7;
+}
+[data-theme='fantasy'] .hero-section {
+  background-color: var(--bg-panel);
+  background-image: var(--parchment-grain);
+  border: var(--hand-drawn-border);
+  border-radius: var(--sketch-radius-lg);
+  margin: 30px;
+  padding: 50px;
+  box-shadow: 12px 12px 0px rgba(44,37,30,0.08);
+}
+[data-theme='fantasy'] .hero-overlay {
+  background: linear-gradient(90deg, rgba(247,237,207,0.96) 0%, rgba(247,237,207,0.5) 60%, transparent 100%);
+}
+[data-theme='fantasy'] .hero-section::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 120px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 120'%3E%3Cpath d='M0,120 L120,60 L280,100 L450,30 L620,90 L800,40 L1000,120' fill='none' stroke='%231a1612' stroke-width='1.2' stroke-dasharray='4,4' opacity='0.15'/%3E%3Cpath d='M40,120 L180,80 L350,110 L520,50 L700,95 L900,60' fill='none' stroke='%231a1612' stroke-width='0.8' opacity='0.08'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 2;
+}
+[data-theme='fantasy'] .hero-tag {
+  color: var(--blood-red);
+  font-weight: 700;
+  letter-spacing: 4px;
+}
+[data-theme='fantasy'] .hero-title {
+  font-family: var(--font-en);
+  font-size: 38px;
+  font-weight: 700;
+  color: var(--ink-black);
+  letter-spacing: 2px;
+}
+[data-theme='fantasy'] .hero-subtitle {
+  font-family: var(--font-zh);
+  font-style: normal;
+  color: var(--text-sub);
+  border-left: 3px solid var(--blood-red);
+  padding-left: 16px;
+  line-height: 1.7;
+}
+[data-theme='fantasy'] .hero-btn {
+  background: transparent;
+  color: var(--ink-black) !important;
+  border: var(--hand-drawn-border);
+  border-radius: var(--sketch-radius-sm);
+  padding: 10px 28px;
+  font-family: var(--font-en);
+  font-weight: bold;
+  letter-spacing: 2px;
+  box-shadow: 3px 3px 0 var(--ink-black);
+  transition: transform 0.15s steps(2), box-shadow 0.15s steps(2);
+}
+[data-theme='fantasy'] .hero-btn:hover {
+  background: var(--ink-black);
+  color: var(--bg-main) !important;
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--ink-black);
+}
+[data-theme='fantasy'] .hero-date {
+  border-left: 3px solid var(--old-gold);
+}
+[data-theme='fantasy'] .hero-date-tag {
+  color: var(--old-gold);
+}
+[data-theme='fantasy'] .hero-date-num {
+  color: var(--ink-black);
+  font-size: 28px;
+}
+[data-theme='fantasy'] .home-content-section,
+[data-theme='fantasy'] #view-article {
+  background-color: transparent;
+  padding: 20px 30px;
+}
+[data-theme='fantasy'] .section-header {
+  border-bottom: 2px solid var(--ink-black);
+}
+[data-theme='fantasy'] .section-title {
+  font-family: var(--font-zh);
+  color: var(--ink-black);
+  font-size: 20px;
+}
+[data-theme='fantasy'] .section-title span {
+  font-family: var(--font-en);
+  color: var(--text-sub);
+}
+[data-theme='fantasy'] .section-more:hover {
+  color: var(--blood-red);
+}
+[data-theme='fantasy'] .post-card-inner {
+  background-color: var(--bg-panel);
+  background-image: var(--parchment-grain);
+  border: var(--hand-drawn-border);
+  border-radius: var(--sketch-radius-md);
+  box-shadow: 4px 4px 0px rgba(0,0,0,0.05);
+  transition: transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.3s;
+}
+[data-theme='fantasy'] .post-card:hover .post-card-inner {
+  transform: scale(1.015) rotate(-1deg);
+  box-shadow: 8px 10px 18px rgba(44,37,30,0.14);
+  animation: sketchCardShake 0.5s steps(2) infinite; /* 强烈的微草稿感 */
+}
+[data-theme='fantasy'] .post-card-bg {
+  filter: sepia(0.9) contrast(1.4) brightness(0.85);
+  mix-blend-mode: multiply; /* 极致优化：混合模式让大图底纹完美承接羊皮纸背景 */
+  transition: filter 0.3s, transform 0.3s;
+}
+[data-theme='fantasy'] .post-card:hover .post-card-bg {
+  filter: sepia(0.4) contrast(1.15) brightness(0.9);
+  transform: scale(1.02);
+}
+[data-theme='fantasy'] .post-card-overlay {
+  background: linear-gradient(to top, var(--bg-panel) 40%, rgba(247,237,207,0.05) 100%);
+}
+[data-theme='fantasy'] .card-tag {
+  color: var(--blood-red);
+  font-weight: 700;
+}
+[data-theme='fantasy'] .card-title {
+  color: var(--ink-black);
+  font-family: var(--font-zh);
+  font-size: 18px;
+}
+[data-theme='fantasy'] .card-desc {
+  color: var(--text-sub);
+  line-height: 1.6;
+}
+[data-theme='fantasy'] .card-meta {
+  color: rgba(74,67,56,0.7);
+}
+[data-theme='fantasy'] .announce-box {
+  background-color: #faf1d9;
+  border: 1px solid var(--border);
+  border-radius: var(--sketch-radius-sm);
+  box-shadow: 3px 3px 6px rgba(0,0,0,0.04);
+  transition: border-color 0.2s, transform 0.2s steps(2);
+}
+[data-theme='fantasy'] .announce-box:hover {
+  border-color: var(--blood-red);
+  transform: translateY(-2px) rotate(0.5deg);
+}
+[data-theme='fantasy'] .announce-watermark {
+  font-family: var(--font-en);
+  color: rgba(114,28,28,0.04);
+}
+[data-theme='fantasy'] .announce-date-big {
+  color: var(--blood-red);
+}
+[data-theme='fantasy'] .announce-tag {
+  background: transparent;
+  color: var(--blood-red);
+  border: 1px solid var(--blood-red);
+  font-weight: bold;
+  border-radius: 0;
+}
+[data-theme='fantasy'] .announce-title {
+  color: var(--ink-black);
+}
+[data-theme='fantasy'] .cat-outline .cat-list-item {
+  border-bottom: 1px dashed rgba(0,0,0,0.12);
+}
+[data-theme='fantasy'] .cat-outline .cat-list-item a {
+  transition: padding 0.2s, color 0.2s;
+}
+[data-theme='fantasy'] .cat-outline .cat-list-item a:hover {
+  color: var(--blood-red);
+  padding-left: 8px;
+}
+[data-theme='fantasy'] .fade-up-wait,
+[data-theme='fantasy'] .fade-up-fast-wait {
+  transform: translateY(0) !important; /* 抹平位移，改用硬朗的纯淡入 */
+  transition: opacity 0.4s ease-in-out !important;
+}
+[data-theme='fantasy'] .breadcrumb {
+  border-bottom: 1px dashed var(--border);
+  font-family: var(--font-zh);
+  color: var(--text-sub);
+}
+[data-theme='fantasy'] .breadcrumb span:hover {
+  color: var(--blood-red);
+}
+[data-theme='fantasy'] .art-header {
+  border-bottom: 2px solid var(--ink-black);
+}
+[data-theme='fantasy'] .art-title {
+  font-family: var(--font-zh);
+  font-weight: 700;
+  color: var(--ink-black);
+}
+[data-theme='fantasy'] .art-title span {
+  color: var(--blood-red);
+}
+[data-theme='fantasy'] .art-content {
+  font-size: 16px;
+  line-height: 1.95;
+  color: var(--charcoal-grey);
+}
+[data-theme='fantasy'] .art-content p {
+  margin: 24px 0;
+  text-align: justify;
+}
+[data-theme='fantasy'] .art-content > p:first-of-type::first-letter {
+  float: left;
+  font-size: 3.2em; /* 稍微放大，凸显中世纪风格 */
+  line-height: 0.8;
+  padding-right: 8px;
+  padding-top: 4px;
+  color: var(--blood-red);
+  font-family: var(--font-en);
+  font-weight: 700;
+  text-shadow: 1px 1px 0px rgba(0,0,0,0.1);
+}
+[data-theme='fantasy'] .art-content h1,
+[data-theme='fantasy'] .art-content h2,
+[data-theme='fantasy'] .art-content h3 {
+  color: var(--ink-black);
+  font-family: var(--font-zh);
+  font-weight: 700;
+  margin-top: 45px;
+  margin-bottom: 16px;
+}
+[data-theme='fantasy'] .art-content h1 {
+  font-size: 24px;
+  border-bottom: 2px dashed var(--ink-black);
+  padding-bottom: 6px;
+}
+[data-theme='fantasy'] .art-content h2 {
+  font-size: 21px;
+  border-bottom: 1px solid var(--ink-black);
+  padding-bottom: 4px;
+  position: relative;
+}
+[data-theme='fantasy'] .art-content h2::before {
+  content: "§";
+  position: absolute;
+  left: -24px;
+  color: var(--blood-red);
+  font-family: var(--font-en);
+  font-weight: bold;
+}
+[data-theme='fantasy'] .art-content a {
+  color: var(--blood-red);
+  border-bottom: 1px dashed var(--blood-red);
+  font-weight: 600;
+  transition: color 0.1s;
+}
+[data-theme='fantasy'] .art-content a:hover {
+  color: var(--ink-black);
+  border-bottom-style: solid;
+}
+[data-theme='fantasy'] .art-content blockquote {
+  background: rgba(170,124,17,0.05);
+  border-left: 4px solid var(--old-gold);
+  border-radius: var(--sketch-radius-sm);
+  padding: 15px 25px;
+  font-style: italic;
+  color: var(--text-sub);
+}
+[data-theme='fantasy'] .art-content img {
+  border: 8px solid #f4ecd8;
+  outline: 1px solid var(--border);
+  box-shadow: 5px 8px 20px rgba(44,37,30,0.15);
+  filter: sepia(0.35) contrast(1.1);
+  mix-blend-mode: multiply; /* 极致融合：使插图的白边融入羊皮纸底色中 */
+  border-radius: 2px;
+}
+[data-theme='fantasy'] .art-content table {
+  border: var(--hand-drawn-border);
+  border-radius: var(--sketch-radius-sm);
+  background: rgba(255,255,255,0.2);
+}
+[data-theme='fantasy'] .art-content th,
+[data-theme='fantasy'] .art-content td {
+  border: 1px solid var(--border);
+  padding: 8px 12px;
+}
+[data-theme='fantasy'] .art-content th {
+  background: var(--bg-sidebar);
+  color: var(--ink-black);
+}
+[data-theme='fantasy'] .art-content :not(pre) > code {
+  background: rgba(44,37,30,0.06);
+  color: var(--blood-red);
+  padding: 2px 6px;
+  font-family: monospace;
+  font-weight: 600;
+}
+[data-theme='fantasy'] .highlight {
+  background: #fdfaf2 !important;
+  border: var(--hand-drawn-border);
+  border-radius: var(--sketch-radius-sm);
+  box-shadow: 4px 4px 0px rgba(0,0,0,0.05);
+}
+[data-theme='fantasy'] .copy-btn {
+  border: var(--hand-drawn-border);
+  background: var(--bg-main);
+  font-family: var(--font-en);
+  border-radius: 0;
+}
+[data-theme='fantasy'] .copy-btn:hover {
+  background: var(--ink-black);
+  color: var(--bg-main);
+}
+[data-theme='fantasy'] .art-widget-title {
+  font-family: var(--font-zh);
+  border-bottom: 2px solid var(--ink-black);
+}
+[data-theme='fantasy'] .art-widget-title span {
+  color: var(--blood-red);
+}
+[data-theme='fantasy'] .toc-list .toc-item {
+  border-bottom: 1px dashed rgba(0,0,0,0.08);
+}
+[data-theme='fantasy'] .toc-list .toc-item a {
+  transition: color 0.15s;
+}
+[data-theme='fantasy'] .toc-list .toc-item a:hover,
+[data-theme='fantasy'] .toc-list .toc-item.active a {
+  color: var(--blood-red);
+  font-weight: bold;
+}
+[data-theme='fantasy'] .rel-card:hover .rel-title {
+  color: var(--blood-red);
+}
+[data-theme='fantasy'] .article_copyright {
+  background: var(--bg-panel);
+  border: var(--hand-drawn-border);
+  border-left: 5px solid var(--blood-red);
+  border-radius: var(--sketch-radius-sm);
+}
+[data-theme='fantasy'] .app-footer {
+  border-top: 2px solid var(--ink-black);
+  background: transparent;
+  position: relative;
+}
+[data-theme='fantasy'] .app-footer::before {
+  content: "S.Q.";
+  position: absolute;
+  top: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 48px;
+  height: 48px;
+  background: var(--blood-red);
+  color: #fff;
+  border-radius: 50%;
+  border: 2px solid var(--ink-black);
+  box-shadow: 0 4px 8px rgba(114,28,28,0.3), inset 0 0 8px rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 14px;
+  z-index: 10;
+  letter-spacing: 1px;
+}
+[data-theme='fantasy'] .toolbar-item {
+  background: var(--bg-panel);
+  border: 1px solid var(--charcoal-grey);
+  border-radius: 0;
+  box-shadow: 2px 2px 0 var(--ink-black);
+  transition: background 0.15s steps(2), box-shadow 0.15s steps(2), border-color 0.15s steps(2);
+}
+[data-theme='fantasy'] .toolbar-item:hover {
+  background: #f4ecd8;
+  border-color: var(--blood-red);
+  box-shadow: 1px 1px 0 var(--blood-red);
+}
+[data-theme='fantasy'] .toolbar-item:hover > svg {
+  fill: var(--blood-red);
+  transform: rotate(12deg) scale(1.1);
+  transition: transform 0.25s steps(3), fill 0.15s;
+}
+[data-theme='fantasy'] .toolbar-item > svg {
+  transition: transform 0.25s steps(3), fill 0.15s;
+}
+[data-theme='fantasy'] #tool-refresh:hover > svg {
+  animation: fantasyQuillSpin 0.5s steps(4); /* 剔除柔滑，改为机械而复古的定格旋转 */
+  transform-origin: center;
+}
+[data-theme='fantasy'] .dragon-sketch {
+  position: fixed;
+  bottom: 40px;
+  left: 310px;
+  width: 320px;
+  height: 220px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 100'%3E%3Cpath d='M10,80 Q30,20 60,40 T100,20 T140,50 T180,30 M40,65 Q70,25 110,55' fill='none' stroke='%232c251e' stroke-width='0.6' stroke-dasharray='1,1' opacity='0.12'/%3E%3Cpath d='M15,78 C35,45 85,15 130,45 C150,55 175,35 190,50' fill='none' stroke='%232c251e' stroke-width='0.3' opacity='0.08'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: -1;
+}
+[data-theme='fantasy'] .astrolabe-sketch {
+  position: fixed;
+  top: 120px;
+  right: 30px;
+  width: 240px;
+  height: 240px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='42' fill='none' stroke='%232c251e' stroke-width='0.6' opacity='0.12'/%3E%3Ccircle cx='50' cy='50' r='32' fill='none' stroke='%232c251e' stroke-width='0.4' stroke-dasharray='2,2' opacity='0.1'/%3E%3Cline x1='50' y1='5' x2='50' y2='95' stroke='%232c251e' stroke-width='0.5' opacity='0.08'/%3E%3Cline x1='5' y1='50' x2='95' y2='50' stroke='%232c251e' stroke-width='0.5' opacity='0.08'/%3E%3Cpath d='M15,15 L85,85 M85,15 L15,85' stroke='%232c251e' stroke-width='0.3' stroke-dasharray='1,3' opacity='0.08'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: -1;
+}
+[data-theme='fantasy'] .category-list-link,
+[data-theme='fantasy'] .tag-list-link {
+  border: var(--hand-drawn-border);
+  border-radius: var(--sketch-radius-sm);
+  background: rgba(0,0,0,0.015);
+  font-family: var(--font-zh);
+  transition: background 0.15s steps(2), color 0.15s steps(2);
+}
+[data-theme='fantasy'] .category-list-link:hover,
+[data-theme='fantasy'] .tag-list-link:hover {
+  background: var(--ink-black);
+  color: var(--bg-main);
+  transform: translateY(-1px);
+}
+[data-theme='fantasy'] #top-progress-bar {
+  background: var(--old-gold);
+  box-shadow: 0 0 8px var(--old-gold);
+}
+[data-theme='fantasy'] #top-progress-num {
+  color: var(--old-gold);
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(1) {
+  top: 19%;
+  left: 29%;
+  transform: scale(0.6);
+  animation: inkDropletFadePlay 7s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(2) {
+  top: 38%;
+  left: 58%;
+  transform: scale(0.9);
+  animation: inkDropletFadePlay 8s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(3) {
+  top: 57%;
+  left: 87%;
+  transform: scale(1.2);
+  animation: inkDropletFadePlay 9s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(4) {
+  top: 76%;
+  left: 116%;
+  transform: scale(0.3);
+  animation: inkDropletFadePlay 10s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(5) {
+  top: 95%;
+  left: 145%;
+  transform: scale(0.6);
+  animation: inkDropletFadePlay 11s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(6) {
+  top: 114%;
+  left: 174%;
+  transform: scale(0.9);
+  animation: inkDropletFadePlay 12s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(7) {
+  top: 133%;
+  left: 203%;
+  transform: scale(1.2);
+  animation: inkDropletFadePlay 13s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(8) {
+  top: 152%;
+  left: 232%;
+  transform: scale(0.3);
+  animation: inkDropletFadePlay 6s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(9) {
+  top: 171%;
+  left: 261%;
+  transform: scale(0.6);
+  animation: inkDropletFadePlay 7s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(10) {
+  top: 190%;
+  left: 290%;
+  transform: scale(0.9);
+  animation: inkDropletFadePlay 8s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(11) {
+  top: 209%;
+  left: 319%;
+  transform: scale(1.2);
+  animation: inkDropletFadePlay 9s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(12) {
+  top: 228%;
+  left: 348%;
+  transform: scale(0.3);
+  animation: inkDropletFadePlay 10s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(13) {
+  top: 247%;
+  left: 377%;
+  transform: scale(0.6);
+  animation: inkDropletFadePlay 11s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(14) {
+  top: 266%;
+  left: 406%;
+  transform: scale(0.9);
+  animation: inkDropletFadePlay 12s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(15) {
+  top: 285%;
+  left: 435%;
+  transform: scale(1.2);
+  animation: inkDropletFadePlay 13s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(16) {
+  top: 304%;
+  left: 464%;
+  transform: scale(0.3);
+  animation: inkDropletFadePlay 6s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(17) {
+  top: 323%;
+  left: 493%;
+  transform: scale(0.6);
+  animation: inkDropletFadePlay 7s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(18) {
+  top: 342%;
+  left: 522%;
+  transform: scale(0.9);
+  animation: inkDropletFadePlay 8s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(19) {
+  top: 361%;
+  left: 551%;
+  transform: scale(1.2);
+  animation: inkDropletFadePlay 9s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(20) {
+  top: 380%;
+  left: 580%;
+  transform: scale(0.3);
+  animation: inkDropletFadePlay 10s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(21) {
+  top: 399%;
+  left: 609%;
+  transform: scale(0.6);
+  animation: inkDropletFadePlay 11s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(22) {
+  top: 418%;
+  left: 638%;
+  transform: scale(0.9);
+  animation: inkDropletFadePlay 12s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(23) {
+  top: 437%;
+  left: 667%;
+  transform: scale(1.2);
+  animation: inkDropletFadePlay 13s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(24) {
+  top: 456%;
+  left: 696%;
+  transform: scale(0.3);
+  animation: inkDropletFadePlay 6s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(25) {
+  top: 475%;
+  left: 725%;
+  transform: scale(0.6);
+  animation: inkDropletFadePlay 7s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(26) {
+  top: 494%;
+  left: 754%;
+  transform: scale(0.9);
+  animation: inkDropletFadePlay 8s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(27) {
+  top: 513%;
+  left: 783%;
+  transform: scale(1.2);
+  animation: inkDropletFadePlay 9s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(28) {
+  top: 532%;
+  left: 812%;
+  transform: scale(0.3);
+  animation: inkDropletFadePlay 10s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(29) {
+  top: 551%;
+  left: 841%;
+  transform: scale(0.6);
+  animation: inkDropletFadePlay 11s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(30) {
+  top: 570%;
+  left: 870%;
+  transform: scale(0.9);
+  animation: inkDropletFadePlay 12s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(31) {
+  top: 589%;
+  left: 899%;
+  transform: scale(1.2);
+  animation: inkDropletFadePlay 13s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(32) {
+  top: 608%;
+  left: 928%;
+  transform: scale(0.3);
+  animation: inkDropletFadePlay 6s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(33) {
+  top: 627%;
+  left: 957%;
+  transform: scale(0.6);
+  animation: inkDropletFadePlay 7s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(34) {
+  top: 646%;
+  left: 986%;
+  transform: scale(0.9);
+  animation: inkDropletFadePlay 8s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(35) {
+  top: 665%;
+  left: 1015%;
+  transform: scale(1.2);
+  animation: inkDropletFadePlay 9s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(36) {
+  top: 684%;
+  left: 1044%;
+  transform: scale(0.3);
+  animation: inkDropletFadePlay 10s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(37) {
+  top: 703%;
+  left: 1073%;
+  transform: scale(0.6);
+  animation: inkDropletFadePlay 11s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(38) {
+  top: 722%;
+  left: 1102%;
+  transform: scale(0.9);
+  animation: inkDropletFadePlay 12s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(39) {
+  top: 741%;
+  left: 1131%;
+  transform: scale(1.2);
+  animation: inkDropletFadePlay 13s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(40) {
+  top: 760%;
+  left: 1160%;
+  transform: scale(0.3);
+  animation: inkDropletFadePlay 6s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(41) {
+  top: 779%;
+  left: 1189%;
+  transform: scale(0.6);
+  animation: inkDropletFadePlay 7s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(42) {
+  top: 798%;
+  left: 1218%;
+  transform: scale(0.9);
+  animation: inkDropletFadePlay 8s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(43) {
+  top: 817%;
+  left: 1247%;
+  transform: scale(1.2);
+  animation: inkDropletFadePlay 9s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(44) {
+  top: 836%;
+  left: 1276%;
+  transform: scale(0.3);
+  animation: inkDropletFadePlay 10s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(45) {
+  top: 855%;
+  left: 1305%;
+  transform: scale(0.6);
+  animation: inkDropletFadePlay 11s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(46) {
+  top: 874%;
+  left: 1334%;
+  transform: scale(0.9);
+  animation: inkDropletFadePlay 12s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(47) {
+  top: 893%;
+  left: 1363%;
+  transform: scale(1.2);
+  animation: inkDropletFadePlay 13s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(48) {
+  top: 912%;
+  left: 1392%;
+  transform: scale(0.3);
+  animation: inkDropletFadePlay 6s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(49) {
+  top: 931%;
+  left: 1421%;
+  transform: scale(0.6);
+  animation: inkDropletFadePlay 7s infinite ease-in-out;
+}
+[data-theme='fantasy'] .ink-droplet:nth-child(50) {
+  top: 950%;
+  left: 1450%;
+  transform: scale(0.9);
+  animation: inkDropletFadePlay 8s infinite ease-in-out;
+}
+@-moz-keyframes inkSplatterPlay {
+  0% {
+    transform: translateY(-50%) scale(0);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(-50%) scale(2.2);
+    opacity: 0;
+  }
+}
+@-webkit-keyframes inkSplatterPlay {
+  0% {
+    transform: translateY(-50%) scale(0);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(-50%) scale(2.2);
+    opacity: 0;
+  }
+}
+@-o-keyframes inkSplatterPlay {
+  0% {
+    transform: translateY(-50%) scale(0);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(-50%) scale(2.2);
+    opacity: 0;
+  }
+}
+@keyframes inkSplatterPlay {
+  0% {
+    transform: translateY(-50%) scale(0);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(-50%) scale(2.2);
+    opacity: 0;
+  }
+}
+@-moz-keyframes fantasyQuillSpin {
+  0% {
+    transform: rotate(0deg) scale(1.1);
+  }
+  100% {
+    transform: rotate(360deg) scale(1.1);
+  }
+}
+@-webkit-keyframes fantasyQuillSpin {
+  0% {
+    transform: rotate(0deg) scale(1.1);
+  }
+  100% {
+    transform: rotate(360deg) scale(1.1);
+  }
+}
+@-o-keyframes fantasyQuillSpin {
+  0% {
+    transform: rotate(0deg) scale(1.1);
+  }
+  100% {
+    transform: rotate(360deg) scale(1.1);
+  }
+}
+@keyframes fantasyQuillSpin {
+  0% {
+    transform: rotate(0deg) scale(1.1);
+  }
+  100% {
+    transform: rotate(360deg) scale(1.1);
+  }
+}
+@-moz-keyframes sketchMicroShake {
+  0% {
+    border-radius: var(--sketch-radius-sm);
+  }
+  100% {
+    border-radius: var(--sketch-radius-sm-v2);
+  }
+}
+@-webkit-keyframes sketchMicroShake {
+  0% {
+    border-radius: var(--sketch-radius-sm);
+  }
+  100% {
+    border-radius: var(--sketch-radius-sm-v2);
+  }
+}
+@-o-keyframes sketchMicroShake {
+  0% {
+    border-radius: var(--sketch-radius-sm);
+  }
+  100% {
+    border-radius: var(--sketch-radius-sm-v2);
+  }
+}
+@keyframes sketchMicroShake {
+  0% {
+    border-radius: var(--sketch-radius-sm);
+  }
+  100% {
+    border-radius: var(--sketch-radius-sm-v2);
+  }
+}
+@-moz-keyframes sketchCardShake {
+  0% {
+    border-radius: var(--sketch-radius-md);
+  }
+  100% {
+    border-radius: var(--sketch-radius-md-v2);
+  }
+}
+@-webkit-keyframes sketchCardShake {
+  0% {
+    border-radius: var(--sketch-radius-md);
+  }
+  100% {
+    border-radius: var(--sketch-radius-md-v2);
+  }
+}
+@-o-keyframes sketchCardShake {
+  0% {
+    border-radius: var(--sketch-radius-md);
+  }
+  100% {
+    border-radius: var(--sketch-radius-md-v2);
+  }
+}
+@keyframes sketchCardShake {
+  0% {
+    border-radius: var(--sketch-radius-md);
+  }
+  100% {
+    border-radius: var(--sketch-radius-md-v2);
+  }
+}
+@-moz-keyframes inkDropletFadePlay {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0.5) rotate(0deg);
+  }
+  50% {
+    opacity: 0.14;
+    transform: scale(1.1) rotate(180deg);
+  }
+}
+@-webkit-keyframes inkDropletFadePlay {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0.5) rotate(0deg);
+  }
+  50% {
+    opacity: 0.14;
+    transform: scale(1.1) rotate(180deg);
+  }
+}
+@-o-keyframes inkDropletFadePlay {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0.5) rotate(0deg);
+  }
+  50% {
+    opacity: 0.14;
+    transform: scale(1.1) rotate(180deg);
+  }
+}
+@keyframes inkDropletFadePlay {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0.5) rotate(0deg);
+  }
+  50% {
+    opacity: 0.14;
+    transform: scale(1.1) rotate(180deg);
+  }
 }
 [data-theme='manga'] {
   --bg-sidebar: #c4f0d5; /* 莫比斯薄荷绿 */
@@ -3206,6 +4191,179 @@ input {
   50% {
     transform: translateY(-5px) rotate(-1deg);
   }
+}
+[data-theme='light'] {
+  --bg-sidebar: #fff;
+  --bg-main: #f8f9fa;
+  --bg-content: #fff;
+  --bg-panel: #fff;
+  --text-main: #2c3e50;
+  --text-sub: #7f8c8d;
+  --border: #e0e0e0;
+  --color-orange: #3498db; /* 简约风改用蓝色作为主色调 */
+  --font-zh: 'Inter', 'Source Sans Pro', 'PingFang SC', sans-serif;
+  --font-en: 'Montserrat', sans-serif;
+}
+[data-theme='light'] .sidebar {
+  background-color: var(--bg-sidebar);
+  border-right: 1px solid var(--border);
+  box-shadow: none;
+  padding: 60px 0;
+}
+[data-theme='light'] .brand-icon {
+  fill: var(--color-orange);
+}
+[data-theme='light'] .nav-item::before,
+[data-theme='light'] .nav-item::after {
+  display: none;
+}
+[data-theme='light'] .nav-item .zh {
+  font-weight: 500;
+}
+[data-theme='light'] .nav-item.active .zh,
+[data-theme='light'] .nav-item:hover .zh {
+  color: var(--color-orange);
+}
+[data-theme='light'] .nav-item.active,
+[data-theme='light'] .nav-item:hover {
+  background: rgba(52,152,219,0.05);
+}
+[data-theme='light'] .post-card-inner {
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+  background: #fff;
+}
+[data-theme='light'] .post-card:hover .post-card-inner {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+[data-theme='light'] .post-card-bg {
+  filter: brightness(1);
+}
+[data-theme='light'] .post-card-overlay {
+  background: linear-gradient(to top, rgba(255,255,255,0.9) 0%, transparent 100%);
+}
+[data-theme='light'] .card-title,
+[data-theme='light'] .card-desc,
+[data-theme='light'] .card-meta {
+  color: var(--text-main);
+}
+[data-theme='light'] .card-title {
+  color: #2c3e50;
+}
+[data-theme='light'] .card-desc {
+  color: #7f8c8d;
+}
+[data-theme='light'] .top-bar {
+  background: rgba(255,255,255,0.8);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+[data-theme='light'] .search-box {
+  background: #f1f3f5;
+  border-radius: 20px;
+}
+[data-theme='light'] .search-box:hover,
+[data-theme='light'] .search-box:focus-within {
+  border-color: var(--color-orange);
+  background: #fff;
+}
+[data-theme='light'] .hero-section {
+  background: #fff;
+}
+[data-theme='light'] .hero-overlay {
+  background: linear-gradient(90deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.6) 50%, transparent 100%);
+}
+[data-theme='light'] .hero-title {
+  color: #2c3e50;
+  text-shadow: 0 0 30px #fff;
+}
+[data-theme='light'] .hero-date {
+  border-left-color: var(--color-orange);
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(8px);
+  padding: 10px 20px;
+  border-radius: 0 10px 10px 0;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+[data-theme='light'] .hero-date-num {
+  color: #2c3e50;
+}
+[data-theme='light'] .hero-btn {
+  background: var(--color-orange);
+  color: #fff !important;
+  border-radius: 30px;
+  padding: 12px 30px;
+  border: none;
+  box-shadow: 0 6px 20px rgba(52,152,219,0.3);
+}
+[data-theme='light'] .hero-btn:hover {
+  background: #2980b9;
+  color: #fff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(52,152,219,0.4);
+}
+[data-theme='light'] .art-content h1 {
+  border-bottom: 2px solid var(--color-orange);
+  color: #2c3e50;
+}
+[data-theme='light'] .art-content h2 {
+  border-bottom: none;
+  color: #34495e;
+  background: #f8f9fa;
+  padding: 10px 15px;
+  border-left: 4px solid var(--color-orange);
+}
+[data-theme='light'] .art-content blockquote {
+  background: #f8f9fa;
+  border-left-color: #bdc3c7;
+}
+[data-theme='light'] .art-content pre {
+  background: #fdfdfd;
+  border: 1px solid #eee;
+}
+[data-theme='light'] .art-content pre code {
+  color: #444;
+}
+[data-theme='light'] .app-footer {
+  background: #fff;
+  border-top: 1px solid var(--border);
+}
+[data-theme='light'] .glitch-layer,
+[data-theme='light'] .pjax-glitch-layer {
+  display: none !important;
+}
+[data-theme='light'] .jump-char,
+[data-theme='light'] .wave-char {
+  animation: none !important;
+}
+[data-theme='light'] .brand:hover {
+  transform: scale(1.02);
+  filter: drop-shadow(0 0 8px rgba(52,152,219,0.3));
+}
+[data-theme='light'] .user-info:hover .avatar {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(52,152,219,0.4);
+  transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+[data-theme='light'] .nav-item.active .nav-icon,
+[data-theme='light'] .nav-item:hover .nav-icon {
+  filter: invert(53%) sepia(82%) saturate(3015%) hue-rotate(180deg) brightness(95%) contrast(92%) !important;
+}
+[data-theme='light'] .hero-subtitle {
+  color: #2c3e50; /* 加深颜色 */
+  background: none; /* 去掉突兀背景 */
+  backdrop-filter: none;
+  padding: 0;
+  margin-left: 0;
+  line-height: 1.8;
+  font-weight: 400;
+  max-width: 600px;
+}
+[data-theme='light'] .card-desc {
+  color: #34495e !important;
+  font-weight: 400;
 }
 [data-theme='street'] {
   --sidebar-width: 300px; /* 增加侧边栏宽度，提供呼吸感 */

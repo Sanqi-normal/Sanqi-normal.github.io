@@ -208,7 +208,7 @@ $(function () {
     /*回到页首*/
     $("#rocket").on("click", function (e) {
         $(this).addClass("launch");
-        container.animate({scrollTop: 0}, 500);
+        $('html, body, .main-wrapper').animate({scrollTop: 0}, 500);
     });
 
     // 移动端侧边栏切换
