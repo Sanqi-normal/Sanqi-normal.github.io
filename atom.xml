@@ -513,8 +513,8 @@ Pass 3: 最终调色 → 色彩校正并与原图混合
     </author>
     <category term="计算机" scheme="http://example.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/"/>
     <category term="后端" scheme="http://example.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E5%90%8E%E7%AB%AF/"/>
-    <category term="架构" scheme="http://example.com/tags/%E6%9E%B6%E6%9E%84/"/>
     <category term="后端" scheme="http://example.com/tags/%E5%90%8E%E7%AB%AF/"/>
+    <category term="架构" scheme="http://example.com/tags/%E6%9E%B6%E6%9E%84/"/>
     <category term="MCP" scheme="http://example.com/tags/MCP/"/>
     <category term="SSE" scheme="http://example.com/tags/SSE/"/>
     <category term="HTTP" scheme="http://example.com/tags/HTTP/"/>
