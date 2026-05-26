@@ -132,6 +132,10 @@ function afterPjax() {
 
     /* 新内容淡入 */
     content.css({'opacity': 1}).removeClass('fadeOuts').addClass('fadeIns');
+    // 动画完成后清理类，避免后续主题切换时 fadeIns 动画重播导致闪烁
+    setTimeout(function() {
+        content.removeClass('fadeIns');
+    }, 350);
     bind();
     initEffects();
     initScrollObserver();

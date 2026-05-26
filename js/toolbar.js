@@ -148,6 +148,7 @@
                 // 降级方案：老浏览器仍然禁用 CSS 过渡，使用瞬间硬切以保证不卡顿
                 $('html').addClass('theme-switching');
                 updateThemeDOM();
+                document.body.offsetHeight;
                 setTimeout(function() {
                     $('html').removeClass('theme-switching');
                 }, 50);

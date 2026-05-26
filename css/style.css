@@ -2351,6 +2351,377 @@ input {
     opacity: 1;
   }
 }
+[data-theme='cassette'] {
+/* --- 核心色彩与排版体系 --- */
+  --bg-main: #dcd9cd /* 经典旧电子设备米白/塑料灰 */;
+  --bg-sidebar: #22252a /* 录像带/磁带外壳深炭黑 */;
+  --bg-panel: #eae7dc /* 浅色控制面板底色 */;
+  --text-main: #1d2021 /* 哑光深灰文本 */;
+  --text-sub: #665c54 /* 工业标牌暗黄褐 */;
+  --border: #22252a /* 粗重的机械缝隙线条 */;
+/* 标志性复古未来霓虹/信号色 */
+  --crt-green: #3f3 /* 阴极射线管荧光绿 */;
+  --analog-orange: #fe8019 /* 录音指示灯橙 */;
+  --analog-red: #fb4934 /* 磁带流线红 */;
+  --analog-yellow: #fabd2f /* 复古标牌黄 */;
+  --font-zh: 'Courier New', 'Noto Sans SC', 'PingFang SC', monospace;
+  --font-en: 'Courier New', 'Consolas', monospace /* 强制等宽矩阵字体 */;
+  --sidebar-width: 290px;
+  --top-bar-height: 70px;
+  --content-padding: 50px;
+  --analog-border: 4px solid var(--border);
+  --deck-shadow: 6px 6px 0px rgba(0,0,0,0.15);
+}
+[data-theme='cassette'] body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  font-family: var(--font-zh);
+  position: relative;
+}
+[data-theme='cassette'] body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+/* 物理扫描线栅格 */
+  background: linear-gradient(rgba(18,16,16,0) 50%, rgba(0,0,0,0.08) 50%), linear-gradient(90deg, rgba(255,0,0,0.03), rgba(0,255,0,0.01), rgba(0,255,0,0.03));
+  background-size: 100% 4px, 6px 100%;
+  pointer-events: none;
+  z-index: 9999;
+}
+[data-theme='cassette'] body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, transparent 350px, var(--analog-red) 350px, var(--analog-red) 354px, var(--analog-orange) 354px, var(--analog-orange) 358px, var(--analog-yellow) 358px, var(--analog-yellow) 362px, transparent 362px);
+  z-index: -1;
+  pointer-events: none;
+}
+[data-theme='cassette'] * {
+  border-radius: 6px !important;
+}
+[data-theme='cassette'] .sidebar {
+  background-color: var(--bg-sidebar);
+  border-right: 5px solid #161819;
+  padding: 30px 0 20px;
+  box-shadow: inset -10px 0 20px rgba(0,0,0,0.4);
+}
+[data-theme='cassette'] .brand {
+  background: #eae7dc;
+  border: 3px solid var(--border);
+  margin: 10px 20px 30px;
+  padding: 12px;
+  box-shadow: inset 2px 2px 5px rgba(0,0,0,0.3);
+  position: relative;
+}
+[data-theme='cassette'] .brand::before,
+[data-theme='cassette'] .brand::after {
+  content: "";
+  position: absolute;
+  bottom: 6px;
+  width: 10px;
+  height: 10px;
+  background: var(--bg-sidebar);
+  border-radius: 50% !important;
+}
+[data-theme='cassette'] .brand::before {
+  left: 15px;
+}
+[data-theme='cassette'] .brand::after {
+  right: 15px;
+}
+[data-theme='cassette'] .brand-text h1 {
+  font-family: var(--font-en);
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--bg-sidebar);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+[data-theme='cassette'] .brand-text span {
+  font-family: var(--font-en);
+  color: var(--analog-orange);
+  font-weight: bold;
+}
+[data-theme='cassette'] .nav-label {
+  font-family: var(--font-en);
+  color: #8f3f71;
+  padding: 0 20px;
+  font-weight: bold;
+  font-size: 11px;
+}
+[data-theme='cassette'] .nav-item {
+  margin: 6px 20px;
+  background: #32302f;
+  border: 2px solid #1d2021;
+  border-bottom: 4px solid #1d2021 /* 做出琴键立体感 */;
+  height: auto;
+  padding: 10px;
+  transition: all 0.1s ease;
+}
+[data-theme='cassette'] .nav-item .zh {
+  color: #bdae93;
+  font-family: var(--font-zh);
+  font-size: 14px;
+}
+[data-theme='cassette'] .nav-item .en {
+  color: var(--analog-yellow);
+  font-family: var(--font-en);
+  font-size: 10px;
+}
+[data-theme='cassette'] .nav-item:hover,
+[data-theme='cassette'] .nav-item.active {
+  background: #1d2021;
+  border-bottom: 2px solid #1d2021;
+  transform: translateY(2px) /* 物理下压 */;
+}
+[data-theme='cassette'] .nav-item:hover .zh,
+[data-theme='cassette'] .nav-item.active .zh {
+  color: var(--crt-green);
+  text-shadow: 0 0 4px var(--crt-green) /* 荧光发光 */;
+}
+[data-theme='cassette'] .user-info * {
+  color: #bdae93 !important;
+}
+[data-theme='cassette'] .avatar {
+  border: 3px solid #1d2021;
+  filter: sepia(0.8) contrast(1.2) /* 营造老照片/老式监视器感 */;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+}
+[data-theme='cassette'] .user-desc {
+  font-size: 12px;
+  border-left: 2px solid var(--analog-orange);
+  padding-left: 8px;
+}
+[data-theme='cassette'] .top-bar {
+  left: var(--sidebar-width) !important;
+  background: rgba(220,217,205,0.9);
+  border-bottom: var(--analog-border);
+  backdrop-filter: blur(4px);
+}
+[data-theme='cassette'] .search-box {
+  background: #c5c2b6;
+  border: 2px solid #a8a59a;
+  box-shadow: inset 2px 2px 5px rgba(0,0,0,0.15);
+}
+[data-theme='cassette'] .search-box input {
+  font-family: var(--font-en);
+  color: var(--text-main);
+}
+[data-theme='cassette'] .sys-text {
+  font-family: var(--font-en);
+  background: #1d2021;
+  color: var(--crt-green) !important;
+  padding: 4px 10px;
+  border: 2px solid #32302f;
+  box-shadow: inset 0 0 6px rgba(0,255,0,0.5);
+}
+[data-theme='cassette'] .sys-text * {
+  color: var(--crt-green) !important;
+}
+[data-theme='cassette'] .hero-section {
+  background-color: #282828;
+  margin: 20px;
+  border: var(--analog-border);
+  box-shadow: var(--deck-shadow);
+}
+[data-theme='cassette'] .hero-overlay {
+  background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.4) 100%);
+}
+[data-theme='cassette'] .hero-content {
+  background: #1d2021;
+  border: 3px solid #32302f;
+  padding: 30px !important;
+  margin: 30px !important;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+}
+[data-theme='cassette'] .hero-title {
+  font-family: var(--font-en);
+  color: #fff !important;
+  text-shadow: 0 0 8px rgba(255,255,255,0.3);
+}
+[data-theme='cassette'] .hero-subtitle {
+  color: var(--crt-green) !important;
+  font-family: var(--font-en);
+  border-left: 3px solid var(--crt-green);
+  padding-left: 10px;
+  text-shadow: 0 0 4px var(--crt-green);
+}
+[data-theme='cassette'] .hero-btn {
+  background: var(--analog-orange) !important;
+  color: #1d2021 !important;
+  font-weight: bold;
+  border: 2px solid var(--border) !important;
+  box-shadow: 3px 3px 0px rgba(0,0,0,0.3);
+}
+[data-theme='cassette'] .section-title {
+  font-family: var(--font-en);
+  background: var(--border);
+  color: var(--bg-main);
+  padding: 4px 14px;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+[data-theme='cassette'] .post-card-inner {
+  border: var(--analog-border);
+  background: var(--bg-panel);
+  box-shadow: var(--deck-shadow);
+}
+[data-theme='cassette'] .post-card-bg {
+  filter: sepia(0.5) saturate(1.2) contrast(1.1);
+}
+[data-theme='cassette'] .card-title {
+  color: var(--text-main);
+}
+[data-theme='cassette'] .card-tag {
+  color: var(--analog-red);
+  font-weight: bold;
+}
+[data-theme='cassette'] .announce-box {
+  border: 2px dashed var(--border) !important;
+  background: #e0ddd3;
+  box-shadow: none;
+}
+[data-theme='cassette'] .announce-date-big {
+  color: var(--analog-orange);
+  font-family: var(--font-en);
+}
+[data-theme='cassette'] .chat-container {
+  background: #d4d1c4;
+  border: var(--analog-border);
+  box-shadow: inset 3px 3px 10px rgba(0,0,0,0.1);
+}
+[data-theme='cassette'] .chat-bubble.received {
+  background: #1d2021;
+  color: var(--crt-green);
+  border: 3px solid #32302f;
+  box-shadow: var(--deck-shadow);
+  font-family: var(--font-en);
+}
+[data-theme='cassette'] .chat-bubble.received * {
+  color: var(--crt-green) !important;
+}
+[data-theme='cassette'] .chat-bubble.received::before {
+  border-bottom: 5px solid #1d2021;
+  border-left: 5px solid #1d2021;
+  background: #1d2021;
+}
+[data-theme='cassette'] .chat-bubble.sent {
+  background: var(--analog-yellow);
+  color: var(--border);
+  border: var(--analog-border);
+  box-shadow: var(--deck-shadow);
+  font-weight: bold;
+}
+[data-theme='cassette'] .chat-bubble.sent * {
+  color: var(--border) !important;
+}
+[data-theme='cassette'] .chat-bubble.sent::before {
+  border-top: 5px solid var(--border);
+  border-right: 5px solid var(--border);
+  background: var(--analog-yellow);
+}
+[data-theme='cassette'] .chat-input-wrapper {
+  border: var(--analog-border);
+  background: #282828;
+  padding: 5px;
+}
+[data-theme='cassette'] .chat-input {
+  background: #1d2021;
+  color: #fff;
+  border: 2px solid #32302f;
+  padding: 15px;
+}
+[data-theme='cassette'] .chat-submit-btn {
+  background: var(--analog-orange);
+  color: #1d2021;
+  border-left: var(--analog-border);
+  font-family: var(--font-en);
+}
+[data-theme='cassette'] .chat-submit-btn:hover {
+  background: var(--analog-red);
+  color: #fff;
+}
+[data-theme='cassette'] .art-header {
+  background: #c5c2b6;
+  border: var(--analog-border);
+  padding: 30px;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+}
+[data-theme='cassette'] .art-title {
+  font-family: var(--font-zh);
+  color: var(--text-main);
+}
+[data-theme='cassette'] .art-content {
+  font-family: var(--font-zh);
+  letter-spacing: 0.5px;
+}
+[data-theme='cassette'] .art-content h2 {
+  font-family: var(--font-zh);
+  border-bottom: 3px solid var(--border);
+  color: var(--text-main);
+  padding-bottom: 5px;
+  font-weight: bold;
+}
+[data-theme='cassette'] .art-content code {
+  background: #c5c2b6 !important;
+  color: var(--analog-red) !important;
+  font-family: var(--font-en);
+}
+[data-theme='cassette'] .art-content pre {
+  background: #1d2021;
+  border: var(--analog-border);
+  box-shadow: var(--deck-shadow);
+}
+[data-theme='cassette'] .art-content pre code {
+  color: #ebdbb2 !important;
+  background: transparent !important;
+}
+[data-theme='cassette'] #top-progress-bar {
+  height: 6px !important;
+/* 橙黑相间的磁带引带（Leader Tape）视效 */
+  background: repeating-linear-gradient(45deg, var(--analog-orange), var(--analog-orange) 10px, var(--border) 10px, var(--border) 20px);
+}
+[data-theme='cassette'] .nav-item:hover {
+  animation: tape-flutter 0.2s infinite ease-in-out;
+}
+@-moz-keyframes tape-flutter {
+  0%, 100% {
+    transform: translateY(2px);
+  }
+  50% {
+    transform: translateY(3px);
+  }
+}
+@-webkit-keyframes tape-flutter {
+  0%, 100% {
+    transform: translateY(2px);
+  }
+  50% {
+    transform: translateY(3px);
+  }
+}
+@-o-keyframes tape-flutter {
+  0%, 100% {
+    transform: translateY(2px);
+  }
+  50% {
+    transform: translateY(3px);
+  }
+}
+@keyframes tape-flutter {
+  0%, 100% {
+    transform: translateY(2px);
+  }
+  50% {
+    transform: translateY(3px);
+  }
+}
 [data-theme='fantasy'] {
 /* --- 核心色彩与排版体系 --- */
   --bg-main: #fcf6e8;
@@ -4805,6 +5176,1925 @@ input {
   color: var(--color-red);
   font-weight: 900;
   font-size: 14px;
+}
+[data-theme='post-punk'] {
+  --sidebar-width: 270px;
+  --bg-main: #1a1c1e; /* 苏联晚期工业小镇的冬夜灰黑 */
+  --bg-content: transparent;
+  --bg-panel: #222528; /* 冰冷混凝土（Concrete）的质感暗色 */
+  --bg-sidebar: #131416; /* 巨型工厂阴影下的脏沥青黑 */
+  --text-main: #d1d5db; /* 漫天大雪下的苍白灰 */
+  --text-sub: #718096; /* 工业废气与浓雾的烟熏灰 */
+  --border: #4a5568; /* 锈蚀铁丝网与钢筋的冷铁灰 */
+  --doomer-green: #22c55e; /* 夜视仪/老旧示波器的电流荧光绿 */
+  --doomer-rust: #9a3412; /* 废弃工厂管道的铁锈红 */
+  --doomer-amber: #d97706; /* 坏掉的深夜街灯那种孤独的昏黄 */
+  --doomer-concrete: #374151;
+  --font-zh: 'SimSun', 'STSong', 'Noto Sans SC', sans-serif; /* 采用带有复古、粗糙印刷感的宋体，模拟90年代地下独立刊物印刷质感 */
+  --font-en: 'Courier New', 'Courier', monospace; /* 纯粹的打字机终端单色等宽字体，拒绝现代感 */
+}
+[data-theme='post-punk'] body {
+  background: var(--bg-main);
+/* 模拟老旧胶片粗糙颗粒、粗糙的水泥墙面以及粗线扫描线纹理 */
+  background-image: radial-gradient(rgba(255,255,255,0.03) 1px, transparent 0), linear-gradient(to bottom, rgba(0,0,0,0.1) 50%, rgba(255,255,255,0.02) 50%);
+  background-size: 8px 8px, 100% 4px;
+  font-family: var(--font-zh);
+}
+[data-theme='post-punk'] * {
+  border-radius: 0 !important;
+}
+[data-theme='post-punk'] .sidebar {
+  background: var(--bg-sidebar);
+  border-right: 3px solid var(--border);
+  box-shadow: 5px 0 15px rgba(0,0,0,0.6);
+  padding: 0;
+}
+[data-theme='post-punk'] .sidebar::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 4px;
+  height: 100%;
+  background: repeating-linear-gradient(to bottom, var(--border), var(--border) 5px, transparent 5px, transparent 10px);
+  opacity: 0.4;
+  pointer-events: none;
+}
+[data-theme='post-punk'] .brand {
+  display: block;
+  padding: 40px 20px 25px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,0,0,0.2);
+}
+[data-theme='post-punk'] .brand-text h1 {
+  font-family: var(--font-zh);
+  font-size: 28px;
+  font-weight: 900;
+  color: #e5e7eb;
+  line-height: 1.1;
+  letter-spacing: -1px;
+  margin-bottom: 15px;
+  position: relative;
+  z-index: 2;
+  word-wrap: normal;
+  white-space: nowrap;
+  max-width: none;
+  overflow: visible;
+/* 增加苏联晚期工业钢印感，隐约的脏灰色重影投影 */
+  text-shadow: 2px 2px 0px rgba(0,0,0,0.9), -1px -1px 0px rgba(255,255,255,0.1);
+}
+[data-theme='post-punk'] .brand-text h1::after {
+  content: "ТИПИЧНЫЙ ДООМЕР // МЫ ВМЕСТЕ (1991)";
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0px;
+  color: var(--doomer-rust); /* 铁锈红点缀，强化废弃斑驳的历史痕迹 */
+  font-family: var(--font-en);
+  margin-top: 8px;
+  opacity: 0.73;
+  text-shadow: none;
+}
+[data-theme='post-punk'] .nav-label {
+  color: var(--text-sub);
+  border-bottom: 1px solid var(--border);
+  margin: 30px 20px 10px;
+  padding-bottom: 4px;
+  font-weight: normal;
+  font-family: var(--font-en);
+  font-size: 11px;
+  text-transform: uppercase;
+}
+[data-theme='post-punk'] .nav-label::before {
+  content: "[SECTION_";
+}
+[data-theme='post-punk'] .nav-label::after {
+  content: "]";
+}
+[data-theme='post-punk'] .nav-item {
+  background: transparent;
+  border: 1px solid transparent;
+  margin: 4px 15px;
+  padding: 10px 15px;
+  transition: all 0.2s ease;
+  position: relative;
+}
+[data-theme='post-punk'] .nav-item .zh {
+  color: var(--text-main);
+  font-size: 14px;
+  font-weight: normal;
+}
+[data-theme='post-punk'] .nav-item .en {
+  color: var(--text-sub);
+  font-family: var(--font-en);
+  font-size: 11px;
+  margin-left: 5px;
+}
+[data-theme='post-punk'] .nav-item::before,
+[data-theme='post-punk'] .nav-item::after {
+  display: none;
+}
+[data-theme='post-punk'] .nav-item:hover,
+[data-theme='post-punk'] .nav-item.active {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  transform: translateX(3px);
+/* 激活或悬停时亮起唯一的、老旧微型计算机示波器的故障荧光绿 */
+}
+[data-theme='post-punk'] .nav-item:hover .zh,
+[data-theme='post-punk'] .nav-item.active .zh {
+  color: var(--doomer-green);
+  text-shadow: 0 0 4px rgba(34,197,94,0.5);
+}
+[data-theme='post-punk'] .nav-item:hover .en,
+[data-theme='post-punk'] .nav-item.active .en {
+  color: var(--doomer-green);
+  opacity: 0.8;
+}
+[data-theme='post-punk'] .nav-item:hover .nav-icon,
+[data-theme='post-punk'] .nav-item.active .nav-icon {
+  filter: invert(58%) sepia(58%) saturate(489%) hue-rotate(93deg) brightness(97%) contrast(93%);
+}
+[data-theme='post-punk'] .user-info {
+  margin-top: auto;
+  padding: 25px 20px;
+  background: rgba(0,0,0,0.3);
+  border-top: 1px solid var(--border);
+  gap: 15px;
+}
+[data-theme='post-punk'] .avatar-container {
+  width: 50px;
+  height: 50px;
+  flex-shrink: 0;
+}
+[data-theme='post-punk'] .avatar {
+  border: 1px solid var(--border);
+  width: 50px;
+  height: 50px;
+/* 强制高对比度黑白调，营造剥离现实的迷茫与压抑感 */
+  filter: grayscale(100%) contrast(1.4) brightness(0.9);
+  transition: filter 0.3s ease;
+}
+[data-theme='post-punk'] .user-info:hover .avatar {
+  filter: grayscale(100%) contrast(1.1) brightness(0.7);
+  border-color: var(--doomer-rust);
+}
+[data-theme='post-punk'] .user-name {
+  color: var(--text-main);
+  font-size: 15px;
+  font-weight: bold;
+  font-family: var(--font-zh);
+}
+[data-theme='post-punk'] .user-id {
+  color: var(--text-sub);
+  font-family: var(--font-en);
+  font-size: 11px;
+}
+[data-theme='post-punk'] .social-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+}
+[data-theme='post-punk'] .social-btn:hover {
+  background: rgba(255,255,255,0.05);
+  border-color: var(--doomer-amber);
+  transform: translateY(-1px);
+}
+[data-theme='post-punk'] .social-btn:hover img {
+  filter: invert(72%) sepia(87%) saturate(432%) hue-rotate(357deg) brightness(93%) contrast(91%);
+}
+[data-theme='post-punk'] .top-bar {
+  background: rgba(26,28,30,0.9);
+  border-bottom: 1px solid var(--border);
+  padding-top: 0;
+  backdrop-filter: blur(5px);
+}
+[data-theme='post-punk'] .top-bar::before {
+  content: "● ПАНК-РОК // СТАТУС: ОК";
+  position: absolute;
+  left: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-sub);
+  font-size: 12px;
+  font-family: var(--font-en);
+  letter-spacing: 1px;
+}
+[data-theme='post-punk'] .search-box {
+  background: rgba(0,0,0,0.4);
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  color: var(--text-main);
+  width: 180px;
+}
+[data-theme='post-punk'] .search-box:hover,
+[data-theme='post-punk'] .search-box:focus-within,
+[data-theme='post-punk'] .search-box.expanded {
+  width: 230px;
+  border-color: var(--doomer-amber);
+  background: rgba(0,0,0,0.6);
+  box-shadow: none;
+  transform: none;
+}
+[data-theme='post-punk'] .search-box input {
+  font-size: 12px;
+  color: var(--text-main);
+  font-family: var(--font-en);
+}
+[data-theme='post-punk'] .search-box input::placeholder {
+  color: rgba(255,255,255,0.2);
+}
+[data-theme='post-punk'] .search-box svg {
+  fill: var(--text-sub);
+}
+[data-theme='post-punk'] .top-links a {
+  color: var(--text-main);
+  font-family: var(--font-zh);
+  font-size: 13px;
+  padding: 4px 0;
+  border-bottom: 1px solid transparent;
+}
+[data-theme='post-punk'] .top-links a:hover {
+  color: var(--doomer-green);
+  border-bottom: 1px solid var(--doomer-green);
+}
+[data-theme='post-punk'] .sys-text {
+  color: var(--text-sub);
+  font-family: var(--font-en);
+  font-size: 13px;
+}
+[data-theme='post-punk'] #visualizer-line {
+  stroke: var(--doomer-green) !important;
+  filter: drop-shadow(0 0 4px rgba(34,197,94,0.6));
+  stroke-width: 1.5px;
+}
+[data-theme='post-punk'] .sys-status svg {
+  animation: doomerSignal 3s ease-in-out infinite;
+}
+[data-theme='post-punk'] .hero-section {
+  background: #151618;
+  padding: calc(var(--top-bar-height) + 50px) 40px 50px;
+  margin-top: calc(-1 * var(--top-bar-height));
+  min-height: 420px;
+  border-bottom: 1px solid var(--border);
+/* 增加网格横纵拼缝线，模拟粗野主义建筑（Brutalist architecture）预制混凝土板墙面 */
+  background-image: linear-gradient(to right, rgba(255,255,255,0.015) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.015) 1px, transparent 1px);
+  background-size: 100px 100px;
+}
+[data-theme='post-punk'] .hero-bg {
+  display: block;
+/* 将背景大图彻底黑白、高对比度低亮度化，使其褪化为一副带有粗糙微粒的压抑水泥墙 */
+  filter: grayscale(100%) contrast(1.6) brightness(0.25);
+  opacity: 0.7;
+}
+[data-theme='post-punk'] .hero-overlay {
+  display: block;
+  background: linear-gradient(to right, #1a1c1e 0%, rgba(26,28,30,0.7) 50%, rgba(0,0,0,0.5) 100%);
+}
+[data-theme='post-punk'] .hero-content {
+  position: relative;
+  z-index: 2;
+  background: transparent;
+  border: none;
+  padding: 0;
+  box-shadow: none;
+  max-width: 720px;
+  width: 100%;
+  clip-path: none;
+/* 左侧融入一条代表旧时代体制遗留的沉重铁锈红粗边（卡带唱片套感） */
+  border-left: 5px solid var(--doomer-rust);
+  padding-left: 25px;
+}
+[data-theme='post-punk'] .hero-content::after {
+  display: none;
+}
+[data-theme='post-punk'] .hero-content::before {
+  content: "СДЕЛАНО В СССР";
+  position: absolute;
+  right: 40px;
+  top: -10px;
+  font-family: var(--font-en);
+  font-size: 11px;
+  color: rgba(154,52,18,0.35);
+  border: 2px solid rgba(154,52,18,0.35);
+  padding: 2px 8px;
+  transform: rotate(12deg);
+  pointer-events: none;
+  letter-spacing: 1px;
+}
+[data-theme='post-punk'] .hero-tag {
+  background: var(--doomer-concrete);
+  color: var(--text-main);
+  display: inline-block;
+  padding: 2px 10px;
+  border: 1px solid var(--border);
+  font-family: var(--font-en);
+  font-size: 11px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+[data-theme='post-punk'] .hero-title {
+  font-family: var(--font-zh);
+  font-size: 40px;
+  color: #f3f4f6;
+  font-weight: 900;
+  line-height: 1.3;
+  margin-bottom: 20px;
+  letter-spacing: 0px;
+/* 增加极其克制的黑白磁带错位故障重影 */
+  text-shadow: -1px 1px 0px var(--border), 1px -1px 0px rgba(0,0,0,0.8);
+}
+[data-theme='post-punk'] .hero-subtitle {
+  color: var(--text-sub);
+  font-weight: normal;
+  font-size: 14px;
+  border-left: 3px solid var(--border);
+  background: transparent;
+  padding: 5px 0 5px 15px;
+  max-width: 650px;
+  line-height: 1.7;
+}
+[data-theme='post-punk'] .hero-btn {
+  background: transparent;
+  color: var(--text-main) !important;
+  font-family: var(--font-zh);
+  font-size: 13px;
+  font-weight: normal;
+  padding: 8px 25px;
+  border: 1px solid var(--border);
+  margin-top: 30px;
+  box-shadow: none;
+  transform: none;
+}
+[data-theme='post-punk'] .hero-btn:hover {
+  background: rgba(255,255,255,0.03);
+  color: var(--doomer-amber) !important;
+  border-color: var(--doomer-amber);
+  transform: none;
+  box-shadow: none;
+}
+[data-theme='post-punk'] .hero-date {
+  position: absolute;
+  right: 40px;
+  bottom: 40px;
+  top: auto;
+  background: transparent;
+  border: 1px solid var(--border);
+  padding: 12px 20px;
+  text-align: left;
+  box-shadow: none;
+  z-index: 5;
+  transform: none;
+}
+[data-theme='post-punk'] .hero-date-tag {
+  color: var(--text-sub);
+  font-size: 10px;
+  font-family: var(--font-en);
+}
+[data-theme='post-punk'] .hero-date-num {
+  font-size: 28px;
+  color: var(--text-main);
+  font-family: var(--font-en);
+  font-weight: bold;
+  line-height: 1;
+  margin: 4px 0;
+}
+[data-theme='post-punk'] .hero-date-sub {
+  display: none;
+}
+[data-theme='post-punk'] .hero-date::after {
+  display: none;
+}
+[data-theme='post-punk'] .home-content-section {
+  background: transparent;
+  padding-top: 40px;
+}
+[data-theme='post-punk'] .section-title {
+  font-family: var(--font-zh);
+  font-weight: bold;
+  font-size: 20px;
+  color: #f3f4f6;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 8px;
+  margin-bottom: 35px;
+}
+[data-theme='post-punk'] .section-title span {
+  font-family: var(--font-en);
+  font-size: 11px;
+  background: transparent;
+  color: var(--text-sub);
+  padding: 0 0 0 8px;
+  border: none;
+  font-weight: normal;
+  transform: none;
+}
+[data-theme='post-punk'] .post-card {
+  height: auto;
+  margin-bottom: 40px;
+  overflow: visible !important;
+}
+[data-theme='post-punk'] .post-card-inner {
+  background: #1d1f22; /* 调深色调，与整体环境融合并拉开微弱视差 */
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  clip-path: none;
+}
+[data-theme='post-punk'] .post-card-inner::before {
+  display: none;
+}
+[data-theme='post-punk'] .post-card:hover .post-card-inner {
+  transform: translateY(-1px);
+  box-shadow: 0 0 18px rgba(217,119,6,0.18);
+  border-color: var(--doomer-amber);
+}
+[data-theme='post-punk'] .post-card:hover .post-card-inner .card-title {
+  color: var(--doomer-amber);
+}
+[data-theme='post-punk'] .post-card-bg {
+  height: 160px;
+  border-bottom: 1px solid var(--border);
+  filter: grayscale(100%) brightness(0.5) contrast(1.2);
+  transition: filter 0.3s ease;
+}
+[data-theme='post-punk'] .post-card:hover .post-card-bg {
+  filter: grayscale(100%) brightness(0.4) contrast(1.3);
+}
+[data-theme='post-punk'] .post-card-overlay {
+  position: relative;
+  background: transparent;
+  padding: 20px;
+  display: block;
+  color: var(--text-main);
+}
+[data-theme='post-punk'] .card-tag {
+  background: transparent;
+  color: var(--text-sub);
+  font-family: var(--font-en);
+  font-weight: normal;
+  border: 1px solid var(--border);
+  padding: 1px 8px;
+  display: inline-block;
+  margin-bottom: 12px;
+  font-size: 11px;
+}
+[data-theme='post-punk'] .card-title {
+  color: #f3f4f6;
+  font-size: 17px;
+  font-weight: bold;
+  margin-bottom: 12px;
+  line-height: 1.4;
+  font-family: var(--font-zh);
+  transition: color 0.2s;
+}
+[data-theme='post-punk'] .card-desc {
+  color: var(--text-sub);
+  font-size: 13px;
+  margin-bottom: 18px;
+  line-height: 1.5;
+  font-family: var(--font-zh);
+}
+[data-theme='post-punk'] .card-meta {
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+  color: var(--text-sub);
+  font-family: var(--font-en);
+  font-size: 11px;
+}
+[data-theme='post-punk'] .announce-box {
+  background: rgba(0,0,0,0.15);
+  border: 1px solid var(--border);
+  color: var(--text-main);
+  padding: 22px;
+  box-shadow: none;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+[data-theme='post-punk'] .announce-box::before {
+  display: none;
+}
+[data-theme='post-punk'] .announce-box:hover {
+  background: rgba(0,0,0,0.3);
+  border-color: var(--doomer-rust);
+  box-shadow: none;
+}
+[data-theme='post-punk'] .announce-box:hover .announce-tag {
+  color: var(--doomer-rust);
+  border-color: var(--doomer-rust);
+}
+[data-theme='post-punk'] .announce-box:hover .announce-date-big {
+  color: var(--doomer-rust);
+}
+[data-theme='post-punk'] .announce-box:hover .announce-desc {
+  color: var(--text-main);
+}
+[data-theme='post-punk'] .announce-tag {
+  background: transparent;
+  color: var(--text-sub);
+  font-weight: normal;
+  padding: 1px 6px;
+  border: 1px solid var(--border);
+  font-family: var(--font-en);
+  font-size: 11px;
+}
+[data-theme='post-punk'] .announce-date-big {
+  color: var(--text-sub);
+  font-family: var(--font-en);
+  font-size: 32px;
+  font-weight: bold;
+  line-height: 1;
+  margin-top: 8px;
+}
+[data-theme='post-punk'] .announce-title {
+  font-size: 15px;
+  font-weight: bold;
+  margin: 12px 0 8px;
+  line-height: 1.4;
+  color: #e5e7eb;
+}
+[data-theme='post-punk'] .announce-desc {
+  font-weight: normal;
+  color: var(--text-sub);
+  font-size: 12px;
+  line-height: 1.5;
+}
+[data-theme='post-punk'] #view-article {
+  background: var(--bg-main);
+}
+[data-theme='post-punk'] .art-header {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  padding: 40px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  margin-bottom: 40px;
+  clip-path: none;
+}
+[data-theme='post-punk'] .art-header::before,
+[data-theme='post-punk'] .art-header::after {
+  display: none;
+}
+[data-theme='post-punk'] .art-title {
+  font-family: var(--font-zh);
+  font-size: 32px;
+  font-weight: bold;
+  color: #f3f4f6;
+  line-height: 1.3;
+  margin-bottom: 25px;
+}
+[data-theme='post-punk'] .art-title span {
+  background: transparent;
+  padding: 0;
+  color: var(--doomer-rust);
+  transform: none;
+  display: inline;
+}
+[data-theme='post-punk'] .art-meta {
+  background: transparent;
+  color: var(--text-sub);
+  padding: 0;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  font-family: var(--font-en);
+  font-weight: normal;
+  font-size: 12px;
+  border: none;
+}
+[data-theme='post-punk'] .art-meta-link {
+  color: var(--text-main);
+  border-bottom: 1px solid var(--border);
+}
+[data-theme='post-punk'] .art-content {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  padding: 40px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  color: var(--text-main);
+  font-size: 14.5px;
+  line-height: 1.85;
+}
+[data-theme='post-punk'] .art-content h1,
+[data-theme='post-punk'] .art-content h2 {
+  font-family: var(--font-zh);
+  font-weight: bold;
+  color: #f3f4f6;
+  margin-top: 35px;
+}
+[data-theme='post-punk'] .art-content h1 {
+  font-size: 1.8em;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 10px;
+  color: #fff;
+}
+[data-theme='post-punk'] .art-content h2 {
+  background: transparent;
+  color: var(--doomer-amber);
+  display: block;
+  padding: 0;
+  border: none;
+  border-left: 4px solid var(--doomer-amber);
+  padding-left: 12px;
+  box-shadow: none;
+  transform: none;
+  margin-top: 35px;
+  font-size: 1.4em;
+}
+[data-theme='post-punk'] .art-content blockquote {
+  background: rgba(0,0,0,0.2);
+  color: var(--text-sub);
+  border: none;
+  border-left: 3px solid var(--border);
+  padding: 15px 20px;
+  font-weight: normal;
+  font-size: 14px;
+  margin: 25px 0;
+  box-shadow: none;
+}
+[data-theme='post-punk'] .art-content pre {
+  background: #131416;
+  border: 1px solid var(--border);
+  box-shadow: none;
+  padding-top: 35px;
+}
+[data-theme='post-punk'] .art-content pre::before {
+  content: "[DEVICE_OUTPUT]";
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: transparent;
+  color: var(--text-sub);
+  font-family: var(--font-en);
+  font-weight: normal;
+  font-size: 11px;
+  padding: 2px 10px;
+  border-bottom: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+}
+[data-theme='post-punk'] .art-content img {
+  border: 1px solid var(--border);
+  box-shadow: none;
+  margin: 20px 0;
+}
+[data-theme='post-punk'] .art-content a {
+  color: var(--doomer-green);
+  background: transparent;
+  font-weight: normal;
+  padding: 0;
+  border: none;
+  border-bottom: 1px solid var(--doomer-green);
+  display: inline;
+  transform: none;
+  box-shadow: none;
+}
+[data-theme='post-punk'] .art-content a:hover {
+  color: #fff;
+  border-bottom-color: #fff;
+  background: transparent;
+}
+[data-theme='post-punk'] .art-widget-title {
+  background: transparent;
+  color: var(--text-main);
+  padding: 0 0 5px 0;
+  font-family: var(--font-zh);
+  font-weight: bold;
+  font-size: 14px;
+  display: block;
+  margin-bottom: 20px;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  box-shadow: none;
+  transform: none;
+}
+[data-theme='post-punk'] .rel-card {
+  border: none;
+  border-bottom: 1px solid var(--border);
+  background: transparent;
+  box-shadow: none;
+  margin-bottom: 0;
+  padding: 10px 0;
+}
+[data-theme='post-punk'] .rel-card:hover {
+  background: rgba(255,255,255,0.02);
+  transform: none;
+  box-shadow: none;
+}
+[data-theme='post-punk'] .rel-card:hover .rel-title {
+  color: var(--doomer-green);
+}
+[data-theme='post-punk'] .rel-title {
+  font-weight: normal;
+  color: var(--text-main);
+  font-size: 14px;
+}
+[data-theme='post-punk'] .rel-img {
+  border: 1px solid var(--border);
+}
+[data-theme='post-punk'] .cat-list-item {
+  border-bottom: 1px solid var(--border);
+  padding: 10px 0;
+}
+[data-theme='post-punk'] .cat-list-link {
+  font-weight: normal;
+  color: var(--text-main);
+  font-size: 14px;
+}
+[data-theme='post-punk'] .cat-list-count {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-sub);
+  padding: 1px 6px;
+  font-family: var(--font-en);
+  font-size: 11px;
+  box-shadow: none;
+}
+[data-theme='post-punk'] .app-footer {
+  position: relative;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background: var(--bg-sidebar);
+  color: var(--text-sub);
+  border: none;
+  font-family: var(--font-en);
+  font-weight: normal;
+  font-size: 12px;
+  text-align: center;
+  overflow: hidden;
+  border-top: 1px solid var(--border);
+}
+[data-theme='post-punk'] .app-footer::before {
+  display: none;
+}
+[data-theme='post-punk'] .toolbar-item {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  box-shadow: none;
+  margin-bottom: 8px;
+}
+[data-theme='post-punk'] .toolbar-item:hover {
+  background: rgba(255,255,255,0.05);
+  border-color: var(--text-main);
+  transform: none;
+  box-shadow: none;
+}
+[data-theme='post-punk'] .toolbar-item:hover svg {
+  fill: #fff;
+  stroke: none;
+}
+[data-theme='post-punk'] .palette-item {
+  border-radius: 0;
+  border: 1px solid var(--border);
+}
+[data-theme='post-punk'] .palette-item[data-theme-style='post-punk'].active,
+[data-theme='post-punk'] .palette-item[data-theme-style='post-punk']:hover {
+  background: transparent;
+  border: 1px solid #fff;
+  box-shadow: none;
+  transform: none;
+}
+[data-theme='post-punk'] ::-webkit-scrollbar {
+  width: 10px;
+}
+[data-theme='post-punk'] ::-webkit-scrollbar-track {
+  background: var(--bg-main);
+  border-left: 1px solid var(--border);
+}
+[data-theme='post-punk'] ::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border: none;
+}
+[data-theme='post-punk'] ::-webkit-scrollbar-thumb:hover {
+  background: var(--text-sub);
+}
+@-moz-keyframes doomerSignal {
+  0%, 100% {
+    opacity: 0.4;
+    filter: brightness(0.8) drop-shadow(0 0 2px var(--doomer-green));
+  }
+  50% {
+    opacity: 0.95;
+    filter: brightness(1.2) drop-shadow(0 0 6px var(--doomer-green));
+  }
+}
+@-webkit-keyframes doomerSignal {
+  0%, 100% {
+    opacity: 0.4;
+    filter: brightness(0.8) drop-shadow(0 0 2px var(--doomer-green));
+  }
+  50% {
+    opacity: 0.95;
+    filter: brightness(1.2) drop-shadow(0 0 6px var(--doomer-green));
+  }
+}
+@-o-keyframes doomerSignal {
+  0%, 100% {
+    opacity: 0.4;
+    filter: brightness(0.8) drop-shadow(0 0 2px var(--doomer-green));
+  }
+  50% {
+    opacity: 0.95;
+    filter: brightness(1.2) drop-shadow(0 0 6px var(--doomer-green));
+  }
+}
+@keyframes doomerSignal {
+  0%, 100% {
+    opacity: 0.4;
+    filter: brightness(0.8) drop-shadow(0 0 2px var(--doomer-green));
+  }
+  50% {
+    opacity: 0.95;
+    filter: brightness(1.2) drop-shadow(0 0 6px var(--doomer-green));
+  }
+}
+[data-theme='post-punk'] .brand-text h1 {
+  animation: crtBreathe 4s ease-in-out infinite;
+}
+@-moz-keyframes crtBreathe {
+  0%, 100% {
+    opacity: 0.98;
+    filter: brightness(1) drop-shadow(0 0 0px transparent);
+  }
+  50% {
+    opacity: 1;
+    filter: brightness(1.04) drop-shadow(0 0 1px rgba(255,255,255,0.1));
+  }
+}
+@-webkit-keyframes crtBreathe {
+  0%, 100% {
+    opacity: 0.98;
+    filter: brightness(1) drop-shadow(0 0 0px transparent);
+  }
+  50% {
+    opacity: 1;
+    filter: brightness(1.04) drop-shadow(0 0 1px rgba(255,255,255,0.1));
+  }
+}
+@-o-keyframes crtBreathe {
+  0%, 100% {
+    opacity: 0.98;
+    filter: brightness(1) drop-shadow(0 0 0px transparent);
+  }
+  50% {
+    opacity: 1;
+    filter: brightness(1.04) drop-shadow(0 0 1px rgba(255,255,255,0.1));
+  }
+}
+@keyframes crtBreathe {
+  0%, 100% {
+    opacity: 0.98;
+    filter: brightness(1) drop-shadow(0 0 0px transparent);
+  }
+  50% {
+    opacity: 1;
+    filter: brightness(1.04) drop-shadow(0 0 1px rgba(255,255,255,0.1));
+  }
+}
+[data-theme='punk'] {
+  --sidebar-width: 290px;
+  --bg-main: #14001a; /* 极暗霓虹紫底色，营造深夜地下的LIVE现场感 */
+  --bg-content: transparent;
+  --bg-panel: #22002a;
+  --bg-sidebar: #050505; /* 脏漆黑 */
+  --text-main: #fff;
+  --text-sub: #0fc; /* 荧光青绿 */
+  --border: #f05; /* 核心高亮：暴走荧光粉红 */
+  --punk-pink: #f05;
+  --punk-cyan: #0fc;
+  --punk-yellow: #fffb00; /* 撕裂警告黄 */
+  --punk-dark: #110018;
+  --font-zh: 'Impact', 'Noto Sans SC', 'PingFang SC', sans-serif;
+  --font-en: 'Arial Black', 'Oswald', 'Impact', sans-serif;
+}
+[data-theme='punk'] body {
+  background: var(--bg-main);
+/* 朋克拼贴粗糙半调网点 + 复古横向扫描线双重背景 */
+  background-image: radial-gradient(rgba(255,0,85,0.15) 15%, transparent 16%), linear-gradient(rgba(0,0,0,0.3) 50%, rgba(255,255,255,0.05) 50%);
+  background-size: 16px 16px, 100% 4px;
+  font-family: var(--font-zh);
+}
+[data-theme='punk'] * {
+  border-radius: 0 !important;
+}
+[data-theme='punk'] .sidebar {
+  background: var(--bg-sidebar);
+  border-right: 4px ridge var(--punk-pink);
+  box-shadow: -10px 0 30px rgba(255,0,85,0.3) inset;
+  padding: 0;
+}
+[data-theme='punk'] .sidebar::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  background: repeating-linear-gradient(45deg, var(--punk-pink), var(--punk-pink) 10px, var(--punk-yellow) 10px, var(--punk-yellow) 20px);
+  z-index: 10;
+  pointer-events: none;
+  clip-path: polygon(0% 0%, 5% 100%, 10% 0%, 15% 100%, 20% 0%, 25% 100%, 30% 0%, 35% 100%, 40% 0%, 45% 100%, 50% 0%, 55% 100%, 60% 0%, 65% 100%, 70% 0%, 75% 100%, 80% 0%, 85% 100%, 90% 0%, 95% 100%, 100% 0%);
+}
+[data-theme='punk'] .brand {
+  display: block;
+  padding: 40px 20px 20px;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><path d='M0 0 L100 100 M100 0 L0 100' stroke='rgba(255,0,85,0.05)' stroke-width='5'/></svg>");
+}
+[data-theme='punk'] .brand-text h1 {
+  font-family: var(--font-en);
+  font-size: 38px;
+  color: #fff;
+  line-height: 0.9;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 2;
+  letter-spacing: -1px;
+  transform: rotate(-3deg) skewX(-10deg);
+  background: var(--punk-pink);
+  padding: 10px;
+  display: inline-block;
+  word-wrap: normal;
+  white-space: nowrap;
+  max-width: none;
+  overflow: visible;
+  box-shadow: 5px 5px 0 var(--punk-cyan);
+}
+[data-theme='punk'] .brand-text h1::after {
+  content: "REBEL SYSTEM_";
+  display: block;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--punk-yellow);
+  background: #000;
+  padding: 2px 5px;
+  margin-top: 5px;
+  transform: rotate(3deg);
+  font-family: var(--font-en);
+}
+[data-theme='punk'] .nav-label {
+  color: var(--punk-cyan);
+  border-bottom: 3px double var(--punk-pink);
+  margin: 35px 20px 15px;
+  padding-bottom: 5px;
+  font-weight: 900;
+  font-family: var(--font-en);
+  text-shadow: 0 0 8px var(--punk-cyan);
+}
+[data-theme='punk'] .nav-label::before {
+  content: "⚡ NO_LAW_";
+}
+[data-theme='punk'] .nav-item {
+  background: #111;
+  border: 2px solid #333;
+  margin: 8px 20px;
+  padding: 12px 15px;
+  transition: 0s;
+  position: relative;
+  clip-path: polygon(0 0, 100% 0, 92% 100%, 0 100%);
+}
+[data-theme='punk'] .nav-item .zh {
+  color: #aaa;
+  font-size: 16px;
+  font-weight: 900;
+}
+[data-theme='punk'] .nav-item .en {
+  color: #555;
+  font-family: var(--font-en);
+  font-size: 11px;
+  text-transform: uppercase;
+}
+[data-theme='punk'] .nav-item::before,
+[data-theme='punk'] .nav-item::after {
+  display: none;
+}
+[data-theme='punk'] .nav-item:hover,
+[data-theme='punk'] .nav-item.active {
+  background: var(--punk-cyan);
+  border-color: var(--punk-pink);
+  transform: scale(1.05) rotate(2deg) translateX(5px);
+  z-index: 10;
+  box-shadow: -8px 8px 0 var(--punk-pink);
+  clip-path: none;
+}
+[data-theme='punk'] .nav-item:hover .zh,
+[data-theme='punk'] .nav-item.active .zh {
+  color: #000;
+  font-weight: 900;
+  text-shadow: none;
+}
+[data-theme='punk'] .nav-item:hover .en,
+[data-theme='punk'] .nav-item.active .en {
+  color: #000;
+  font-weight: 900;
+}
+[data-theme='punk'] .nav-item:hover .nav-icon,
+[data-theme='punk'] .nav-item.active .nav-icon {
+  filter: brightness(0);
+}
+[data-theme='punk'] .user-info {
+  margin-top: 40px;
+  padding: 20px;
+  background: #0a000f;
+  border-top: 4px dashed var(--punk-pink);
+  gap: 15px;
+  position: relative;
+}
+[data-theme='punk'] .avatar-container {
+  width: 65px;
+  height: 65px;
+  flex-shrink: 0;
+}
+[data-theme='punk'] .avatar {
+  border: 3px dashed var(--punk-cyan);
+  width: 65px;
+  height: 65px;
+  border-radius: 50% !important; /* 特例：头像作为黑胶唱片，强制圆形 */
+  transform: rotate(0deg);
+  transition: transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  box-shadow: 0 0 15px rgba(0,255,204,0.4);
+}
+[data-theme='punk'] .user-info:hover .avatar {
+  transform: rotate(360deg);
+  border-color: var(--punk-pink);
+  box-shadow: 0 0 20px var(--punk-pink);
+}
+[data-theme='punk'] .user-name {
+  color: #fff;
+  font-size: 22px;
+  font-weight: 900;
+  font-family: var(--font-en);
+  text-transform: uppercase;
+  text-shadow: 2px 2px 0 var(--punk-pink);
+}
+[data-theme='punk'] .user-id {
+  color: var(--punk-yellow);
+  font-family: monospace;
+  font-size: 11px;
+  font-weight: bold;
+  background: #222;
+  padding: 2px 5px;
+  width: fit-content;
+}
+[data-theme='punk'] .social-btn {
+  background: #000;
+  border: 2px solid var(--punk-pink);
+}
+[data-theme='punk'] .social-btn:hover {
+  background: var(--punk-yellow);
+  border-color: #000;
+  transform: rotate(-10deg) scale(1.2);
+  box-shadow: 3px 3px 0 var(--punk-pink);
+}
+[data-theme='punk'] .social-btn:hover img {
+  filter: brightness(0);
+}
+[data-theme='punk'] .top-bar {
+  background: rgba(20,0,26,0.85);
+  border-bottom: 4px ridge var(--punk-cyan);
+  padding-top: 10px;
+  backdrop-filter: blur(8px) saturate(180%);
+}
+[data-theme='punk'] .top-bar::before {
+  content: "★ ANARCHY_UI ★";
+  position: absolute;
+  left: 30px;
+  top: 20px;
+  color: var(--punk-pink);
+  font-weight: 900;
+  font-size: 16px;
+  font-family: var(--font-en);
+  text-shadow: 0 0 5px var(--punk-pink);
+}
+[data-theme='punk'] .search-box {
+  background: #000;
+  border: 3px solid var(--punk-pink);
+  box-shadow: -4px 4px 0 var(--punk-cyan);
+  padding: 8px 15px;
+  color: #fff;
+  width: 200px;
+  clip-path: polygon(0 0, 100% 0, 100% 80%, 90% 100%, 0 100%);
+}
+[data-theme='punk'] .search-box:hover,
+[data-theme='punk'] .search-box:focus-within,
+[data-theme='punk'] .search-box.expanded {
+  width: 250px;
+  border-color: var(--punk-yellow);
+  background: #111;
+  box-shadow: -6px 6px 0 var(--punk-pink);
+  transform: translate(2px, -2px);
+  clip-path: none;
+}
+[data-theme='punk'] .search-box input {
+  font-weight: bold;
+  font-size: 13px;
+  color: var(--punk-cyan);
+}
+[data-theme='punk'] .search-box svg {
+  fill: var(--punk-cyan);
+}
+[data-theme='punk'] .top-links a {
+  color: #fff;
+  font-weight: 900;
+  font-family: var(--font-en);
+  text-transform: uppercase;
+  padding: 5px 10px;
+  border: 1px solid transparent;
+}
+[data-theme='punk'] .top-links a:hover {
+  color: #000;
+  background: var(--punk-yellow);
+  border: 1px solid #000;
+  transform: skewX(-15deg);
+  box-shadow: 4px 4px 0 var(--punk-pink);
+}
+[data-theme='punk'] .sys-text {
+  color: var(--punk-cyan);
+  font-weight: 900;
+  text-shadow: 0 0 4px var(--punk-cyan);
+}
+[data-theme='punk'] .hero-section {
+  background: #000;
+  border: none;
+  box-shadow: none;
+  padding: calc(var(--top-bar-height) + 80px) 40px 60px;
+  margin-top: calc(-1 * var(--top-bar-height));
+  min-height: 520px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+[data-theme='punk'] .hero-bg {
+  display: block;
+  filter: grayscale(100%) contrast(2) invert(100%) brightness(0.6);
+  opacity: 0.4;
+}
+[data-theme='punk'] .hero-section::before {
+  content: "DESTROY\A SYSTEM\00a0\00a0FUTURE";
+  white-space: pre;
+  position: absolute;
+  bottom: -5%;
+  right: -5%;
+  font-family: var(--font-en);
+  font-size: 16vw;
+  line-height: 0.75;
+  color: rgba(255,0,85,0.08);
+  font-weight: 900;
+  z-index: 0;
+  transform: rotate(12deg) skewX(-10deg);
+  pointer-events: none;
+}
+[data-theme='punk'] .hero-overlay {
+  display: block;
+  background: linear-gradient(135deg, rgba(34,0,42,0.95) 0%, rgba(20,0,26,0.5) 70%, transparent 100%);
+}
+[data-theme='punk'] .hero-content {
+  position: relative;
+  z-index: 2;
+  background: #000;
+  border: 4px solid var(--punk-pink);
+  padding: 45px;
+  box-shadow: -20px 20px 0 rgba(0,255,204,0.7);
+  max-width: none;
+  width: 100%;
+  margin-top: 0;
+  margin-bottom: 20px;
+/* 暴力撕裂感硬折边切角 */
+  clip-path: polygon(0 0, 95% 0, 100% 15%, 100% 100%, 8% 100%, 0 85%);
+}
+[data-theme='punk'] .hero-content::after {
+  content: "RIOT ART";
+  position: absolute;
+  top: 10px;
+  right: -30px;
+  background: var(--punk-yellow);
+  color: #000;
+  font-family: var(--font-en);
+  font-weight: 900;
+  font-size: 12px;
+  padding: 5px 30px;
+  transform: rotate(45deg);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+[data-theme='punk'] .hero-tag {
+  background: var(--punk-cyan);
+  color: #000;
+  display: inline-block;
+  padding: 4px 15px;
+  font-weight: 900;
+  font-family: var(--font-en);
+  letter-spacing: 1px;
+  font-size: 14px;
+  margin-bottom: 25px;
+  transform: rotate(-2deg);
+}
+[data-theme='punk'] .hero-title {
+  font-family: var(--font-en);
+  font-size: 65px;
+  color: #fff;
+  line-height: 0.95;
+  text-transform: uppercase;
+  margin-bottom: 25px;
+  letter-spacing: -3px;
+  font-weight: 900;
+  max-width: 100%;
+  word-wrap: break-word;
+  text-shadow: 4px 4px 0 var(--punk-pink), -2px -2px 0 var(--punk-cyan);
+}
+[data-theme='punk'] .hero-subtitle {
+  color: #ddd;
+  font-weight: bold;
+  font-size: 15px;
+  border-left: 6px dashed var(--punk-pink);
+  background: rgba(255,255,255,0.03);
+  padding: 15px 20px;
+  max-width: 800px;
+  line-height: 1.7;
+}
+[data-theme='punk'] .hero-btn {
+  background: var(--punk-pink);
+  color: #fff !important;
+  font-family: var(--font-en);
+  font-size: 18px;
+  font-weight: 900;
+  padding: 12px 35px;
+  border: 3px solid #fff;
+  margin-top: 35px;
+  display: inline-flex;
+  align-items: center;
+  transition: 0s;
+  box-shadow: 5px 5px 0 #000;
+  transform: skewX(-10deg);
+}
+[data-theme='punk'] .hero-btn:hover {
+  background: var(--punk-yellow);
+  color: #000 !important;
+  border-color: #000;
+  transform: skewX(-10deg) translate(-5px, -5px);
+  box-shadow: 10px 10px 0 var(--punk-cyan);
+}
+[data-theme='punk'] .hero-date {
+  position: absolute;
+  right: 50px;
+  top: calc(var(--top-bar-height) + 30px);
+  background: #000;
+  border: 4px solid var(--punk-yellow);
+  padding: 15px 25px;
+  text-align: center;
+  box-shadow: 8px 8px 0 var(--punk-pink);
+  z-index: 5;
+  transform: rotate(4deg);
+}
+[data-theme='punk'] .hero-date-tag {
+  color: var(--punk-cyan);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+[data-theme='punk'] .hero-date-num {
+  font-size: 52px;
+  color: var(--punk-yellow);
+  font-family: var(--font-en);
+  font-weight: 900;
+  line-height: 0.9;
+  margin: 8px 0;
+}
+[data-theme='punk'] .hero-date-sub {
+  display: none;
+}
+[data-theme='punk'] .hero-date::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 20px;
+  margin-top: 10px;
+  background: repeating-linear-gradient(90deg, var(--punk-pink), var(--punk-pink) 4px, transparent 4px, transparent 8px);
+}
+[data-theme='punk'] .home-content-section {
+  background: transparent;
+  padding-top: 50px;
+  grid-template-columns: 2fr 1fr;
+}
+[data-theme='punk'] .section-title {
+  font-family: var(--font-zh);
+  font-weight: 900;
+  font-size: 30px;
+  color: #fff;
+  border-bottom: 6px dotted var(--punk-pink);
+  padding-bottom: 12px;
+  margin-bottom: 45px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+[data-theme='punk'] .section-title span {
+  font-family: var(--font-en);
+  font-size: 13px;
+  background: var(--punk-pink);
+  color: #fff;
+  padding: 4px 12px;
+  font-weight: 900;
+  transform: rotate(-3deg);
+}
+[data-theme='punk'] .post-card {
+  height: auto;
+  margin-bottom: 60px;
+  overflow: visible !important;
+}
+[data-theme='punk'] .post-card-inner {
+  background: var(--bg-panel);
+  border: 3px solid var(--punk-cyan);
+  box-shadow: -10px 10px 0 rgba(255,0,85,0.5);
+  display: flex;
+  flex-direction: column;
+  transition: 0s;
+  position: relative;
+  overflow: visible;
+  clip-path: polygon(0 0, 100% 0, 100% 90%, 93% 100%, 0 100%);
+}
+[data-theme='punk'] .post-card-inner::before {
+  content: "☠ ATTACK";
+  position: absolute;
+  top: -12px;
+  left: 20px;
+  background: var(--punk-yellow);
+  color: #000;
+  font-family: var(--font-en);
+  font-size: 11px;
+  font-weight: 900;
+  padding: 2px 15px;
+  transform: rotate(-5deg);
+  box-shadow: 2px 2px 0 #000;
+  z-index: 10;
+}
+[data-theme='punk'] .post-card:hover .post-card-inner {
+  transform: translate(4px, -4px);
+  box-shadow: -15px 15px 0 var(--punk-yellow);
+  border-color: var(--punk-pink);
+  clip-path: none;
+}
+[data-theme='punk'] .post-card-bg {
+  height: 190px;
+  border-bottom: 3px solid var(--punk-cyan);
+  filter: grayscale(100%) contrast(1.8) sepia(50%);
+  transition: filter 0.15s;
+  position: relative;
+}
+[data-theme='punk'] .post-card:hover .post-card-bg {
+  filter: grayscale(20%) contrast(1.4) hue-rotate(-50deg);
+}
+[data-theme='punk'] .post-card-overlay {
+  position: relative;
+  background: transparent;
+  padding: 25px;
+  display: block;
+  color: #fff;
+}
+[data-theme='punk'] .card-tag {
+  background: #000;
+  color: var(--punk-pink);
+  font-family: var(--font-en);
+  font-weight: 900;
+  border: 2px solid var(--punk-pink);
+  padding: 3px 12px;
+  display: inline-block;
+  margin-bottom: 15px;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+[data-theme='punk'] .card-title {
+  color: #fff;
+  font-size: 22px;
+  font-weight: 900;
+  margin-bottom: 15px;
+  white-space: normal;
+  line-height: 1.2;
+}
+[data-theme='punk'] .card-title:hover {
+  color: var(--punk-cyan);
+}
+[data-theme='punk'] .card-desc {
+  color: #bbb;
+  font-size: 14px;
+  margin-bottom: 25px;
+  line-height: 1.6;
+}
+[data-theme='punk'] .card-meta {
+  border-top: 2px dashed var(--punk-pink);
+  padding-top: 15px;
+  color: var(--punk-cyan);
+  font-family: var(--font-en);
+  font-weight: 900;
+  font-size: 12px;
+}
+[data-theme='punk'] .announce-box {
+  background: #110016;
+  border: 4px dashed var(--punk-pink);
+  color: #fff;
+  padding: 30px;
+  box-shadow: -8px 8px 0 var(--punk-cyan);
+  position: relative;
+  overflow: hidden;
+  transition: 0s;
+}
+[data-theme='punk'] .announce-box:hover {
+  background: var(--punk-pink);
+  border-color: #fff;
+  color: #fff;
+  box-shadow: 0 0 25px rgba(255,0,85,0.6);
+}
+[data-theme='punk'] .announce-box:hover .announce-tag {
+  background: #000;
+  color: var(--punk-yellow);
+  border-color: #000;
+}
+[data-theme='punk'] .announce-box:hover .announce-desc {
+  color: #000;
+}
+[data-theme='punk'] .announce-box:hover .announce-date-big {
+  color: #fff;
+}
+[data-theme='punk'] .announce-box::before {
+  content: "⚡";
+  position: absolute;
+  right: 0;
+  bottom: -20px;
+  font-size: 130px;
+  font-weight: 900;
+  color: rgba(0,255,204,0.1);
+  line-height: 1;
+  pointer-events: none;
+}
+[data-theme='punk'] .announce-box:hover::before {
+  color: rgba(255,255,255,0.2);
+}
+[data-theme='punk'] .announce-tag {
+  background: var(--punk-cyan);
+  color: #000;
+  font-weight: 900;
+  padding: 3px 10px;
+  border: 1px solid #000;
+  font-family: var(--font-en);
+  font-size: 11px;
+}
+[data-theme='punk'] .announce-date-big {
+  color: var(--punk-yellow);
+  font-family: var(--font-en);
+  font-size: 38px;
+  font-weight: 900;
+  line-height: 1;
+  margin-top: 10px;
+  text-shadow: 2px 2px 0 #000;
+}
+[data-theme='punk'] .announce-title {
+  font-size: 19px;
+  font-weight: 900;
+  text-transform: uppercase;
+  margin: 15px 0 10px;
+  line-height: 1.3;
+  color: #fff;
+}
+[data-theme='punk'] .announce-desc {
+  font-weight: bold;
+  color: #999;
+  font-size: 13px;
+  line-height: 1.5;
+}
+[data-theme='punk'] #view-article {
+  background: var(--bg-main);
+}
+[data-theme='punk'] .art-header {
+  background: #000;
+  border: 4px solid var(--punk-pink);
+  padding: 50px;
+  box-shadow: -15px 15px 0 rgba(0,255,204,0.3);
+  margin-bottom: 50px;
+  position: relative;
+  clip-path: polygon(0 0, 100% 0, 100% 93%, 95% 100%, 0 100%);
+}
+[data-theme='punk'] .art-header::before {
+  content: "✖ ✖ ✖";
+  position: absolute;
+  top: 15px;
+  left: 20px;
+  color: var(--punk-cyan);
+  font-family: var(--font-en);
+  font-weight: 900;
+  letter-spacing: 5px;
+}
+[data-theme='punk'] .art-title {
+  font-family: var(--font-zh);
+  font-size: 45px;
+  font-weight: 900;
+  color: #fff;
+  text-transform: uppercase;
+  line-height: 1.1;
+  margin-bottom: 30px;
+  letter-spacing: -1px;
+  word-wrap: break-word;
+}
+[data-theme='punk'] .art-title span {
+  background: var(--punk-pink);
+  padding: 2px 12px;
+  color: #fff;
+  transform: rotate(-1deg);
+  display: inline-block;
+}
+[data-theme='punk'] .art-meta {
+  background: var(--bg-panel);
+  color: #fff;
+  padding: 12px 20px;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  font-family: var(--font-en);
+  font-weight: 900;
+  font-size: 13px;
+  border: 2px solid var(--punk-cyan);
+}
+[data-theme='punk'] .art-meta-link {
+  color: var(--punk-yellow);
+}
+[data-theme='punk'] .art-content {
+  background: #050007;
+  border: 4px solid var(--punk-pink);
+  padding: 50px;
+  box-shadow: 15px 15px 0 #000;
+  color: #eee;
+}
+[data-theme='punk'] .art-content h1,
+[data-theme='punk'] .art-content h2 {
+  font-family: var(--font-zh);
+  font-weight: 900;
+  color: #fff;
+  border: none;
+  text-transform: uppercase;
+}
+[data-theme='punk'] .art-content h1 {
+  font-size: 2.3em;
+  border-bottom: 5px dashed var(--punk-cyan);
+  padding-bottom: 12px;
+  color: var(--punk-pink);
+  text-shadow: 2px 2px 0 #000;
+}
+[data-theme='punk'] .art-content h2 {
+  background: var(--punk-yellow);
+  color: #000;
+  display: inline-block;
+  padding: 6px 18px;
+  border: 3px solid #000;
+  box-shadow: -5px 5px 0 var(--punk-pink);
+  transform: rotate(1deg) skewX(-10deg);
+  margin-top: 45px;
+  font-size: 1.7em;
+}
+[data-theme='punk'] .art-content blockquote {
+  background: #1c0024;
+  color: #fff;
+  border: none;
+  border-left: 10px solid var(--punk-pink);
+  border-right: 10px solid var(--punk-pink);
+  padding: 25px;
+  font-weight: bold;
+  font-size: 16px;
+  margin: 35px 0;
+  line-height: 1.7;
+  box-shadow: inset 0 0 15px rgba(0,0,0,0.6);
+}
+[data-theme='punk'] .art-content pre {
+  background: #000;
+  border: 3px solid var(--punk-cyan);
+  border-radius: 0;
+  box-shadow: -6px 6px 0 var(--punk-pink);
+  padding-top: 45px;
+  position: relative;
+}
+[data-theme='punk'] .art-content pre::before {
+  content: "☢_CORE_DUMP";
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: var(--punk-pink);
+  color: #fff;
+  font-family: var(--font-en);
+  font-weight: 900;
+  font-size: 11px;
+  padding: 4px 15px;
+  border-bottom: 3px solid var(--punk-cyan);
+  border-right: 3px solid var(--punk-cyan);
+}
+[data-theme='punk'] .art-content img {
+  border: 4px solid var(--punk-pink);
+  box-shadow: -8px 8px 0 var(--punk-cyan);
+  border-radius: 0;
+  margin: 25px 0;
+  max-width: 100%;
+}
+[data-theme='punk'] .art-content a {
+  color: #000;
+  background: var(--punk-cyan);
+  font-weight: 900;
+  padding: 1px 8px;
+  border: 2px solid #000;
+  text-decoration: none;
+  display: inline-block;
+  transform: rotate(-2deg);
+  box-shadow: 3px 3px 0 var(--punk-pink);
+  transition: 0s;
+}
+[data-theme='punk'] .art-content a:hover {
+  background: var(--punk-pink);
+  color: #fff;
+  box-shadow: none;
+  transform: translate(3px, 3px);
+}
+[data-theme='punk'] .art-widget-title {
+  background: var(--punk-pink);
+  color: #fff;
+  padding: 6px 15px;
+  font-family: var(--font-en);
+  font-weight: 900;
+  font-size: 16px;
+  display: inline-block;
+  margin-bottom: 25px;
+  text-transform: uppercase;
+  border: 2px solid #fff;
+  box-shadow: -4px 4px 0 var(--punk-cyan);
+  transform: rotate(-2deg);
+}
+[data-theme='punk'] .rel-card {
+  border: 3px solid var(--punk-pink);
+  background: #110018;
+  box-shadow: -5px 5px 0 #000;
+  margin-bottom: 20px;
+  transition: 0s;
+  padding: 15px;
+}
+[data-theme='punk'] .rel-card:hover {
+  background: var(--punk-cyan);
+  transform: scale(1.02);
+  box-shadow: -8px 8px 0 var(--punk-pink);
+}
+[data-theme='punk'] .rel-card:hover .rel-title {
+  color: #000;
+}
+[data-theme='punk'] .rel-title {
+  font-weight: 900;
+  color: #fff;
+  font-size: 15px;
+  line-height: 1.4;
+}
+[data-theme='punk'] .rel-img {
+  border: 2px solid var(--punk-cyan);
+  border-radius: 0;
+}
+[data-theme='punk'] .cat-list-item {
+  border-bottom: 2px dashed var(--punk-pink);
+  padding: 12px 0;
+}
+[data-theme='punk'] .cat-list-link {
+  font-weight: 900;
+  color: #fff;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+[data-theme='punk'] .cat-list-link:hover {
+  color: var(--punk-cyan);
+}
+[data-theme='punk'] .cat-list-count {
+  background: var(--punk-yellow);
+  border: 2px solid #000;
+  color: #000;
+  padding: 2px 8px;
+  font-weight: 900;
+  font-family: var(--font-en);
+  margin-left: 10px;
+  font-size: 11px;
+}
+[data-theme='punk'] .app-footer {
+  position: relative;
+  padding-top: 90px;
+  padding-bottom: 50px;
+  background: #000;
+  color: #fff;
+  border: none;
+  font-family: var(--font-en);
+  font-weight: 900;
+  font-size: 14px;
+  text-align: center;
+  overflow: hidden;
+  border-top: 4px ridge var(--punk-pink);
+}
+[data-theme='punk'] .app-footer::before {
+  content: "⚡ NO FUTURE /// BLOW UP THE SYSTEM /// ANARCHY NOW /// RIOT GEAR /// PUNK SOUL /// EVERYDAY COMPLAINT ///";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  background: var(--punk-pink);
+  color: #fff;
+  font-family: var(--font-en);
+  font-size: 22px;
+  font-weight: 900;
+  padding: 6px 0;
+  border-bottom: 4px solid #000;
+  white-space: nowrap;
+  animation: marqueeX 12s linear infinite;
+  pointer-events: none;
+  transform: rotate(-1.5deg) scale(1.02);
+}
+[data-theme='punk'] .toolbar-item {
+  background: #000;
+  border: 3px solid var(--punk-pink);
+  box-shadow: -4px 4px 0 var(--punk-cyan);
+  margin-bottom: 12px;
+  transition: 0s;
+}
+[data-theme='punk'] .toolbar-item:hover {
+  background: var(--punk-yellow);
+  transform: translate(2px, -2px);
+  box-shadow: -6px 6px 0 var(--punk-pink);
+}
+[data-theme='punk'] .toolbar-item:hover svg {
+  fill: #000;
+  stroke: #000;
+}
+[data-theme='punk'] .palette-item {
+  border-radius: 0;
+  border: 2px solid #fff;
+}
+[data-theme='punk'] .palette-item[data-theme-style='punk'].active,
+[data-theme='punk'] .palette-item[data-theme-style='punk']:hover {
+  background: var(--punk-pink);
+  border: 2px solid #fff;
+  box-shadow: -4px 4px 0 var(--punk-cyan);
+  transform: scale(1.1);
+}
+[data-theme='punk'] ::-webkit-scrollbar {
+  width: 14px;
+}
+[data-theme='punk'] ::-webkit-scrollbar-track {
+  background: #110018;
+  border-left: 3px solid var(--punk-pink);
+}
+[data-theme='punk'] ::-webkit-scrollbar-thumb {
+  background: var(--punk-cyan);
+  border: 3px solid #000;
+  border-radius: 0;
+}
+[data-theme='punk'] ::-webkit-scrollbar-thumb:hover {
+  background: var(--punk-yellow);
+}
+@-moz-keyframes marqueeX {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+@-webkit-keyframes marqueeX {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+@-o-keyframes marqueeX {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+@keyframes marqueeX {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+[data-theme='punk'] .brand-text h1:hover {
+  animation: punkFlicker 0.4s steps(1) infinite;
+  color: var(--punk-yellow);
+  box-shadow: 5px 5px 0 #fff;
+}
+@-moz-keyframes punkFlicker {
+  0% {
+    opacity: 1;
+    transform: scaleY(1) skewX(0deg);
+    filter: hue-rotate(0deg);
+  }
+  5% {
+    opacity: 0.8;
+    transform: skewX(-15deg);
+    filter: hue-rotate(90deg);
+  }
+  10% {
+    opacity: 1;
+    transform: scaleY(0.95);
+  }
+  15% {
+    opacity: 0.9;
+    transform: skewX(10deg);
+    filter: invert(100%);
+  }
+  20% {
+    opacity: 1;
+    transform: scaleY(1) skewX(0deg);
+    filter: hue-rotate(0deg);
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes punkFlicker {
+  0% {
+    opacity: 1;
+    transform: scaleY(1) skewX(0deg);
+    filter: hue-rotate(0deg);
+  }
+  5% {
+    opacity: 0.8;
+    transform: skewX(-15deg);
+    filter: hue-rotate(90deg);
+  }
+  10% {
+    opacity: 1;
+    transform: scaleY(0.95);
+  }
+  15% {
+    opacity: 0.9;
+    transform: skewX(10deg);
+    filter: invert(100%);
+  }
+  20% {
+    opacity: 1;
+    transform: scaleY(1) skewX(0deg);
+    filter: hue-rotate(0deg);
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-o-keyframes punkFlicker {
+  0% {
+    opacity: 1;
+    transform: scaleY(1) skewX(0deg);
+    filter: hue-rotate(0deg);
+  }
+  5% {
+    opacity: 0.8;
+    transform: skewX(-15deg);
+    filter: hue-rotate(90deg);
+  }
+  10% {
+    opacity: 1;
+    transform: scaleY(0.95);
+  }
+  15% {
+    opacity: 0.9;
+    transform: skewX(10deg);
+    filter: invert(100%);
+  }
+  20% {
+    opacity: 1;
+    transform: scaleY(1) skewX(0deg);
+    filter: hue-rotate(0deg);
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes punkFlicker {
+  0% {
+    opacity: 1;
+    transform: scaleY(1) skewX(0deg);
+    filter: hue-rotate(0deg);
+  }
+  5% {
+    opacity: 0.8;
+    transform: skewX(-15deg);
+    filter: hue-rotate(90deg);
+  }
+  10% {
+    opacity: 1;
+    transform: scaleY(0.95);
+  }
+  15% {
+    opacity: 0.9;
+    transform: skewX(10deg);
+    filter: invert(100%);
+  }
+  20% {
+    opacity: 1;
+    transform: scaleY(1) skewX(0deg);
+    filter: hue-rotate(0deg);
+  }
+  100% {
+    opacity: 1;
+  }
 }
 [data-theme='light'] {
   --bg-sidebar: #fff;
