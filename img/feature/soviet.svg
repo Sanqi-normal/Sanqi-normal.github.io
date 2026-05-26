@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Circle representing the "Whites" or globe -->
+    <circle cx="14" cy="14" r="6" />
+    <!-- "Beat the Whites with the Red Wedge" motif -->
+    <polygon points="2,2 16,14 2,14" fill="currentColor" />
+    <!-- Dynamic diagonal composition line -->
+    <line x1="2" y1="22" x2="22" y2="2" />
+</svg>

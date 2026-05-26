@@ -122,12 +122,36 @@
         });
 
         function applyTheme(theme, dataTheme) {
-            $('html').attr('data-theme', dataTheme);
-            localStorage.setItem('theme', theme);
+            function updateThemeDOM() {
+                $('html').attr('data-theme', dataTheme);
+                localStorage.setItem('theme', theme);
 
-            // 高亮当前选中的图标
-            $('.palette-item').removeClass('active');
-            $('.palette-item[data-theme-style="' + theme + '"]').addClass('active');
+                // 高亮当前选中的图标
+                $('.palette-item').removeClass('active');
+                $('.palette-item[data-theme-style="' + theme + '"]').addClass('active');
+            }
+
+            if (document.startViewTransition) {
+                // 开始 GPU 截屏渐变
+                var transition = document.startViewTransition(function() {
+                    // 在截取新屏幕快照前，禁用元素的 CSS 原生渐变
+                    $('html').addClass('theme-switching');
+                    updateThemeDOM();
+                });
+                
+                // 渐变动画彻底结束后，恢复 CSS 动画能力
+                transition.finished.finally(function() {
+                    document.body.offsetHeight;
+                    $('html').removeClass('theme-switching');
+                });
+            } else {
+                // 降级方案：老浏览器仍然禁用 CSS 过渡，使用瞬间硬切以保证不卡顿
+                $('html').addClass('theme-switching');
+                updateThemeDOM();
+                setTimeout(function() {
+                    $('html').removeClass('theme-switching');
+                }, 50);
+            }
         }
 
         // [4] 沉浸模式

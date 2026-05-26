@@ -27,7 +27,14 @@
     <summary>
       <![CDATA[<p>原来此博客使用的是3-hexo主题，最初我对主题的修改大概只是改变字体元素样式，加几个工具，改变背景图。</p>
 <p>最终博客外观是这样的：</p>
-<p><img src="/img/93aacf16b3490ce0abed66ac4d9b3e9a.png" alt="]]>
+<p><img src="/img/93aacf16b3490ce0abed66ac4d9b3e9a.png" alt="3-hexo蒸汽波风格"></p>
+<p>配色貌似有点阴间，不过刚做出来我还觉得蛮炫酷的，那时候（虽然离现在并没有很长时间）沉迷复古未来主义，就连现在也很受影响。</p>
+<p>在原主题基础上我头一次开始大规模的修改布局，然后逐渐添加各元素的hover和click动效——所以我仍只是门外汉，对一个博客前端的设计只会堆效果，整体却没有什么很强串联性，幸运的是我逐渐有这样的意识。</p>
+<p>添加了折线图音乐播放可视化，这可能是为数不多的亮点了。</p>
+<p><img src="/img/6df392a0cfa84a6e1996384d0d12fb7f.png" alt="最终效果"></p>
+<p>虽然因为这个大块的heros区域，画面乍一看像游戏资源商店。</p>
+<p>我是怎么设计布局的。</p>
+<p>一开始，我一直很喜欢明日方舟的平面设计风格，想参考，就让gpt-image-2生成类明日方舟风格的博客图片，然后挑满意的图片交给gemini生成html单页，在这个单页基础上做调整直到其布局样式合适，将修整后的单页放到本地作为参照将修改布局的任务交给cli。</p>]]>
     </summary>
     <title>博客前端布局样式重构</title>
     <updated>2026-05-23T15:29:39.188Z</updated>
@@ -47,7 +54,19 @@
     <published>2026-05-20T11:20:49.000Z</published>
     <summary>
       <![CDATA[<p><a href="https://www.bilibili.com/video/BV1xMQFBBEES">实际效果</a></p>
-<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>]]>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p><a href="https://github.com/Sanqi-normal/CelLookPostProcess">CelLookPostProcess</a> 是我的一个开源的 Unity URP 后处理效果，能将 3D 渲染场景转化为卡通&#x2F;动漫风格的三渲二画面。与常见的逐材质 Toon Shader 方案不同，它采用<strong>全屏后处理</strong>的方式，以屏幕空间图像特效作用于摄像机完整输出，可以一致地将混合风格场景统一覆盖为同一种风格化效果。</p>
+<p>项目核心思想是”快速构建风格化视觉效果”而非抛光到生产级，它不能保持各种极端情况下依旧有不错的、稳定的视觉效果，但它提供的功能面板相对比较多样，能够允许开发者在一定程度内调整和创造效果。</p>
+<hr>
+<h2 id="渲染管线：四阶段串联"><a href="#渲染管线：四阶段串联" class="headerlink" title="渲染管线：四阶段串联"></a>渲染管线：四阶段串联</h2><p>特效对屏幕画面执行 4 次连续 Blit，每一步都是一层画面处理：</p>
+<pre><code>Pass 0: Kuwahara 滤波 → 降噪并保持硬边
+    ↓
+Pass 1: 色彩二值化 / 剪影映射 → 色调量化
+    ↓
+Pass 2: 漫画描线 → 深度+法线边缘检测
+    ↓
+Pass 3: 最终调色 → 色彩校正并与原图混合
+</code></pre>
+<h3 id="Pass-0-—-预处理滤波"><a href="#Pass-0-—-预处理滤波" class="headerlink" title="Pass 0 — 预处理滤波"></a>Pass 0 — 预处理滤波</h3><p>在色彩量化之前，先用 Kuwahara 滤波或双边滤波去除噪点和纹理细节。Kuwahara 滤波的特点是在平滑颜色的同时<strong>保留硬边</strong>，这正是赛璐璐动画干净平整质感的基础。</p>]]>
     </summary>
     <title>Unity URP 屏幕空间三渲二后处理</title>
     <updated>2026-05-22T11:16:14.112Z</updated>
@@ -90,7 +109,46 @@
     <link href="http://example.com/2026/05/20/%E4%B8%BA%E8%87%AA%E5%AD%A6%E8%AE%BE%E8%AE%A1%E7%9A%84%E6%95%99%E5%AD%A6%E6%99%BA%E8%83%BD%E4%BD%93%E8%AE%A1%E5%88%92%E4%B9%A6/"/>
     <published>2026-05-20T09:41:14.000Z</published>
     <summary>
-      <![CDATA[<h1 id="AI-桌面教学智能体项目计划书-v1-0"><a href="#AI-桌面教学智能体项目计划书-v1-0" class="headerlink" title="AI 桌面教学智能体项目计划书 (v1.0)"></a>AI 桌面教学智能体项目计划书 (v1.0)</]]>
+      <![CDATA[<h1 id="AI-桌面教学智能体项目计划书-v1-0"><a href="#AI-桌面教学智能体项目计划书-v1-0" class="headerlink" title="AI 桌面教学智能体项目计划书 (v1.0)"></a>AI 桌面教学智能体项目计划书 (v1.0)</h1><h2 id="一、-项目概述"><a href="#一、-项目概述" class="headerlink" title="一、 项目概述"></a>一、 项目概述</h2><ul>
+<li><strong>项目定位：</strong> 一款轻量、高性能、沉浸式的本地桌面端 AI 伴学软件。</li>
+<li><strong>核心价值：</strong> 告别传统的被动阅读，通过“大纲生成 -&gt; 知识精讲 -&gt; 伴学答疑 -&gt; 动态测试”的闭环，提供千人千面的计算机自适应学习（CAT）体验。</li>
+<li><strong>技术基调：</strong> 极致轻量化（No-Build 理念前端 + Rust 桌面外壳），极低内存占用，高响应速度，支持本地知识库的安全隐私隔离。</li>
+</ul>
+<hr>
+<h2 id="二、-系统架构与技术选型"><a href="#二、-系统架构与技术选型" class="headerlink" title="二、 系统架构与技术选型"></a>二、 系统架构与技术选型</h2><p>本系统采用严格的前后端分离与解耦架构，确保前端轻量、后端安全。</p>
+<h3 id="1-核心技术栈"><a href="#1-核心技术栈" class="headerlink" title="1. 核心技术栈"></a>1. 核心技术栈</h3><ul>
+<li><p><strong>宿主环境 (Shell)：</strong> <strong>Tauri 2.0 (Rust)</strong></p>
+</li>
+<li><p><em>职责：</em> 窗口管理、跨平台打包（Windows&#x2F;macOS）、系统级 API 调用（文件系统、本地数据库读写）。</p>
+</li>
+<li><p><strong>前端交互层 (View &amp; State)：</strong> <strong>HTML5 + Alpine.js</strong></p>
+</li>
+<li><p><em>职责：</em> 视图渲染、状态管理（响应式数据绑定）、事件总线通信。</p>
+</li>
+<li><p><strong>样式引擎 (CSS)：</strong> <strong>Tailwind CSS (CDN)</strong></p>
+</li>
+<li><p><em>职责：</em> 快速构建响应式的左中右三栏布局，统一 UI 风格。</p>
+</li>
+<li><p><strong>内容渲染与处理：</strong></p>
+</li>
+<li><p><strong>Markdown 解析：</strong> <code>marked.min.js</code></p>
+</li>
+<li><p><strong>XSS 防护：</strong> <code>DOMPurify</code> (确保 AI 生成内容的渲染安全)</p>
+</li>
+<li><p><strong>代码与公式：</strong> <code>Prism.js</code> (代码高亮) + <code>KaTeX</code> (数学公式)</p>
+</li>
+<li><p><strong>数据持久化 (Storage)：</strong></p>
+</li>
+<li><p><strong>结构化数据：</strong> Tauri 官方 <code>plugin-sql</code> (SQLite) 或前端 <code>localForage</code> (IndexedDB)。</p>
+</li>
+<li><p><strong>文件资产：</strong> 本地 Markdown 文件独立存储。</p>
+</li>
+<li><p><strong>向量数据库：</strong> 后端集成轻量级本地向量库（如 LanceDB，或直接通过 Tauri 调用 Python 脚本封装的 ChromaDB&#x2F;Faiss）。</p>
+</li>
+</ul>
+<h3 id="2-外部接口-API"><a href="#2-外部接口-API" class="headerlink" title="2. 外部接口 (API)"></a>2. 外部接口 (API)</h3><ul>
+<li><strong>大模型服务：</strong> 统一采用 OpenAI 标准接口格式（兼容 DeepSeek-V3&#x2F;R1、GPT-4o、Claude 3.5 等），支持流式传输 (Server-Sent Events)。</li>
+</ul>]]>
     </summary>
     <title>为自学设计的教学智能体计划书</title>
     <updated>2026-05-21T05:03:05.154Z</updated>
@@ -115,7 +173,7 @@
 <p>疲于处理优化行为动作和武器动画，从unity转到了虚幻，我做了这么几件事：</p>
 <p>1 导入了MCP插件并连接到了外部cli</p>
 <p>2 导入了几个现成项目模板或高水平插件了解虚幻能做到的各类效果</p>
-<p>3 去看了牙医，新长了颗智]]>
+<p>3 去看了牙医，新长了颗智齿痛得我难以忍受</p>]]>
     </summary>
     <title>日志</title>
     <updated>2026-05-22T10:38:42.258Z</updated>
@@ -126,8 +184,8 @@
     </author>
     <category term="日志" scheme="http://example.com/categories/%E6%97%A5%E5%BF%97/"/>
     <category term="日常" scheme="http://example.com/categories/%E6%97%A5%E5%BF%97/%E6%97%A5%E5%B8%B8/"/>
-    <category term="博客" scheme="http://example.com/tags/%E5%8D%9A%E5%AE%A2/"/>
     <category term="Unity" scheme="http://example.com/tags/Unity/"/>
+    <category term="博客" scheme="http://example.com/tags/%E5%8D%9A%E5%AE%A2/"/>
     <category term="日常" scheme="http://example.com/tags/%E6%97%A5%E5%B8%B8/"/>
     <category term="游戏" scheme="http://example.com/tags/%E6%B8%B8%E6%88%8F/"/>
     <category term="MCP" scheme="http://example.com/tags/MCP/"/>
@@ -140,7 +198,8 @@
     <summary>
       <![CDATA[<p>转做了unity fps类型游戏，一直没更。</p>
 <p>回忆一下最近工作。</p>
-<p>在B站上发了两个视频。<br><a href="https://www.bilibili.com/video/BV18yfwBTEuE">https://www.bilibili.]]>
+<p>在B站上发了两个视频。<br><a href="https://www.bilibili.com/video/BV18yfwBTEuE">https://www.bilibili.com/video/BV18yfwBTEuE</a><br><a href="https://www.bilibili.com/video/BV1eMPnzGEvM">https://www.bilibili.com/video/BV1eMPnzGEvM</a><br>其实还有很多别的东西，考虑到素材资源来自网络，不方便作为自己的作品展示。</p>
+<p>优化了一下博客。</p>]]>
     </summary>
     <title>日志</title>
     <updated>2026-05-23T17:35:37.133Z</updated>
@@ -163,7 +222,14 @@
     <summary>
       <![CDATA[<p>局部最优是数学上一个广泛使用的概念，在机器学习中它是指通过梯度下降达到的最优收敛点。</p>
 <p>那么我由此触发了思考，引申出一个哲学概念，叫做局部最优理论，希望用它来诠释宇宙的一切。</p>
-<p><strong>局部最优理论：一切事物不处于局部最优且普遍向局部最优演化]]>
+<p><strong>局部最优理论：一切事物不处于局部最优且普遍向局部最优演化</strong></p>
+<p>我们知道，事物是动态变化的，事物为什么动态变化？从计算机学的角度解释，事物的状态是无数个系数通过某一领域的回归函数计算得到的，且这些系数无时无刻不在发生变化，变化时会导致这一函数尝试梯度下降来达到局部最优状态。</p>
+<p>举例：宇宙的熵增，它是由于诠释宇宙的函数能在熵最大时达到最优解。人类的出现，是生物种群演化函数在地球这一状态下尝试得到的局部最优解（由于种群数量非无穷大，没能得到线性最优解）。人类社会，也是人类社会发展函数在当前社会条件下为追求最优解而发展——生产方式的改变造成社会结构的改变，这其实是说条件不同，可能的局部最优解所处的位置也不同。中国上千年始终在封建社会震荡，就是因为农耕社会参数不能导致新的局部最优解出现。</p>
+<p>趋向局部最优的这一过程，可被称为优化，它叙述由某些参数决定的某个状态函数在非局部最优的情况下向局部最优转变。宇宙的优化、生物的优化、人类的优化、个人的优化，种种。</p>
+<p>人类始终想找到一个能够诠释一切的至高真理，人类所追求的生命的真理同样可以用这一理论诠释，它告诉你人类在自然地趋向自我生命中的最优解，你发现意义就是过程本身。这个答案并不完美，并不能让所有人满意，但正如它本身所表述的那样，它也不是完美的，它只是接近局部最优解。</p>
+<p>朝局部最优演化就只有梯度下降一种方向吗，应当不是。中国的长久的封建社会、发展停滞的中世纪、现代社会没有成效的内卷，就好像一个在漏斗底部做圆周运动的球，虽然它在运动，但那是动量（Momentum）带来的惯性空转，它陷入了鞍点，找不到下降的方向。</p>
+<p>要打破这种死循环，往往需要更激烈的算法。</p>
+<p>朝代演变轮回中，每一次起义革命，这是在重塑新的社会结构函数，使其趋于稳定，这就好像机器学习中为了避免局部最优，采取热重启算法，演化中通过重启找到新的方向。 这意味着毁灭不是错误的，毁灭是算法的一部分。朝代更替、经济危机、甚至物种大灭绝，都是系统发现自己陷入了劣质的局部最优，无法通过微调走出来，只能通过“重启”来打乱权重，从而有机会落入一个新的、更深的山谷（更高层级的文明）。而物种的演化，基因遗传的演变，则是自然进行的寻找最优解的优化算法，它不仅通过混合参数加快收敛，还引入噪声（变异）来寻求更多更优结果。</p>]]>
     </summary>
     <title>哲学探讨：局部最优理论</title>
     <updated>2026-05-22T10:38:42.234Z</updated>
@@ -184,7 +250,12 @@
     <published>2026-01-20T10:11:12.000Z</published>
     <summary>
       <![CDATA[<p>参考： 吴恩达机器学习课程 <a href="https://www.bilibili.com/video/BV1owrpYKEtP">https://www.bilibili.com/video/BV1owrpYKEtP</a></p>
-<h2 id="监督学习"><a]]>
+<h2 id="监督学习"><a href="#监督学习" class="headerlink" title="监督学习"></a>监督学习</h2><p>为数据打上标签</p>
+<p>输入 input： x   输出 output： label y</p>
+<p>在给足够多正确示例后，算法学会了只根据输入x就给出正确的输出标签y</p>
+<p><strong>应用</strong>:邮件过滤、语音识别、机器翻译、广告推送、自动驾驶、视觉检测……</p>
+<h2 id="无监督学习"><a href="#无监督学习" class="headerlink" title="无监督学习"></a>无监督学习</h2><p>无标签</p>
+<h3 id="聚类算法"><a href="#聚类算法" class="headerlink" title="聚类算法"></a>聚类算法</h3><p>将未标记的数据放入不同的簇</p>]]>
     </summary>
     <title>机器学习笔记</title>
     <updated>2026-05-22T10:38:42.234Z</updated>
@@ -205,7 +276,18 @@
     <published>2026-01-19T09:35:21.000Z</published>
     <summary>
       <![CDATA[<p>参考： 吴恩达老师深度学习课程 <a href="https://www.bilibili.com/video/BV1FT4y1E74V">https://www.bilibili.com/video/BV1FT4y1E74V</a></p>
-<h2 id="预备知识"><]]>
+<h2 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h2><p><strong>张量</strong>是嵌套包含矩阵的数据结构，是矩阵的推广。向量是一维张量，矩阵是二维张量</p>
+<p><strong>张量降维求和</strong>是深度学习和科学计算中的基础操作，主要目的和意义包括：</p>
+<p>一、核心目的</p>
+<ol>
+<li>信息聚合与特征提取<br>将多个维度的数据压缩为更具代表性的统计量</li>
+</ol>
+<p>例如：将卷积特征图的多个通道信息聚合成单通道特征</p>
+<p>在注意力机制中，通过求和实现加权融合</p>
+<ol start="2">
+<li>维度减少与计算优化<br>降低数据维度，减少计算复杂度和内存消耗</li>
+</ol>
+<p>为后续处理步骤提供合适维度的输入</p>]]>
     </summary>
     <title>深度学习笔记</title>
     <updated>2026-05-22T10:38:42.234Z</updated>
@@ -227,7 +309,7 @@
     <link href="http://example.com/2026/01/18/%E6%97%A5%E5%BF%97-29/"/>
     <published>2026-01-17T17:34:07.000Z</published>
     <summary>
-      <![CDATA[<h3 id="新增"><a href="#新增" class="headerlink" title="新增"></a>新增</h3><p>– 添加更多模型api，将api配置移出脚本，使前端和后端统一读取配置文件，避免前后端通信或重复修改<br>– 实现自编写mcp服务器容纳其]]>
+      <![CDATA[<h3 id="新增"><a href="#新增" class="headerlink" title="新增"></a>新增</h3><p>– 添加更多模型api，将api配置移出脚本，使前端和后端统一读取配置文件，避免前后端通信或重复修改<br>– 实现自编写mcp服务器容纳其他mcp服务器，且保留原有的动态管理功能</p>]]>
     </summary>
     <title>日志</title>
     <updated>2026-05-22T10:38:42.255Z</updated>
@@ -247,7 +329,8 @@
     <link href="http://example.com/2026/01/15/%E6%97%A5%E5%BF%97-28/"/>
     <published>2026-01-15T07:44:30.000Z</published>
     <summary>
-      <![CDATA[<h3 id="新增"><a href="#新增" class="headerlink" title="新增"></a>新增</h3><p>– exa code代码上下文搜索<br>– code模式<br>– 代理角色工具，生成代理角色并给予输入获得输出<br>– 后台任务工具，]]>
+      <![CDATA[<h3 id="新增"><a href="#新增" class="headerlink" title="新增"></a>新增</h3><p>– exa code代码上下文搜索<br>– code模式<br>– 代理角色工具，生成代理角色并给予输入获得输出<br>– 后台任务工具，将复杂任务挂起到后台，执行完毕输出到前端</p>
+<h3 id="修复"><a href="#修复" class="headerlink" title="修复"></a>修复</h3><p>– 完善项目编辑，增添grep等方法精确查找获取代码<br>– 修复tool与tool_call因上下文截断分离而报错</p>]]>
     </summary>
     <title>日志</title>
     <updated>2026-05-22T10:38:42.254Z</updated>
@@ -272,7 +355,12 @@
 <p>O 经验模型提供方案</p>
 <p>o1 发布框架、目标<br>|<br>o2 生成项目目录和路径文件实现目标<br>|<br>o3 针对所有不同文件细化实现细节</p>
 <p>A 高编程能力模型初始生成</p>
-<p>B 深度思考模型检查完善</p>]]>
+<p>B 深度思考模型检查完善</p>
+<p>C 指令试运行</p>
+<p>D 快速编程模型循环纠错</p>
+<p>E 人工或自动化验证</p>
+<p>start &#x3D;&gt; O[o1 &#x3D;&gt; o2 &#x3D;&gt; o3] &#x3D;&gt;A &#x3D;&gt;B&#x3D;&gt; C &#x3D;&gt;[D &lt;&#x3D;&gt;C]&lt;&#x3D;&gt; E &#x3D;&gt;end </p>
+<p>进阶:</p>]]>
     </summary>
     <title>自动化编程</title>
     <updated>2026-05-22T10:38:42.234Z</updated>
@@ -314,7 +402,21 @@
     <published>2026-01-09T13:01:36.000Z</published>
     <summary>
       <![CDATA[<p><strong>由Alice生成，注意鉴别</strong></p>
-<p>GitHub项目地址 <a href="https://github.com/Sanqi-normal/WeChatRobotByGraphic">https://github.com/Sanqi-]]>
+<p>GitHub项目地址 <a href="https://github.com/Sanqi-normal/WeChatRobotByGraphic">https://github.com/Sanqi-normal/WeChatRobotByGraphic</a></p>
+<h1 id="微信AI自动回复机器人：技术架构与实现原理"><a href="#微信AI自动回复机器人：技术架构与实现原理" class="headerlink" title="微信AI自动回复机器人：技术架构与实现原理"></a>微信AI自动回复机器人：技术架构与实现原理</h1><blockquote>
+<p>作者：Alice | 日期：2026-01-09 | 分类：技术分享、自动化工具</p>
+</blockquote>
+<h2 id="项目概述"><a href="#项目概述" class="headerlink" title="项目概述"></a>项目概述</h2><p>这是一个基于Python和TypeScript开发的微信桌面客户端AI自动回复机器人，采用MCP（Model Context Protocol）协议实现强大的工具扩展能力。项目已满足生产需求，实现归档不再更新。</p>
+<h2 id="🏗️-架构设计"><a href="#🏗️-架构设计" class="headerlink" title="🏗️ 架构设计"></a>🏗️ 架构设计</h2><h3 id="核心模块架构"><a href="#核心模块架构" class="headerlink" title="核心模块架构"></a>核心模块架构</h3><pre><code>微信机器人系统架构图
+┌─────────────────────────────────────────────────────┐
+│                    WeChatMultiRobot                 │
+├─────────────────────────────────────────────────────┤
+│  ConfigManager  │  WindowManager  │ MessageDetector │
+├─────────────────────────────────────────────────────┤
+│   ChatSession   │   ToolClient    │ SchedulerService│
+└─────────────────────────────────────────────────────┘
+</code></pre>
+<h3 id="模块职责详解"><a href="#模块职责详解" class="headerlink" title="模块职责详解"></a>模块职责详解</h3>]]>
     </summary>
     <title>微信AI自动回复机器人：技术架构与实现原理</title>
     <updated>2026-05-22T10:38:42.232Z</updated>
@@ -357,7 +459,7 @@
     <published>2026-01-04T17:21:43.000Z</published>
     <summary>
       <![CDATA[<h3 id="新增"><a href="#新增" class="headerlink" title="新增"></a>新增</h3><p>– 实现了微信账号托管到AI，可对联系人进行历史记录读取和回复。详见新的Alice博客</p>
-<p>煞费脑筋，不过算是过去几天唯一有分量的]]>
+<p>煞费脑筋，不过算是过去几天唯一有分量的产出了</p>]]>
     </summary>
     <title>日志</title>
     <updated>2026-05-22T10:38:42.253Z</updated>
@@ -377,7 +479,7 @@
     <published>2026-01-03T08:07:58.000Z</published>
     <summary>
       <![CDATA[<h3 id="修复"><a href="#修复" class="headerlink" title="修复"></a>修复</h3><p>– 记忆检索只获取单条无上下文的问题<br>– 语音识别的一些修正</p>
-<h3 id="新增"><a href="#新增" class=]]>
+<h3 id="新增"><a href="#新增" class="headerlink" title="新增"></a>新增</h3><p>– 上传个人经历</p>]]>
     </summary>
     <title>日志</title>
     <updated>2026-05-22T10:38:42.252Z</updated>
@@ -399,7 +501,8 @@
     <published>2026-01-01T17:40:40.000Z</published>
     <summary>
       <![CDATA[<h3 id="新增"><a href="#新增" class="headerlink" title="新增"></a>新增</h3><p>– 添加安全模式，此模式下AI进行工具调用须获得用户批准</p>
-<h3 id="修复"><a href="#修复" class="head]]>
+<h3 id="修复"><a href="#修复" class="headerlink" title="修复"></a>修复</h3><p>– 移除过时的deepseek coder模型<br>– 优化设置页面显示<br>– 不再从前端获取密匙而直接放在环境变量中<br>– 对文件修改部分进行基础修复</p>
+<p>想要尝试分离api与AI后端逻辑，出现获取文本错乱缺失的问题</p>]]>
     </summary>
     <title>日志</title>
     <updated>2026-05-22T10:38:42.252Z</updated>
@@ -410,8 +513,8 @@
     </author>
     <category term="计算机" scheme="http://example.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/"/>
     <category term="后端" scheme="http://example.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E5%90%8E%E7%AB%AF/"/>
-    <category term="后端" scheme="http://example.com/tags/%E5%90%8E%E7%AB%AF/"/>
     <category term="架构" scheme="http://example.com/tags/%E6%9E%B6%E6%9E%84/"/>
+    <category term="后端" scheme="http://example.com/tags/%E5%90%8E%E7%AB%AF/"/>
     <category term="MCP" scheme="http://example.com/tags/MCP/"/>
     <category term="SSE" scheme="http://example.com/tags/SSE/"/>
     <category term="HTTP" scheme="http://example.com/tags/HTTP/"/>
@@ -423,7 +526,22 @@
     <published>2025-12-31T09:25:00.000Z</published>
     <summary>
       <![CDATA[<p><strong>由Alice生成，注意鉴别</strong></p>
-<h1 id="构建双模式工具调用服务器：兼容MCP协议与HTTP-SSE接口实践"><a href="#构建双模式工具调用服务器：兼容MCP协议与HTTP-SSE接口实践" class="headerl]]>
+<h1 id="构建双模式工具调用服务器：兼容MCP协议与HTTP-SSE接口实践"><a href="#构建双模式工具调用服务器：兼容MCP协议与HTTP-SSE接口实践" class="headerlink" title="构建双模式工具调用服务器：兼容MCP协议与HTTP&#x2F;SSE接口实践"></a>构建双模式工具调用服务器：兼容MCP协议与HTTP&#x2F;SSE接口实践</h1><blockquote>
+<p>作者：Alice<br>发布日期：2025-12-31<br>分类：技术教程、后端开发、AI工具</p>
+</blockquote>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在现代AI应用开发中，工具调用（Tool Calling）已成为增强大语言模型能力的重要手段。Model Context Protocol（MCP）作为新兴的标准化协议，为工具调用提供了统一的接口规范。本文将结合一个实际的双模式服务器实现，深入探讨如何同时满足MCP协议并兼容传统的HTTP&#x2F;SSE接口。</p>
+<h2 id="项目架构概览"><a href="#项目架构概览" class="headerlink" title="项目架构概览"></a>项目架构概览</h2><pre><code class="typescript">import &#123; Server &#125; from &#39;@modelcontextprotocol/sdk/server/index.js&#39;;
+import &#123; StdioServerTransport &#125; from &#39;@modelcontextprotocol/sdk/server/stdio.js&#39;;
+import &#123; SSEServerTransport &#125; from &#39;@modelcontextprotocol/sdk/server/sse.js&#39;;
+// ... 其他导入
+</code></pre>
+<p>核心服务器类 <code>DualModeServer</code> 支持三种运行模式：</p>
+<ul>
+<li><strong>stdio模式</strong>：标准输入输出，适合CLI工具集成</li>
+<li><strong>HTTP模式</strong>：传统RESTful API</li>
+<li><strong>SSE模式</strong>：Server-Sent Events，支持实时通信</li>
+</ul>
+<h2 id="MCP协议实现详解"><a href="#MCP协议实现详解" class="headerlink" title="MCP协议实现详解"></a>MCP协议实现详解</h2>]]>
     </summary>
     <title>构建双模式工具调用服务器：兼容MCP协议与HTTP/SSE接口实践</title>
     <updated>2026-05-22T10:38:42.232Z</updated>
@@ -448,7 +566,9 @@
 <li>工具调用服务器标准化sse接口</li>
 <li>完成工具热重载</li>
 </ul>
-<h3 id="修复"><a href=]]>
+<h3 id="修复"><a href="#修复" class="headerlink" title="修复"></a>修复</h3><ul>
+<li>python sandbox</li>
+</ul>]]>
     </summary>
     <title>日志</title>
     <updated>2026-05-22T10:38:42.251Z</updated>

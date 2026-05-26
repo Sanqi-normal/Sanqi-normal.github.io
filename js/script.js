@@ -26,7 +26,7 @@ blog_path= blog_path.lastIndexOf("/") === blog_path.length-1?blog_path.slice(0, 
 var content = $(".pjax");
 var container = $(".main-wrapper");
 var $searchInput = $("#local-search-input");
-var $outlineList = $('#outline-list');
+var $outlineList = $('#art-toc');
 var $localSearchResult = $("#local-search-result")
 var isFullScreen = $(window).width() <= 1024
 $(document).pjax('.site_url,.nav-item a,.post-card,.hero-btn', '.pjax', {fragment: '.pjax', timeout: 8000});$(document).on({
@@ -152,31 +152,54 @@ $searchInput.keydown(function (e) {
     }
 });
 var clickScrollTo = false
-function syncOutline(_this) {
-    try{
-        if ($('#outline-list .toc-link[href!="#"]').length > 0 && !clickScrollTo) {
-            var activeIndex = null
-            $('#outline-list .toc-link[href!="#"]').each(function (index) {
-                var diff = _this.scrollTop - $(_this).find(decodeURI($(this).attr('href')))[0].offsetTop
-                if (diff < -20) {
-                    activeIndex = index === 0 ? 0 : index - 1
-                    return false
+function syncOutline(scrollContainer) {
+    try {
+        var $tocLinks = $('#art-toc .toc-link[href!="#"]');
+        if ($tocLinks.length > 0 && !clickScrollTo) {
+            var isWindow = scrollContainer === window || scrollContainer.scrollTop !== undefined && scrollContainer.find;
+            var scrollTop = isWindow ? (scrollContainer.scrollTop || $(window).scrollTop()) : $(scrollContainer).scrollTop();
+            
+            var activeIndex = null;
+            $tocLinks.each(function (index) {
+                var targetId = decodeURIComponent($(this).attr('href'));
+                var $target = $(targetId);
+                if ($target.length > 0) {
+                    var targetTop = $target[0].offsetTop;
+                    // 如果是 window 滚动，使用相对于文档的 offset().top
+                    if (isWindow && $('.main-wrapper').css('overflow-y') === 'visible') {
+                        targetTop = $target.offset().top;
+                    }
+                    
+                    var diff = scrollTop - targetTop;
+                    if (diff < -20) {
+                        activeIndex = index === 0 ? 0 : index - 1;
+                        return false;
+                    }
                 }
-            })
-            $('#outline-list .toc-link[href!="#"].active').removeClass('active')
+            });
+
+            $tocLinks.removeClass('active');
+            var $activeLink;
             if (activeIndex === null) {
-                $('#outline-list .toc-link[href!="#"]:last').addClass('active')
+                $activeLink = $tocLinks.last();
             } else {
-                $('#outline-list .toc-link[href!="#"]:eq(' + activeIndex + ')').addClass('active')
+                $activeLink = $tocLinks.eq(activeIndex);
             }
-            if ($('#outline-list .toc-link[href!="#"].active')[0].offsetTop - $outlineList.height() - $outlineList[0].scrollTop > -80) {
-                $outlineList.scrollTop($('#outline-list .toc-link[href!="#"].active')[0].offsetTop + 80 - $outlineList.height())
-            } else if ($('#outline-list .toc-link[href!="#"].active')[0].offsetTop < $outlineList[0].scrollTop) {
-                $outlineList.scrollTop($('#outline-list .toc-link[href!="#"].active')[0].offsetTop)
+            $activeLink.addClass('active');
+
+            // 同步 TOC 内部滚动条
+            if ($activeLink.length > 0) {
+                var $container = $('#art-toc');
+                var activeTop = $activeLink[0].offsetTop;
+                if (activeTop - $container.height() - $container.scrollTop() > -80) {
+                    $container.scrollTop(activeTop + 80 - $container.height());
+                } else if (activeTop < $container.scrollTop()) {
+                    $container.scrollTop(activeTop);
+                }
             }
         }
     } catch (e) {
-        console.error('同步toc位置失败！', e)
+        console.error('同步toc位置失败！', e);
     }
 }
 
@@ -187,15 +210,23 @@ $(function () {
     initScrollObserver(); // 初始化滚动观察
 
     // 监测滚动，同步大纲
-    container.on('scroll', function () {
-        var _this = this
+    $(window).add(container).on('scroll', function () {
+        var scrollTop = $(this).scrollTop();
         var $rocket = $("#rocket");
-        if (container.scrollTop() >= 200 && $rocket.css("display") === "none") {
+        if (scrollTop >= 200 && $rocket.css("display") === "none") {
             $("#rocket").removeClass("launch").css("display", "block").css("opacity", "0.5");
-        } else if (container.scrollTop() < 200 && $rocket.css("display") === "block") {
+        } else if (scrollTop < 200 && $rocket.css("display") === "block") {
             $("#rocket").removeClass("launch").css("opacity", "1").css("display", "none");
         }
-        syncOutline(_this)
+        
+        if (this === window) {
+            syncOutline({
+                scrollTop: scrollTop,
+                find: function(selector) { return $(selector); }
+            });
+        } else {
+            syncOutline(this);
+        }
     })
 
     // 全文搜索初始化
@@ -378,11 +409,8 @@ function bind() {
         $searchInput.val("@" + $(this).text().trim());
         $searchInput.trigger('input');
     });
-    //初始化文章toc
-    $("#outline-list").html($(".pjax article .toc-ref .toc").clone());
-    $("#outline-list .toc").append($(".pjax article .toc-ref > .toc-item").clone());
     // 修复自定义标题的关联关系
-    $("#outline-list").find('.toc-link').each(function() {
+    $("#art-toc").find('.toc-link').each(function() {
         if (!$(this).attr('href')) {
             var tocText = $(this).text().replaceAll(/[^a-zA-Z0-9]/g, '')
             $(this).attr('href', '#' + encodeURIComponent(tocText))
@@ -401,8 +429,8 @@ function bind() {
     //绑定文章toc的滚动事件
     $("a[href^='#']").click(function () {
         var $this = $(this)
-        if ($this.parents('#outline-list').length > 0) {
-            $('#outline-list .toc-link[href!="#"].active').removeClass('active')
+        if ($this.parents('#art-toc').length > 0) {
+            $('#art-toc .toc-link[href!="#"].active').removeClass('active')
             $this.addClass('active')
         }
         
@@ -412,8 +440,15 @@ function bind() {
         }
 
         clickScrollTo = true
-		    var targetOffsetTop = $(decodeURI($this.attr("href")))[0].offsetTop
-        container.animate({scrollTop: container.scrollTop > targetOffsetTop ? (targetOffsetTop + 20) : (targetOffsetTop - 20)}, 500, 'swing', function () {
+        var $target = $(decodeURIComponent($this.attr("href")));
+        var targetOffsetTop = $target[0].offsetTop;
+        
+        // 如果是西幻风（窗口滚动），需要使用相对于文档的偏移
+        if ($('.main-wrapper').css('overflow-y') === 'visible') {
+            targetOffsetTop = $target.offset().top;
+        }
+
+        $('html, body, .main-wrapper').animate({scrollTop: targetOffsetTop - 20}, 500, 'swing', function () {
             clickScrollTo = false
         });
         return false;
@@ -694,7 +729,7 @@ function initSoundEffects() {
     // 2. 批量绑定点击音效
     $(document).on('click', 'a, button, #rocket, .search-btn, .copy-btn', function(e) {
         // 如果是目录点击，使用 toc_select 音效，否则使用普通 click
-        if ($(this).hasClass('toc-link') || $(this).parents('#outline-list').length > 0) {
+        if ($(this).hasClass('toc-link') || $(this).parents('#art-toc').length > 0) {
             sounds.toc_select.play();
         } else {
             sounds.click.play();
