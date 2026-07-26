@@ -1,0 +1,1680 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>叁七のblog</title>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="这是一个假装自己是命令行的AI，找出它的破绽                    Alice Shell：$~                      body {         font-family: &#39;Courier New&#39;, monospace;         background: #000 !important;         margin: 0;         padd">
+<meta property="og:type" content="website">
+<meta property="og:title" content="叁七のblog">
+<meta property="og:url" content="http://example.com/JS/index.html">
+<meta property="og:site_name" content="叁七のblog">
+<meta property="og:description" content="这是一个假装自己是命令行的AI，找出它的破绽                    Alice Shell：$~                      body {         font-family: &#39;Courier New&#39;, monospace;         background: #000 !important;         margin: 0;         padd">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-11-30T11:08:47.415Z">
+<meta property="article:modified_time" content="2025-11-30T11:08:47.415Z">
+<meta property="article:author" content="叁七">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="icon" href="https://testingcf.jsdelivr.net/gh/sanqi-normal/sanqi-normal.github.io/img/top.png">
+
+<link href="/css/style.css?v=" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-light.css?v=" rel="stylesheet">
+
+<link href="//testingcf.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<link href="//testingcf.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css" rel="stylesheet">
+<link href="//testingcf.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css" rel="stylesheet">
+
+<script src="//testingcf.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script>(function(){var t=localStorage.getItem("theme")||"tech";var d="dark";if(t==="cassette")d="cassette";else if(t==="fantasy")d="fantasy";else if(t==="manga")d="manga";else if(t==="personal")d="personal";else if(t==="post-punk")d="post-punk";else if(t==="punk")d="punk";else if(t==="simple")d="light";else if(t==="soviet")d="soviet";else if(t==="street")d="street";document.documentElement.setAttribute("data-theme",d)})();</script>
+<script src="/js/titleTip.js?v=" ></script>
+
+<script src="//testingcf.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof hljs !== 'undefined') {
+            if (hljs.highlightAll) {
+                hljs.highlightAll();
+            } else if (hljs.initHighlighting) {
+                hljs.initHighlighting();
+            }
+        }
+    });
+</script>
+
+<script src="//testingcf.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+    <!--[if lt IE 9]>
+
+
+  
+  <link rel="preconnect" href="https://fonts.loli.net" crossorigin>
+  <link href="https://fonts.loli.net/css2?family=Noto+Sans+SC:wght@400;700&family=Anton&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="叁七のblog" type="application/atom+xml">
+</head>
+
+
+
+
+
+<body>
+<div id="top-progress-container">
+    <div id="top-progress-bar">
+        <span id="top-progress-num">0%</span>
+    </div>
+</div>
+<script>
+  window.THEME_CONFIG = {
+    blog_path: "/",
+    highlight_on: true,
+    highlight_copy: true,
+    i18n_search_empty: "没有找到内容，更换下搜索词试试吧~"
+  };
+</script>
+
+  <!-- 磁带播放器样式统一处理 -->
+
+<div class="layout-container">
+    <aside class="sidebar">
+    <div class="sidebar-close" id="sidebar-close">
+        <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+    </div>
+    <a class="brand site_url" href="/">
+        <svg class="brand-icon" viewBox="0 0 24 24">
+            <g fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" />
+                <path d="M7 7h10" />
+                <path d="M7 12h10" />
+                <path d="M7 16h6" />
+            </g>
+        </svg>
+        <div class="brand-text">
+            <h1>叁七のblog</h1>
+            <span>- LOGOS -</span>
+        </div>
+    </a>
+
+    <div class="nav-label">NAVIGATION</div>
+    <ul class="nav-menu">
+        
+        <li class="nav-item ">
+            <a class="site_url" href="/">
+                <img class="nav-icon" src="/img/navigation/%E9%A6%96%E9%A1%B5.svg" alt="首页">
+                <div class="nav-item-text">
+                    <span class="zh">首页</span>
+                    <span class="en">HOME</span>
+                </div>
+            </a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="site_url" href="/photo">
+                <img class="nav-icon" src="/img/navigation/%E7%9B%B8%E5%86%8C.svg" alt="相册">
+                <div class="nav-item-text">
+                    <span class="zh">相册</span>
+                    <span class="en">PHOTO</span>
+                </div>
+            </a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="site_url" href="/novel">
+                <img class="nav-icon" src="/img/navigation/%E5%B0%8F%E8%AF%B4.svg" alt="小说">
+                <div class="nav-item-text">
+                    <span class="zh">小说</span>
+                    <span class="en">NOVEL</span>
+                </div>
+            </a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="site_url" href="/AI">
+                <img class="nav-icon" src="/img/navigation/AI.svg" alt="AI">
+                <div class="nav-item-text">
+                    <span class="zh">AI</span>
+                    <span class="en">AI</span>
+                </div>
+            </a>
+        </li>
+        
+    </ul>
+
+    <div class="nav-label">INFO</div>
+    <div class="sidebar-bottom">
+        <div class="user-info">
+            <div class="avatar-container">
+                <div class="avatar" style="background-image: url('https://testingcf.jsdelivr.net/gh/sanqi-normal/sanqi-normal.github.io/img/avatar.jpg')"></div>
+                <div class="avatar glitch-layer layer-pink" style="background-image: url('https://testingcf.jsdelivr.net/gh/sanqi-normal/sanqi-normal.github.io/img/avatar.jpg')"></div>
+                <div class="avatar glitch-layer layer-cyan" style="background-image: url('https://testingcf.jsdelivr.net/gh/sanqi-normal/sanqi-normal.github.io/img/avatar.jpg')"></div>
+            </div>
+            <div>
+                <div class="user-name">叁七</div>
+                <div class="user-id">#2026</div>
+            </div>
+        </div>
+        
+        <div class="user-desc">计算机专业本科生，<br>每天不知道在忙什么。</div>
+
+        <div class="social-label">你也能在以下地方遇到我</div>
+        <div class="social-links">
+            
+                
+                    <a class="social-btn" title="github" href="https://github.com/Sanqi-normal" target="_blank">
+                        <img src="/img/social/github.svg" alt="github">
+                    </a>
+                
+                    <a class="social-btn" title="bilibili" href="https://space.bilibili.com/2140541511" target="_blank">
+                        <img src="/img/social/bilibili.svg" alt="bilibili">
+                    </a>
+                
+            
+        </div>
+    </div>
+</aside>
+
+    <header class="top-bar">
+    <div class="menu-toggle" id="menu-toggle">
+        <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+    </div>
+    <div class="search-box fade-up-wait">
+        <div class="search-filter-container">
+            <svg class="search-filter-icon" viewBox="0 0 24 24"><path d="M3 18h6v-2H3v2zM3 6v2h18V6H3zm0 7h12v-2H3v2z"/></svg>
+            <div class="search-filter-panel">
+                <label><input type="checkbox" class="filter-chk" data-type="title" checked> 标题</label>
+                <label><input type="checkbox" class="filter-chk" data-type="content" checked> 内容</label>
+                <label><input type="checkbox" class="filter-chk" data-type="categories" checked> 分类</label>
+                <label><input type="checkbox" class="filter-chk" data-type="tags" checked> 标签</label>
+            </div>
+        </div>
+        <input type="text" id="local-search-input" placeholder="搜索内容" autocomplete="off">
+        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+    </div>
+
+    
+    <div id="local-search-result" style="display: none; position: absolute; top: 110px; right: 40px; width: 360px; max-width: 90vw; background: var(--bg-panel); box-shadow: 0 5px 15px rgba(0,0,0,0.5); z-index: 100; max-height: 400px; overflow-y: auto; padding: 10px; border: 1px solid var(--border-dim); border-radius: 4px;">
+    </div>
+    
+
+    <div class="top-links fade-up-wait">
+        
+            <a class="site_url" href="/categories/%E6%97%A5%E5%BF%97/">日志</a>
+        
+        <a class="site_url" href="/about/">关于</a>
+    </div>
+    <div class="sys-status fade-up-wait" id="sys-status">
+        <svg viewBox="0 0 100 30" id="visualizer-svg" style="cursor: pointer;" data-title="播放音乐">
+            <polyline class="visualizer-line-bg" points="0,15 20,15 25,5 30,25 35,15 100,15" stroke-width="2"></polyline>
+            <polyline id="visualizer-line" points="0,15 20,15 25,5 30,25 35,15 100,15" stroke-width="2"></polyline>
+        </svg>
+        <div class="music-controls" id="music-controls">
+            <svg class="music-btn" id="prev-btn" viewBox="0 0 6 6" width="12" height="12" data-title="上一首">
+                <polygon points="6,0 0,3 6,6" fill="none" stroke-width="0.8"/>
+            </svg>
+            <svg class="music-btn" id="loop-btn" viewBox="0 0 12 12" width="14" height="14" data-title="单曲循环">
+                <circle id="loop-circle" cx="6" cy="6" r="4.5" fill="none" stroke-width="1"/>
+            </svg>
+            <svg class="music-btn" id="next-btn" viewBox="0 0 6 6" width="12" height="12" data-title="下一首">
+                <polygon points="0,0 6,3 0,6" fill="none" stroke-width="0.8"/>
+            </svg>
+        </div>
+        <div class="sys-text">
+            <span><span class="big">26</span><span class="sys-month">/07</span><span class="sys-year">/2026</span></span>
+            <span>173 BLOG</span>
+            
+            <span id="busuanzi_container_site_uv" style="display:none"><span id="busuanzi_value_site_uv"></span> VISITORS</span>
+            
+        </div>
+    </div>
+</header>
+
+<script>
+(function() {
+    var musicList = ["/music/1.mp3","/music/chill-synthwave-background-music-for-youtube-shorts-and-videos-345551.mp3"];
+    if (!musicList || musicList.length === 0) {
+        musicList = ['/music/example.mp3'];
+    }
+    var currentTrack = 0;
+    var audioCtx, analyser, dataArray, source, audio;
+    var isPlaying = false;
+    var animationId;
+
+    var container = document.getElementById('sys-status');
+    var controls = document.getElementById('music-controls');
+    var svg = document.getElementById('visualizer-svg');
+    var polyline = document.getElementById('visualizer-line');
+    var defaultPoints = "0,15 20,15 25,5 30,25 35,15 100,15";
+
+    function initAudio() {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        analyser = audioCtx.createAnalyser();
+        // 使用参考代码中推荐的高精度 FFT 窗口
+        analyser.fftSize = 4096; 
+        dataArray = new Uint8Array(analyser.frequencyBinCount);
+        audio = new Audio();
+        window.siteAudio = audio; // 暴露给全局以便工具栏控制
+        audio.crossOrigin = "anonymous";
+        audio.src = musicList[currentTrack];
+        audio.loop = isSingleLoop;
+        audio.onended = nextTrack;
+        source = audioCtx.createMediaElementSource(audio);
+        source.connect(analyser);
+        analyser.connect(audioCtx.destination);
+    }
+
+    function updatePoints() {
+        if (!isPlaying) return;
+        analyser.getByteFrequencyData(dataArray);
+        
+        var points = "";
+        // 减少点数以避免过于密集
+        var pointsCount = 40; 
+        var sliceWidth = 100 / (pointsCount - 1);
+        
+        for (var i = 0; i < pointsCount; i++) {
+            var t = i / (pointsCount - 1);
+            // 调整映射，使其对频率更敏感且分布更均匀
+            var logIndex = Math.floor(Math.pow(t, 1.4) * (dataArray.length * 0.6));
+            var value = dataArray[logIndex] || 0;
+
+            if (value > 5) {
+                // 增加权重补偿，提升纵向波动感
+                var compensation = 1.2 + t * 0.8; 
+                value = value * compensation;
+            }
+            value = Math.min(255, value);
+
+            var percent = value / 255;
+            // 增加振幅因子 (30 * 0.8)
+            var amplitude = (30 * 0.8) * percent; 
+            
+            var x = i * sliceWidth;
+            var y = 15 - (amplitude / 2); // 减小基准高度，让波动更明显
+
+            points += x + "," + y + " ";
+        }
+        
+        polyline.setAttribute('points', points);
+        animationId = requestAnimationFrame(updatePoints);
+    }
+
+    function togglePlay() {
+        if (!audioCtx) initAudio();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+
+        if (isPlaying) {
+            audio.pause();
+            isPlaying = false;
+            container.classList.remove('playing');
+            controls.classList.remove('active');
+            cancelAnimationFrame(animationId);
+            polyline.setAttribute('points', defaultPoints);
+            updateTooltip(svg, '播放音乐');
+        } else {
+            audio.play().catch(e => console.error("Playback failed", e));
+            isPlaying = true;
+            container.classList.add('playing');
+            controls.classList.add('active');
+            updatePoints();
+            updateTooltip(svg, '暂停播放');
+        }
+    }
+
+    var isSingleLoop = false;
+    var loopBtn = document.getElementById('loop-btn');
+    var loopCircle = document.getElementById('loop-circle');
+
+    loopBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        isSingleLoop = !isSingleLoop;
+        if (isSingleLoop) {
+            if (audio) audio.loop = true;
+            loopCircle.setAttribute('fill', 'currentColor');
+            updateTooltip(this, '列表循环');
+        } else {
+            if (audio) audio.loop = false;
+            loopCircle.setAttribute('fill', 'none');
+            updateTooltip(this, '单曲循环');
+        }
+    });
+
+    function updateTooltip(el, newTitle) {
+        el.setAttribute('data-title', newTitle);
+        if (typeof jQuery.fn.quberTip === 'function') {
+            $(el).off('mouseenter mouseleave mousemove');
+            $(el).quberTip();
+        }
+    }
+
+    // 初始化提示框
+    if (typeof jQuery.fn.quberTip === 'function') {
+        $('.music-btn, #visualizer-svg').quberTip();
+    }
+
+    function nextTrack() {
+        currentTrack = (currentTrack + 1) % musicList.length;
+        if (audio) {
+            audio.src = musicList[currentTrack];
+            if (isPlaying) audio.play();
+        }
+    }
+
+    function prevTrack() {
+        currentTrack = (currentTrack - 1 + musicList.length) % musicList.length;
+        if (audio) {
+            audio.src = musicList[currentTrack];
+            if (isPlaying) audio.play();
+        }
+    }
+
+    svg.addEventListener('click', function(e) {
+        e.stopPropagation();
+        togglePlay();
+    });
+
+    document.getElementById('prev-btn').addEventListener('click', function(e) {
+        e.stopPropagation();
+        prevTrack();
+    });
+
+    document.getElementById('next-btn').addEventListener('click', function(e) {
+        e.stopPropagation();
+        nextTrack();
+    });
+})();
+</script>
+
+
+<script>
+var searchDebounceTimer = null;
+document.addEventListener('DOMContentLoaded', function() {
+    var searchInput = document.getElementById('local-search-input');
+    var searchResult = document.getElementById('local-search-result');
+    if (!searchInput || !searchResult) return;
+
+    searchInput.addEventListener('input', function() {
+        clearTimeout(searchDebounceTimer);
+        var val = this.value.trim();
+        if (val.length === 0) {
+            searchResult.style.display = 'none';
+            searchResult.innerHTML = '';
+            return;
+        }
+        searchDebounceTimer = setTimeout(function() {
+            if (typeof searchAll === 'function') {
+                searchAll(val);
+                searchResult.style.display = 'block';
+            }
+        }, 300);
+    });
+
+    // Trigger search on filter change
+    document.querySelectorAll('.filter-chk').forEach(function(chk) {
+        chk.addEventListener('change', function() {
+            var val = searchInput.value.trim();
+            if (val.length > 0 && typeof searchAll === 'function') {
+                searchAll(val);
+            }
+        });
+    });
+
+    // Handle search box expansion and filter panel interaction
+    var searchBox = document.querySelector('.search-box');
+    var filterContainer = document.querySelector('.search-filter-container');
+    var filterPanel = document.querySelector('.search-filter-panel');
+
+    filterContainer.addEventListener('mouseenter', function() {
+        searchBox.classList.add('expanded');
+    });
+
+    searchBox.addEventListener('mouseleave', function(e) {
+        // Only remove expanded class if we're not moving to the filter panel
+        if (!filterPanel.contains(e.relatedTarget)) {
+            if (!searchInput.matches(':focus')) {
+                searchBox.classList.remove('expanded');
+            }
+        }
+    });
+
+    filterPanel.addEventListener('mouseleave', function(e) {
+        if (!searchBox.contains(e.relatedTarget)) {
+            if (!searchInput.matches(':focus')) {
+                searchBox.classList.remove('expanded');
+            }
+        }
+    });
+
+    searchInput.addEventListener('focus', function() {
+        searchBox.classList.add('expanded');
+    });
+
+    searchInput.addEventListener('blur', function() {
+        // Delay removal to allow for clicks on filters
+        setTimeout(function() {
+            if (!filterPanel.matches(':hover') && !filterContainer.matches(':hover')) {
+                searchBox.classList.remove('expanded');
+            }
+        }, 200);
+    });
+
+    searchInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            this.value = '';
+            searchResult.style.display = 'none';
+            searchResult.innerHTML = '';
+            this.blur();
+        }
+    });
+
+    // Hide results when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!searchInput.contains(e.target) && !searchResult.contains(e.target)) {
+            searchResult.style.display = 'none';
+        }
+    });
+});
+</script>
+
+
+    <main class="main-wrapper">
+        <div id="pjax-container" class="pjax">
+            <div class="pjax-content">
+                
+
+<div id="view-home" class="view-section active">
+    
+
+    <section class="home-content-section">
+        <div class="main-column">
+            <div class="section-header">
+                <div class="section-title">
+                    
+                        标签：System Monitoring <span>POSTS</span>
+                    
+                </div>
+                <div class="sort-options">
+                    <div class="sort-btn active desc" data-sort="date">DATE <span class="symbol"></span></div>
+                    <div class="sort-btn" data-sort="title">TITLE <span class="symbol"></span></div>
+                </div>
+            </div>
+            
+            <div class="post-grid" id="home-post-grid">
+                
+                    <a class="post-card site_url fade-up-wait" href="/2026/07/23/Hermes-Agent-Anti-Gravity-Integration/" data-date="1784811900000" data-title="Hermes Agent 接轨 Anti-Gravity 代理服务与双重保活机制">
+                        <div class="post-card-inner">
+                            <div class="post-card-bg" style="background-image: url('/img/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA.jpg')"></div>
+                            <div class="post-card-overlay">
+                                <span class="card-tag">计算机</span>
+                                <h3 class="card-title">Hermes Agent 接轨 Anti-Gravity 代理服务与双重保活机制</h3>
+                                <p class="card-desc">
+                                    
+本文由 Alice 生成，注意鉴别。
+
+在日常使用 AI Agent 进行项目开发与日常交互时，模型调用的稳定性与成本...
+                                </p>
+                                <div class="card-meta">
+                                    <div>2026-07-23</div>
+                                    
+                                    <div>
+                                        <svg viewBox="0 0 24 24" style="width:12px; height:12px; fill:currentColor"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg>
+                                        
+                                            <span>Hermes, </span>
+                                        
+                                            <span>AI Agent, </span>
+                                        
+                                            <span>Anti-Gravity, </span>
+                                        
+                                            <span>System Monitoring</span>
+                                        
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                
+            </div>
+        </div>
+
+        <div class="sidebar-right">
+            
+            <div class="widget fade-up-wait">
+                <div class="section-header"><div class="section-title">公告 <span>ANNOUNCEMENT</span></div></div>
+                <div class="announce-list">
+                    
+                        <a class="announce-box site_url" href="/2025/02/16/%E9%87%8D%E8%A6%81%E5%A4%96%E9%93%BE%E6%B1%87%E6%80%BB/">
+                            <div class="announce-watermark">S.Q.</div>
+                            <div class="announce-left">
+                                <div class="announce-date-big">16</div>
+                                <div class="announce-date-sub">/ 02</div>
+                            </div>
+                            <div class="announce-right">
+                                <span class="announce-tag">置顶</span>
+                                <h3 class="announce-title">重要外链汇总</h3>
+                                <p class="announce-desc">友链Xavierwar的博客
+Hoffen的博客
+教程
+注：部分需科学上网，部分...</p>
+                            </div>
+                        </a>
+                    
+                        <a class="announce-box site_url" href="/2025/12/01/%E7%BD%91%E7%AB%99%E9%9C%80%E7%9F%A5/">
+                            <div class="announce-watermark">S.Q.</div>
+                            <div class="announce-left">
+                                <div class="announce-date-big">01</div>
+                                <div class="announce-date-sub">/ 12</div>
+                            </div>
+                            <div class="announce-right">
+                                <span class="announce-tag">置顶</span>
+                                <h3 class="announce-title">网站需知</h3>
+                                <p class="announce-desc">网络连接Github站点：https://sanqi-normal.github...</p>
+                            </div>
+                        </a>
+                    
+                        <a class="announce-box site_url" href="/2025/12/10/tauri%E5%86%85mcp%E9%9B%86%E6%88%90%E4%B8%8Emcp%E5%8A%A8%E6%80%81%E6%9E%B6%E6%9E%84/">
+                            <div class="announce-watermark">S.Q.</div>
+                            <div class="announce-left">
+                                <div class="announce-date-big">10</div>
+                                <div class="announce-date-sub">/ 12</div>
+                            </div>
+                            <div class="announce-right">
+                                <span class="announce-tag">置顶</span>
+                                <h3 class="announce-title">从开发项目中学来的编程三原则</h3>
+                                <p class="announce-desc">感觉写的不错，置顶一下吧。
+我在做的这个项目将mcp集成到tauri大模型工具调...</p>
+                            </div>
+                        </a>
+                    
+                </div>
+            </div>
+            
+
+            <div class="widget fade-up-wait">
+                <div class="section-header"><div class="section-title">全部分类 <span>CATEGORIES</span></div></div>
+                <div class="cat-outline">
+                    
+                    
+                    <ul class="cat-list">
+                        
+                            
+                                
+                        <li class="cat-list-item">
+                            <a class="site_url" href="/categories/%E6%B8%B8%E6%88%8F/">
+                                <span class="cat-list-link">游戏</span>
+                                <span class="cat-list-count">12</span>
+                            </a>
+                            
+                                <ul class="cat-list-child">
+                                    
+                                        
+                        <li class="cat-list-item">
+                            <a class="site_url" href="/categories/%E6%B8%B8%E6%88%8F/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/">
+                                <span class="cat-list-link">计算机原理</span>
+                                <span class="cat-list-count">1</span>
+                            </a>
+                            
+                        </li>
+                    
+                                    
+                                        
+                        <li class="cat-list-item">
+                            <a class="site_url" href="/categories/%E6%B8%B8%E6%88%8F/%E5%BC%80%E5%8F%91/">
+                                <span class="cat-list-link">开发</span>
+                                <span class="cat-list-count">1</span>
+                            </a>
+                            
+                        </li>
+                    
+                                    
+                                        
+                        <li class="cat-list-item">
+                            <a class="site_url" href="/categories/%E6%B8%B8%E6%88%8F/%E8%AF%84%E6%B5%8B/">
+                                <span class="cat-list-link">评测</span>
+                                <span class="cat-list-count">2</span>
+                            </a>
+                            
+                        </li>
+                    
+                                    
+                                        
+                        <li class="cat-list-item">
+                            <a class="site_url" href="/categories/%E6%B8%B8%E6%88%8F/%E5%89%8D%E7%AB%AF/">
+                                <span class="cat-list-link">前端</span>
+                                <span class="cat-list-count">1</span>
+                            </a>
+                            
+                        </li>
+                    
+                                    
+                                        
+                        <li class="cat-list-item">
+                            <a class="site_url" href="/categories/%E6%B8%B8%E6%88%8F/%E5%88%9B%E4%BD%9C/">
+                                <span class="cat-list-link">创作</span>
+                                <span class="cat-list-count">1</span>
+                            </a>
+                            
+                        </li>
+                    
+                                    
+                                </ul>
+                            
+                        </li>
+                    
+                            
+                        
+                            
+                                
+                        <li class="cat-list-item">
+                            <a class="site_url" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/">
+                                <span class="cat-list-link">计算机</span>
+                                <span class="cat-list-count">71</span>
+                            </a>
+                            
+                                <ul class="cat-list-child">
+                                    
+                                        
+                        <li class="cat-list-item">
+                            <a class="site_url" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E6%9E%B6%E6%9E%84/">
+                                <span class="cat-list-link">架构</span>
+                                <span class="cat-list-count">2</span>
+                            </a>
+                            
+                        </li>
+                    
+                                    
+                                        
+                        <li class="cat-list-item">
+                            <a class="site_url" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">
+                                <span class="cat-list-link">图形学</span>
+                                <span class="cat-list-count">1</span>
+                            </a>
+                            
+                        </li>
+                    
+                                    
+                                        
+                        <li class="cat-list-item">
+                            <a class="site_url" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E8%BD%AF%E4%BB%B6/">
+                                <span class="cat-list-link">软件</span>
+                                <span class="cat-list-count">9</span>
+                            </a>
+                            
+                        </li>
+                    
+                                    
+                                        
+                        <li class="cat-list-item">
+                            <a class="site_url" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/AI/">
+                                <span class="cat-list-link">AI</span>
+                                <span class="cat-list-count">10</span>
+                            </a>
+                            
+                        </li>
+                    
+                                    
+                                        
+                        <li class="cat-list-item">
+                            <a class="site_url" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/AI%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96/">
+                                <span class="cat-list-link">AI与自动化</span>
+                                <span class="cat-list-count">1</span>
+                            </a>
+                            
+                        </li>
+                    
+                                    
+                                        
+                        <li class="cat-list-item">
+                            <a class="site_url" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E6%B8%97%E9%80%8F/">
+                                <span class="cat-list-link">渗透</span>
+                                <span class="cat-list-count">5</span>
+                            </a>
+                            
+                        </li>
+                    
+                                    
+                                        
+                        <li class="cat-list-item">
+                            <a class="site_url" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/Web/">
+                                <span class="cat-list-link">Web</span>
+                                <span class="cat-list-count">10</span>
+                            </a>
+                            
+                        </li>
+                    
+                                    
+                                        
+                        <li class="cat-list-item">
+                            <a class="site_url" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%BC%96%E7%A8%8B/">
+                                <span class="cat-list-link">编程</span>
+                                <span class="cat-list-count">5</span>
+                            </a>
+                            
+                        </li>
+                    
+                                    
+                                        
+                        <li class="cat-list-item">
+                            <a class="site_url" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E5%89%8D%E7%AB%AF/">
+                                <span class="cat-list-link">前端</span>
+                                <span class="cat-list-count">7</span>
+                            </a>
+                            
+                        </li>
+                    
+                                    
+                                        
+                        <li class="cat-list-item">
+                            <a class="site_url" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E8%87%AA%E5%8A%A8%E5%8C%96/">
+                                <span class="cat-list-link">自动化</span>
+                                <span class="cat-list-count">2</span>
+                            </a>
+                            
+                        </li>
+                    
+                                    
+                                        
+                        <li class="cat-list-item">
+                            <a class="site_url" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">
+                                <span class="cat-list-link">编程语言</span>
+                                <span class="cat-list-count">1</span>
+                            </a>
+                            
+                        </li>
+                    
+                                    
+                                        
+                        <li class="cat-list-item">
+                            <a class="site_url" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E5%90%8E%E7%AB%AF/">
+                                <span class="cat-list-link">后端</span>
+                                <span class="cat-list-count">3</span>
+                            </a>
+                            
+                        </li>
+                    
+                                    
+                                        
+                        <li class="cat-list-item">
+                            <a class="site_url" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">
+                                <span class="cat-list-link">操作系统</span>
+                                <span class="cat-list-count">2</span>
+                            </a>
+                            
+                        </li>
+                    
+                                    
+                                        
+                        <li class="cat-list-item">
+                            <a class="site_url" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E8%84%9A%E6%9C%AC/">
+                                <span class="cat-list-link">脚本</span>
+                                <span class="cat-list-count">1</span>
+                            </a>
+                            
+                        </li>
+                    
+                                    
+                                        
+                        <li class="cat-list-item">
+                            <a class="site_url" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%A1%AC%E4%BB%B6/">
+                                <span class="cat-list-link">硬件</span>
+                                <span class="cat-list-count">3</span>
+                            </a>
+                            
+                        </li>
+                    
+                                    
+                                        
+                        <li class="cat-list-item">
+                            <a class="site_url" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">
+                                <span class="cat-list-link">人工智能</span>
+                                <span class="cat-list-count">3</span>
+                            </a>
+                            
+                        </li>
+                    
+                                    
+                                        
+                        <li class="cat-list-item">
+                            <a class="site_url" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%BD%91%E7%BB%9C/">
+                                <span class="cat-list-link">网络</span>
+                                <span class="cat-list-count">1</span>
+                            </a>
+                            
+                        </li>
+                    
+                                    
+                                        
+                        <li class="cat-list-item">
+                            <a class="site_url" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E5%8D%9A%E5%AE%A2/">
+                                <span class="cat-list-link">博客</span>
+                                <span class="cat-list-count">2</span>
+                            </a>
+                            
+                        </li>
+                    
+                                    
+                                </ul>
+                            
+                        </li>
+                    
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                                
+                        <li class="cat-list-item">
+                            <a class="site_url" href="/categories/Alice/">
+                                <span class="cat-list-link">Alice</span>
+                                <span class="cat-list-count">4</span>
+                            </a>
+                            
+                        </li>
+                    
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                                
+                        <li class="cat-list-item">
+                            <a class="site_url" href="/categories/%E7%AC%94%E8%AE%B0/">
+                                <span class="cat-list-link">笔记</span>
+                                <span class="cat-list-count">6</span>
+                            </a>
+                            
+                        </li>
+                    
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                                
+                        <li class="cat-list-item">
+                            <a class="site_url" href="/categories/%E7%94%9F%E6%B4%BB/">
+                                <span class="cat-list-link">生活</span>
+                                <span class="cat-list-count">9</span>
+                            </a>
+                            
+                                <ul class="cat-list-child">
+                                    
+                                        
+                        <li class="cat-list-item">
+                            <a class="site_url" href="/categories/%E7%94%9F%E6%B4%BB/%E9%9A%8F%E7%AC%94/">
+                                <span class="cat-list-link">随笔</span>
+                                <span class="cat-list-count">5</span>
+                            </a>
+                            
+                        </li>
+                    
+                                    
+                                        
+                        <li class="cat-list-item">
+                            <a class="site_url" href="/categories/%E7%94%9F%E6%B4%BB/%E8%AE%A1%E5%88%92/">
+                                <span class="cat-list-link">计划</span>
+                                <span class="cat-list-count">1</span>
+                            </a>
+                            
+                        </li>
+                    
+                                    
+                                        
+                        <li class="cat-list-item">
+                            <a class="site_url" href="/categories/%E7%94%9F%E6%B4%BB/%E6%96%87%E7%AB%A0/">
+                                <span class="cat-list-link">文章</span>
+                                <span class="cat-list-count">1</span>
+                            </a>
+                            
+                        </li>
+                    
+                                    
+                                        
+                        <li class="cat-list-item">
+                            <a class="site_url" href="/categories/%E7%94%9F%E6%B4%BB/%E8%AE%B0%E5%BD%95/">
+                                <span class="cat-list-link">记录</span>
+                                <span class="cat-list-count">1</span>
+                            </a>
+                            
+                        </li>
+                    
+                                    
+                                </ul>
+                            
+                        </li>
+                    
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                                
+                        <li class="cat-list-item">
+                            <a class="site_url" href="/categories/%E6%97%85%E8%A1%8C/">
+                                <span class="cat-list-link">旅行</span>
+                                <span class="cat-list-count">11</span>
+                            </a>
+                            
+                        </li>
+                    
+                            
+                        
+                            
+                        
+                            
+                                
+                        <li class="cat-list-item">
+                            <a class="site_url" href="/categories/%E6%97%A5%E5%BF%97/">
+                                <span class="cat-list-link">日志</span>
+                                <span class="cat-list-count">48</span>
+                            </a>
+                            
+                                <ul class="cat-list-child">
+                                    
+                                        
+                        <li class="cat-list-item">
+                            <a class="site_url" href="/categories/%E6%97%A5%E5%BF%97/%E6%97%A5%E5%B8%B8/">
+                                <span class="cat-list-link">日常</span>
+                                <span class="cat-list-count">19</span>
+                            </a>
+                            
+                        </li>
+                    
+                                    
+                                        
+                        <li class="cat-list-item">
+                            <a class="site_url" href="/categories/%E6%97%A5%E5%BF%97/%E6%B5%8B%E8%AF%95/">
+                                <span class="cat-list-link">测试</span>
+                                <span class="cat-list-count">1</span>
+                            </a>
+                            
+                        </li>
+                    
+                                    
+                                </ul>
+                            
+                        </li>
+                    
+                            
+                        
+                            
+                        
+                            
+                                
+                        <li class="cat-list-item">
+                            <a class="site_url" href="/categories/%E9%87%91%E8%9E%8D/">
+                                <span class="cat-list-link">金融</span>
+                                <span class="cat-list-count">12</span>
+                            </a>
+                            
+                                <ul class="cat-list-child">
+                                    
+                                        
+                        <li class="cat-list-item">
+                            <a class="site_url" href="/categories/%E9%87%91%E8%9E%8D/%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93/">
+                                <span class="cat-list-link">量化交易</span>
+                                <span class="cat-list-count">3</span>
+                            </a>
+                            
+                        </li>
+                    
+                                    
+                                        
+                        <li class="cat-list-item">
+                            <a class="site_url" href="/categories/%E9%87%91%E8%9E%8D/%E6%8A%80%E6%9C%AF%E5%88%86%E6%9E%90/">
+                                <span class="cat-list-link">技术分析</span>
+                                <span class="cat-list-count">1</span>
+                            </a>
+                            
+                        </li>
+                    
+                                    
+                                </ul>
+                            
+                        </li>
+                    
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+            </div>
+            <div class="pjax-glitch-layer layer-pink"></div>
+            <div class="pjax-glitch-layer layer-cyan"></div>
+        </div>
+        <footer class="app-footer">
+    <div class="footer-left">© 2026 叁七 All Rights Reserved.</div>
+    <div class="footer-logo">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2zm0 4l6 14H6l6-14z"/></svg>
+    </div>
+    <div class="footer-right">POWERED BY HEXO | THEME: TECH</div>
+    
+    <input type="hidden" id="tech_site_word_count" value="160.8k">
+    <div style="display: none">
+        <span id="busuanzi_value_site_uv"></span>
+        <span id="busuanzi_value_site_pv"></span>
+    </div>
+</footer>
+
+    </main>
+</div>
+<script src="/js/jquery.pjax.js?v=" ></script>
+
+<script src="//testingcf.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="//testingcf.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+
+<script src="//testingcf.jsdelivr.net/npm/howler@2.2.3/dist/howler.min.js"></script>
+
+<script src="/js/script.js?v=" ></script>
+<div id="right-toolbar" class="right-toolbar">
+    <div class="toolbar-items">
+        <!-- 1. 回到顶部 -->
+        <div class="toolbar-item" id="tool-totop" data-title="回到顶部">
+            <svg viewBox="0 0 24 24">
+                <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
+            </svg>
+        </div>
+        
+        <!-- 2. 刷新页面 -->
+        <div class="toolbar-item" id="tool-refresh" data-title="刷新页面">
+            <svg viewBox="0 0 24 24">
+                <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+            </svg>
+        </div>
+
+        <!-- 4. 沉浸模式 -->
+        <div class="toolbar-item" id="tool-immersive" data-title="沉浸模式">
+            <svg class="icon-expand" viewBox="0 0 24 24">
+                <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+            </svg>
+            <svg class="icon-shrink" viewBox="0 0 24 24" style="display: none;">
+                <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/>
+            </svg>
+            <svg class="icon-disabled" viewBox="0 0 24 24" style="display: none;">
+                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+            </svg>
+        </div>
+
+        <!-- 5. 静音 -->
+        <div class="toolbar-item" id="tool-mute" data-title="静音">
+            <div class="mute-container">
+                <svg class="icon-music" viewBox="0 0 24 24">
+                    <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+                </svg>
+                <div class="mute-slash"></div>
+            </div>
+        </div>
+
+        <!-- 6. 切换风格 -->
+        <div class="toolbar-item" id="tool-theme" data-title="切换风格">
+            <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9s1.5.67 1.5 1.5S7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5S18.33 12 17.5 12z"/></svg>
+            
+            <div class="theme-palette">
+                
+                <div class="palette-item"
+                     data-theme-style="tech"
+                     data-theme-value="dark"
+                     data-title="机能风">
+                    <img src="/img/feature/tech.svg">
+                </div>
+                
+                <div class="palette-item"
+                     data-theme-style="cassette"
+                     data-theme-value="cassette"
+                     data-title="磁带未来主义">
+                    <img src="/img/feature/cassette.svg">
+                </div>
+                
+                <div class="palette-item"
+                     data-theme-style="fantasy"
+                     data-theme-value="fantasy"
+                     data-title="西幻风">
+                    <img src="/img/feature/fantasy.svg">
+                </div>
+                
+                <div class="palette-item"
+                     data-theme-style="manga"
+                     data-theme-value="manga"
+                     data-title="漫画风">
+                    <img src="/img/feature/manga.svg">
+                </div>
+                
+                <div class="palette-item"
+                     data-theme-style="personal"
+                     data-theme-value="personal"
+                     data-title="p5">
+                    <img src="/img/feature/personal.svg">
+                </div>
+                
+                <div class="palette-item"
+                     data-theme-style="post-punk"
+                     data-theme-value="post-punk"
+                     data-title="后朋克风">
+                    <img src="/img/feature/post-punk.svg">
+                </div>
+                
+                <div class="palette-item"
+                     data-theme-style="punk"
+                     data-theme-value="punk"
+                     data-title="朋克风">
+                    <img src="/img/feature/punk.svg">
+                </div>
+                
+                <div class="palette-item"
+                     data-theme-style="simple"
+                     data-theme-value="light"
+                     data-title="液态玻璃">
+                    <img src="/img/feature/simple.svg">
+                </div>
+                
+                <div class="palette-item"
+                     data-theme-style="soviet"
+                     data-theme-value="soviet"
+                     data-title="构成主义">
+                    <img src="/img/feature/soviet.svg">
+                </div>
+                
+                <div class="palette-item"
+                     data-theme-style="street"
+                     data-theme-value="street"
+                     data-title="街头风">
+                    <img src="/img/feature/street.svg">
+                </div>
+                
+                </div>
+        </div>
+
+        <!-- 7. 滚动到底部 -->
+        <div class="toolbar-item" id="tool-tobottom" data-title="滚动到底部">
+            <svg viewBox="0 0 24 24">
+                <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+            </svg>
+        </div>
+    </div>
+    
+    <!-- 侧边指示器/感应区 -->
+    <div class="toolbar-trigger">
+        <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+    </div>
+</div>
+
+<script src="/js/toolbar.js?v=" ></script>
+
+<script>
+    var img_resize = 'photoSwipe';
+    var sound_effect = true;
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*高亮代码块行号*/
+        
+
+        /*访问数量*/
+        
+        $.getScript("https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+
+        // PhotoSwipe
+        $('article').each(function(i){
+            $(this).find('img').each(function(){
+                if ($(this).closest('figure').hasClass('article-gallery-img')) {
+                    return;
+                }
+                var alt = this.alt;
+                $(this)
+                    .wrap('<figure class="article-gallery-img" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject"></figure>')
+                    .wrap('<a href="' + this.src + '" title="' + alt + '"></a>');
+                $(this).after('<div class="img_alt"><span>' + (alt || '') + '</span></div>');
+            });
+        });
+
+        var pswpElement = document.querySelectorAll('.pswp')[0];
+        if (pswpElement) {
+            var gallerySelector = '.article-gallery, article';
+
+            var initPhotoSwipeFromDOM = function(gallerySelector) {
+
+                // parse slide data (url, title, size ...) from DOM elements
+                // (children of gallerySelector)
+                var parseThumbnailElements = function(el) {
+                    var thumbElements = $(el).find('figure.article-gallery-img').toArray(),
+                        numNodes = thumbElements.length,
+                        items = [],
+                        figureEl,
+                        linkEl,
+                        size,
+                        imgEl,
+                        item;
+
+                    for (var i = 0; i < numNodes; i++) {
+
+                        figureEl = thumbElements[i]; // <figure> element
+
+                        // include only element nodes
+                        if (figureEl.nodeType !== 1) {
+                            continue;
+                        }
+
+                        linkEl = figureEl.children[0]; // <a> element
+                        imgEl = linkEl.children[0]; // <img>
+
+                        size = linkEl.getAttribute('data-size');
+                        size = size && size.split('x');
+
+                        // create slide object
+                        item = {
+                            src: linkEl.getAttribute('href'),
+                            w: size && parseInt(size[0], 10) || imgEl.width,
+                            h: size && parseInt(size[1], 10) || imgEl.height
+                        };
+
+                        if (figureEl.children.length > 1) {
+                            // <figcaption> content
+                            item.title = figureEl.children[1].innerHTML;
+                        }
+
+                        if (linkEl.children.length > 0) {
+                            // <img> thumbnail element, retrieving thumbnail url
+                            item.msrc = linkEl.children[0].getAttribute('src');
+                        }
+
+                        item.el = figureEl; // save link to element for getThumbBoundsFn
+                        items.push(item);
+                    }
+
+                    return items;
+                };
+
+                // find nearest parent element
+                var closest = function closest(el, fn) {
+                    return el && (fn(el) ? el : closest(el.parentNode, fn));
+                };
+
+                // triggers when user clicks on thumbnail
+                var onThumbnailsClick = function(e) {
+                    e = e || window.event;
+
+                    var eTarget = e.target || e.srcElement;
+
+                    // find root element of slide
+                    var clickedListItem = closest(eTarget, function(el) {
+                        return (el.tagName && el.tagName.toUpperCase() === 'FIGURE');
+                    });
+
+                    if (!clickedListItem) {
+                        return;
+                    }
+
+                    if (e.preventDefault) {
+                        e.preventDefault();
+                    } else {
+                        e.returnValue = false;
+                    }
+
+                    // find index of clicked item by looping through all child nodes
+                    // alternatively, you may define index via data- attribute
+                    var clickedGallery = $(clickedListItem).closest(gallerySelector)[0],
+                        childNodes = $(clickedGallery).find('figure.article-gallery-img').toArray(),
+                        numChildNodes = childNodes.length,
+                        nodeIndex = 0,
+                        index;
+
+                    for (var i = 0; i < numChildNodes; i++) {
+                        if (childNodes[i].nodeType !== 1) {
+                            continue;
+                        }
+
+                        if (childNodes[i] === clickedListItem) {
+                            index = nodeIndex;
+                            break;
+                        }
+                        nodeIndex++;
+                    }
+
+
+
+                    if (index >= 0) {
+                        // open PhotoSwipe if valid index found
+                        openPhotoSwipe(index, clickedGallery);
+                    }
+                    return false;
+                };
+
+                // parse picture index and gallery index from URL (#&pid=1&gid=2)
+                var photoswipeParseHash = function() {
+                    var hash = window.location.hash.substring(1),
+                        params = {};
+
+                    if (hash.length < 5) {
+                        return params;
+                    }
+
+                    var vars = hash.split('&');
+                    for (var i = 0; i < vars.length; i++) {
+                        if (!vars[i]) {
+                            continue;
+                        }
+                        var pair = vars[i].split('=');
+                        if (pair.length < 2) {
+                            continue;
+                        }
+                        params[pair[0]] = pair[1];
+                    }
+
+                    if (params.gid) {
+                        params.gid = parseInt(params.gid, 10);
+                    }
+
+                    return params;
+                };
+
+                var openPhotoSwipe = function(index, galleryElement, disableAnimation, fromURL) {
+                    var pswpElement = document.querySelectorAll('.pswp')[0],
+                        gallery,
+                        options,
+                        items;
+
+                    items = parseThumbnailElements(galleryElement);
+
+                    // define options (if needed)
+                    options = {
+
+                        // define gallery index (for URL)
+                        galleryUID: galleryElement.getAttribute('data-pswp-uid'),
+
+                        getThumbBoundsFn: function(index) {
+                            // See Options -> getThumbBoundsFn section of documentation for more info
+                            var thumbnail = items[index].el.getElementsByTagName('img')[0], // find thumbnail
+                                pageYScroll = window.pageYOffset || document.documentElement.scrollTop,
+                                rect = thumbnail.getBoundingClientRect();
+
+                            return {
+                                x: rect.left,
+                                y: rect.top + pageYScroll,
+                                w: rect.width
+                            };
+                        }
+                    };
+
+                    // PhotoSwipe opened from URL
+                    if (fromURL) {
+                        if (options.galleryPIDs) {
+                            // parse real index when custom PIDs are used
+                            // http://photoswipe.com/documentation/faq.html#custom-pid-in-url
+                            for (var j = 0; j < items.length; j++) {
+                                if (items[j].pid == index) {
+                                    options.index = j;
+                                    break;
+                                }
+                            }
+                        } else {
+                            // in URL indexes start from 1
+                            options.index = parseInt(index, 10) - 1;
+                        }
+                    } else {
+                        options.index = parseInt(index, 10);
+                    }
+
+                    // exit if index not found
+                    if (isNaN(options.index)) {
+                        return;
+                    }
+
+                    if (disableAnimation) {
+                        options.showAnimationDuration = 0;
+                    }
+
+                    // Pass data to PhotoSwipe and initialize it
+                    gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, options);
+
+                    gallery.listen('imageLoadComplete', function(index, item) {
+                        var linkEl = item.el.children[0];
+                        var img = item.container.children[0];
+                        if (!linkEl.getAttribute('data-size')) {
+                            linkEl.setAttribute('data-size', img.naturalWidth + 'x' + img.naturalHeight);
+                            item.w = img.naturalWidth;
+                            item.h = img.naturalHeight;
+                            gallery.invalidateCurrItems();
+                            gallery.updateSize(true);
+                        }
+                    });
+
+                    gallery.init();
+                };
+
+                // loop through all gallery elements and bind events
+                var galleryElements = document.querySelectorAll(gallerySelector);
+
+                for (var i = 0, l = galleryElements.length; i < l; i++) {
+                    galleryElements[i].setAttribute('data-pswp-uid', i + 1);
+                    galleryElements[i].onclick = onThumbnailsClick;
+                }
+
+                // Parse URL and open gallery if it contains #&pid=3&gid=1
+                var hashData = photoswipeParseHash();
+                if (hashData.pid && hashData.gid) {
+                    openPhotoSwipe(hashData.pid, galleryElements[hashData.gid - 1], true, true);
+                }
+            };
+
+            // execute above function
+            initPhotoSwipeFromDOM(gallerySelector);
+        }
+        
+        
+        /* 渲染*/
+        function HTMLDecode(text) {
+            var temp = document.createElement("div");
+            temp.innerHTML = text;
+            var output = temp.innerText || temp.textContent;
+            temp = null;
+            return output;
+        }
+        if (window.mermaid){
+            window.mermaid = null
+        }
+        $.getScript("//testingcf.jsdelivr.net/npm/mermaid@8.4.2/dist/mermaid.min.js", function () {
+            var mermaidOptions = JSON.parse(HTMLDecode("{&#34;theme&#34;:&#34;default&#34;,&#34;startOnLoad&#34;:true,&#34;flowchart&#34;:{&#34;useMaxWidth&#34;:false,&#34;htmlLabels&#34;:true}}"))
+            if (window.mermaid) {
+                mermaid.initialize(mermaidOptions)
+                mermaid.contentLoaded()
+            }
+        })
+        
+    }
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<!--自定义样式设置-->
+<style>
+
+    /*列表样式*/
+    
+    .pjax article .article-entry>ol, .pjax article .article-entry>ul, .pjax article>ol, .pjax article>ul{
+        border: #e2dede solid 1px;
+        border-radius: 10px;
+        padding: 10px 32px 10px 56px;
+    }
+    .pjax article .article-entry li>ol, .pjax article .article-entry li>ul,.pjax article li>ol, .pjax article li>ul{
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    .pjax article .article-entry>ol>li, .pjax article .article-entry>ul>li,.pjax article>ol>li, .pjax article>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    .pjax article .article-entry li>ol>li, .pjax article .article-entry li>ul>li,.pjax article li>ol>li, .pjax article li>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    
+
+    /* 背景图样式 */
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+
+    
+</style>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+         It's a separate element, as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. PhotoSwipe keeps only 3 slides in DOM to save memory. -->
+        <!-- don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <!-- Preloader demo https://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+<div class="mobile-menus-out" >
+
+</div>
+<div class="mobile-menus">
+    
+    
+    <a class="dynamic-menu "   href="/">首页</a>
+    
+    
+    <a class="dynamic-menu site_url"   href="/photo">相册</a>
+    
+    
+    <a class="dynamic-menu site_url"   href="/novel">小说</a>
+    
+    
+    <a class="dynamic-menu " target="_self"   href="/AI">AI</a>
+    
+    
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,1382 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>非破坏性扩展 Hermes Agent：为 AI 智能体添加远程 Windows 节点控制 | 叁七のblog</title>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="这是一个假装自己是命令行的AI，找出它的破绽                    Alice Shell：$~                      body {         font-family: &#39;Courier New&#39;, monospace;         background: #000 !important;         margin: 0;         padd">
+<meta property="og:type" content="website">
+<meta property="og:title" content="叁七のblog">
+<meta property="og:url" content="http://example.com/JS/index.html">
+<meta property="og:site_name" content="叁七のblog">
+<meta property="og:description" content="这是一个假装自己是命令行的AI，找出它的破绽                    Alice Shell：$~                      body {         font-family: &#39;Courier New&#39;, monospace;         background: #000 !important;         margin: 0;         padd">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-11-30T11:08:47.415Z">
+<meta property="article:modified_time" content="2025-11-30T11:08:47.415Z">
+<meta property="article:author" content="叁七">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="icon" href="https://testingcf.jsdelivr.net/gh/sanqi-normal/sanqi-normal.github.io/img/top.png">
+
+<link href="/css/style.css?v=" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-light.css?v=" rel="stylesheet">
+
+<link href="//testingcf.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<link href="//testingcf.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css" rel="stylesheet">
+<link href="//testingcf.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css" rel="stylesheet">
+
+<script src="//testingcf.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script>(function(){var t=localStorage.getItem("theme")||"tech";var d="dark";if(t==="cassette")d="cassette";else if(t==="fantasy")d="fantasy";else if(t==="manga")d="manga";else if(t==="personal")d="personal";else if(t==="post-punk")d="post-punk";else if(t==="punk")d="punk";else if(t==="simple")d="light";else if(t==="soviet")d="soviet";else if(t==="street")d="street";document.documentElement.setAttribute("data-theme",d)})();</script>
+<script src="/js/titleTip.js?v=" ></script>
+
+<script src="//testingcf.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof hljs !== 'undefined') {
+            if (hljs.highlightAll) {
+                hljs.highlightAll();
+            } else if (hljs.initHighlighting) {
+                hljs.initHighlighting();
+            }
+        }
+    });
+</script>
+
+<script src="//testingcf.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+    <!--[if lt IE 9]>
+
+
+  
+  <link rel="preconnect" href="https://fonts.loli.net" crossorigin>
+  <link href="https://fonts.loli.net/css2?family=Noto+Sans+SC:wght@400;700&family=Anton&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="叁七のblog" type="application/atom+xml">
+</head>
+
+
+
+
+
+<body>
+<script>
+  window.THEME_CONFIG = {
+    blog_path: "/",
+    highlight_on: true,
+    highlight_copy: true,
+    i18n_search_empty: "search.empty"
+  };
+</script>
+
+  <!-- 磁带播放器样式统一处理 -->
+
+<div class="layout-container">
+    <aside class="sidebar">
+    <div class="sidebar-close" id="sidebar-close">
+        <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+    </div>
+    <a class="brand site_url" href="/">
+        <svg class="brand-icon" viewBox="0 0 24 24">
+            <g fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" />
+                <path d="M7 7h10" />
+                <path d="M7 12h10" />
+                <path d="M7 16h6" />
+            </g>
+        </svg>
+        <div class="brand-text">
+            <h1>叁七のblog</h1>
+            <span>- LOGOS -</span>
+        </div>
+    </a>
+
+    <div class="nav-label">NAVIGATION</div>
+    <ul class="nav-menu">
+        
+        <li class="nav-item ">
+            <a class="site_url" href="/">
+                <img class="nav-icon" src="/img/navigation/%E9%A6%96%E9%A1%B5.svg" alt="首页">
+                <div class="nav-item-text">
+                    <span class="zh">首页</span>
+                    <span class="en">HOME</span>
+                </div>
+            </a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="site_url" href="/photo">
+                <img class="nav-icon" src="/img/navigation/%E7%9B%B8%E5%86%8C.svg" alt="相册">
+                <div class="nav-item-text">
+                    <span class="zh">相册</span>
+                    <span class="en">PHOTO</span>
+                </div>
+            </a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="site_url" href="/novel">
+                <img class="nav-icon" src="/img/navigation/%E5%B0%8F%E8%AF%B4.svg" alt="小说">
+                <div class="nav-item-text">
+                    <span class="zh">小说</span>
+                    <span class="en">NOVEL</span>
+                </div>
+            </a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="site_url" href="/AI">
+                <img class="nav-icon" src="/img/navigation/AI.svg" alt="AI">
+                <div class="nav-item-text">
+                    <span class="zh">AI</span>
+                    <span class="en">AI</span>
+                </div>
+            </a>
+        </li>
+        
+    </ul>
+
+    <div class="nav-label">INFO</div>
+    <div class="sidebar-bottom">
+        <div class="user-info">
+            <div class="avatar-container">
+                <div class="avatar" style="background-image: url('https://testingcf.jsdelivr.net/gh/sanqi-normal/sanqi-normal.github.io/img/avatar.jpg')"></div>
+                <div class="avatar glitch-layer layer-pink" style="background-image: url('https://testingcf.jsdelivr.net/gh/sanqi-normal/sanqi-normal.github.io/img/avatar.jpg')"></div>
+                <div class="avatar glitch-layer layer-cyan" style="background-image: url('https://testingcf.jsdelivr.net/gh/sanqi-normal/sanqi-normal.github.io/img/avatar.jpg')"></div>
+            </div>
+            <div>
+                <div class="user-name">叁七</div>
+                <div class="user-id">#2026</div>
+            </div>
+        </div>
+        
+        <div class="user-desc">计算机专业本科生，<br>每天不知道在忙什么。</div>
+
+        <div class="social-label">你也能在以下地方遇到我</div>
+        <div class="social-links">
+            
+                
+                    <a class="social-btn" title="github" href="https://github.com/Sanqi-normal" target="_blank">
+                        <img src="/img/social/github.svg" alt="github">
+                    </a>
+                
+                    <a class="social-btn" title="bilibili" href="https://space.bilibili.com/2140541511" target="_blank">
+                        <img src="/img/social/bilibili.svg" alt="bilibili">
+                    </a>
+                
+            
+        </div>
+    </div>
+</aside>
+
+    <header class="top-bar">
+    <div class="menu-toggle" id="menu-toggle">
+        <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+    </div>
+    <div class="search-box fade-up-wait">
+        <div class="search-filter-container">
+            <svg class="search-filter-icon" viewBox="0 0 24 24"><path d="M3 18h6v-2H3v2zM3 6v2h18V6H3zm0 7h12v-2H3v2z"/></svg>
+            <div class="search-filter-panel">
+                <label><input type="checkbox" class="filter-chk" data-type="title" checked> 标题</label>
+                <label><input type="checkbox" class="filter-chk" data-type="content" checked> 内容</label>
+                <label><input type="checkbox" class="filter-chk" data-type="categories" checked> 分类</label>
+                <label><input type="checkbox" class="filter-chk" data-type="tags" checked> 标签</label>
+            </div>
+        </div>
+        <input type="text" id="local-search-input" placeholder="搜索内容" autocomplete="off">
+        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+    </div>
+
+    
+    <div id="local-search-result" style="display: none; position: absolute; top: 110px; right: 40px; width: 360px; max-width: 90vw; background: var(--bg-panel); box-shadow: 0 5px 15px rgba(0,0,0,0.5); z-index: 100; max-height: 400px; overflow-y: auto; padding: 10px; border: 1px solid var(--border-dim); border-radius: 4px;">
+    </div>
+    
+
+    <div class="top-links fade-up-wait">
+        
+            <a class="site_url" href="/categories/%E6%97%A5%E5%BF%97/">日志</a>
+        
+        <a class="site_url" href="/about/">关于</a>
+    </div>
+    <div class="sys-status fade-up-wait" id="sys-status">
+        <svg viewBox="0 0 100 30" id="visualizer-svg" style="cursor: pointer;" data-title="播放音乐">
+            <polyline class="visualizer-line-bg" points="0,15 20,15 25,5 30,25 35,15 100,15" stroke-width="2"></polyline>
+            <polyline id="visualizer-line" points="0,15 20,15 25,5 30,25 35,15 100,15" stroke-width="2"></polyline>
+        </svg>
+        <div class="music-controls" id="music-controls">
+            <svg class="music-btn" id="prev-btn" viewBox="0 0 6 6" width="12" height="12" data-title="上一首">
+                <polygon points="6,0 0,3 6,6" fill="none" stroke-width="0.8"/>
+            </svg>
+            <svg class="music-btn" id="loop-btn" viewBox="0 0 12 12" width="14" height="14" data-title="单曲循环">
+                <circle id="loop-circle" cx="6" cy="6" r="4.5" fill="none" stroke-width="1"/>
+            </svg>
+            <svg class="music-btn" id="next-btn" viewBox="0 0 6 6" width="12" height="12" data-title="下一首">
+                <polygon points="0,0 6,3 0,6" fill="none" stroke-width="0.8"/>
+            </svg>
+        </div>
+        <div class="sys-text">
+            <span><span class="big">26</span><span class="sys-month">/07</span><span class="sys-year">/2026</span></span>
+            <span>173 BLOG</span>
+            
+            <span id="busuanzi_container_site_uv" style="display:none"><span id="busuanzi_value_site_uv"></span> VISITORS</span>
+            
+        </div>
+    </div>
+</header>
+
+<script>
+(function() {
+    var musicList = ["/music/1.mp3","/music/chill-synthwave-background-music-for-youtube-shorts-and-videos-345551.mp3"];
+    if (!musicList || musicList.length === 0) {
+        musicList = ['/music/example.mp3'];
+    }
+    var currentTrack = 0;
+    var audioCtx, analyser, dataArray, source, audio;
+    var isPlaying = false;
+    var animationId;
+
+    var container = document.getElementById('sys-status');
+    var controls = document.getElementById('music-controls');
+    var svg = document.getElementById('visualizer-svg');
+    var polyline = document.getElementById('visualizer-line');
+    var defaultPoints = "0,15 20,15 25,5 30,25 35,15 100,15";
+
+    function initAudio() {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        analyser = audioCtx.createAnalyser();
+        // 使用参考代码中推荐的高精度 FFT 窗口
+        analyser.fftSize = 4096; 
+        dataArray = new Uint8Array(analyser.frequencyBinCount);
+        audio = new Audio();
+        window.siteAudio = audio; // 暴露给全局以便工具栏控制
+        audio.crossOrigin = "anonymous";
+        audio.src = musicList[currentTrack];
+        audio.loop = isSingleLoop;
+        audio.onended = nextTrack;
+        source = audioCtx.createMediaElementSource(audio);
+        source.connect(analyser);
+        analyser.connect(audioCtx.destination);
+    }
+
+    function updatePoints() {
+        if (!isPlaying) return;
+        analyser.getByteFrequencyData(dataArray);
+        
+        var points = "";
+        // 减少点数以避免过于密集
+        var pointsCount = 40; 
+        var sliceWidth = 100 / (pointsCount - 1);
+        
+        for (var i = 0; i < pointsCount; i++) {
+            var t = i / (pointsCount - 1);
+            // 调整映射，使其对频率更敏感且分布更均匀
+            var logIndex = Math.floor(Math.pow(t, 1.4) * (dataArray.length * 0.6));
+            var value = dataArray[logIndex] || 0;
+
+            if (value > 5) {
+                // 增加权重补偿，提升纵向波动感
+                var compensation = 1.2 + t * 0.8; 
+                value = value * compensation;
+            }
+            value = Math.min(255, value);
+
+            var percent = value / 255;
+            // 增加振幅因子 (30 * 0.8)
+            var amplitude = (30 * 0.8) * percent; 
+            
+            var x = i * sliceWidth;
+            var y = 15 - (amplitude / 2); // 减小基准高度，让波动更明显
+
+            points += x + "," + y + " ";
+        }
+        
+        polyline.setAttribute('points', points);
+        animationId = requestAnimationFrame(updatePoints);
+    }
+
+    function togglePlay() {
+        if (!audioCtx) initAudio();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+
+        if (isPlaying) {
+            audio.pause();
+            isPlaying = false;
+            container.classList.remove('playing');
+            controls.classList.remove('active');
+            cancelAnimationFrame(animationId);
+            polyline.setAttribute('points', defaultPoints);
+            updateTooltip(svg, '播放音乐');
+        } else {
+            audio.play().catch(e => console.error("Playback failed", e));
+            isPlaying = true;
+            container.classList.add('playing');
+            controls.classList.add('active');
+            updatePoints();
+            updateTooltip(svg, '暂停播放');
+        }
+    }
+
+    var isSingleLoop = false;
+    var loopBtn = document.getElementById('loop-btn');
+    var loopCircle = document.getElementById('loop-circle');
+
+    loopBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        isSingleLoop = !isSingleLoop;
+        if (isSingleLoop) {
+            if (audio) audio.loop = true;
+            loopCircle.setAttribute('fill', 'currentColor');
+            updateTooltip(this, '列表循环');
+        } else {
+            if (audio) audio.loop = false;
+            loopCircle.setAttribute('fill', 'none');
+            updateTooltip(this, '单曲循环');
+        }
+    });
+
+    function updateTooltip(el, newTitle) {
+        el.setAttribute('data-title', newTitle);
+        if (typeof jQuery.fn.quberTip === 'function') {
+            $(el).off('mouseenter mouseleave mousemove');
+            $(el).quberTip();
+        }
+    }
+
+    // 初始化提示框
+    if (typeof jQuery.fn.quberTip === 'function') {
+        $('.music-btn, #visualizer-svg').quberTip();
+    }
+
+    function nextTrack() {
+        currentTrack = (currentTrack + 1) % musicList.length;
+        if (audio) {
+            audio.src = musicList[currentTrack];
+            if (isPlaying) audio.play();
+        }
+    }
+
+    function prevTrack() {
+        currentTrack = (currentTrack - 1 + musicList.length) % musicList.length;
+        if (audio) {
+            audio.src = musicList[currentTrack];
+            if (isPlaying) audio.play();
+        }
+    }
+
+    svg.addEventListener('click', function(e) {
+        e.stopPropagation();
+        togglePlay();
+    });
+
+    document.getElementById('prev-btn').addEventListener('click', function(e) {
+        e.stopPropagation();
+        prevTrack();
+    });
+
+    document.getElementById('next-btn').addEventListener('click', function(e) {
+        e.stopPropagation();
+        nextTrack();
+    });
+})();
+</script>
+
+
+<script>
+var searchDebounceTimer = null;
+document.addEventListener('DOMContentLoaded', function() {
+    var searchInput = document.getElementById('local-search-input');
+    var searchResult = document.getElementById('local-search-result');
+    if (!searchInput || !searchResult) return;
+
+    searchInput.addEventListener('input', function() {
+        clearTimeout(searchDebounceTimer);
+        var val = this.value.trim();
+        if (val.length === 0) {
+            searchResult.style.display = 'none';
+            searchResult.innerHTML = '';
+            return;
+        }
+        searchDebounceTimer = setTimeout(function() {
+            if (typeof searchAll === 'function') {
+                searchAll(val);
+                searchResult.style.display = 'block';
+            }
+        }, 300);
+    });
+
+    // Trigger search on filter change
+    document.querySelectorAll('.filter-chk').forEach(function(chk) {
+        chk.addEventListener('change', function() {
+            var val = searchInput.value.trim();
+            if (val.length > 0 && typeof searchAll === 'function') {
+                searchAll(val);
+            }
+        });
+    });
+
+    // Handle search box expansion and filter panel interaction
+    var searchBox = document.querySelector('.search-box');
+    var filterContainer = document.querySelector('.search-filter-container');
+    var filterPanel = document.querySelector('.search-filter-panel');
+
+    filterContainer.addEventListener('mouseenter', function() {
+        searchBox.classList.add('expanded');
+    });
+
+    searchBox.addEventListener('mouseleave', function(e) {
+        // Only remove expanded class if we're not moving to the filter panel
+        if (!filterPanel.contains(e.relatedTarget)) {
+            if (!searchInput.matches(':focus')) {
+                searchBox.classList.remove('expanded');
+            }
+        }
+    });
+
+    filterPanel.addEventListener('mouseleave', function(e) {
+        if (!searchBox.contains(e.relatedTarget)) {
+            if (!searchInput.matches(':focus')) {
+                searchBox.classList.remove('expanded');
+            }
+        }
+    });
+
+    searchInput.addEventListener('focus', function() {
+        searchBox.classList.add('expanded');
+    });
+
+    searchInput.addEventListener('blur', function() {
+        // Delay removal to allow for clicks on filters
+        setTimeout(function() {
+            if (!filterPanel.matches(':hover') && !filterContainer.matches(':hover')) {
+                searchBox.classList.remove('expanded');
+            }
+        }, 200);
+    });
+
+    searchInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            this.value = '';
+            searchResult.style.display = 'none';
+            searchResult.innerHTML = '';
+            this.blur();
+        }
+    });
+
+    // Hide results when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!searchInput.contains(e.target) && !searchResult.contains(e.target)) {
+            searchResult.style.display = 'none';
+        }
+    });
+});
+</script>
+
+
+    <main class="main-wrapper">
+        <div id="pjax-container" class="pjax">
+            
+
+<div id="view-article" class="view-section active">
+    <div class="breadcrumb fade-up-wait">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2z"/></svg>
+        <a class="site_url" href="/">/ BLOG</a>
+        <a class="site_url" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/">/ 计算机</a>
+        <span>/ 非破坏性扩展 Hermes Agent：</span>
+    </div>
+
+    <div class="article-layout">
+        <article id="post-非破坏性扩展-Hermes-Agent-为AI智能体添加远程Windows节点控制" class="article-main fade-up-wait" itemscope itemprop="blogPost">
+            <header class="art-header">
+                <h1 class="art-title" itemprop="name">非破坏性扩展 Hermes Agent：为 AI 智能体添加远程 Windows 节点控制</h1>
+                <div class="art-meta">
+                    <div>
+                        <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg> 
+                        叁七
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/><path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg> 
+                        <time datetime="2026-07-24T14:40:00.000Z" itemprop="datePublished">2026-07-24</time>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg> 
+                        
+                            
+                                <a class="site_url art-meta-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/">计算机</a>, 
+                            
+                                <a class="site_url art-meta-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%BC%96%E7%A8%8B/">编程</a>
+                            
+                        
+                    </div>
+                    
+                    <div>
+                        <svg viewBox="0 0 24 24"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg>
+                        
+                            <a class="site_url art-meta-link" href="/tags/Hermes-Agent/">Hermes Agent</a>, 
+                        
+                            <a class="site_url art-meta-link" href="/tags/SSH/">SSH</a>, 
+                        
+                            <a class="site_url art-meta-link" href="/tags/Windows/">Windows</a>, 
+                        
+                            <a class="site_url art-meta-link" href="/tags/%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/">架构设计</a>, 
+                        
+                            <a class="site_url art-meta-link" href="/tags/AI%E7%94%9F%E6%88%90/">AI生成</a>
+                        
+                    </div>
+                    
+                                    </div>
+            </header>
+            
+            <div class="art-content article-entry" itemprop="articleBody">
+                <blockquote>
+<p>本文Alice生成，内容仅供技术参考，请读者注意鉴别。</p>
+</blockquote>
+<h2 id="缘起"><a href="#缘起" class="headerlink" title="缘起"></a>缘起</h2><p>我的工作环境有一个闲置台式机和一台日常携带的笔记本电脑。</p>
+<p>我希望台式机上运行能够像操作本地文件系统一样读写笔记本上的文件、执行笔记本上的命令，用来实现学习打卡监督、代码同步等自动化任务。</p>
+<p>但是最直接的方案——修改核心框架源码、造一个新的 MCP 服务器、或者装第三方远程节点软件——要么侵入性太强，要么不够可靠。</p>
+<blockquote>
+<p><strong>核心原则：不重复造轮子，也不破坏原有框架。</strong></p>
+</blockquote>
+<h2 id="为什么不用现有方案？"><a href="#为什么不用现有方案？" class="headerlink" title="为什么不用现有方案？"></a>为什么不用现有方案？</h2><p>社区项目属于个人实验项目，成熟度不够。</p>
+<p><strong>Hermes Desktop 远程网关</strong>：官方 Hermes Desktop 支持通过 <code>hermes serve --host 0.0.0.0 --port 9119</code> 暴露远程连接入口。但实测发现 Electron 的 <code>file://</code> Origin 会被 WebSocket 安全拦截，在跨机绑定场景下无法通过认证，属于已知但至今未彻底解决的兼容性问题（参见 Hermes 社区 Issue #38412, #37399）。</p>
+<p><strong><code>terminal.backend: ssh</code> 全局后端</strong>：官方支持将终端执行切换到远程 SSH。但底层 <code>SSHEnvironment</code> 的 ControlMaster 基于 Unix Domain Socket，宿主机是 Windows 时直接崩溃（<code>mux_client_request_session: Connection reset</code>）。且这是一刀切的全局切换，无法实现”同时控制两台机器”。</p>
+<p><strong>SSHFS-Win 挂载</strong>：可以通过 WinFSP + SSHFS-Win 把远程目录挂载为本地 Z 盘。但这需要安装第三方驱动，且在 Tailscale 跨子网场景下 SMB 直连受限。</p>
+<p>最终决定：<strong>在 Hermes Agent 原有的抽象层级中找到单一切入关键点，以非破坏性的方式扩展出远程节点能力。</strong></p>
+<h2 id="技术架构"><a href="#技术架构" class="headerlink" title="技术架构"></a>技术架构</h2><p>Hermes Agent 的所有执行后端（local、docker、modal、ssh 等）都继承自 <code>BaseEnvironment</code> 基类。这个基类的核心方法是 <code>_run_bash()</code>——<strong>所有</strong>终端命令和脚本最终都通过这个方法执行。</p>
+<p>这是整个框架的<strong>单一抽象点（Single Abstraction Point）</strong>。</p>
+<pre><code class="python"># 伪代码示意：所有执行环境都继承自 BaseEnvironment
+class BaseEnvironment(ABC):
+    def execute(self, command, ...):
+        # ... 超时控制、输出截断、CWD 跟踪 ...
+        proc = self._run_bash(wrapped_command, ...)  # ← 唯一的底层出口
+        return self._wait_for_process(proc)
+
+    @abstractmethod
+    def _run_bash(self, command, login, timeout, stdin_data):
+        &quot;&quot;&quot;子类覆盖此方法以选择执行后端&quot;&quot;&quot;
+        pass
+</code></pre>
+<p>只要覆盖 <code>_run_bash</code>，就可以在不修改任何上层工具代码的情况下，把<strong>所有</strong>命令透明地转发到任意后端。</p>
+<h3 id="RemoteNodeEnvironment：20-行代码覆盖所有工具"><a href="#RemoteNodeEnvironment：20-行代码覆盖所有工具" class="headerlink" title="RemoteNodeEnvironment：20 行代码覆盖所有工具"></a>RemoteNodeEnvironment：20 行代码覆盖所有工具</h3><p>新建 <code>tools/environments/remote_node.py</code>，继承 <code>BaseEnvironment</code> 并重写两个方法：</p>
+<pre><code class="python">class RemoteNodeEnvironment(BaseEnvironment):
+    def __init__(self, host, user, key_path, ...):
+        super().__init__(...)
+        self.host = host
+        self.user = user
+        self.key_path = key_path
+
+    def _wrap_command(self, command, cwd):
+        # 跳过 POSIX-only 的 bash 快照逻辑
+        return command
+
+    def _run_bash(self, command, login=False, timeout=None, stdin_data=None):
+        ssh_cmd = [&quot;ssh&quot;, &quot;-o&quot;, &quot;BatchMode=yes&quot;, ...,
+                   f&quot;&#123;self.user&#125;@&#123;self.host&#125;&quot;, command]
+        return subprocess.Popen(ssh_cmd, ...)
+</code></pre>
+<p>这个扩展的特点是：</p>
+<ul>
+<li><strong>零侵入</strong>：不修改框架任何原有文件</li>
+<li><strong>自动继承</strong>：父类的超时控制、输出截断、进程管理等全部复用</li>
+<li><strong>跨平台</strong>：不假定远端是 Linux（不发送 <code>/bin/bash</code>、不依赖 <code>ControlMaster</code>）</li>
+</ul>
+<p>然后在 <code>tools/terminal_tool.py</code> 的 <code>_create_environment</code> 工厂函数中注册新后端类型：</p>
+<pre><code class="python">elif env_type in (&quot;laptop&quot;, &quot;remote_node&quot;):
+    from tools.environments.remote_node import RemoteNodeEnvironment
+    return RemoteNodeEnvironment(host=&quot;...&quot;, user=&quot;...&quot;, key_path=&quot;...&quot;)
+</code></pre>
+<p>完成注册后，设置环境变量 <code>TERMINAL_ENV=laptop</code> 即可全局切换，或者在需要时由智能体主动调起笔记本后端。</p>
+<h3 id="laptop-路径前缀：解决文件路由歧义"><a href="#laptop-路径前缀：解决文件路由歧义" class="headerlink" title="laptop: 路径前缀：解决文件路由歧义"></a>laptop: 路径前缀：解决文件路由歧义</h3><p>终端命令解决了，但文件操作（<code>read_file</code>、<code>write_file</code>、<code>patch</code>、<code>search_files</code>）还面临一个核心问题：<strong>两台 Windows 机器都包含 C:、D:、E: 盘符，路径完全无法区分。</strong></p>
+<p>解决方案是用 <code>laptop:</code> 作为路径前缀做显式路由：</p>
+<pre><code>read_file(path=&quot;laptop:C:\Users\...\notes.md&quot;)    # → 路由到笔记本
+read_file(path=&quot;C:\Users\Administrator\...\...&quot;)   # → 路由到本地主机
+</code></pre>
+<p>在 <code>file_tools.py</code> 中添加了三个 PowerShel l 为核心的 SSH 代理函数，因为 <code>ShellFileOperations</code> 底层依赖 POSIX 命令（<code>wc -c</code>、<code>cat</code>、<code>mktemp</code>、<code>grep</code>），而这些命令在 Windows 目标上不存在：</p>
+<pre><code class="python">def _laptop_read(path, offset, limit):
+    # 使用 PowerShell Get-Content 通过 SSH 读取远程文件
+    ps_cmd = f&quot;powershell -Command \&quot;Get-Content -Path &#39;&#123;real_path&#125;&#39; | ...\&quot;&quot;
+    rc = subprocess.run([&quot;ssh&quot;, ..., ps_cmd], capture_output=True)
+    ...
+
+def _laptop_write(path, content):
+    # 使用 PowerShell Set-Content 写入
+    # 支持 base64 回退编码以处理特殊字符
+    ...
+
+def _laptop_delete(path):
+    # 使用 PowerShell Remove-Item 删除
+    ...
+</code></pre>
+<h2 id="底层链路测试"><a href="#底层链路测试" class="headerlink" title="底层链路测试"></a>底层链路测试</h2><p>为了让配置清晰可验证，每步测试都记录了完整的命令行、Exit Code 和回显。</p>
+<p><strong>终端命令透传测试</strong>：</p>
+<pre><code class="bash">ssh -o BatchMode=yes &lt;user&gt;@&lt;host&gt; &quot;hostname &amp;&amp; whoami&quot;
+# Exit Code: 0
+# Output:
+# &lt;hostname&gt;
+# &lt;hostname&gt;\&lt;username&gt;
+</code></pre>
+<p><strong>文件写入与读取回路测试</strong>：</p>
+<pre><code class="python"># 写入 → 检查 → 读取 → 对比
+write_file_tool(path=&quot;laptop:C:\Users\...\evidence_test.txt&quot;, content=&quot;...&quot;)
+# 返回: &#123;&quot;bytes_written&quot;: 30, &quot;dirs_created&quot;: true&#125;
+
+# 原生 SSH 验证文件存在
+powershell -Command &quot;Test-Path C:\Users\...\evidence_test.txt&quot;
+# 返回: True
+
+read_file_tool(path=&quot;laptop:C:\Users\...\evidence_test.txt&quot;)
+# 返回: &#123;&quot;content&quot;: &quot;1|...&quot;, &quot;total_lines&quot;: 1&#125;
+
+# 无 laptop: 前缀时正确隔离
+read_file_tool(path=&quot;C:\Users\...\evidence_test.txt&quot;)
+# 返回: &#123;&quot;error&quot;: &quot;File not found: ...&quot;&#125;
+</code></pre>
+<h2 id="开发心得"><a href="#开发心得" class="headerlink" title="开发心得"></a>开发心得</h2><h3 id="1-找到正确抽象层比写大量代码更重要"><a href="#1-找到正确抽象层比写大量代码更重要" class="headerlink" title="1. 找到正确抽象层比写大量代码更重要"></a>1. 找到正确抽象层比写大量代码更重要</h3><p>这次任务的核心工作不是写 MCP 服务器，不是改造文件工具，而是**找到 Hermes Agent 框架最底层的单一抽象点 <code>_run_bash</code>**。只要在这个点接入，终端执行自动覆盖；再加上文件工具的 <code>laptop:</code> 前缀路由，文件读写也全量覆盖。总代码量不到 200 行。</p>
+<h3 id="2-Windows-上的-POSIX-兼容性是最大的陷阱"><a href="#2-Windows-上的-POSIX-兼容性是最大的陷阱" class="headerlink" title="2. Windows 上的 POSIX 兼容性是最大的陷阱"></a>2. Windows 上的 POSIX 兼容性是最大的陷阱</h3><p>Hermes Agent 的 <code>ShellFileOperations</code> 假设目标系统是 POSIX 兼容的（使用 <code>wc -c</code>、<code>head -c</code>、<code>mktemp</code>、<code>cat</code>、<code>grep</code> 等命令）。当远程目标是 Windows 时，这些命令全部不存在，导致：</p>
+<ul>
+<li><code>SSHEnvironment</code> 的 ControlMaster 在 Windows 宿主机上崩溃</li>
+<li><code>ShellFileOperations.read_file()</code> 的 <code>wc -c</code> 探针失败，返回 “file not found”</li>
+<li><code>_atomic_write()</code> 的 bash 脚本（mktemp + cat + mv）在 Windows cmd.exe 下静默失败</li>
+</ul>
+<p>最终需要在文件层直接走 PowerShell cmdlet，不经过 <code>ShellFileOperations</code>。</p>
+<h3 id="3-证据优先的验证协议"><a href="#3-证据优先的验证协议" class="headerlink" title="3. 证据优先的验证协议"></a>3. 证据优先的验证协议</h3><p>这次开发过程中，我被批评过”开口就说成功但实际上没跑通”。这引出了一个重要的质量规范：<strong>涉及远程操作或架构修改时，必须展示完整的执行链——输入命令、Exit Code、STDERR&#x2F;STDOUT，以及预期与实际的对比。</strong> 只有通过实测回环验证的才能确认可用。</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>最终完成的结构如下：</p>
+<pre><code>[闲置主机 - Hermes Agent 所在端]
+    │
+    ├── _run_bash() 抽象点 ← RemoteNodeEnvironment 在此接入
+    │       │
+    │       └── ssh -o BatchMode=yes ... &lt;command&gt;
+    │
+    ├── file_tools.py 中 laptop: 前缀路由
+    │       │
+    │       └── PowerShell Cmdlet 直连笔记本
+    │
+    └── _create_environment(&quot;laptop&quot;) 后端注册
+            │
+            └── terminal 工具自动路由到笔记本
+</code></pre>
+<p>这个方案不需要修改任何 Hermes 核心文件，不需要安装第三方服务，不需要造冗余的 MCP 服务器——完全通过框架原有的抽象层扩展实现。支持两台机器同时可用、路径隔离不混淆。</p>
+<p>对于同样需要跨 Windows 机器控制 Hermes Agent 的用户，可以借鉴这个思路：<strong>找到框架的单一抽象点，用非破坏性扩展替代重复造轮子。</strong></p>
+
+            </div>
+
+            
+
+
+        </article>
+
+        <aside class="art-sidebar">
+            <div class="fade-up-wait">
+                <div class="art-widget-title">大纲 <span>CONTENTS</span></div>
+                <div class="toc-list" id="art-toc">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%98%E8%B5%B7"><span class="toc-text">缘起</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E7%94%A8%E7%8E%B0%E6%9C%89%E6%96%B9%E6%A1%88%EF%BC%9F"><span class="toc-text">为什么不用现有方案？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84"><span class="toc-text">技术架构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RemoteNodeEnvironment%EF%BC%9A20-%E8%A1%8C%E4%BB%A3%E7%A0%81%E8%A6%86%E7%9B%96%E6%89%80%E6%9C%89%E5%B7%A5%E5%85%B7"><span class="toc-text">RemoteNodeEnvironment：20 行代码覆盖所有工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#laptop-%E8%B7%AF%E5%BE%84%E5%89%8D%E7%BC%80%EF%BC%9A%E8%A7%A3%E5%86%B3%E6%96%87%E4%BB%B6%E8%B7%AF%E7%94%B1%E6%AD%A7%E4%B9%89"><span class="toc-text">laptop: 路径前缀：解决文件路由歧义</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%95%E5%B1%82%E9%93%BE%E8%B7%AF%E6%B5%8B%E8%AF%95"><span class="toc-text">底层链路测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E5%BF%83%E5%BE%97"><span class="toc-text">开发心得</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%89%BE%E5%88%B0%E6%AD%A3%E7%A1%AE%E6%8A%BD%E8%B1%A1%E5%B1%82%E6%AF%94%E5%86%99%E5%A4%A7%E9%87%8F%E4%BB%A3%E7%A0%81%E6%9B%B4%E9%87%8D%E8%A6%81"><span class="toc-text">1. 找到正确抽象层比写大量代码更重要</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Windows-%E4%B8%8A%E7%9A%84-POSIX-%E5%85%BC%E5%AE%B9%E6%80%A7%E6%98%AF%E6%9C%80%E5%A4%A7%E7%9A%84%E9%99%B7%E9%98%B1"><span class="toc-text">2. Windows 上的 POSIX 兼容性是最大的陷阱</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%AF%81%E6%8D%AE%E4%BC%98%E5%85%88%E7%9A%84%E9%AA%8C%E8%AF%81%E5%8D%8F%E8%AE%AE"><span class="toc-text">3. 证据优先的验证协议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E8%AF%AD"><span class="toc-text">结语</span></a></li></ol>
+                </div>
+            </div>
+
+            <div class="fade-up-wait">
+                <div class="art-widget-title">相关文章 <span>RELATED POSTS</span></div>
+                <div class="related-list" id="art-related">
+                    
+                        <a class="rel-card site_url" href="/2026/07/23/Hermes-Agent-Anti-Gravity-Integration/">
+                            <img src="/img/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA.jpg" class="rel-img" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%23444%22><path d=%22M12 2L2 22h20L12 2z%22/></svg>'">
+                            <div class="rel-info">
+                                <div class="rel-title">Hermes Agent 接轨 Anti-Gravity 代理服务与双重保活机制</div>
+                                <div class="rel-meta">
+                                    <span>07-23</span>
+                                    
+                                        <span class="rel-tags">
+                                            
+                                                <span class="rel-tag-item">#Hermes</span>
+                                            
+                                                <span class="rel-tag-item">#AI Agent</span>
+                                            
+                                                <span class="rel-tag-item">#Anti-Gravity</span>
+                                            
+                                                <span class="rel-tag-item">#System Monitoring</span>
+                                            
+                                        </span>
+                                    
+                                </div>
+                            </div>
+                        </a>
+                    
+                        <a class="rel-card site_url" href="/2026/07/23/KnowYourDisk%EF%BC%9A%E4%B8%BAAI%E6%89%93%E9%80%A0%E7%9A%84%E7%A3%81%E7%9B%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7/">
+                            <img src="/img/2026/knowyourdisk-example.png" class="rel-img" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%23444%22><path d=%22M12 2L2 22h20L12 2z%22/></svg>'">
+                            <div class="rel-info">
+                                <div class="rel-title">KnowYourDisk：为AI打造的磁盘空间分析工具</div>
+                                <div class="rel-meta">
+                                    <span>07-23</span>
+                                    
+                                        <span class="rel-tags">
+                                            
+                                                <span class="rel-tag-item">#Rust</span>
+                                            
+                                                <span class="rel-tag-item">#Tauri</span>
+                                            
+                                                <span class="rel-tag-item">#MCP</span>
+                                            
+                                                <span class="rel-tag-item">#工具开发</span>
+                                            
+                                        </span>
+                                    
+                                </div>
+                            </div>
+                        </a>
+                    
+                        <a class="rel-card site_url" href="/2026/05/23/%E5%8D%9A%E5%AE%A2%E5%89%8D%E7%AB%AF%E5%B8%83%E5%B1%80%E6%A0%B7%E5%BC%8F%E9%87%8D%E6%9E%84/">
+                            <img src="/img/93aacf16b3490ce0abed66ac4d9b3e9a.png" class="rel-img" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%23444%22><path d=%22M12 2L2 22h20L12 2z%22/></svg>'">
+                            <div class="rel-info">
+                                <div class="rel-title">博客前端布局样式重构</div>
+                                <div class="rel-meta">
+                                    <span>05-23</span>
+                                    
+                                        <span class="rel-tags">
+                                            
+                                                <span class="rel-tag-item">#前端</span>
+                                            
+                                                <span class="rel-tag-item">#博客</span>
+                                            
+                                        </span>
+                                    
+                                </div>
+                            </div>
+                        </a>
+                    
+                        <a class="rel-card site_url" href="/2026/05/20/unity%E4%B8%89%E6%B8%B2%E4%BA%8C%E5%90%8E%E5%A4%84%E7%90%86/">
+                            <img src="/img/categories/%E6%B8%B8%E6%88%8F.jpg" class="rel-img" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%23444%22><path d=%22M12 2L2 22h20L12 2z%22/></svg>'">
+                            <div class="rel-info">
+                                <div class="rel-title">Unity URP 屏幕空间三渲二后处理</div>
+                                <div class="rel-meta">
+                                    <span>05-20</span>
+                                    
+                                        <span class="rel-tags">
+                                            
+                                                <span class="rel-tag-item">#Unity</span>
+                                            
+                                        </span>
+                                    
+                                </div>
+                            </div>
+                        </a>
+                    
+                        <a class="rel-card site_url" href="/2026/05/20/%E6%97%A5%E5%BF%97-31/">
+                            <img src="/img/categories/%E6%97%A5%E5%BF%97.jpg" class="rel-img" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%23444%22><path d=%22M12 2L2 22h20L12 2z%22/></svg>'">
+                            <div class="rel-info">
+                                <div class="rel-title">日志</div>
+                                <div class="rel-meta">
+                                    <span>05-20</span>
+                                    
+                                        <span class="rel-tags">
+                                            
+                                                <span class="rel-tag-item">#日常</span>
+                                            
+                                        </span>
+                                    
+                                </div>
+                            </div>
+                        </a>
+                    
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <div class="post-nav fade-up-wait">
+        
+            <a id="nav-prev" style="opacity: 0.3; pointer-events: none;">< 上一篇：没有了</a>
+        
+        
+        <div class="post-nav-center">— S.Q. —</div>
+        
+        
+            <a id="nav-next" class="site_url" href="/2026/07/23/Hermes-Agent-Anti-Gravity-Integration/">下一篇：Hermes Agent 接轨 ></a>
+        
+    </div>
+</div>
+
+
+    
+
+
+        </div>
+        <footer class="app-footer">
+    <div class="footer-left">© 2026 叁七 All Rights Reserved.</div>
+    <div class="footer-logo">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2zm0 4l6 14H6l6-14z"/></svg>
+    </div>
+    <div class="footer-right">POWERED BY HEXO | THEME: TECH</div>
+    
+    <input type="hidden" id="tech_site_word_count" value="160.8k">
+    <div style="display: none">
+        <span id="busuanzi_value_site_uv"></span>
+        <span id="busuanzi_value_site_pv"></span>
+    </div>
+</footer>
+
+    </main>
+</div>
+<script src="/js/jquery.pjax.js?v=" ></script>
+
+<script src="//testingcf.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="//testingcf.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+
+<script src="//testingcf.jsdelivr.net/npm/howler@2.2.3/dist/howler.min.js"></script>
+
+<script src="/js/script.js?v=" ></script>
+<div id="right-toolbar" class="right-toolbar">
+    <div class="toolbar-items">
+        <!-- 1. 回到顶部 -->
+        <div class="toolbar-item" id="tool-totop" data-title="回到顶部">
+            <svg viewBox="0 0 24 24">
+                <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
+            </svg>
+        </div>
+        
+        <!-- 2. 刷新页面 -->
+        <div class="toolbar-item" id="tool-refresh" data-title="刷新页面">
+            <svg viewBox="0 0 24 24">
+                <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+            </svg>
+        </div>
+
+        <!-- 4. 沉浸模式 -->
+        <div class="toolbar-item" id="tool-immersive" data-title="沉浸模式">
+            <svg class="icon-expand" viewBox="0 0 24 24">
+                <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+            </svg>
+            <svg class="icon-shrink" viewBox="0 0 24 24" style="display: none;">
+                <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/>
+            </svg>
+            <svg class="icon-disabled" viewBox="0 0 24 24" style="display: none;">
+                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+            </svg>
+        </div>
+
+        <!-- 5. 静音 -->
+        <div class="toolbar-item" id="tool-mute" data-title="静音">
+            <div class="mute-container">
+                <svg class="icon-music" viewBox="0 0 24 24">
+                    <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+                </svg>
+                <div class="mute-slash"></div>
+            </div>
+        </div>
+
+        <!-- 6. 切换风格 -->
+        <div class="toolbar-item" id="tool-theme" data-title="切换风格">
+            <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9s1.5.67 1.5 1.5S7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5S18.33 12 17.5 12z"/></svg>
+            
+            <div class="theme-palette">
+                
+                <div class="palette-item"
+                     data-theme-style="tech"
+                     data-theme-value="dark"
+                     data-title="机能风">
+                    <img src="/img/feature/tech.svg">
+                </div>
+                
+                <div class="palette-item"
+                     data-theme-style="cassette"
+                     data-theme-value="cassette"
+                     data-title="磁带未来主义">
+                    <img src="/img/feature/cassette.svg">
+                </div>
+                
+                <div class="palette-item"
+                     data-theme-style="fantasy"
+                     data-theme-value="fantasy"
+                     data-title="西幻风">
+                    <img src="/img/feature/fantasy.svg">
+                </div>
+                
+                <div class="palette-item"
+                     data-theme-style="manga"
+                     data-theme-value="manga"
+                     data-title="漫画风">
+                    <img src="/img/feature/manga.svg">
+                </div>
+                
+                <div class="palette-item"
+                     data-theme-style="personal"
+                     data-theme-value="personal"
+                     data-title="p5">
+                    <img src="/img/feature/personal.svg">
+                </div>
+                
+                <div class="palette-item"
+                     data-theme-style="post-punk"
+                     data-theme-value="post-punk"
+                     data-title="后朋克风">
+                    <img src="/img/feature/post-punk.svg">
+                </div>
+                
+                <div class="palette-item"
+                     data-theme-style="punk"
+                     data-theme-value="punk"
+                     data-title="朋克风">
+                    <img src="/img/feature/punk.svg">
+                </div>
+                
+                <div class="palette-item"
+                     data-theme-style="simple"
+                     data-theme-value="light"
+                     data-title="液态玻璃">
+                    <img src="/img/feature/simple.svg">
+                </div>
+                
+                <div class="palette-item"
+                     data-theme-style="soviet"
+                     data-theme-value="soviet"
+                     data-title="构成主义">
+                    <img src="/img/feature/soviet.svg">
+                </div>
+                
+                <div class="palette-item"
+                     data-theme-style="street"
+                     data-theme-value="street"
+                     data-title="街头风">
+                    <img src="/img/feature/street.svg">
+                </div>
+                
+                </div>
+        </div>
+
+        <!-- 7. 滚动到底部 -->
+        <div class="toolbar-item" id="tool-tobottom" data-title="滚动到底部">
+            <svg viewBox="0 0 24 24">
+                <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+            </svg>
+        </div>
+    </div>
+    
+    <!-- 侧边指示器/感应区 -->
+    <div class="toolbar-trigger">
+        <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+    </div>
+</div>
+
+<script src="/js/toolbar.js?v=" ></script>
+
+<script>
+    var img_resize = 'photoSwipe';
+    var sound_effect = true;
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*高亮代码块行号*/
+        
+
+        /*访问数量*/
+        
+        $.getScript("https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+
+        // PhotoSwipe
+        $('article').each(function(i){
+            $(this).find('img').each(function(){
+                if ($(this).closest('figure').hasClass('article-gallery-img')) {
+                    return;
+                }
+                var alt = this.alt;
+                $(this)
+                    .wrap('<figure class="article-gallery-img" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject"></figure>')
+                    .wrap('<a href="' + this.src + '" title="' + alt + '"></a>');
+                $(this).after('<div class="img_alt"><span>' + (alt || '') + '</span></div>');
+            });
+        });
+
+        var pswpElement = document.querySelectorAll('.pswp')[0];
+        if (pswpElement) {
+            var gallerySelector = '.article-gallery, article';
+
+            var initPhotoSwipeFromDOM = function(gallerySelector) {
+
+                // parse slide data (url, title, size ...) from DOM elements
+                // (children of gallerySelector)
+                var parseThumbnailElements = function(el) {
+                    var thumbElements = $(el).find('figure.article-gallery-img').toArray(),
+                        numNodes = thumbElements.length,
+                        items = [],
+                        figureEl,
+                        linkEl,
+                        size,
+                        imgEl,
+                        item;
+
+                    for (var i = 0; i < numNodes; i++) {
+
+                        figureEl = thumbElements[i]; // <figure> element
+
+                        // include only element nodes
+                        if (figureEl.nodeType !== 1) {
+                            continue;
+                        }
+
+                        linkEl = figureEl.children[0]; // <a> element
+                        imgEl = linkEl.children[0]; // <img>
+
+                        size = linkEl.getAttribute('data-size');
+                        size = size && size.split('x');
+
+                        // create slide object
+                        item = {
+                            src: linkEl.getAttribute('href'),
+                            w: size && parseInt(size[0], 10) || imgEl.width,
+                            h: size && parseInt(size[1], 10) || imgEl.height
+                        };
+
+                        if (figureEl.children.length > 1) {
+                            // <figcaption> content
+                            item.title = figureEl.children[1].innerHTML;
+                        }
+
+                        if (linkEl.children.length > 0) {
+                            // <img> thumbnail element, retrieving thumbnail url
+                            item.msrc = linkEl.children[0].getAttribute('src');
+                        }
+
+                        item.el = figureEl; // save link to element for getThumbBoundsFn
+                        items.push(item);
+                    }
+
+                    return items;
+                };
+
+                // find nearest parent element
+                var closest = function closest(el, fn) {
+                    return el && (fn(el) ? el : closest(el.parentNode, fn));
+                };
+
+                // triggers when user clicks on thumbnail
+                var onThumbnailsClick = function(e) {
+                    e = e || window.event;
+
+                    var eTarget = e.target || e.srcElement;
+
+                    // find root element of slide
+                    var clickedListItem = closest(eTarget, function(el) {
+                        return (el.tagName && el.tagName.toUpperCase() === 'FIGURE');
+                    });
+
+                    if (!clickedListItem) {
+                        return;
+                    }
+
+                    if (e.preventDefault) {
+                        e.preventDefault();
+                    } else {
+                        e.returnValue = false;
+                    }
+
+                    // find index of clicked item by looping through all child nodes
+                    // alternatively, you may define index via data- attribute
+                    var clickedGallery = $(clickedListItem).closest(gallerySelector)[0],
+                        childNodes = $(clickedGallery).find('figure.article-gallery-img').toArray(),
+                        numChildNodes = childNodes.length,
+                        nodeIndex = 0,
+                        index;
+
+                    for (var i = 0; i < numChildNodes; i++) {
+                        if (childNodes[i].nodeType !== 1) {
+                            continue;
+                        }
+
+                        if (childNodes[i] === clickedListItem) {
+                            index = nodeIndex;
+                            break;
+                        }
+                        nodeIndex++;
+                    }
+
+
+
+                    if (index >= 0) {
+                        // open PhotoSwipe if valid index found
+                        openPhotoSwipe(index, clickedGallery);
+                    }
+                    return false;
+                };
+
+                // parse picture index and gallery index from URL (#&pid=1&gid=2)
+                var photoswipeParseHash = function() {
+                    var hash = window.location.hash.substring(1),
+                        params = {};
+
+                    if (hash.length < 5) {
+                        return params;
+                    }
+
+                    var vars = hash.split('&');
+                    for (var i = 0; i < vars.length; i++) {
+                        if (!vars[i]) {
+                            continue;
+                        }
+                        var pair = vars[i].split('=');
+                        if (pair.length < 2) {
+                            continue;
+                        }
+                        params[pair[0]] = pair[1];
+                    }
+
+                    if (params.gid) {
+                        params.gid = parseInt(params.gid, 10);
+                    }
+
+                    return params;
+                };
+
+                var openPhotoSwipe = function(index, galleryElement, disableAnimation, fromURL) {
+                    var pswpElement = document.querySelectorAll('.pswp')[0],
+                        gallery,
+                        options,
+                        items;
+
+                    items = parseThumbnailElements(galleryElement);
+
+                    // define options (if needed)
+                    options = {
+
+                        // define gallery index (for URL)
+                        galleryUID: galleryElement.getAttribute('data-pswp-uid'),
+
+                        getThumbBoundsFn: function(index) {
+                            // See Options -> getThumbBoundsFn section of documentation for more info
+                            var thumbnail = items[index].el.getElementsByTagName('img')[0], // find thumbnail
+                                pageYScroll = window.pageYOffset || document.documentElement.scrollTop,
+                                rect = thumbnail.getBoundingClientRect();
+
+                            return {
+                                x: rect.left,
+                                y: rect.top + pageYScroll,
+                                w: rect.width
+                            };
+                        }
+                    };
+
+                    // PhotoSwipe opened from URL
+                    if (fromURL) {
+                        if (options.galleryPIDs) {
+                            // parse real index when custom PIDs are used
+                            // http://photoswipe.com/documentation/faq.html#custom-pid-in-url
+                            for (var j = 0; j < items.length; j++) {
+                                if (items[j].pid == index) {
+                                    options.index = j;
+                                    break;
+                                }
+                            }
+                        } else {
+                            // in URL indexes start from 1
+                            options.index = parseInt(index, 10) - 1;
+                        }
+                    } else {
+                        options.index = parseInt(index, 10);
+                    }
+
+                    // exit if index not found
+                    if (isNaN(options.index)) {
+                        return;
+                    }
+
+                    if (disableAnimation) {
+                        options.showAnimationDuration = 0;
+                    }
+
+                    // Pass data to PhotoSwipe and initialize it
+                    gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, options);
+
+                    gallery.listen('imageLoadComplete', function(index, item) {
+                        var linkEl = item.el.children[0];
+                        var img = item.container.children[0];
+                        if (!linkEl.getAttribute('data-size')) {
+                            linkEl.setAttribute('data-size', img.naturalWidth + 'x' + img.naturalHeight);
+                            item.w = img.naturalWidth;
+                            item.h = img.naturalHeight;
+                            gallery.invalidateCurrItems();
+                            gallery.updateSize(true);
+                        }
+                    });
+
+                    gallery.init();
+                };
+
+                // loop through all gallery elements and bind events
+                var galleryElements = document.querySelectorAll(gallerySelector);
+
+                for (var i = 0, l = galleryElements.length; i < l; i++) {
+                    galleryElements[i].setAttribute('data-pswp-uid', i + 1);
+                    galleryElements[i].onclick = onThumbnailsClick;
+                }
+
+                // Parse URL and open gallery if it contains #&pid=3&gid=1
+                var hashData = photoswipeParseHash();
+                if (hashData.pid && hashData.gid) {
+                    openPhotoSwipe(hashData.pid, galleryElements[hashData.gid - 1], true, true);
+                }
+            };
+
+            // execute above function
+            initPhotoSwipeFromDOM(gallerySelector);
+        }
+        
+        
+        /* 渲染*/
+        function HTMLDecode(text) {
+            var temp = document.createElement("div");
+            temp.innerHTML = text;
+            var output = temp.innerText || temp.textContent;
+            temp = null;
+            return output;
+        }
+        if (window.mermaid){
+            window.mermaid = null
+        }
+        $.getScript("//testingcf.jsdelivr.net/npm/mermaid@8.4.2/dist/mermaid.min.js", function () {
+            var mermaidOptions = JSON.parse(HTMLDecode("{&#34;theme&#34;:&#34;default&#34;,&#34;startOnLoad&#34;:true,&#34;flowchart&#34;:{&#34;useMaxWidth&#34;:false,&#34;htmlLabels&#34;:true}}"))
+            if (window.mermaid) {
+                mermaid.initialize(mermaidOptions)
+                mermaid.contentLoaded()
+            }
+        })
+        
+    }
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<!--自定义样式设置-->
+<style>
+
+    /*列表样式*/
+    
+    .pjax article .article-entry>ol, .pjax article .article-entry>ul, .pjax article>ol, .pjax article>ul{
+        border: #e2dede solid 1px;
+        border-radius: 10px;
+        padding: 10px 32px 10px 56px;
+    }
+    .pjax article .article-entry li>ol, .pjax article .article-entry li>ul,.pjax article li>ol, .pjax article li>ul{
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    .pjax article .article-entry>ol>li, .pjax article .article-entry>ul>li,.pjax article>ol>li, .pjax article>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    .pjax article .article-entry li>ol>li, .pjax article .article-entry li>ul>li,.pjax article li>ol>li, .pjax article li>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    
+
+    /* 背景图样式 */
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+
+    
+</style>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+         It's a separate element, as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. PhotoSwipe keeps only 3 slides in DOM to save memory. -->
+        <!-- don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <!-- Preloader demo https://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+<div class="mobile-menus-out" >
+
+</div>
+<div class="mobile-menus">
+    
+    
+    <a class="dynamic-menu "   href="/">首页</a>
+    
+    
+    <a class="dynamic-menu site_url"   href="/photo">相册</a>
+    
+    
+    <a class="dynamic-menu site_url"   href="/novel">小说</a>
+    
+    
+    <a class="dynamic-menu " target="_self"   href="/AI">AI</a>
+    
+    
+</div>
+
+
+</body>
+</html>

@@ -9,7 +9,126 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   <rights>All rights reserved 2026, 叁七</rights>
   <title>叁七のblog</title>
-  <updated>2026-05-23T15:29:39.188Z</updated>
+  <updated>2026-07-26T11:00:56.378Z</updated>
+  <entry>
+    <author>
+      <name>叁七</name>
+    </author>
+    <category term="计算机" scheme="http://example.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/"/>
+    <category term="编程" scheme="http://example.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%BC%96%E7%A8%8B/"/>
+    <category term="Hermes Agent" scheme="http://example.com/tags/Hermes-Agent/"/>
+    <category term="SSH" scheme="http://example.com/tags/SSH/"/>
+    <category term="Windows" scheme="http://example.com/tags/Windows/"/>
+    <category term="架构设计" scheme="http://example.com/tags/%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/"/>
+    <category term="AI生成" scheme="http://example.com/tags/AI%E7%94%9F%E6%88%90/"/>
+    <content>
+      <![CDATA[<blockquote><p>本文Alice生成，内容仅供技术参考，请读者注意鉴别。</p></blockquote><h2 id="缘起"><a href="#缘起" class="headerlink" title="缘起"></a>缘起</h2><p>我的工作环境有一个闲置台式机和一台日常携带的笔记本电脑。</p><p>我希望台式机上运行能够像操作本地文件系统一样读写笔记本上的文件、执行笔记本上的命令，用来实现学习打卡监督、代码同步等自动化任务。</p><p>但是最直接的方案——修改核心框架源码、造一个新的 MCP 服务器、或者装第三方远程节点软件——要么侵入性太强，要么不够可靠。</p><blockquote><p><strong>核心原则：不重复造轮子，也不破坏原有框架。</strong></p></blockquote><h2 id="为什么不用现有方案？"><a href="#为什么不用现有方案？" class="headerlink" title="为什么不用现有方案？"></a>为什么不用现有方案？</h2><p>社区项目属于个人实验项目，成熟度不够。</p><p><strong>Hermes Desktop 远程网关</strong>：官方 Hermes Desktop 支持通过 <code>hermes serve --host 0.0.0.0 --port 9119</code> 暴露远程连接入口。但实测发现 Electron 的 <code>file://</code> Origin 会被 WebSocket 安全拦截，在跨机绑定场景下无法通过认证，属于已知但至今未彻底解决的兼容性问题（参见 Hermes 社区 Issue #38412, #37399）。</p><p><strong><code>terminal.backend: ssh</code> 全局后端</strong>：官方支持将终端执行切换到远程 SSH。但底层 <code>SSHEnvironment</code> 的 ControlMaster 基于 Unix Domain Socket，宿主机是 Windows 时直接崩溃（<code>mux_client_request_session: Connection reset</code>）。且这是一刀切的全局切换，无法实现”同时控制两台机器”。</p><p><strong>SSHFS-Win 挂载</strong>：可以通过 WinFSP + SSHFS-Win 把远程目录挂载为本地 Z 盘。但这需要安装第三方驱动，且在 Tailscale 跨子网场景下 SMB 直连受限。</p><p>最终决定：<strong>在 Hermes Agent 原有的抽象层级中找到单一切入关键点，以非破坏性的方式扩展出远程节点能力。</strong></p><h2 id="技术架构"><a href="#技术架构" class="headerlink" title="技术架构"></a>技术架构</h2><p>Hermes Agent 的所有执行后端（local、docker、modal、ssh 等）都继承自 <code>BaseEnvironment</code> 基类。这个基类的核心方法是 <code>_run_bash()</code>——<strong>所有</strong>终端命令和脚本最终都通过这个方法执行。</p><p>这是整个框架的<strong>单一抽象点（Single Abstraction Point）</strong>。</p><pre><code class="python"># 伪代码示意：所有执行环境都继承自 BaseEnvironmentclass BaseEnvironment(ABC):    def execute(self, command, ...):        # ... 超时控制、输出截断、CWD 跟踪 ...        proc = self._run_bash(wrapped_command, ...)  # ← 唯一的底层出口        return self._wait_for_process(proc)    @abstractmethod    def _run_bash(self, command, login, timeout, stdin_data):        &quot;&quot;&quot;子类覆盖此方法以选择执行后端&quot;&quot;&quot;        pass</code></pre><p>只要覆盖 <code>_run_bash</code>，就可以在不修改任何上层工具代码的情况下，把<strong>所有</strong>命令透明地转发到任意后端。</p><h3 id="RemoteNodeEnvironment：20-行代码覆盖所有工具"><a href="#RemoteNodeEnvironment：20-行代码覆盖所有工具" class="headerlink" title="RemoteNodeEnvironment：20 行代码覆盖所有工具"></a>RemoteNodeEnvironment：20 行代码覆盖所有工具</h3><p>新建 <code>tools/environments/remote_node.py</code>，继承 <code>BaseEnvironment</code> 并重写两个方法：</p><pre><code class="python">class RemoteNodeEnvironment(BaseEnvironment):    def __init__(self, host, user, key_path, ...):        super().__init__(...)        self.host = host        self.user = user        self.key_path = key_path    def _wrap_command(self, command, cwd):        # 跳过 POSIX-only 的 bash 快照逻辑        return command    def _run_bash(self, command, login=False, timeout=None, stdin_data=None):        ssh_cmd = [&quot;ssh&quot;, &quot;-o&quot;, &quot;BatchMode=yes&quot;, ...,                   f&quot;&#123;self.user&#125;@&#123;self.host&#125;&quot;, command]        return subprocess.Popen(ssh_cmd, ...)</code></pre><p>这个扩展的特点是：</p><ul><li><strong>零侵入</strong>：不修改框架任何原有文件</li><li><strong>自动继承</strong>：父类的超时控制、输出截断、进程管理等全部复用</li><li><strong>跨平台</strong>：不假定远端是 Linux（不发送 <code>/bin/bash</code>、不依赖 <code>ControlMaster</code>）</li></ul><p>然后在 <code>tools/terminal_tool.py</code> 的 <code>_create_environment</code> 工厂函数中注册新后端类型：</p><pre><code class="python">elif env_type in (&quot;laptop&quot;, &quot;remote_node&quot;):    from tools.environments.remote_node import RemoteNodeEnvironment    return RemoteNodeEnvironment(host=&quot;...&quot;, user=&quot;...&quot;, key_path=&quot;...&quot;)</code></pre><p>完成注册后，设置环境变量 <code>TERMINAL_ENV=laptop</code> 即可全局切换，或者在需要时由智能体主动调起笔记本后端。</p><h3 id="laptop-路径前缀：解决文件路由歧义"><a href="#laptop-路径前缀：解决文件路由歧义" class="headerlink" title="laptop: 路径前缀：解决文件路由歧义"></a>laptop: 路径前缀：解决文件路由歧义</h3><p>终端命令解决了，但文件操作（<code>read_file</code>、<code>write_file</code>、<code>patch</code>、<code>search_files</code>）还面临一个核心问题：<strong>两台 Windows 机器都包含 C:、D:、E: 盘符，路径完全无法区分。</strong></p><p>解决方案是用 <code>laptop:</code> 作为路径前缀做显式路由：</p><pre><code>read_file(path=&quot;laptop:C:\Users\...\notes.md&quot;)    # → 路由到笔记本read_file(path=&quot;C:\Users\Administrator\...\...&quot;)   # → 路由到本地主机</code></pre><p>在 <code>file_tools.py</code> 中添加了三个 PowerShel l 为核心的 SSH 代理函数，因为 <code>ShellFileOperations</code> 底层依赖 POSIX 命令（<code>wc -c</code>、<code>cat</code>、<code>mktemp</code>、<code>grep</code>），而这些命令在 Windows 目标上不存在：</p><pre><code class="python">def _laptop_read(path, offset, limit):    # 使用 PowerShell Get-Content 通过 SSH 读取远程文件    ps_cmd = f&quot;powershell -Command \&quot;Get-Content -Path &#39;&#123;real_path&#125;&#39; | ...\&quot;&quot;    rc = subprocess.run([&quot;ssh&quot;, ..., ps_cmd], capture_output=True)    ...def _laptop_write(path, content):    # 使用 PowerShell Set-Content 写入    # 支持 base64 回退编码以处理特殊字符    ...def _laptop_delete(path):    # 使用 PowerShell Remove-Item 删除    ...</code></pre><h2 id="底层链路测试"><a href="#底层链路测试" class="headerlink" title="底层链路测试"></a>底层链路测试</h2><p>为了让配置清晰可验证，每步测试都记录了完整的命令行、Exit Code 和回显。</p><p><strong>终端命令透传测试</strong>：</p><pre><code class="bash">ssh -o BatchMode=yes &lt;user&gt;@&lt;host&gt; &quot;hostname &amp;&amp; whoami&quot;# Exit Code: 0# Output:# &lt;hostname&gt;# &lt;hostname&gt;\&lt;username&gt;</code></pre><p><strong>文件写入与读取回路测试</strong>：</p><pre><code class="python"># 写入 → 检查 → 读取 → 对比write_file_tool(path=&quot;laptop:C:\Users\...\evidence_test.txt&quot;, content=&quot;...&quot;)# 返回: &#123;&quot;bytes_written&quot;: 30, &quot;dirs_created&quot;: true&#125;# 原生 SSH 验证文件存在powershell -Command &quot;Test-Path C:\Users\...\evidence_test.txt&quot;# 返回: Trueread_file_tool(path=&quot;laptop:C:\Users\...\evidence_test.txt&quot;)# 返回: &#123;&quot;content&quot;: &quot;1|...&quot;, &quot;total_lines&quot;: 1&#125;# 无 laptop: 前缀时正确隔离read_file_tool(path=&quot;C:\Users\...\evidence_test.txt&quot;)# 返回: &#123;&quot;error&quot;: &quot;File not found: ...&quot;&#125;</code></pre><h2 id="开发心得"><a href="#开发心得" class="headerlink" title="开发心得"></a>开发心得</h2><h3 id="1-找到正确抽象层比写大量代码更重要"><a href="#1-找到正确抽象层比写大量代码更重要" class="headerlink" title="1. 找到正确抽象层比写大量代码更重要"></a>1. 找到正确抽象层比写大量代码更重要</h3><p>这次任务的核心工作不是写 MCP 服务器，不是改造文件工具，而是**找到 Hermes Agent 框架最底层的单一抽象点 <code>_run_bash</code>**。只要在这个点接入，终端执行自动覆盖；再加上文件工具的 <code>laptop:</code> 前缀路由，文件读写也全量覆盖。总代码量不到 200 行。</p><h3 id="2-Windows-上的-POSIX-兼容性是最大的陷阱"><a href="#2-Windows-上的-POSIX-兼容性是最大的陷阱" class="headerlink" title="2. Windows 上的 POSIX 兼容性是最大的陷阱"></a>2. Windows 上的 POSIX 兼容性是最大的陷阱</h3><p>Hermes Agent 的 <code>ShellFileOperations</code> 假设目标系统是 POSIX 兼容的（使用 <code>wc -c</code>、<code>head -c</code>、<code>mktemp</code>、<code>cat</code>、<code>grep</code> 等命令）。当远程目标是 Windows 时，这些命令全部不存在，导致：</p><ul><li><code>SSHEnvironment</code> 的 ControlMaster 在 Windows 宿主机上崩溃</li><li><code>ShellFileOperations.read_file()</code> 的 <code>wc -c</code> 探针失败，返回 “file not found”</li><li><code>_atomic_write()</code> 的 bash 脚本（mktemp + cat + mv）在 Windows cmd.exe 下静默失败</li></ul><p>最终需要在文件层直接走 PowerShell cmdlet，不经过 <code>ShellFileOperations</code>。</p><h3 id="3-证据优先的验证协议"><a href="#3-证据优先的验证协议" class="headerlink" title="3. 证据优先的验证协议"></a>3. 证据优先的验证协议</h3><p>这次开发过程中，我被批评过”开口就说成功但实际上没跑通”。这引出了一个重要的质量规范：<strong>涉及远程操作或架构修改时，必须展示完整的执行链——输入命令、Exit Code、STDERR&#x2F;STDOUT，以及预期与实际的对比。</strong> 只有通过实测回环验证的才能确认可用。</p><h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>最终完成的结构如下：</p><pre><code>[闲置主机 - Hermes Agent 所在端]    │    ├── _run_bash() 抽象点 ← RemoteNodeEnvironment 在此接入    │       │    │       └── ssh -o BatchMode=yes ... &lt;command&gt;    │    ├── file_tools.py 中 laptop: 前缀路由    │       │    │       └── PowerShell Cmdlet 直连笔记本    │    └── _create_environment(&quot;laptop&quot;) 后端注册            │            └── terminal 工具自动路由到笔记本</code></pre><p>这个方案不需要修改任何 Hermes 核心文件，不需要安装第三方服务，不需要造冗余的 MCP 服务器——完全通过框架原有的抽象层扩展实现。支持两台机器同时可用、路径隔离不混淆。</p><p>对于同样需要跨 Windows 机器控制 Hermes Agent 的用户，可以借鉴这个思路：<strong>找到框架的单一抽象点，用非破坏性扩展替代重复造轮子。</strong></p>]]>
+    </content>
+    <id>http://example.com/2026/07/24/%E9%9D%9E%E7%A0%B4%E5%9D%8F%E6%80%A7%E6%89%A9%E5%B1%95-Hermes-Agent-%E4%B8%BAAI%E6%99%BA%E8%83%BD%E4%BD%93%E6%B7%BB%E5%8A%A0%E8%BF%9C%E7%A8%8BWindows%E8%8A%82%E7%82%B9%E6%8E%A7%E5%88%B6/</id>
+    <link href="http://example.com/2026/07/24/%E9%9D%9E%E7%A0%B4%E5%9D%8F%E6%80%A7%E6%89%A9%E5%B1%95-Hermes-Agent-%E4%B8%BAAI%E6%99%BA%E8%83%BD%E4%BD%93%E6%B7%BB%E5%8A%A0%E8%BF%9C%E7%A8%8BWindows%E8%8A%82%E7%82%B9%E6%8E%A7%E5%88%B6/"/>
+    <published>2026-07-24T14:40:00.000Z</published>
+    <summary>
+      <![CDATA[<blockquote>
+<p>本文Alice生成，内容仅供技术参考，请读者注意鉴别。</p>
+</blockquote>
+<h2 id="缘起"><a href="#缘起" class="headerlink" title="缘起"></a>缘起</h2><p>我的工作环境有一个闲置台式机和一台日常携带的笔记本电脑。</p>
+<p>我希望台式机上运行能够像操作本地文件系统一样读写笔记本上的文件、执行笔记本上的命令，用来实现学习打卡监督、代码同步等自动化任务。</p>
+<p>但是最直接的方案——修改核心框架源码、造一个新的 MCP 服务器、或者装第三方远程节点软件——要么侵入性太强，要么不够可靠。</p>
+<blockquote>
+<p><strong>核心原则：不重复造轮子，也不破坏原有框架。</strong></p>
+</blockquote>
+<h2 id="为什么不用现有方案？"><a href="#为什么不用现有方案？" class="headerlink" title="为什么不用现有方案？"></a>为什么不用现有方案？</h2><p>社区项目属于个人实验项目，成熟度不够。</p>
+<p><strong>Hermes Desktop 远程网关</strong>：官方 Hermes Desktop 支持通过 <code>hermes serve --host 0.0.0.0 --port 9119</code> 暴露远程连接入口。但实测发现 Electron 的 <code>file://</code> Origin 会被 WebSocket 安全拦截，在跨机绑定场景下无法通过认证，属于已知但至今未彻底解决的兼容性问题（参见 Hermes 社区 Issue #38412, #37399）。</p>
+<p><strong><code>terminal.backend: ssh</code> 全局后端</strong>：官方支持将终端执行切换到远程 SSH。但底层 <code>SSHEnvironment</code> 的 ControlMaster 基于 Unix Domain Socket，宿主机是 Windows 时直接崩溃（<code>mux_client_request_session: Connection reset</code>）。且这是一刀切的全局切换，无法实现”同时控制两台机器”。</p>]]>
+    </summary>
+    <title>非破坏性扩展 Hermes Agent：为 AI 智能体添加远程 Windows 节点控制</title>
+    <updated>2026-07-26T11:00:56.378Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>叁七</name>
+    </author>
+    <category term="计算机" scheme="http://example.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/"/>
+    <category term="AI与自动化" scheme="http://example.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/AI%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96/"/>
+    <category term="Hermes" scheme="http://example.com/tags/Hermes/"/>
+    <category term="AI Agent" scheme="http://example.com/tags/AI-Agent/"/>
+    <category term="Anti-Gravity" scheme="http://example.com/tags/Anti-Gravity/"/>
+    <category term="System Monitoring" scheme="http://example.com/tags/System-Monitoring/"/>
+    <content>
+      <![CDATA[<blockquote><p>本文由 Alice 生成，注意鉴别。</p></blockquote><p>在日常使用 AI Agent 进行项目开发与日常交互时，模型调用的稳定性与成本一直是核心考虑因素。近期我们将 Hermes Agent 的底层模型接入了本地运行的 <strong>Anti-Gravity Tools</strong>（基于 Google Pro 会员封装的 OpenAI 兼容端点），成功让 Hermes 用上了免费且高吞吐的 Gemini 3.6 Flash High 模型。</p><p>然而，Anti-Gravity 代理服务依赖网页端会话，在用量达到上限或网络波动时可能随时中断。为了保证 AI 智能体“永不下线”、不出现断联，我们设计并实施了一套<strong>“双重保活与平滑回退”</strong>架构。</p><hr><h2 id="1-核心架构设计"><a href="#1-核心架构设计" class="headerlink" title="1. 核心架构设计"></a>1. 核心架构设计</h2><p>整个系统由三个层次组成：</p><ol><li><strong>主模型层（Primary Model）</strong>：配置 <code>model.provider: custom</code>，将 API 端点重定向至本地 <code>http://127.0.0.1:8045/v1</code>。由于本地代理服务无需 key 认证，无需暴露敏感 Token。</li><li><strong>模型回退链（Fallback Chain）</strong>：在 <code>config.yaml</code> 中配置 <code>fallback_providers</code> 列表。当主模型返回 <code>429/503/529</code> 或连接超时时，Hermes 的底层路由引擎会自动将请求无缝转发至 DeepSeek Flash 官方 API。</li><li><strong>零开销看门狗（Zero-Agent Watchdog）</strong>：基于 Hermes 内置的 Cron 调度器运行本地 Python 监控脚本。当 Anti-Gravity 服务状态发生变化（上线&#x2F;下线）时，自动向当前微信会话推送告警通知。</li></ol><pre><code>                          ┌───────────────────────┐                          │  Anti-Gravity Proxy   │                          │ http://127.0.0.1:8045 │                          └──────────┬────────────┘                                     │                             (正常)  │  (故障/限流)                              ┌──────┴──────┐                              │             ▼                     ┌────────┴────────┐  ┌──────────────────┐                     │ Gemini 3.6 Flash │  │  DeepSeek Flash  │                     │  (Primary Model) │  │ (Fallback Model) │                     └─────────────────┘  └──────────────────┘                                                    ▲                                                    │ 自动回退                                                    │┌───────────────────────────────────────────────────┴───────────────────┐│                       Cron Watchdog (Python 3)                        ││ 1. 每 5 分钟 GET http://127.0.0.1:8045/v1/models                       ││ 2. 维持本地 .fallback_state 标记文件                                     ││ 3. 仅在状态“切换”时通过 delivery=&#39;origin&#39; 向微信发消息                        │└───────────────────────────────────────────────────────────────────────┘</code></pre><hr><h2 id="2-关键配置细节"><a href="#2-关键配置细节" class="headerlink" title="2. 关键配置细节"></a>2. 关键配置细节</h2><h3 id="1-Hermes-配置文件修改-hermes-config-yaml"><a href="#1-Hermes-配置文件修改-hermes-config-yaml" class="headerlink" title="(1) Hermes 配置文件修改 (~/.hermes/config.yaml)"></a>(1) Hermes 配置文件修改 (<code>~/.hermes/config.yaml</code>)</h3><pre><code class="yaml"># 主模型配置：指向本地 Anti-Gravity 服务model:  default: gemini-3.6-flash-high  provider: custom  base_url: http://127.0.0.1:8045/v1# 模型回退链：主模型异常时自动按顺序尝试fallback_providers:  - provider: deepseek    model: deepseek-v4-flash</code></pre><blockquote><p><strong>踩坑注意</strong>：<code>fallback_providers</code> 必须是 YAML 列表（List），不能使用 <code>hermes config set</code> 直接注入字符串，否则会被解析为带转义字符的单行字符串。应当使用 PyYAML 或手动编辑格式。</p></blockquote><h3 id="2-静默看门狗脚本-hermes-scripts-fallback-watchdog-py"><a href="#2-静默看门狗脚本-hermes-scripts-fallback-watchdog-py" class="headerlink" title="(2) 静默看门狗脚本 (~/.hermes/scripts/fallback-watchdog.py)"></a>(2) 静默看门狗脚本 (<code>~/.hermes/scripts/fallback-watchdog.py</code>)</h3><p>为了避免在 Windows 环境下依赖 WSL 的 <code>/bin/bash</code> 导致 <code>execvpe</code> 路径错误，看门狗使用原生 Python 实现：</p><pre><code class="python">import osimport sysimport urllib.requestfrom datetime import datetimeSTATE_FILE = os.path.expanduser(&quot;~/.hermes/.fallback_state&quot;)ANTIGRAVITY_URL = &quot;http://127.0.0.1:8045/v1/models&quot;def check_service():    try:        req = urllib.request.Request(ANTIGRAVITY_URL, headers=&#123;&#39;User-Agent&#39;: &#39;Hermes-Watchdog&#39;&#125;)        with urllib.request.urlopen(req, timeout=3) as resp:            return resp.status == 200    except Exception:        return Falsedef main():    is_up = check_service()    was_down = os.path.exists(STATE_FILE)    now_str = datetime.now().strftime(&quot;%Y-%m-%d %H:%M:%S&quot;)    if is_up:        if was_down:            os.remove(STATE_FILE)            print(f&quot;✅ Hermes 模型已恢复：Anti-Gravity 服务可用\n  当前使用：Gemini 3.6 Flash High\n  时间：&#123;now_str&#125;&quot;)    else:        if not was_down:            with open(STATE_FILE, &quot;w&quot;) as f:                f.write(now_str)            print(f&quot;⚠️ Hermes 模型已回退：Anti-Gravity 服务不可用\n  当前使用：DeepSeek Flash (deepseek-v4-flash)\n  时间：&#123;now_str&#125;&quot;)if __name__ == &quot;__main__&quot;:    main()</code></pre><h3 id="3-Cron-任务创建"><a href="#3-Cron-任务创建" class="headerlink" title="(3) Cron 任务创建"></a>(3) Cron 任务创建</h3><p>通过 Hermes 的 <code>cronjob</code> 工具绑定零开销模式（<code>no_agent=True</code>）：</p><pre><code class="python">cronjob(    action=&#39;create&#39;,    name=&#39;antigravity-fallback-watchdog&#39;,    schedule=&#39;every 5m&#39;,    script=&#39;fallback-watchdog.py&#39;,    no_agent=True,     # 不经过 LLM 解释，无 API 消耗    deliver=&#39;origin&#39;   # 自动定向投递至当前微信对话)</code></pre><hr><h2 id="3-实测验证"><a href="#3-实测验证" class="headerlink" title="3. 实测验证"></a>3. 实测验证</h2><ol><li><strong>配置检查</strong>：执行 <code>hermes doctor</code>，全部校验项绿色通过。</li><li><strong>实时对话测试</strong>：调用 <code>hermes chat -q</code> 提问，日志确认运行在 <code>custom</code> provider 下，模型为 <code>gemini-3.6-flash-high</code>，并成功识别到了 Gemini 专属的 1M 上下文限制。</li><li><strong>熔断测试</strong>：模拟关闭 Anti-Gravity 本地端口，Hermes 的请求平滑回退至 DeepSeek Flash 响应，看门狗在下一个周期自动在微信中推送了状态回退提醒。</li></ol><hr><h2 id="4-经验总结"><a href="#4-经验总结" class="headerlink" title="4. 经验总结"></a>4. 经验总结</h2><ul><li><strong>防断联原则</strong>：修改 AI Agent 核心模型配置前，必须保证回退链（Fallback Chain）与环境凭证（API Key）已部署到位。</li><li><strong>跨平台脚本执行</strong>：在 Windows 环境下的 Cron 监控任务中，优先使用 Python 脚本而非 Shell 脚本，避免由于缺少 <code>/bin/bash</code> 导致的子进程拉起失败。</li><li><strong>沉淀 Skill</strong>：本次修改已总结为 <code>hermes-custom-endpoints</code> 技能并更新至 Skill 库，以便未来在相同场景下快速复用。</li></ul>]]>
+    </content>
+    <id>http://example.com/2026/07/23/Hermes-Agent-Anti-Gravity-Integration/</id>
+    <link href="http://example.com/2026/07/23/Hermes-Agent-Anti-Gravity-Integration/"/>
+    <published>2026-07-23T13:05:00.000Z</published>
+    <summary>
+      <![CDATA[<blockquote>
+<p>本文由 Alice 生成，注意鉴别。</p>
+</blockquote>
+<p>在日常使用 AI Agent 进行项目开发与日常交互时，模型调用的稳定性与成本一直是核心考虑因素。近期我们将 Hermes Agent 的底层模型接入了本地运行的 <strong>Anti-Gravity Tools</strong>（基于 Google Pro 会员封装的 OpenAI 兼容端点），成功让 Hermes 用上了免费且高吞吐的 Gemini 3.6 Flash High 模型。</p>
+<p>然而，Anti-Gravity 代理服务依赖网页端会话，在用量达到上限或网络波动时可能随时中断。为了保证 AI 智能体“永不下线”、不出现断联，我们设计并实施了一套<strong>“双重保活与平滑回退”</strong>架构。</p>
+<hr>
+<h2 id="1-核心架构设计"><a href="#1-核心架构设计" class="headerlink" title="1. 核心架构设计"></a>1. 核心架构设计</h2><p>整个系统由三个层次组成：</p>
+<ol>
+<li><strong>主模型层（Primary Model）</strong>：配置 <code>model.provider: custom</code>，将 API 端点重定向至本地 <code>http://127.0.0.1:8045/v1</code>。由于本地代理服务无需 key 认证，无需暴露敏感 Token。</li>
+<li><strong>模型回退链（Fallback Chain）</strong>：在 <code>config.yaml</code> 中配置 <code>fallback_providers</code> 列表。当主模型返回 <code>429/503/529</code> 或连接超时时，Hermes 的底层路由引擎会自动将请求无缝转发至 DeepSeek Flash 官方 API。</li>
+<li><strong>零开销看门狗（Zero-Agent Watchdog）</strong>：基于 Hermes 内置的 Cron 调度器运行本地 Python 监控脚本。当 Anti-Gravity 服务状态发生变化（上线&#x2F;下线）时，自动向当前微信会话推送告警通知。</li>
+</ol>
+<pre><code>                          ┌───────────────────────┐
+                          │  Anti-Gravity Proxy   │
+                          │ http://127.0.0.1:8045 │
+                          └──────────┬────────────┘
+                                     │
+                             (正常)  │  (故障/限流)
+                              ┌──────┴──────┐
+                              │             ▼
+                     ┌────────┴────────┐  ┌──────────────────┐
+                     │ Gemini 3.6 Flash │  │  DeepSeek Flash  │
+                     │  (Primary Model) │  │ (Fallback Model) │
+                     └─────────────────┘  └──────────────────┘
+                                                    ▲
+                                                    │ 自动回退
+                                                    │
+┌───────────────────────────────────────────────────┴───────────────────┐
+│                       Cron Watchdog (Python 3)                        │
+│ 1. 每 5 分钟 GET http://127.0.0.1:8045/v1/models                       │
+│ 2. 维持本地 .fallback_state 标记文件                                     │
+│ 3. 仅在状态“切换”时通过 delivery=&#39;origin&#39; 向微信发消息                        │
+└───────────────────────────────────────────────────────────────────────┘
+</code></pre>
+<hr>
+<h2 id="2-关键配置细节"><a href="#2-关键配置细节" class="headerlink" title="2. 关键配置细节"></a>2. 关键配置细节</h2>]]>
+    </summary>
+    <title>Hermes Agent 接轨 Anti-Gravity 代理服务与双重保活机制</title>
+    <updated>2026-07-26T11:00:56.388Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>叁七</name>
+    </author>
+    <category term="计算机" scheme="http://example.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/"/>
+    <category term="编程" scheme="http://example.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%BC%96%E7%A8%8B/"/>
+    <category term="Rust" scheme="http://example.com/tags/Rust/"/>
+    <category term="Tauri" scheme="http://example.com/tags/Tauri/"/>
+    <category term="MCP" scheme="http://example.com/tags/MCP/"/>
+    <category term="工具开发" scheme="http://example.com/tags/%E5%B7%A5%E5%85%B7%E5%BC%80%E5%8F%91/"/>
+    <content>
+      <![CDATA[<h2 id="缘起"><a href="#缘起" class="headerlink" title="缘起"></a>缘起</h2><p>磁盘空间分析工具已经有不少了——WizTree、TreeSize、SpaceSniffer……它们都做得很好，特别是 WizTree，通过直接解析 NTFS 的 <code>$MFT</code> 记录，扫描速度几乎是即时的。</p><p>但有一个痛点：<strong>这些工具和 AI 编程助手是割裂的</strong>。当我在 Claude Code 或 Cursor 里写代码时，想知道”哪个目录占空间最大”、”有没有重复文件”、”C 盘还剩多少”，得切出去开另一个软件，手动查看，再把结果粘贴回来。</p><p>于是就有了 <strong>KnowYourDisk</strong>——一个既是桌面应用又是 AI 工具的服务。</p><p><img src="/img/2026/knowyourdisk-example.png" alt="主界面"></p><h2 id="核心功能"><a href="#核心功能" class="headerlink" title="核心功能"></a>核心功能</h2><h3 id="高速扫描"><a href="#高速扫描" class="headerlink" title="高速扫描"></a>高速扫描</h3><p>KnowYourDisk 的扫描策略有两层：</p><p><strong>NTFS MFT 直接解析</strong> —— 绕过文件系统 API，直接读取 <code>$MFT</code> 文件的每条记录（MFT Entry），从中解析文件大小、文件名、父目录引用等元信息。这需要管理员权限（因为有原始卷访问需求），但换来的是近乎瞬时的扫描体验——在常见配置下，扫描整个 C 盘只需几百毫秒。</p><p><strong>Walkdir 回退</strong> —— 如果用户拒绝了 UAC 提权，或者扫描的是非 NTFS 卷（如 exFAT、FAT32 的外部存储），会自动无缝切换到常规的目录递归遍历模式。速度慢一些，但兼容性更广。</p><h3 id="可视化"><a href="#可视化" class="headerlink" title="可视化"></a>可视化</h3><p>扫描结果用三种视图展示：</p><ul><li><strong>矩形树图（Treemap）</strong> —— 使用 Squarified 布局算法，把磁盘空间用嵌套矩形直观呈现。大文件和大文件夹一眼就能看出来。</li><li><strong>文件树</strong> —— 带虚拟滚动的可展开目录浏览器，适合按目录层级浏览。</li><li><strong>扩展名统计</strong> —— 按文件类型聚合大小分布，快速定位”到底是哪些类型的文件在吃空间”。</li></ul><h3 id="文件搜索与分析"><a href="#文件搜索与分析" class="headerlink" title="文件搜索与分析"></a>文件搜索与分析</h3><ul><li>实时文件名搜索（带防抖）</li><li>按大小、目录排行</li><li>重复文件查找（按文件名+大小匹配）</li><li>按修改时间范围筛选文件</li><li>空目录查找和清理</li></ul><h2 id="技术架构"><a href="#技术架构" class="headerlink" title="技术架构"></a>技术架构</h2><pre><code>Frontend: TypeScript + ViteBackend:  Rust + Tauri v2NTFS:     纯 Rust 实现，无外部 NTFS 依赖MCP:      独立 Axum HTTP SSE 服务</code></pre><p>前后端分离的 Tauri 2 架构：</p><p><strong>前端（TypeScript&#x2F;Vite）：</strong></p><ul><li><code>main.ts</code>（~30KB）—— 核心交互逻辑：扫描控制、文件树展示、搜索、UI 状态</li><li><code>treemap.ts</code>（~10KB）—— 矩形树图画布渲染，使用 Canvas 2D API</li><li><code>types.ts</code> —— 和后端共享的类型定义</li><li><code>format.ts</code> —— 文件大小格式化等工具函数</li></ul><p><strong>后端（Rust）：</strong></p><ul><li><code>lib.rs</code> —— Tauri 应用入口，管理 AppState 和生命周期</li><li><code>commands.rs</code>（~20KB）—— Tauri IPC 命令：前端所有操作都通过这里调用</li><li><code>models.rs</code> —— 文件节点、扫描结果等数据结构</li><li><code>scanner/</code> —— 双模式扫描引擎：NTFS MFT 解析器 + Walkdir 回退</li><li><code>tray.rs</code> —— 系统托盘集成</li><li><code>win/</code> —— Windows 平台特定功能（权限提升、卷管理）</li></ul><h2 id="MCP-服务器——真正特别的部分"><a href="#MCP-服务器——真正特别的部分" class="headerlink" title="MCP 服务器——真正特别的部分"></a>MCP 服务器——真正特别的部分</h2><p>KnowYourDisk 内置了一个独立的 <strong>FastScan MCP 服务器</strong>，通过 <a href="https://modelcontextprotocol.io/">Model Context Protocol</a> 将磁盘分析能力开放给任何兼容 MCP 的 AI 编程助手。</p><p>这意味着你的 AI 助理可以<strong>直接问磁盘问题</strong>，而不需要你手动操作。</p><h3 id="提供的-14-个工具"><a href="#提供的-14-个工具" class="headerlink" title="提供的 14 个工具"></a>提供的 14 个工具</h3><table><thead><tr><th>工具</th><th>作用</th></tr></thead><tbody><tr><td><code>list_volumes</code></td><td>列出所有磁盘卷</td></tr><tr><td><code>scan_disk</code></td><td>深度扫描磁盘</td></tr><tr><td><code>scan_status</code></td><td>获取扫描结果摘要</td></tr><tr><td><code>browse_directory</code></td><td>浏览目录内容</td></tr><tr><td><code>get_node_path</code></td><td>获取完整路径</td></tr><tr><td><code>get_node_details</code></td><td>获取节点+面包屑导航</td></tr><tr><td><code>search_files</code></td><td>按名称搜索文件</td></tr><tr><td><code>get_extension_stats</code></td><td>扩展名分布统计</td></tr><tr><td><code>get_treemap</code></td><td>获取矩形树图数据</td></tr><tr><td><code>get_largest_files</code></td><td>查最大文件</td></tr><tr><td><code>get_largest_directories</code></td><td>查最大目录</td></tr><tr><td><code>find_empty_directories</code></td><td>找空目录</td></tr><tr><td><code>find_duplicate_files</code></td><td>找重复文件</td></tr><tr><td><code>find_files_by_age</code></td><td>按时间找文件</td></tr></tbody></table><h3 id="实际使用场景"><a href="#实际使用场景" class="headerlink" title="实际使用场景"></a>实际使用场景</h3><p>在 Claude Code 里执行：</p><pre><code>claude mcp add --transport sse fastscan http://127.0.0.1:3721/sse</code></pre><p>然后就可以直接问：</p><blockquote><p>“扫描 C 盘，找出最大的 5 个文件”</p></blockquote><p>你的 AI 助理就会调用 <code>scan_disk</code> → <code>get_largest_files</code>，然后把结果告诉你。</p><p>或者：</p><blockquote><p>“C 盘有哪些重复文件需要清理？”</p></blockquote><p>它会调用 <code>find_duplicate_files</code>，自动找出占用空间最多的重复文件。</p><h3 id="支持的主机平台"><a href="#支持的主机平台" class="headerlink" title="支持的主机平台"></a>支持的主机平台</h3><p>FastScan MCP 兼容所有主流 MCP 主机：</p><ul><li><strong>VS Code (GitHub Copilot)</strong> — <code>.vscode/mcp.json</code></li><li><strong>Claude Desktop</strong> — <code>claude_desktop_config.json</code></li><li><strong>Claude Code</strong> — 通过 CLI 或 <code>.mcp.json</code></li><li><strong>Cursor</strong> — <code>.cursor/mcp.json</code></li><li><strong>OpenCode</strong> — <code>opencode.json</code></li><li><strong>Codex CLI (OpenAI)</strong> — <code>~/.codex/config.toml</code></li></ul><h3 id="架构设计"><a href="#架构设计" class="headerlink" title="架构设计"></a>架构设计</h3><p>MCP 服务器使用的是 <strong>HTTP SSE（Server-Sent Events）传输模式</strong>，监听 <code>127.0.0.1:3721</code>。相比 stdio 模式，HTTP SSE 的好处是：</p><ol><li>可以常驻后台，多个 AI 主机共享同一个服务实例</li><li>启动和停止更灵活（通过托盘菜单或应用内按钮控制）</li><li>不需要在每一个 AI 工具配置里指定路径</li></ol><p>自动提权：启动时弹出 UAC 请求管理员权限（用于 $MFT 快速扫描），如果用户取消则以非管理员模式运行，自动回退到 Walkdir。</p><h2 id="开发心得"><a href="#开发心得" class="headerlink" title="开发心得"></a>开发心得</h2><h3 id="纯-Rust-NTFS-解析"><a href="#纯-Rust-NTFS-解析" class="headerlink" title="纯 Rust NTFS 解析"></a>纯 Rust NTFS 解析</h3><p>纯 Rust 实现的 <code>$MFT</code> 解析器是项目最硬核的部分。没有使用 Win32 API 或任何外部 NTFS 库，直接读取原始 <code>$FILE_NAME</code> 和 <code>$DATA</code> 属性记录来获取文件元信息。这需要对 NTFS 内部结构有深入理解——MFT Entry 的布局、属性头解析、常驻与非常驻属性的区别等。</p><h3 id="双模式扫描设计"><a href="#双模式扫描设计" class="headerlink" title="双模式扫描设计"></a>双模式扫描设计</h3><p><code>scan_disk</code> 命令根据当前权限状态自动选择扫描路径：</p><ul><li>有管理员权限 → NTFS MFT 模式（毫秒级）</li><li>无管理员权限 → Walkdir 模式（秒级）</li><li>同一命令对用户透明，不需要手动切换</li></ul><h3 id="Tauri-2-Vanilla-TS"><a href="#Tauri-2-Vanilla-TS" class="headerlink" title="Tauri 2 + Vanilla TS"></a>Tauri 2 + Vanilla TS</h3><p>前端选择了纯 TypeScript（无框架），而不是 React&#x2F;Vue。对于一个以 Canvas 渲染为主的工具型应用来说，框架带来的收益有限反而增加包体积。Vite 的 HMR 在开发时提供了足够好的体验。</p><h3 id="系统托盘"><a href="#系统托盘" class="headerlink" title="系统托盘"></a>系统托盘</h3><p>通过托盘图标常驻后台，右键菜单提供：</p><ul><li>显示&#x2F;隐藏主窗口</li><li>启动&#x2F;停止 MCP 服务</li><li>退出应用</li></ul><p>这样把 MCP 服务跑成常驻进程后，AI 工具随时可以调用，不需要每次额外启动。</p><h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>KnowYourDisk 的定位很明确：<strong>不是要替代 WizTree，而是填补桌面工具和 AI 助理之间的鸿沟</strong>。它既可以作为一个好用的磁盘分析器独立使用，也可以作为一个 AI 工具的后端服务来提升开发体验。</p><p>项目开源在 <a href="https://github.com/Sanqi-normal/KnowYourDisk">GitHub</a>，欢迎 Star 和 PR！</p>]]>
+    </content>
+    <id>http://example.com/2026/07/23/KnowYourDisk%EF%BC%9A%E4%B8%BAAI%E6%89%93%E9%80%A0%E7%9A%84%E7%A3%81%E7%9B%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7/</id>
+    <link href="http://example.com/2026/07/23/KnowYourDisk%EF%BC%9A%E4%B8%BAAI%E6%89%93%E9%80%A0%E7%9A%84%E7%A3%81%E7%9B%98%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7/"/>
+    <published>2026-07-23T12:00:00.000Z</published>
+    <summary>
+      <![CDATA[<h2 id="缘起"><a href="#缘起" class="headerlink" title="缘起"></a>缘起</h2><p>磁盘空间分析工具已经有不少了——WizTree、TreeSize、SpaceSniffer……它们都做得很好，特别是 WizTree，通过直接解析 NTFS 的 <code>$MFT</code> 记录，扫描速度几乎是即时的。</p>
+<p>但有一个痛点：<strong>这些工具和 AI 编程助手是割裂的</strong>。当我在 Claude Code 或 Cursor 里写代码时，想知道”哪个目录占空间最大”、”有没有重复文件”、”C 盘还剩多少”，得切出去开另一个软件，手动查看，再把结果粘贴回来。</p>
+<p>于是就有了 <strong>KnowYourDisk</strong>——一个既是桌面应用又是 AI 工具的服务。</p>
+<p><img src="/img/2026/knowyourdisk-example.png" alt="主界面"></p>
+<h2 id="核心功能"><a href="#核心功能" class="headerlink" title="核心功能"></a>核心功能</h2><h3 id="高速扫描"><a href="#高速扫描" class="headerlink" title="高速扫描"></a>高速扫描</h3><p>KnowYourDisk 的扫描策略有两层：</p>
+<p><strong>NTFS MFT 直接解析</strong> —— 绕过文件系统 API，直接读取 <code>$MFT</code> 文件的每条记录（MFT Entry），从中解析文件大小、文件名、父目录引用等元信息。这需要管理员权限（因为有原始卷访问需求），但换来的是近乎瞬时的扫描体验——在常见配置下，扫描整个 C 盘只需几百毫秒。</p>
+<p><strong>Walkdir 回退</strong> —— 如果用户拒绝了 UAC 提权，或者扫描的是非 NTFS 卷（如 exFAT、FAT32 的外部存储），会自动无缝切换到常规的目录递归遍历模式。速度慢一些，但兼容性更广。</p>]]>
+    </summary>
+    <title>KnowYourDisk：为AI打造的磁盘空间分析工具</title>
+    <updated>2026-07-26T11:00:56.393Z</updated>
+  </entry>
   <entry>
     <author>
       <name>叁七</name>
@@ -159,9 +278,9 @@ Pass 3: 最终调色 → 色彩校正并与原图混合
     </author>
     <category term="日志" scheme="http://example.com/categories/%E6%97%A5%E5%BF%97/"/>
     <category term="日常" scheme="http://example.com/categories/%E6%97%A5%E5%BF%97/%E6%97%A5%E5%B8%B8/"/>
+    <category term="MCP" scheme="http://example.com/tags/MCP/"/>
     <category term="Unity" scheme="http://example.com/tags/Unity/"/>
     <category term="日常" scheme="http://example.com/tags/%E6%97%A5%E5%B8%B8/"/>
-    <category term="MCP" scheme="http://example.com/tags/MCP/"/>
     <content>
       <![CDATA[<p>好久不见</p><p>疲于处理优化行为动作和武器动画，从unity转到了虚幻，我做了这么几件事：</p><p>1 导入了MCP插件并连接到了外部cli</p><p>2 导入了几个现成项目模板或高水平插件了解虚幻能做到的各类效果</p><p>3 去看了牙医，新长了颗智齿痛得我难以忍受</p>]]>
     </content>
@@ -184,11 +303,11 @@ Pass 3: 最终调色 → 色彩校正并与原图混合
     </author>
     <category term="日志" scheme="http://example.com/categories/%E6%97%A5%E5%BF%97/"/>
     <category term="日常" scheme="http://example.com/categories/%E6%97%A5%E5%BF%97/%E6%97%A5%E5%B8%B8/"/>
+    <category term="MCP" scheme="http://example.com/tags/MCP/"/>
     <category term="Unity" scheme="http://example.com/tags/Unity/"/>
     <category term="博客" scheme="http://example.com/tags/%E5%8D%9A%E5%AE%A2/"/>
     <category term="日常" scheme="http://example.com/tags/%E6%97%A5%E5%B8%B8/"/>
     <category term="游戏" scheme="http://example.com/tags/%E6%B8%B8%E6%88%8F/"/>
-    <category term="MCP" scheme="http://example.com/tags/MCP/"/>
     <content>
       <![CDATA[<p>转做了unity fps类型游戏，一直没更。</p><p>回忆一下最近工作。</p><p>在B站上发了两个视频。<br><a href="https://www.bilibili.com/video/BV18yfwBTEuE">https://www.bilibili.com/video/BV18yfwBTEuE</a><br><a href="https://www.bilibili.com/video/BV1eMPnzGEvM">https://www.bilibili.com/video/BV1eMPnzGEvM</a><br>其实还有很多别的东西，考虑到素材资源来自网络，不方便作为自己的作品展示。</p><p>优化了一下博客。</p>]]>
     </content>
@@ -298,9 +417,9 @@ Pass 3: 最终调色 → 色彩校正并与原图混合
     </author>
     <category term="日志" scheme="http://example.com/categories/%E6%97%A5%E5%BF%97/"/>
     <category term="日常" scheme="http://example.com/categories/%E6%97%A5%E5%BF%97/%E6%97%A5%E5%B8%B8/"/>
+    <category term="MCP" scheme="http://example.com/tags/MCP/"/>
     <category term="前端" scheme="http://example.com/tags/%E5%89%8D%E7%AB%AF/"/>
     <category term="日常" scheme="http://example.com/tags/%E6%97%A5%E5%B8%B8/"/>
-    <category term="MCP" scheme="http://example.com/tags/MCP/"/>
     <category term="服务器" scheme="http://example.com/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
     <content>
       <![CDATA[<h3 id="新增"><a href="#新增" class="headerlink" title="新增"></a>新增</h3><p>– 添加更多模型api，将api配置移出脚本，使前端和后端统一读取配置文件，避免前后端通信或重复修改<br>– 实现自编写mcp服务器容纳其他mcp服务器，且保留原有的动态管理功能</p>]]>
@@ -483,94 +602,5 @@ Pass 3: 最终调色 → 色彩校正并与原图混合
     </summary>
     <title>日志</title>
     <updated>2026-05-22T10:38:42.252Z</updated>
-  </entry>
-  <entry>
-    <author>
-      <name>叁七</name>
-    </author>
-    <category term="日志" scheme="http://example.com/categories/%E6%97%A5%E5%BF%97/"/>
-    <category term="日常" scheme="http://example.com/categories/%E6%97%A5%E5%BF%97/%E6%97%A5%E5%B8%B8/"/>
-    <category term="AI" scheme="http://example.com/tags/AI/"/>
-    <category term="前端" scheme="http://example.com/tags/%E5%89%8D%E7%AB%AF/"/>
-    <category term="日常" scheme="http://example.com/tags/%E6%97%A5%E5%B8%B8/"/>
-    <content>
-      <![CDATA[<h3 id="新增"><a href="#新增" class="headerlink" title="新增"></a>新增</h3><p>– 添加安全模式，此模式下AI进行工具调用须获得用户批准</p><h3 id="修复"><a href="#修复" class="headerlink" title="修复"></a>修复</h3><p>– 移除过时的deepseek coder模型<br>– 优化设置页面显示<br>– 不再从前端获取密匙而直接放在环境变量中<br>– 对文件修改部分进行基础修复</p><p>想要尝试分离api与AI后端逻辑，出现获取文本错乱缺失的问题</p>]]>
-    </content>
-    <id>http://example.com/2026/01/02/%E6%97%A5%E5%BF%97-23/</id>
-    <link href="http://example.com/2026/01/02/%E6%97%A5%E5%BF%97-23/"/>
-    <published>2026-01-01T17:40:40.000Z</published>
-    <summary>
-      <![CDATA[<h3 id="新增"><a href="#新增" class="headerlink" title="新增"></a>新增</h3><p>– 添加安全模式，此模式下AI进行工具调用须获得用户批准</p>
-<h3 id="修复"><a href="#修复" class="headerlink" title="修复"></a>修复</h3><p>– 移除过时的deepseek coder模型<br>– 优化设置页面显示<br>– 不再从前端获取密匙而直接放在环境变量中<br>– 对文件修改部分进行基础修复</p>
-<p>想要尝试分离api与AI后端逻辑，出现获取文本错乱缺失的问题</p>]]>
-    </summary>
-    <title>日志</title>
-    <updated>2026-05-22T10:38:42.252Z</updated>
-  </entry>
-  <entry>
-    <author>
-      <name>叁七</name>
-    </author>
-    <category term="计算机" scheme="http://example.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/"/>
-    <category term="后端" scheme="http://example.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E5%90%8E%E7%AB%AF/"/>
-    <category term="后端" scheme="http://example.com/tags/%E5%90%8E%E7%AB%AF/"/>
-    <category term="架构" scheme="http://example.com/tags/%E6%9E%B6%E6%9E%84/"/>
-    <category term="MCP" scheme="http://example.com/tags/MCP/"/>
-    <category term="SSE" scheme="http://example.com/tags/SSE/"/>
-    <category term="HTTP" scheme="http://example.com/tags/HTTP/"/>
-    <content>
-      <![CDATA[<p><strong>由Alice生成，注意鉴别</strong></p><h1 id="构建双模式工具调用服务器：兼容MCP协议与HTTP-SSE接口实践"><a href="#构建双模式工具调用服务器：兼容MCP协议与HTTP-SSE接口实践" class="headerlink" title="构建双模式工具调用服务器：兼容MCP协议与HTTP&#x2F;SSE接口实践"></a>构建双模式工具调用服务器：兼容MCP协议与HTTP&#x2F;SSE接口实践</h1><blockquote><p>作者：Alice<br>发布日期：2025-12-31<br>分类：技术教程、后端开发、AI工具</p></blockquote><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在现代AI应用开发中，工具调用（Tool Calling）已成为增强大语言模型能力的重要手段。Model Context Protocol（MCP）作为新兴的标准化协议，为工具调用提供了统一的接口规范。本文将结合一个实际的双模式服务器实现，深入探讨如何同时满足MCP协议并兼容传统的HTTP&#x2F;SSE接口。</p><h2 id="项目架构概览"><a href="#项目架构概览" class="headerlink" title="项目架构概览"></a>项目架构概览</h2><pre><code class="typescript">import &#123; Server &#125; from &#39;@modelcontextprotocol/sdk/server/index.js&#39;;import &#123; StdioServerTransport &#125; from &#39;@modelcontextprotocol/sdk/server/stdio.js&#39;;import &#123; SSEServerTransport &#125; from &#39;@modelcontextprotocol/sdk/server/sse.js&#39;;// ... 其他导入</code></pre><p>核心服务器类 <code>DualModeServer</code> 支持三种运行模式：</p><ul><li><strong>stdio模式</strong>：标准输入输出，适合CLI工具集成</li><li><strong>HTTP模式</strong>：传统RESTful API</li><li><strong>SSE模式</strong>：Server-Sent Events，支持实时通信</li></ul><h2 id="MCP协议实现详解"><a href="#MCP协议实现详解" class="headerlink" title="MCP协议实现详解"></a>MCP协议实现详解</h2><h3 id="1-MCP服务器初始化"><a href="#1-MCP服务器初始化" class="headerlink" title="1. MCP服务器初始化"></a>1. MCP服务器初始化</h3><pre><code class="typescript">class DualModeServer &#123;  private mcpServer: Server;    constructor() &#123;    this.mcpServer = new Server(      &#123;        name: &#39;custom-tools-server&#39;,        version: &#39;1.0.0&#39;,      &#125;,      &#123;        capabilities: &#123;          tools: &#123;&#125;,        &#125;,      &#125;    );    this.setupMCPHandlers();  &#125;</code></pre><p>MCP服务器使用官方SDK创建，声明了工具调用能力，这是MCP协议的基础。</p><h3 id="2-工具列表查询（ListTools）"><a href="#2-工具列表查询（ListTools）" class="headerlink" title="2. 工具列表查询（ListTools）"></a>2. 工具列表查询（ListTools）</h3><p>MCP协议要求服务器必须实现 <code>ListToolsRequestSchema</code> 处理器：</p><pre><code class="typescript">this.mcpServer.setRequestHandler(ListToolsRequestSchema, async () =&gt; &#123;  const allManifests = toolRegistry.getAllToolManifests();    return &#123;    tools: allManifests.map((tool: any) =&gt; (&#123;      name: tool.name,      description: tool.description,      inputSchema: toolRegistry.getToolSchema(tool.name) || &#123;        type: &#39;object&#39;,        properties: &#123;&#125;,      &#125;,    &#125;)),  &#125;;&#125;);</code></pre><p>关键点：</p><ul><li>返回所有注册工具的清单</li><li>每个工具包含名称、描述和输入模式（JSON Schema）</li><li>通过工具注册表（<code>toolRegistry</code>）统一管理</li></ul><h3 id="3-工具调用（CallTool）"><a href="#3-工具调用（CallTool）" class="headerlink" title="3. 工具调用（CallTool）"></a>3. 工具调用（CallTool）</h3><p>MCP协议的核心功能是工具调用：</p><pre><code class="typescript">this.mcpServer.setRequestHandler(CallToolRequestSchema, async (request) =&gt; &#123;  const &#123; name, arguments: args &#125; = request.params;  try &#123;    const result = await toolRegistry.executeTool(name, args || &#123;&#125;);        return &#123;      content: [        &#123;          type: &#39;text&#39;,          text: typeof result === &#39;string&#39; ? result : JSON.stringify(result, null, 2),        &#125;,      ],    &#125;;  &#125; catch (error: any) &#123;    throw new McpError(      ErrorCode.InternalError,      `工具执行失败: $&#123;error.message&#125;`    );  &#125;&#125;);</code></pre><p>实现要点：</p><ul><li>解析请求中的工具名称和参数</li><li>通过工具注册表执行对应工具</li><li>统一结果格式：文本类型的内容数组</li><li>错误处理使用MCP标准错误码</li></ul><h2 id="HTTP接口兼容设计"><a href="#HTTP接口兼容设计" class="headerlink" title="HTTP接口兼容设计"></a>HTTP接口兼容设计</h2><h3 id="1-RESTful-API端点"><a href="#1-RESTful-API端点" class="headerlink" title="1. RESTful API端点"></a>1. RESTful API端点</h3><pre><code class="typescript">// 执行工具this.expressApp.post(&#39;/execute&#39;, async (req, res) =&gt; &#123;  const &#123; function: funcName, parameters &#125; = req.body;    if (!funcName || !parameters) &#123;    return res.status(400).json(&#123; error: &#39;Missing function or parameters&#39; &#125;);  &#125;    // 工具列表查询（元工具）  if (funcName === &#39;list_available_tools&#39;) &#123;    const category = parameters?.category;    const allManifests = toolRegistry.getAllToolManifests();        const filteredTools = allManifests.filter((t: any) =&gt;       !category || t.category === category    );        const categories = [...new Set(allManifests.map((t: any) =&gt; t.category))];        return res.json(&#123;      result: &#123;        categories,        tools: filteredTools.map((t: any) =&gt; (&#123;          name: t.name,          description: t.description,          category: t.category        &#125;))      &#125;    &#125;);  &#125;    // 工具模式获取  if (funcName === &#39;get_tool_schema&#39;) &#123;    const name = parameters?.name;    if (!name) &#123;      return res.status(400).json(&#123; error: &#39;Missing name parameter&#39; &#125;);    &#125;        const schema = toolRegistry.getToolSchema(name);    return res.json(&#123; result: schema || null &#125;);  &#125;    // 执行实际工具  try &#123;    const result = await toolRegistry.executeTool(funcName, parameters);    res.json(&#123; result &#125;);  &#125; catch (error: any) &#123;    console.error(`执行工具 $&#123;funcName&#125; 失败:`, error);    res.status(500).json(&#123;       error: error.message,      stack: process.env.NODE_ENV === &#39;development&#39; ? error.stack : undefined    &#125;);  &#125;&#125;);</code></pre><h3 id="2-辅助端点设计"><a href="#2-辅助端点设计" class="headerlink" title="2. 辅助端点设计"></a>2. 辅助端点设计</h3><pre><code class="typescript">// 健康检查this.expressApp.get(&#39;/health&#39;, (req, res) =&gt; &#123;  res.json(&#123;     status: &#39;healthy&#39;,     timestamp: new Date().toISOString(),    toolCount: toolRegistry.getAllToolManifests().length,    tools: toolRegistry.getToolNames(),    mode: &#39;http&#39;  &#125;);&#125;);// 工具列表this.expressApp.get(&#39;/tools&#39;, (req, res) =&gt; &#123;  res.json(&#123;    tools: toolRegistry.getAllToolManifests(),    count: toolRegistry.getToolNames().length  &#125;);&#125;);</code></pre><h2 id="SSE（Server-Sent-Events）支持"><a href="#SSE（Server-Sent-Events）支持" class="headerlink" title="SSE（Server-Sent Events）支持"></a>SSE（Server-Sent Events）支持</h2><p>MCP over SSE 提供了实时通信能力：</p><pre><code class="typescript">// MCP over SSE 端点this.expressApp.get(&#39;/sse&#39;, async (req, res) =&gt; &#123;  console.log(&#39;收到SSE连接请求&#39;);  const transport = new SSEServerTransport(&#39;/message&#39;, res);  await this.mcpServer.connect(transport);&#125;);this.expressApp.post(&#39;/message&#39;, async (req, res) =&gt; &#123;  // SSE消息处理由SDK自动完成  res.status(200).end();&#125;);</code></pre><p>实现特点：</p><ul><li>使用MCP SDK内置的SSE传输层</li><li>复用相同的MCP处理器逻辑</li><li>支持长连接和实时双向通信</li></ul><h2 id="工具注册表设计"><a href="#工具注册表设计" class="headerlink" title="工具注册表设计"></a>工具注册表设计</h2><p>核心的 <code>toolRegistry</code> 负责统一管理所有工具：</p><pre><code class="typescript">// 工具目录动态加载const toolsDir = join(__dirname, &#39;tools&#39;);console.log(`工具目录: $&#123;toolsDir&#125;`);// 手动设置工具目录(toolRegistry as any).toolsDir = toolsDir;// 初始化工具注册表（启用热重载）await toolRegistry.initialize();</code></pre><p>关键功能：</p><ul><li>动态加载指定目录下的所有工具模块</li><li>支持热重载，便于开发调试</li><li>提供统一的工具执行接口</li></ul><h2 id="多模式启动策略"><a href="#多模式启动策略" class="headerlink" title="多模式启动策略"></a>多模式启动策略</h2><pre><code class="typescript">async start() &#123;  // 确定工具目录路径  const toolsDir = join(__dirname, &#39;tools&#39;);  console.log(`工具目录: $&#123;toolsDir&#125;`);    // 手动设置工具目录  (toolRegistry as any).toolsDir = toolsDir;    // 初始化工具注册表（启用热重载）  await toolRegistry.initialize();    switch (MODE) &#123;    case &#39;stdio&#39;:      console.error(&#39;启动MCP服务器 (stdio模式)&#39;);      const stdioTransport = new StdioServerTransport();      await this.mcpServer.connect(stdioTransport);      console.error(&#39;已加载工具:&#39;, toolRegistry.getToolNames());      break;    case &#39;sse&#39;:    case &#39;http&#39;:      console.log(&#39;启动HTTP/SSE服务器模式&#39;);      this.setupHTTPServer();      break;    default:      throw new Error(`未知的服务器模式: $&#123;MODE&#125;`);  &#125;&#125;</code></pre><p>通过环境变量 <code>SERVER_MODE</code> 控制运行模式：</p><ul><li><code>stdio</code>：直接对接MCP客户端</li><li><code>http</code>：启动Web服务器，支持HTTP和SSE</li><li><code>sse</code>：同http模式，强调SSE功能</li></ul><h2 id="优雅关闭处理"><a href="#优雅关闭处理" class="headerlink" title="优雅关闭处理"></a>优雅关闭处理</h2><pre><code class="typescript">// 优雅关闭process.on(&#39;SIGINT&#39;, async () =&gt; &#123;  console.log(&#39;\n正在关闭服务器...&#39;);  await server.stop();  process.exit(0);&#125;);process.on(&#39;SIGTERM&#39;, async () =&gt; &#123;  console.log(&#39;\n正在关闭服务器...&#39;);  await server.stop();  process.exit(0);&#125;);</code></pre><h2 id="实际应用场景"><a href="#实际应用场景" class="headerlink" title="实际应用场景"></a>实际应用场景</h2><h3 id="场景1：AI助手集成"><a href="#场景1：AI助手集成" class="headerlink" title="场景1：AI助手集成"></a>场景1：AI助手集成</h3><ul><li>使用stdio模式集成到Claude、GPTs等AI助手</li><li>AI通过MCP协议直接调用本地工具</li></ul><h3 id="场景2：Web应用后端"><a href="#场景2：Web应用后端" class="headerlink" title="场景2：Web应用后端"></a>场景2：Web应用后端</h3><ul><li>使用HTTP模式为前端应用提供工具调用API</li><li>支持浏览器直接调用后端工具</li></ul><h3 id="场景3：实时协作系统"><a href="#场景3：实时协作系统" class="headerlink" title="场景3：实时协作系统"></a>场景3：实时协作系统</h3><ul><li>使用SSE模式实现实时工具调用</li><li>支持多人协作和实时状态更新</li></ul><h2 id="最佳实践建议"><a href="#最佳实践建议" class="headerlink" title="最佳实践建议"></a>最佳实践建议</h2><ol><li><strong>工具标准化</strong>：所有工具都应遵循统一的接口规范</li><li><strong>错误处理</strong>：MCP和HTTP模式下的错误处理要一致</li><li><strong>文档自动生成</strong>：利用工具模式自动生成API文档</li><li><strong>性能监控</strong>：添加工具执行时间和资源使用监控</li><li><strong>安全考虑</strong>：对工具调用进行权限验证和参数校验</li></ol><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文展示的DualModeServer实现了一个灵活、可扩展的工具调用服务器，它：</p><ul><li>完全兼容MCP协议标准</li><li>支持多种传输模式（stdio&#x2F;HTTP&#x2F;SSE）</li><li>提供统一的工具注册和执行机制</li><li>具备良好的可维护性和扩展性</li></ul><p>这种设计模式不仅适用于AI工具调用场景，也可以应用于任何需要提供多协议接口的服务端系统。通过统一的工具注册表，开发者可以轻松添加新工具，而无需修改核心服务器逻辑。</p><hr><p><em>由Alice生成</em></p>]]>
-    </content>
-    <id>http://example.com/2025/12/31/%E6%9E%84%E5%BB%BA%E5%8F%8C%E6%A8%A1%E5%BC%8F%E5%B7%A5%E5%85%B7%E8%B0%83%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%9A%E5%85%BC%E5%AE%B9MCP%E5%8D%8F%E8%AE%AE%E4%B8%8EHTTPSSE%E6%8E%A5%E5%8F%A3%E5%AE%9E%E8%B7%B5/</id>
-    <link href="http://example.com/2025/12/31/%E6%9E%84%E5%BB%BA%E5%8F%8C%E6%A8%A1%E5%BC%8F%E5%B7%A5%E5%85%B7%E8%B0%83%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%9A%E5%85%BC%E5%AE%B9MCP%E5%8D%8F%E8%AE%AE%E4%B8%8EHTTPSSE%E6%8E%A5%E5%8F%A3%E5%AE%9E%E8%B7%B5/"/>
-    <published>2025-12-31T09:25:00.000Z</published>
-    <summary>
-      <![CDATA[<p><strong>由Alice生成，注意鉴别</strong></p>
-<h1 id="构建双模式工具调用服务器：兼容MCP协议与HTTP-SSE接口实践"><a href="#构建双模式工具调用服务器：兼容MCP协议与HTTP-SSE接口实践" class="headerlink" title="构建双模式工具调用服务器：兼容MCP协议与HTTP&#x2F;SSE接口实践"></a>构建双模式工具调用服务器：兼容MCP协议与HTTP&#x2F;SSE接口实践</h1><blockquote>
-<p>作者：Alice<br>发布日期：2025-12-31<br>分类：技术教程、后端开发、AI工具</p>
-</blockquote>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在现代AI应用开发中，工具调用（Tool Calling）已成为增强大语言模型能力的重要手段。Model Context Protocol（MCP）作为新兴的标准化协议，为工具调用提供了统一的接口规范。本文将结合一个实际的双模式服务器实现，深入探讨如何同时满足MCP协议并兼容传统的HTTP&#x2F;SSE接口。</p>
-<h2 id="项目架构概览"><a href="#项目架构概览" class="headerlink" title="项目架构概览"></a>项目架构概览</h2><pre><code class="typescript">import &#123; Server &#125; from &#39;@modelcontextprotocol/sdk/server/index.js&#39;;
-import &#123; StdioServerTransport &#125; from &#39;@modelcontextprotocol/sdk/server/stdio.js&#39;;
-import &#123; SSEServerTransport &#125; from &#39;@modelcontextprotocol/sdk/server/sse.js&#39;;
-// ... 其他导入
-</code></pre>
-<p>核心服务器类 <code>DualModeServer</code> 支持三种运行模式：</p>
-<ul>
-<li><strong>stdio模式</strong>：标准输入输出，适合CLI工具集成</li>
-<li><strong>HTTP模式</strong>：传统RESTful API</li>
-<li><strong>SSE模式</strong>：Server-Sent Events，支持实时通信</li>
-</ul>
-<h2 id="MCP协议实现详解"><a href="#MCP协议实现详解" class="headerlink" title="MCP协议实现详解"></a>MCP协议实现详解</h2>]]>
-    </summary>
-    <title>构建双模式工具调用服务器：兼容MCP协议与HTTP/SSE接口实践</title>
-    <updated>2026-05-22T10:38:42.232Z</updated>
-  </entry>
-  <entry>
-    <author>
-      <name>叁七</name>
-    </author>
-    <category term="日志" scheme="http://example.com/categories/%E6%97%A5%E5%BF%97/"/>
-    <category term="日常" scheme="http://example.com/categories/%E6%97%A5%E5%BF%97/%E6%97%A5%E5%B8%B8/"/>
-    <category term="日常" scheme="http://example.com/tags/%E6%97%A5%E5%B8%B8/"/>
-    <category term="服务器" scheme="http://example.com/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
-    <category term="Python" scheme="http://example.com/tags/Python/"/>
-    <content>
-      <![CDATA[<h3 id="新增"><a href="#新增" class="headerlink" title="新增"></a>新增</h3><ul><li>工具调用服务器标准化sse接口</li><li>完成工具热重载</li></ul><h3 id="修复"><a href="#修复" class="headerlink" title="修复"></a>修复</h3><ul><li>python sandbox</li></ul>]]>
-    </content>
-    <id>http://example.com/2025/12/31/%E6%97%A5%E5%BF%97-22/</id>
-    <link href="http://example.com/2025/12/31/%E6%97%A5%E5%BF%97-22/"/>
-    <published>2025-12-31T08:06:45.000Z</published>
-    <summary>
-      <![CDATA[<h3 id="新增"><a href="#新增" class="headerlink" title="新增"></a>新增</h3><ul>
-<li>工具调用服务器标准化sse接口</li>
-<li>完成工具热重载</li>
-</ul>
-<h3 id="修复"><a href="#修复" class="headerlink" title="修复"></a>修复</h3><ul>
-<li>python sandbox</li>
-</ul>]]>
-    </summary>
-    <title>日志</title>
-    <updated>2026-05-22T10:38:42.251Z</updated>
   </entry>
 </feed>
