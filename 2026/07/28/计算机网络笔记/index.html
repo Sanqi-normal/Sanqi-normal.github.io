@@ -8,12 +8,12 @@
 <meta name="description" content="这是一个假装自己是命令行的AI，找出它的破绽                    Alice Shell：$~                      body {         font-family: &#39;Courier New&#39;, monospace;         background: #000 !important;         margin: 0;         padd">
 <meta property="og:type" content="website">
 <meta property="og:title" content="叁七のblog">
-<meta property="og:url" content="http://example.com/AI/index.html">
+<meta property="og:url" content="http://example.com/JS/index.html">
 <meta property="og:site_name" content="叁七のblog">
 <meta property="og:description" content="这是一个假装自己是命令行的AI，找出它的破绽                    Alice Shell：$~                      body {         font-family: &#39;Courier New&#39;, monospace;         background: #000 !important;         margin: 0;         padd">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2025-11-30T10:54:25.596Z">
-<meta property="article:modified_time" content="2025-11-30T10:54:25.596Z">
+<meta property="article:published_time" content="2025-11-30T11:08:47.415Z">
+<meta property="article:modified_time" content="2025-11-30T11:08:47.415Z">
 <meta property="article:author" content="叁七">
 <meta name="twitter:card" content="summary">
 
@@ -30,7 +30,7 @@
 <link href="//testingcf.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css" rel="stylesheet">
 
 <script src="//testingcf.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-<script>(function(){var t=localStorage.getItem("theme")||"tech";var d="dark";if(t==="cassette")d="cassette";else if(t==="fantasy")d="fantasy";else if(t==="manga")d="manga";else if(t==="personal")d="personal";else if(t==="post-punk")d="post-punk";else if(t==="punk")d="punk";else if(t==="simple")d="light";else if(t==="soviet")d="soviet";else if(t==="street")d="street";document.documentElement.setAttribute("data-theme",d)})();</script>
+<script>(function(){var t=localStorage.getItem("theme")||"tech";var d="dark";if(t==="cassette")d="cassette";else if(t==="fantasy")d="fantasy";else if(t==="github")d="github";else if(t==="manga")d="manga";else if(t==="personal")d="personal";else if(t==="post-punk")d="post-punk";else if(t==="punk")d="punk";else if(t==="simple")d="light";else if(t==="soviet")d="soviet";else if(t==="street")d="street";document.documentElement.setAttribute("data-theme",d)})();</script>
 <script src="/js/titleTip.js?v=" ></script>
 
 <script src="//testingcf.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
@@ -218,8 +218,8 @@
             </svg>
         </div>
         <div class="sys-text">
-            <span><span class="big">28</span><span class="sys-month">/07</span><span class="sys-year">/2026</span></span>
-            <span>174 BLOG</span>
+            <span><span class="big">1</span><span class="sys-month">/08</span><span class="sys-year">/2026</span></span>
+            <span>175 BLOG</span>
             
             <span id="busuanzi_container_site_uv" style="display:none"><span id="busuanzi_value_site_uv"></span> VISITORS</span>
             
@@ -551,20 +551,22 @@ document.addEventListener('DOMContentLoaded', function() {
 <blockquote>
 <ul>
 <li><strong>应用层</strong> —— 为计算机用户提供服务</li>
-<li><strong>表示层</strong> —— 数据处理</li>
-<li><strong>会话层</strong> —— 管理应用程序间会话</li>
+<li><strong>表示层</strong> —— 数据处理，允许解释传输的数据</li>
+<li><strong>会话层</strong> —— 管理应用程序间会话 数据交换的同步，检查点，恢复</li>
 <li><strong>传输层</strong> —— 为两台主机进程间通信提供数据传输服务</li>
 <li><strong>网络层</strong> —— 路由和寻址</li>
 <li><strong>数据链路层</strong> —— 帧编码和误差纠正控制</li>
 <li><strong>物理层</strong> —— 透明传送比特流传输</li>
 </ul>
 </blockquote>
-<hr>
-<h2 id="通信"><a href="#通信" class="headerlink" title="通信"></a>通信</h2><p>Client 与 Server 的逻辑通信依赖双方下层实体的互相传输。</p>
+<p><strong>互联网协议栈没有表示层和会话层</strong></p>
+<h2 id="TCP-IP模型-应用层-传输层-网络层-网络接口层"><a href="#TCP-IP模型-应用层-传输层-网络层-网络接口层" class="headerlink" title="TCP&#x2F;IP模型&gt; - 应用层&gt; - 传输层&gt; - 网络层&gt; - 网络接口层"></a><strong>TCP&#x2F;IP模型</strong><br>&gt; - 应用层<br>&gt; - 传输层<br>&gt; - 网络层<br>&gt; - 网络接口层</h2><h2 id="通信"><a href="#通信" class="headerlink" title="通信"></a>通信</h2><p>Client 与 Server 的逻辑通信依赖双方下层实体的互相传输。</p>
 <ul>
 <li><strong>传输要点</strong>：不出错、不重复、不丢失</li>
 <li><strong>面向连接的通讯方式</strong>：目标是在端系统间传输数据，采用 TCP 传输控制协议</li>
 </ul>
+<p><strong>信道</strong> 表示向某一方向传送信息的通道（!&#x3D;通信线路），一条通信线路在逻辑上往往对应一条发送信道和一条接收信道</p>
+<p><strong>信源</strong> 信号来源<br><strong>信宿</strong> 信号接收方<br><strong>信号</strong> 数据载体<br>数字信号离散  模拟信号连续</p>
 <h3 id="IP-协议"><a href="#IP-协议" class="headerlink" title="IP 协议"></a>IP 协议</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/lady_killer9/article/details/113482131">参考资料</a></p>
 <p>IP（网际互连协议，Internet Protocol）是 TCP&#x2F;IP 协议族中最为核心的协议。所有的 TCP、UDP、ICMP 及 IGMP 数据都以 IP 数据报格式传输。</p>
 <ul>
@@ -656,6 +658,51 @@ document.addEventListener('DOMContentLoaded', function() {
 <li><strong>有形（导引型媒体）</strong>：光纤、双绞线（两根绝缘铜线扭在一起）</li>
 <li><strong>无形（非导引型媒体）</strong>：电磁波（如 Wi-Fi、卫星）</li>
 </ul>
+<h2 id="Internet结构和ISP"><a href="#Internet结构和ISP" class="headerlink" title="Internet结构和ISP"></a>Internet结构和ISP</h2><p><strong>ISP</strong> 是互联网服务提供商（Internet Service Provider） 最核心的业务是互联网接入服务，通过电话线、光纤、移动网络等让普通用户的设备接入互联网</p>
+<p><strong>IXP</strong>是互联网交换中心（Internet Exchange Point），可以理解为不同网络运营商（ISP）之间互相连接和交换流量的“交通枢纽”。它的核心作用是让不同ISP的网络流量直接交换，而不必绕行更远的第三方骨干网，从而提升网速、降低延迟、节省成本。通常不涉及费用结算</p>
+<p>一个分组要经过许多网络</p>
+<p><strong>POP</strong> 高层ISP面向客户网络的接入点，涉及费用结算</p>
+<p><strong>对等接入</strong>：两个ISP对等互接 不涉及费用结算</p>
+<h2 id="分组延时、丢失和吞吐量"><a href="#分组延时、丢失和吞吐量" class="headerlink" title="分组延时、丢失和吞吐量"></a>分组延时、丢失和吞吐量</h2><p><strong>分组的延时和丢失是如何发生的</strong></p>
+<p>延迟：<br>排队延迟  分组到达链路的速率超过了链路输出的能力<br>节点处理延迟  检查bit级差错 检查分组首部和决定将分组导向何处<br>传输延迟 将分组发送到链路上的时间等于分组长度&#x2F;链路带宽<br>传播延迟 物理链路长度&#x2F;媒体传播速度  两个节点距离够近传播延迟几乎可忽略不计</p>
+<h3 id="LAN"><a href="#LAN" class="headerlink" title="LAN"></a>LAN</h3><p>局域网 </p>
+<h3 id="WAN"><a href="#WAN" class="headerlink" title="WAN"></a>WAN</h3><p>广域网</p>
+<p><strong>信道容量</strong>是指一条通信链路（信道）在单位时间内最大能够无差错传输的信息量。单位通常是 bps（比特每秒）。</p>
+<p><strong>流量强度</strong> 分组长度（bits）*分组到达队列平均速率&#x2F;链路带宽</p>
+<p>流量强度越接近0，平均排队延时非常小，越接近1越大，1时平均排队延时趋向无限大</p>
+<p>设计系统时流量强度不能大于1</p>
+<p><strong>ICMP</strong>（Internet Control Message Protocol，互联网控制报文协议）是TCP&#x2F;IP协议族中的一个核心协议，主要用于在IP主机和路由器之间传递网络层的控制信息和错误报告。它不传输用户数据，但为网络通信的稳定和诊断提供了关键支持。</p>
+<p><strong>吞吐量</strong> 在源端和目标端之间传输的速率</p>
+<p>平均吞吐取决于最小吞吐链路（瓶颈链路）</p>
+<p>瓶颈链路：端到端路径上，限制端到端吞吐的链路</p>
+<h2 id="协议层次及服务模型"><a href="#协议层次及服务模型" class="headerlink" title="协议层次及服务模型"></a>协议层次及服务模型</h2><p><strong>服务</strong>：低层实体向上层实体提供它们之间的通信能力<br>服务的类型分为面向连接的服务和无连接的服务<br><strong>原语</strong> 原语是网络服务提供者（如操作系统内核或网卡驱动）与服务用户（如应用程序）之间进行交互的一种标准接口或契约。<br><strong>服务访问点 SAP</strong> 使用下层提供的服务通过的层间接口地点</p>
+<p><strong>数据单元 DU</strong><br>上层sdu+本层控制信息 得到本层pdu<br><strong>SDU</strong>（Service Data Unit，服务数据单元）：它是从上一层传下来的、未经当前层处理的原始数据。可以理解为当前层需要服务的“客户”，它本身是上一层PDU的“净荷”（Payload）部分。</p>
+<p><strong>PDU</strong>（Protocol Data Unit，协议数据单元）：它是当前层对SDU进行处理（封装）后，准备发给对等层的最终数据单元。处理方式通常是给SDU加上本层的头部信息（Protocol Control Information, PCI），有时也会加上尾部</p>
+<p><strong>各层次的pdu（协议数据单元）</strong><br>应用层：报文（message）<br>传输层：报文段（segment） TCP段 UDP数据报<br>网络层：分组packet（无连接则是数据报datagram）<br>数据链路层：帧（frame）<br>物理层：位（bit）</p>
+<h2 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h2><p>架构：c&#x2F;s模式 p2p模式 混合模式</p>
+<h3 id="进程通信"><a href="#进程通信" class="headerlink" title="进程通信"></a>进程通信</h3><p><strong>进程</strong> 在主机上运行的应用程序<br>同一个主机内，使用进程间通信机制通信（操作系统定义）<br>不同主机，通过交换报文来通信</p>
+<h4 id="主机为了发送和接收报文，必须有一个标识-SAP"><a href="#主机为了发送和接收报文，必须有一个标识-SAP" class="headerlink" title="主机为了发送和接收报文，必须有一个标识 SAP"></a>主机为了发送和接收报文，必须有一个标识 SAP</h4><p>包含主机32位IP地址、所采用的传输层协议、端口号</p>
+<p>一个进程用IP+port 标示端节点<br><strong>本杂志上一对主机进程间通信由两个端节点构成</strong></p>
+<h4 id="需要穿过层间的信息"><a href="#需要穿过层间的信息" class="headerlink" title="需要穿过层间的信息"></a>需要穿过层间的信息</h4><blockquote>
+<p>必须携带的信息：<br>要传输的报文（SDU）<br>谁传的、传给谁（IP+TCP&#x2F;UDP+port）<br>传输层实体（tcp&#x2F;udp）根据信息进行报文段或数据报的封装<br>源端口号，目标端口号，数据等<br>将IP地址往下交IP实体，用于封装IP数据报：：源IP、目标IP</p>
+</blockquote>
+<h4 id="TCP的套接字"><a href="#TCP的套接字" class="headerlink" title="TCP的套接字"></a>TCP的套接字</h4><p><strong>socket</strong> 包含本地ip+port和目标ip+port 4元组的一个整数<br>唯一指定了一个会话 可以直接使用这个标示与远程应用进程通信 不必每次报文发送都指定4元组<br>使用socket的原因是简单易于管理</p>
+<p><strong>ICI</strong> 接口控制信息，同一台设备里，上下相邻两层协议在“交接”数据时，额外传递的一些“备注”或“指令”。它不是要发送给对方的数据本身，而是用来帮助下层协议更好地处理这份数据的辅助信息</p>
+<h4 id="UDP的套接字"><a href="#UDP的套接字" class="headerlink" title="UDP的套接字"></a>UDP的套接字</h4><p>包含本地ip和port的二元组</p>
+<h3 id="应用层协议"><a href="#应用层协议" class="headerlink" title="应用层协议"></a>应用层协议</h3><p>定义了不同端系统上的应用进程如何相互交换报文</p>
+<ul>
+<li>交换的报文类型：请求和应答报文</li>
+<li>各种报文类型的语法：报文中各个字段和描述</li>
+<li>字段语义：字段取值的含义</li>
+<li>进程何时、如何发送报文及对应报文相应规则</li>
+</ul>
+<p>应用协议仅仅是应用的一个组成部分</p>
+<p>Web应用包含了HTTP协议、web客户端、web服务器和HTML</p>
+<h3 id="安全TCP"><a href="#安全TCP" class="headerlink" title="安全TCP"></a>安全TCP</h3><p><strong>SSL</strong> 在TCP上实现，提供加密TCP连接<br>具有私密性、数据完整性和端到端的鉴别<br>在应用层，应用采用SSL库，SSL库使用TCP通信</p>
+<p><strong>SSL socket API</strong> 应用通过API将明文交给socket，SSL加密在互联网上传输</p>
+<p>SSL已废弃，目前被更安全可靠的TLS替代</p>
+<h2 id="Web-与HTTP"><a href="#Web-与HTTP" class="headerlink" title="Web 与HTTP"></a>Web 与HTTP</h2><h3 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h3><p>Web页： 由一些对象组成，对象可以是HTML、JPEG、JAVA小程序、声音剪辑文件等<br>Web页含有一个基本HTML文件，该文件包含若干对象引用（链接）<br>通过URL对每个对象引用<br>URL格式：协议名 用户 口令 主机名 路径名 端口</p>
+<h3 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h3><p>超文本传输协议<br>HTTP是Web的应用层协议</p>
 
             </div>
 
@@ -668,7 +715,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="fade-up-wait">
                 <div class="art-widget-title">大纲 <span>CONTENTS</span></div>
                 <div class="toc-list" id="art-toc">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%AE%BA"><span class="toc-text">概论</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C"><span class="toc-text">网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C"><span class="toc-text">计算机网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%92%E8%81%94%E7%BD%91"><span class="toc-text">互联网</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PDU"><span class="toc-text">PDU</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E5%B1%82%E5%8E%9F%E7%90%86"><span class="toc-text">分层原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#OSI-%E4%B8%83%E5%B1%82%E6%A8%A1%E5%9E%8B"><span class="toc-text">OSI 七层模型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E4%BF%A1"><span class="toc-text">通信</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#IP-%E5%8D%8F%E8%AE%AE"><span class="toc-text">IP 协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TCP-%E5%8D%8F%E8%AE%AE"><span class="toc-text">TCP 协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UDP-%E5%8D%8F%E8%AE%AE"><span class="toc-text">UDP 协议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E5%B1%82"><span class="toc-text">网络层</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#E2E"><span class="toc-text">E2E</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P2P"><span class="toc-text">P2P</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%A0%E7%BB%9F%E6%96%B9%E5%BC%8F%E4%B8%8B%E7%BD%91%E7%BB%9C%E5%B1%82%E6%98%AF%E5%A6%82%E4%BD%95%E4%BC%A0%E8%BE%93%E6%95%B0%E6%8D%AE%E7%9A%84%EF%BC%9F"><span class="toc-text">传统方式下网络层是如何传输数据的？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SDN"><span class="toc-text">SDN</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84"><span class="toc-text">网络结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E8%BE%B9%E7%BC%98"><span class="toc-text">网络边缘</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E6%A0%B8%E5%BF%83"><span class="toc-text">网络核心</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#access"><span class="toc-text">access</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%BC%8F"><span class="toc-text">网络模式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E4%BF%A1%E7%BD%91%E7%BB%9C"><span class="toc-text">通信网络</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E8%B7%AF%E4%BA%A4%E6%8D%A2-%E7%94%B5%E8%B7%AF%E4%BA%A4%E6%8D%A2"><span class="toc-text">线路交换 &#x2F; 电路交换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E7%BB%84%E4%BA%A4%E6%8D%A2"><span class="toc-text">分组交换</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A5%E5%85%A5%E7%BD%91%E7%BB%9C%E5%92%8C%E7%89%A9%E7%90%86%E5%AA%92%E4%BD%93"><span class="toc-text">接入网络和物理媒体</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%8F%E5%AE%85%E6%8E%A5%E5%85%A5"><span class="toc-text">住宅接入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%BC%86%E7%BD%91%E7%BB%9C"><span class="toc-text">线缆网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A0%E7%BA%BF%E6%8E%A5%E5%85%A5%E7%BD%91%E7%BB%9C-RAN"><span class="toc-text">无线接入网络 (RAN)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%A9%E7%90%86%E5%AA%92%E4%BD%93"><span class="toc-text">物理媒体</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%AE%BA"><span class="toc-text">概论</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C"><span class="toc-text">网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C"><span class="toc-text">计算机网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%92%E8%81%94%E7%BD%91"><span class="toc-text">互联网</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PDU"><span class="toc-text">PDU</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E5%B1%82%E5%8E%9F%E7%90%86"><span class="toc-text">分层原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#OSI-%E4%B8%83%E5%B1%82%E6%A8%A1%E5%9E%8B"><span class="toc-text">OSI 七层模型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP-IP%E6%A8%A1%E5%9E%8B-%E5%BA%94%E7%94%A8%E5%B1%82-%E4%BC%A0%E8%BE%93%E5%B1%82-%E7%BD%91%E7%BB%9C%E5%B1%82-%E7%BD%91%E7%BB%9C%E6%8E%A5%E5%8F%A3%E5%B1%82"><span class="toc-text">TCP&#x2F;IP模型&gt; - 应用层&gt; - 传输层&gt; - 网络层&gt; - 网络接口层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E4%BF%A1"><span class="toc-text">通信</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#IP-%E5%8D%8F%E8%AE%AE"><span class="toc-text">IP 协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TCP-%E5%8D%8F%E8%AE%AE"><span class="toc-text">TCP 协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UDP-%E5%8D%8F%E8%AE%AE"><span class="toc-text">UDP 协议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E5%B1%82"><span class="toc-text">网络层</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#E2E"><span class="toc-text">E2E</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P2P"><span class="toc-text">P2P</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%A0%E7%BB%9F%E6%96%B9%E5%BC%8F%E4%B8%8B%E7%BD%91%E7%BB%9C%E5%B1%82%E6%98%AF%E5%A6%82%E4%BD%95%E4%BC%A0%E8%BE%93%E6%95%B0%E6%8D%AE%E7%9A%84%EF%BC%9F"><span class="toc-text">传统方式下网络层是如何传输数据的？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SDN"><span class="toc-text">SDN</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84"><span class="toc-text">网络结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E8%BE%B9%E7%BC%98"><span class="toc-text">网络边缘</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E6%A0%B8%E5%BF%83"><span class="toc-text">网络核心</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#access"><span class="toc-text">access</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%BC%8F"><span class="toc-text">网络模式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E4%BF%A1%E7%BD%91%E7%BB%9C"><span class="toc-text">通信网络</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E8%B7%AF%E4%BA%A4%E6%8D%A2-%E7%94%B5%E8%B7%AF%E4%BA%A4%E6%8D%A2"><span class="toc-text">线路交换 &#x2F; 电路交换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E7%BB%84%E4%BA%A4%E6%8D%A2"><span class="toc-text">分组交换</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A5%E5%85%A5%E7%BD%91%E7%BB%9C%E5%92%8C%E7%89%A9%E7%90%86%E5%AA%92%E4%BD%93"><span class="toc-text">接入网络和物理媒体</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%8F%E5%AE%85%E6%8E%A5%E5%85%A5"><span class="toc-text">住宅接入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%BC%86%E7%BD%91%E7%BB%9C"><span class="toc-text">线缆网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A0%E7%BA%BF%E6%8E%A5%E5%85%A5%E7%BD%91%E7%BB%9C-RAN"><span class="toc-text">无线接入网络 (RAN)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%A9%E7%90%86%E5%AA%92%E4%BD%93"><span class="toc-text">物理媒体</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Internet%E7%BB%93%E6%9E%84%E5%92%8CISP"><span class="toc-text">Internet结构和ISP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E7%BB%84%E5%BB%B6%E6%97%B6%E3%80%81%E4%B8%A2%E5%A4%B1%E5%92%8C%E5%90%9E%E5%90%90%E9%87%8F"><span class="toc-text">分组延时、丢失和吞吐量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#LAN"><span class="toc-text">LAN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WAN"><span class="toc-text">WAN</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%8F%E8%AE%AE%E5%B1%82%E6%AC%A1%E5%8F%8A%E6%9C%8D%E5%8A%A1%E6%A8%A1%E5%9E%8B"><span class="toc-text">协议层次及服务模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E5%B1%82"><span class="toc-text">应用层</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1"><span class="toc-text">进程通信</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E5%B1%82%E5%8D%8F%E8%AE%AE"><span class="toc-text">应用层协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E5%85%A8TCP"><span class="toc-text">安全TCP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Web-%E4%B8%8EHTTP"><span class="toc-text">Web 与HTTP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Web"><span class="toc-text">Web</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP"><span class="toc-text">HTTP</span></a></li></ol></li></ol>
                 </div>
             </div>
 
@@ -774,7 +821,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     <div class="post-nav fade-up-wait">
         
-            <a id="nav-prev" style="opacity: 0.3; pointer-events: none;">< 上一篇：没有了</a>
+            <a id="nav-prev" class="site_url" href="/2026/07/29/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/">< 上一篇：操作系统笔记</a>
         
         
         <div class="post-nav-center">— S.Q. —</div>
@@ -797,7 +844,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
     <div class="footer-right">POWERED BY HEXO | THEME: TECH</div>
     
-    <input type="hidden" id="tech_site_word_count" value="162.8k">
+    <input type="hidden" id="tech_site_word_count" value="167.1k">
     <div style="display: none">
         <span id="busuanzi_value_site_uv"></span>
         <span id="busuanzi_value_site_pv"></span>
@@ -879,6 +926,13 @@ document.addEventListener('DOMContentLoaded', function() {
                      data-theme-value="fantasy"
                      data-title="西幻风">
                     <img src="/img/feature/fantasy.svg">
+                </div>
+                
+                <div class="palette-item"
+                     data-theme-style="github"
+                     data-theme-value="github"
+                     data-title="GitHub风">
+                    <img src="/img/feature/github.svg">
                 </div>
                 
                 <div class="palette-item"

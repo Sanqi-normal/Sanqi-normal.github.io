@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>操作系统笔记 | 叁七のblog</title>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="这是一个假装自己是命令行的AI，找出它的破绽                    Alice Shell：$~                      body {         font-family: &#39;Courier New&#39;, monospace;         background: #000 !important;         margin: 0;         padd">
+<meta property="og:type" content="website">
+<meta property="og:title" content="叁七のblog">
+<meta property="og:url" content="http://example.com/JS/index.html">
+<meta property="og:site_name" content="叁七のblog">
+<meta property="og:description" content="这是一个假装自己是命令行的AI，找出它的破绽                    Alice Shell：$~                      body {         font-family: &#39;Courier New&#39;, monospace;         background: #000 !important;         margin: 0;         padd">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-11-30T11:08:47.415Z">
+<meta property="article:modified_time" content="2025-11-30T11:08:47.415Z">
+<meta property="article:author" content="叁七">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="icon" href="https://testingcf.jsdelivr.net/gh/sanqi-normal/sanqi-normal.github.io/img/top.png">
+
+<link href="/css/style.css?v=" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-light.css?v=" rel="stylesheet">
+
+<link href="//testingcf.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<link href="//testingcf.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css" rel="stylesheet">
+<link href="//testingcf.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css" rel="stylesheet">
+
+<script src="//testingcf.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script>(function(){var t=localStorage.getItem("theme")||"tech";var d="dark";if(t==="cassette")d="cassette";else if(t==="fantasy")d="fantasy";else if(t==="github")d="github";else if(t==="manga")d="manga";else if(t==="personal")d="personal";else if(t==="post-punk")d="post-punk";else if(t==="punk")d="punk";else if(t==="simple")d="light";else if(t==="soviet")d="soviet";else if(t==="street")d="street";document.documentElement.setAttribute("data-theme",d)})();</script>
+<script src="/js/titleTip.js?v=" ></script>
+
+<script src="//testingcf.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof hljs !== 'undefined') {
+            if (hljs.highlightAll) {
+                hljs.highlightAll();
+            } else if (hljs.initHighlighting) {
+                hljs.initHighlighting();
+            }
+        }
+    });
+</script>
+
+<script src="//testingcf.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+    <!--[if lt IE 9]>
+
+
+  
+  <link rel="preconnect" href="https://fonts.loli.net" crossorigin>
+  <link href="https://fonts.loli.net/css2?family=Noto+Sans+SC:wght@400;700&family=Anton&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="叁七のblog" type="application/atom+xml">
+</head>
+
+
+
+
+
+<body>
+<script>
+  window.THEME_CONFIG = {
+    blog_path: "/",
+    highlight_on: true,
+    highlight_copy: true,
+    i18n_search_empty: "search.empty"
+  };
+</script>
+
+  <!-- 磁带播放器样式统一处理 -->
+
+<div class="layout-container">
+    <aside class="sidebar">
+    <div class="sidebar-close" id="sidebar-close">
+        <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+    </div>
+    <a class="brand site_url" href="/">
+        <svg class="brand-icon" viewBox="0 0 24 24">
+            <g fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" />
+                <path d="M7 7h10" />
+                <path d="M7 12h10" />
+                <path d="M7 16h6" />
+            </g>
+        </svg>
+        <div class="brand-text">
+            <h1>叁七のblog</h1>
+            <span>- LOGOS -</span>
+        </div>
+    </a>
+
+    <div class="nav-label">NAVIGATION</div>
+    <ul class="nav-menu">
+        
+        <li class="nav-item ">
+            <a class="site_url" href="/">
+                <img class="nav-icon" src="/img/navigation/%E9%A6%96%E9%A1%B5.svg" alt="首页">
+                <div class="nav-item-text">
+                    <span class="zh">首页</span>
+                    <span class="en">HOME</span>
+                </div>
+            </a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="site_url" href="/photo">
+                <img class="nav-icon" src="/img/navigation/%E7%9B%B8%E5%86%8C.svg" alt="相册">
+                <div class="nav-item-text">
+                    <span class="zh">相册</span>
+                    <span class="en">PHOTO</span>
+                </div>
+            </a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="site_url" href="/novel">
+                <img class="nav-icon" src="/img/navigation/%E5%B0%8F%E8%AF%B4.svg" alt="小说">
+                <div class="nav-item-text">
+                    <span class="zh">小说</span>
+                    <span class="en">NOVEL</span>
+                </div>
+            </a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="site_url" href="/AI">
+                <img class="nav-icon" src="/img/navigation/AI.svg" alt="AI">
+                <div class="nav-item-text">
+                    <span class="zh">AI</span>
+                    <span class="en">AI</span>
+                </div>
+            </a>
+        </li>
+        
+    </ul>
+
+    <div class="nav-label">INFO</div>
+    <div class="sidebar-bottom">
+        <div class="user-info">
+            <div class="avatar-container">
+                <div class="avatar" style="background-image: url('https://testingcf.jsdelivr.net/gh/sanqi-normal/sanqi-normal.github.io/img/avatar.jpg')"></div>
+                <div class="avatar glitch-layer layer-pink" style="background-image: url('https://testingcf.jsdelivr.net/gh/sanqi-normal/sanqi-normal.github.io/img/avatar.jpg')"></div>
+                <div class="avatar glitch-layer layer-cyan" style="background-image: url('https://testingcf.jsdelivr.net/gh/sanqi-normal/sanqi-normal.github.io/img/avatar.jpg')"></div>
+            </div>
+            <div>
+                <div class="user-name">叁七</div>
+                <div class="user-id">#2026</div>
+            </div>
+        </div>
+        
+        <div class="user-desc">计算机专业本科生，<br>每天不知道在忙什么。</div>
+
+        <div class="social-label">你也能在以下地方遇到我</div>
+        <div class="social-links">
+            
+                
+                    <a class="social-btn" title="github" href="https://github.com/Sanqi-normal" target="_blank">
+                        <img src="/img/social/github.svg" alt="github">
+                    </a>
+                
+                    <a class="social-btn" title="bilibili" href="https://space.bilibili.com/2140541511" target="_blank">
+                        <img src="/img/social/bilibili.svg" alt="bilibili">
+                    </a>
+                
+            
+        </div>
+    </div>
+</aside>
+
+    <header class="top-bar">
+    <div class="menu-toggle" id="menu-toggle">
+        <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+    </div>
+    <div class="search-box fade-up-wait">
+        <div class="search-filter-container">
+            <svg class="search-filter-icon" viewBox="0 0 24 24"><path d="M3 18h6v-2H3v2zM3 6v2h18V6H3zm0 7h12v-2H3v2z"/></svg>
+            <div class="search-filter-panel">
+                <label><input type="checkbox" class="filter-chk" data-type="title" checked> 标题</label>
+                <label><input type="checkbox" class="filter-chk" data-type="content" checked> 内容</label>
+                <label><input type="checkbox" class="filter-chk" data-type="categories" checked> 分类</label>
+                <label><input type="checkbox" class="filter-chk" data-type="tags" checked> 标签</label>
+            </div>
+        </div>
+        <input type="text" id="local-search-input" placeholder="搜索内容" autocomplete="off">
+        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+    </div>
+
+    
+    <div id="local-search-result" style="display: none; position: absolute; top: 110px; right: 40px; width: 360px; max-width: 90vw; background: var(--bg-panel); box-shadow: 0 5px 15px rgba(0,0,0,0.5); z-index: 100; max-height: 400px; overflow-y: auto; padding: 10px; border: 1px solid var(--border-dim); border-radius: 4px;">
+    </div>
+    
+
+    <div class="top-links fade-up-wait">
+        
+            <a class="site_url" href="/categories/%E6%97%A5%E5%BF%97/">日志</a>
+        
+        <a class="site_url" href="/about/">关于</a>
+    </div>
+    <div class="sys-status fade-up-wait" id="sys-status">
+        <svg viewBox="0 0 100 30" id="visualizer-svg" style="cursor: pointer;" data-title="播放音乐">
+            <polyline class="visualizer-line-bg" points="0,15 20,15 25,5 30,25 35,15 100,15" stroke-width="2"></polyline>
+            <polyline id="visualizer-line" points="0,15 20,15 25,5 30,25 35,15 100,15" stroke-width="2"></polyline>
+        </svg>
+        <div class="music-controls" id="music-controls">
+            <svg class="music-btn" id="prev-btn" viewBox="0 0 6 6" width="12" height="12" data-title="上一首">
+                <polygon points="6,0 0,3 6,6" fill="none" stroke-width="0.8"/>
+            </svg>
+            <svg class="music-btn" id="loop-btn" viewBox="0 0 12 12" width="14" height="14" data-title="单曲循环">
+                <circle id="loop-circle" cx="6" cy="6" r="4.5" fill="none" stroke-width="1"/>
+            </svg>
+            <svg class="music-btn" id="next-btn" viewBox="0 0 6 6" width="12" height="12" data-title="下一首">
+                <polygon points="0,0 6,3 0,6" fill="none" stroke-width="0.8"/>
+            </svg>
+        </div>
+        <div class="sys-text">
+            <span><span class="big">1</span><span class="sys-month">/08</span><span class="sys-year">/2026</span></span>
+            <span>175 BLOG</span>
+            
+            <span id="busuanzi_container_site_uv" style="display:none"><span id="busuanzi_value_site_uv"></span> VISITORS</span>
+            
+        </div>
+    </div>
+</header>
+
+<script>
+(function() {
+    var musicList = ["/music/1.mp3","/music/chill-synthwave-background-music-for-youtube-shorts-and-videos-345551.mp3"];
+    if (!musicList || musicList.length === 0) {
+        musicList = ['/music/example.mp3'];
+    }
+    var currentTrack = 0;
+    var audioCtx, analyser, dataArray, source, audio;
+    var isPlaying = false;
+    var animationId;
+
+    var container = document.getElementById('sys-status');
+    var controls = document.getElementById('music-controls');
+    var svg = document.getElementById('visualizer-svg');
+    var polyline = document.getElementById('visualizer-line');
+    var defaultPoints = "0,15 20,15 25,5 30,25 35,15 100,15";
+
+    function initAudio() {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        analyser = audioCtx.createAnalyser();
+        // 使用参考代码中推荐的高精度 FFT 窗口
+        analyser.fftSize = 4096; 
+        dataArray = new Uint8Array(analyser.frequencyBinCount);
+        audio = new Audio();
+        window.siteAudio = audio; // 暴露给全局以便工具栏控制
+        audio.crossOrigin = "anonymous";
+        audio.src = musicList[currentTrack];
+        audio.loop = isSingleLoop;
+        audio.onended = nextTrack;
+        source = audioCtx.createMediaElementSource(audio);
+        source.connect(analyser);
+        analyser.connect(audioCtx.destination);
+    }
+
+    function updatePoints() {
+        if (!isPlaying) return;
+        analyser.getByteFrequencyData(dataArray);
+        
+        var points = "";
+        // 减少点数以避免过于密集
+        var pointsCount = 40; 
+        var sliceWidth = 100 / (pointsCount - 1);
+        
+        for (var i = 0; i < pointsCount; i++) {
+            var t = i / (pointsCount - 1);
+            // 调整映射，使其对频率更敏感且分布更均匀
+            var logIndex = Math.floor(Math.pow(t, 1.4) * (dataArray.length * 0.6));
+            var value = dataArray[logIndex] || 0;
+
+            if (value > 5) {
+                // 增加权重补偿，提升纵向波动感
+                var compensation = 1.2 + t * 0.8; 
+                value = value * compensation;
+            }
+            value = Math.min(255, value);
+
+            var percent = value / 255;
+            // 增加振幅因子 (30 * 0.8)
+            var amplitude = (30 * 0.8) * percent; 
+            
+            var x = i * sliceWidth;
+            var y = 15 - (amplitude / 2); // 减小基准高度，让波动更明显
+
+            points += x + "," + y + " ";
+        }
+        
+        polyline.setAttribute('points', points);
+        animationId = requestAnimationFrame(updatePoints);
+    }
+
+    function togglePlay() {
+        if (!audioCtx) initAudio();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+
+        if (isPlaying) {
+            audio.pause();
+            isPlaying = false;
+            container.classList.remove('playing');
+            controls.classList.remove('active');
+            cancelAnimationFrame(animationId);
+            polyline.setAttribute('points', defaultPoints);
+            updateTooltip(svg, '播放音乐');
+        } else {
+            audio.play().catch(e => console.error("Playback failed", e));
+            isPlaying = true;
+            container.classList.add('playing');
+            controls.classList.add('active');
+            updatePoints();
+            updateTooltip(svg, '暂停播放');
+        }
+    }
+
+    var isSingleLoop = false;
+    var loopBtn = document.getElementById('loop-btn');
+    var loopCircle = document.getElementById('loop-circle');
+
+    loopBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        isSingleLoop = !isSingleLoop;
+        if (isSingleLoop) {
+            if (audio) audio.loop = true;
+            loopCircle.setAttribute('fill', 'currentColor');
+            updateTooltip(this, '列表循环');
+        } else {
+            if (audio) audio.loop = false;
+            loopCircle.setAttribute('fill', 'none');
+            updateTooltip(this, '单曲循环');
+        }
+    });
+
+    function updateTooltip(el, newTitle) {
+        el.setAttribute('data-title', newTitle);
+        if (typeof jQuery.fn.quberTip === 'function') {
+            $(el).off('mouseenter mouseleave mousemove');
+            $(el).quberTip();
+        }
+    }
+
+    // 初始化提示框
+    if (typeof jQuery.fn.quberTip === 'function') {
+        $('.music-btn, #visualizer-svg').quberTip();
+    }
+
+    function nextTrack() {
+        currentTrack = (currentTrack + 1) % musicList.length;
+        if (audio) {
+            audio.src = musicList[currentTrack];
+            if (isPlaying) audio.play();
+        }
+    }
+
+    function prevTrack() {
+        currentTrack = (currentTrack - 1 + musicList.length) % musicList.length;
+        if (audio) {
+            audio.src = musicList[currentTrack];
+            if (isPlaying) audio.play();
+        }
+    }
+
+    svg.addEventListener('click', function(e) {
+        e.stopPropagation();
+        togglePlay();
+    });
+
+    document.getElementById('prev-btn').addEventListener('click', function(e) {
+        e.stopPropagation();
+        prevTrack();
+    });
+
+    document.getElementById('next-btn').addEventListener('click', function(e) {
+        e.stopPropagation();
+        nextTrack();
+    });
+})();
+</script>
+
+
+<script>
+var searchDebounceTimer = null;
+document.addEventListener('DOMContentLoaded', function() {
+    var searchInput = document.getElementById('local-search-input');
+    var searchResult = document.getElementById('local-search-result');
+    if (!searchInput || !searchResult) return;
+
+    searchInput.addEventListener('input', function() {
+        clearTimeout(searchDebounceTimer);
+        var val = this.value.trim();
+        if (val.length === 0) {
+            searchResult.style.display = 'none';
+            searchResult.innerHTML = '';
+            return;
+        }
+        searchDebounceTimer = setTimeout(function() {
+            if (typeof searchAll === 'function') {
+                searchAll(val);
+                searchResult.style.display = 'block';
+            }
+        }, 300);
+    });
+
+    // Trigger search on filter change
+    document.querySelectorAll('.filter-chk').forEach(function(chk) {
+        chk.addEventListener('change', function() {
+            var val = searchInput.value.trim();
+            if (val.length > 0 && typeof searchAll === 'function') {
+                searchAll(val);
+            }
+        });
+    });
+
+    // Handle search box expansion and filter panel interaction
+    var searchBox = document.querySelector('.search-box');
+    var filterContainer = document.querySelector('.search-filter-container');
+    var filterPanel = document.querySelector('.search-filter-panel');
+
+    filterContainer.addEventListener('mouseenter', function() {
+        searchBox.classList.add('expanded');
+    });
+
+    searchBox.addEventListener('mouseleave', function(e) {
+        // Only remove expanded class if we're not moving to the filter panel
+        if (!filterPanel.contains(e.relatedTarget)) {
+            if (!searchInput.matches(':focus')) {
+                searchBox.classList.remove('expanded');
+            }
+        }
+    });
+
+    filterPanel.addEventListener('mouseleave', function(e) {
+        if (!searchBox.contains(e.relatedTarget)) {
+            if (!searchInput.matches(':focus')) {
+                searchBox.classList.remove('expanded');
+            }
+        }
+    });
+
+    searchInput.addEventListener('focus', function() {
+        searchBox.classList.add('expanded');
+    });
+
+    searchInput.addEventListener('blur', function() {
+        // Delay removal to allow for clicks on filters
+        setTimeout(function() {
+            if (!filterPanel.matches(':hover') && !filterContainer.matches(':hover')) {
+                searchBox.classList.remove('expanded');
+            }
+        }, 200);
+    });
+
+    searchInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            this.value = '';
+            searchResult.style.display = 'none';
+            searchResult.innerHTML = '';
+            this.blur();
+        }
+    });
+
+    // Hide results when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!searchInput.contains(e.target) && !searchResult.contains(e.target)) {
+            searchResult.style.display = 'none';
+        }
+    });
+});
+</script>
+
+
+    <main class="main-wrapper">
+        <div id="pjax-container" class="pjax">
+            
+
+<div id="view-article" class="view-section active">
+    <div class="breadcrumb fade-up-wait">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2z"/></svg>
+        <a class="site_url" href="/">/ BLOG</a>
+        <a class="site_url" href="/categories/%E7%AC%94%E8%AE%B0/">/ 笔记</a>
+        <span>/ 操作系统笔记</span>
+    </div>
+
+    <div class="article-layout">
+        <article id="post-操作系统笔记" class="article-main fade-up-wait" itemscope itemprop="blogPost">
+            <header class="art-header">
+                <h1 class="art-title" itemprop="name">操作系统笔记</h1>
+                <div class="art-meta">
+                    <div>
+                        <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg> 
+                        叁七
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/><path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg> 
+                        <time datetime="2026-07-29T06:15:17.000Z" itemprop="datePublished">2026-07-29</time>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg> 
+                        
+                            
+                                <a class="site_url art-meta-link" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a>
+                            
+                        
+                    </div>
+                    
+                    <div>
+                        <svg viewBox="0 0 24 24"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg>
+                        
+                            <a class="site_url art-meta-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
+                        
+                    </div>
+                    
+                                    </div>
+            </header>
+            
+            <div class="art-content article-entry" itemprop="articleBody">
+                <blockquote>
+<p>参考课程 &#x2F; 资料：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1YE411D7nH">王道考研 操作系统</a></p>
+</blockquote>
+<hr>
+<h2 id="一、-计算机系统层次结构"><a href="#一、-计算机系统层次结构" class="headerlink" title="一、 计算机系统层次结构"></a>一、 计算机系统层次结构</h2><pre><code class="text">[ 用户 ] ───&gt; [ 软件 ] ───&gt; [ 操作系统 ] ───&gt; [ 硬件 ]
+</code></pre>
+<h3 id="1-1-操作系统定义"><a href="#1-1-操作系统定义" class="headerlink" title="1.1 操作系统定义"></a>1.1 操作系统定义</h3><p><strong>操作系统（Operating System, OS）</strong>：控制和管理整个计算机系统的硬件和软件资源，并合理组织、调度计算机的工作和资源分配，以提供给用户和其他软件方便的接口和环境，是计算机系统中最基础的系统软件。</p>
+<hr>
+<h2 id="二、-操作系统功能"><a href="#二、-操作系统功能" class="headerlink" title="二、 操作系统功能"></a>二、 操作系统功能</h2><h3 id="2-1-作为系统资源的管理者"><a href="#2-1-作为系统资源的管理者" class="headerlink" title="2.1 作为系统资源的管理者"></a>2.1 作为系统资源的管理者</h3><ul>
+<li><strong>处理机管理 &#x2F; 进程管理</strong>：进程控制、进程同步、进程通信、死锁处理、处理机调度等。</li>
+<li><strong>存储器管理</strong>：内存分配与回收、地址转换、内存保护与共享、虚拟内存。</li>
+<li><strong>文件管理</strong>：文件存储空间管理、目录管理、文件读&#x2F;写管理与保护。</li>
+<li><strong>设备管理</strong>：缓冲管理、设备分配、设备驱动与处理。</li>
+</ul>
+<h3 id="2-2-向上层提供服务"><a href="#2-2-向上层提供服务" class="headerlink" title="2.2 向上层提供服务"></a>2.2 向上层提供服务</h3><ul>
+<li><strong>命令接口</strong>（供普通用户使用，非 GUI 接口）：<ul>
+<li><strong>联机命令接口</strong>：交互式执行（如终端命令行）。</li>
+<li><strong>脱机命令接口</strong>：批处理执行（如批处理脚本 <code>.bat</code> &#x2F; <code>.sh</code>）。</li>
+</ul>
+</li>
+<li><strong>程序接口</strong>（供程序员使用）：通过<strong>系统调用（System Call）</strong>提供给应用程序使用。</li>
+<li><strong>GUI 接口</strong>（图形用户界面）：通过图标、窗口等形式方便用户操作。</li>
+</ul>
+<h3 id="2-3-对硬件机器的扩展"><a href="#2-3-对硬件机器的扩展" class="headerlink" title="2.3 对硬件机器的扩展"></a>2.3 对硬件机器的扩展</h3><ul>
+<li>操作系统对裸机进行扩充，提供更方便、更强大的服务，称为<strong>虚拟机 &#x2F; 扩充机器</strong>。</li>
+</ul>
+<hr>
+<h2 id="三、-操作系统的四大特征"><a href="#三、-操作系统的四大特征" class="headerlink" title="三、 操作系统的四大特征"></a>三、 操作系统的四大特征</h2><blockquote>
+<p><strong>并发</strong>和<strong>共享</strong>是操作系统最基本的两个特征，二者互为存在条件。</p>
+</blockquote>
+<h3 id="3-1-并发（Concurrency）"><a href="#3-1-并发（Concurrency）" class="headerlink" title="3.1 并发（Concurrency）"></a>3.1 并发（Concurrency）</h3><ul>
+<li><strong>概念</strong>：指两个或多个事件在同一时间间隔内发生（宏观上同时发生，微观上交替执行）。</li>
+<li><strong>对比</strong>：<ul>
+<li><strong>并发</strong>：单核 CPU 在同一时刻只执行一个程序，各程序微观上交替执行。</li>
+<li><strong>并行（Parallelism）</strong>：多核 CPU 同一时刻可以执行多个程序，各程序微观上同时执行。</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-2-共享（Sharing）"><a href="#3-2-共享（Sharing）" class="headerlink" title="3.2 共享（Sharing）"></a>3.2 共享（Sharing）</h3><ul>
+<li><strong>概念</strong>：系统资源可供内存中多个并发执行的进程共同使用。</li>
+<li><strong>共享方式</strong>：<ul>
+<li><strong>互斥共享</strong>：一段时间内只允许一个进程访问该资源（如摄像头、打印机等临界资源）。</li>
+<li><strong>同时共享</strong>：允许微观上交替或宏观上同时访问该资源（如磁盘读写、可重入代码等）。</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-3-虚拟（Virtual）"><a href="#3-3-虚拟（Virtual）" class="headerlink" title="3.3 虚拟（Virtual）"></a>3.3 虚拟（Virtual）</h3><ul>
+<li><strong>概念</strong>：把一个物理上的实体变为若干个逻辑上的对应物。物理实体是实际存在的，逻辑对应物是用户感受到的。</li>
+<li><strong>主要技术</strong>：<ul>
+<li><strong>空分复用技术</strong>：如虚拟存储器技术（物理内存不足时逻辑上扩展内存空间）。</li>
+<li><strong>时分复用技术</strong>：如虚拟处理器技术（单 CPU 通过分时复用逻辑上变为多个 CPU）。</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-4-异步（Asynchronism）"><a href="#3-4-异步（Asynchronism）" class="headerlink" title="3.4 异步（Asynchronism）"></a>3.4 异步（Asynchronism）</h3><ul>
+<li><strong>概念</strong>：在多道程序环境下，多个程序并发执行，但由于资源有限，进程的执行不是一贯到底，而是“走走停停”，以不可预知的速度向前推进。</li>
+</ul>
+<hr>
+<h2 id="四、-操作系统的发展历程"><a href="#四、-操作系统的发展历程" class="headerlink" title="四、 操作系统的发展历程"></a>四、 操作系统的发展历程</h2><pre><code class="text">手工操作阶段 ──&gt; 单道批处理系统 ──&gt; 多道批处理系统 ──&gt; 分时操作系统 ──&gt; 实时操作系统 ──&gt; 网络/分布式/个人计算机操作系统
+</code></pre>
+<hr>
+<h2 id="五、-操作系统的运行机制与体系结构"><a href="#五、-操作系统的运行机制与体系结构" class="headerlink" title="五、 操作系统的运行机制与体系结构"></a>五、 操作系统的运行机制与体系结构</h2><h3 id="5-1-内核与指令集"><a href="#5-1-内核与指令集" class="headerlink" title="5.1 内核与指令集"></a>5.1 内核与指令集</h3><ul>
+<li><strong>内核（Kernel）</strong>：操作系统最核心的部分，由核心内核程序组成。</li>
+<li><strong>指令分类</strong>：<ul>
+<li><strong>特权指令</strong>：只允许操作系统内核程序执行（如修改 PSW、关中断、清内存等）。</li>
+<li><strong>非特权指令</strong>：应用程序和内核程序均可执行（如基本算术运算、逻辑运算等）。</li>
+</ul>
+</li>
+</ul>
+<h3 id="5-2-CPU-状态（处理器模式）"><a href="#5-2-CPU-状态（处理器模式）" class="headerlink" title="5.2 CPU 状态（处理器模式）"></a>5.2 CPU 状态（处理器模式）</h3><p>CPU 中有一个寄存器称为<strong>程序状态字寄存器（PSW）</strong>，用来指示当前 CPU 所处的运行状态：</p>
+<ul>
+<li><strong>内核态（管态 &#x2F; 核心态）</strong>：能够执行特权指令和非特权指令，运行内核程序。</li>
+<li><strong>用户态（目态）</strong>：只能执行非特权指令，运行用户应用程序。</li>
+</ul>
+<h3 id="5-3-状态切换"><a href="#5-3-状态切换" class="headerlink" title="5.3 状态切换"></a>5.3 状态切换</h3><ul>
+<li><strong>内核态 ──&gt; 用户态</strong>：执行一条修改 PSW 的<strong>特权指令</strong>（如中断返回指令）。</li>
+<li><strong>用户态 ──&gt; 内核态</strong>：通过<strong>中断&#x2F;异常机制</strong>实现，由<strong>硬件自动完成</strong>（非特权指令无法直接切换状态）。</li>
+</ul>
+<hr>
+<h2 id="六、-中断和异常"><a href="#六、-中断和异常" class="headerlink" title="六、 中断和异常"></a>六、 中断和异常</h2><blockquote>
+<p><strong>中断</strong>是操作系统内核重新夺回 CPU 使用权的<strong>唯一途径</strong>。</p>
+</blockquote>
+<h3 id="6-1-中断分类"><a href="#6-1-中断分类" class="headerlink" title="6.1 中断分类"></a>6.1 中断分类</h3><ul>
+<li><strong>内中断（又称 异常 &#x2F; Exception &#x2F; Internal Interrupt）</strong>：<ul>
+<li>信号来源于 CPU 内部，与当前执行的指令相关。</li>
+<li><strong>分类 &#x2F; 原因</strong>：<ol>
+<li><strong>指令非法&#x2F;参数非法</strong>：如除零异常、缺页中断、非法访问地址。</li>
+<li><strong>陷入指令（Trap &#x2F; 访管指令）</strong>：应用程序主动请求内核服务时执行，<strong>陷入指令是非特权指令</strong>，但会引发内中断使 CPU 切换到内核态。</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><strong>外中断（狭义的中断 &#x2F; Interrupt &#x2F; External Interrupt）</strong>：<ul>
+<li>信号来源于 CPU 外部，与当前执行的指令无关。</li>
+<li><strong>分类 &#x2F; 原因</strong>：<ol>
+<li><strong>时钟中断</strong>：由时钟部件发来的中断信号，用于进程调度和时间片管理。</li>
+<li><strong>I&#x2F;O 中断</strong>：由输入&#x2F;输出设备发送的中断信号，告知内核数据传输或任务已完成。</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="6-2-中断处理的基本原理"><a href="#6-2-中断处理的基本原理" class="headerlink" title="6.2 中断处理的基本原理"></a>6.2 中断处理的基本原理</h3><ol>
+<li>CPU 每执行完一条指令后，硬件会自动检测是否有外中断信号。</li>
+<li>不同的中断信号对应不同的<strong>中断处理程序</strong>。</li>
+<li>CPU 检测到中断信号后，会根据中断类型查询<strong>中断向量表</strong>，找到对应中断处理程序在内存中的入口地址并跳转执行。</li>
+</ol>
+<hr>
+<h2 id="七、-系统调用"><a href="#七、-系统调用" class="headerlink" title="七、 系统调用"></a>七、 系统调用</h2><h3 id="7-1-概念"><a href="#7-1-概念" class="headerlink" title="7.1 概念"></a>7.1 概念</h3><p><strong>系统调用（System Call）</strong>是操作系统提供给应用程序调用的接口，应用程序可以通过系统调用向操作系统内核请求服务（如文件读写、内存分配、进程创建等）。</p>
+<h3 id="7-2-系统调用与库函数的区别"><a href="#7-2-系统调用与库函数的区别" class="headerlink" title="7.2 系统调用与库函数的区别"></a>7.2 系统调用与库函数的区别</h3><ul>
+<li><strong>普通库函数</strong>：运行在用户态，部分库函数内部会封装系统调用，部分纯计算库函数则不会。</li>
+<li><strong>系统调用</strong>：运行在内核态，提供底层资源管理和服务。</li>
+</ul>
+<h3 id="7-3-系统调用的执行过程"><a href="#7-3-系统调用的执行过程" class="headerlink" title="7.3 系统调用的执行过程"></a>7.3 系统调用的执行过程</h3><ol>
+<li><strong>用户程序传递参数</strong>：将系统调用所需的参数放入寄存器或栈中。</li>
+<li><strong>执行陷入指令（Trap &#x2F; Syscall &#x2F; Int）</strong>：引发内中断，CPU 状态从<strong>用户态</strong>转为<strong>内核态</strong>。</li>
+<li><strong>内核处理</strong>：由操作系统内核中的系统调用处理程序根据服务号执行相应逻辑。</li>
+<li><strong>返回用户态</strong>：处理完毕后恢复现场，CPU 返回用户态继续执行用户程序。</li>
+</ol>
+<h2 id="操作系统体系结构"><a href="#操作系统体系结构" class="headerlink" title="操作系统体系结构"></a>操作系统体系结构</h2><h3 id="大内核（宏内核-单内核）"><a href="#大内核（宏内核-单内核）" class="headerlink" title="大内核（宏内核&#x2F;单内核）"></a>大内核（宏内核&#x2F;单内核）</h3><p>将操作系统的主要功能模块都作为系统内核运行在和心态<br>包含进程管理、存储器管理、设备管理、时钟管理、中断处理、原语完整功能的内核结构<br>优点：高性能<br>缺点：内核代码庞大，结构混乱，难以维护<br>如linux UNIX</p>
+<h3 id="微内核"><a href="#微内核" class="headerlink" title="微内核"></a>微内核</h3><p>只把最基本的功能保存在内核<br>只包含时钟管理、中断处理、原语的结构<br>进程、存储、设备管理属于用户态<br>优点：内核功能少，结构清晰，便于维护<br>缺点：需要频繁在核心态与用户态切换，性能低<br>如Windows NT</p>
+<h3 id="分层结构"><a href="#分层结构" class="headerlink" title="分层结构"></a>分层结构</h3><p>最底层硬件，最高层用户接口 每层可调用更低一层<br>缺点：只能高层调用低层 不可跨层导致效率低</p>
+<h3 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h3><p>将内核划分位多个模块 各模块相互协作<br>内核&#x3D;主模块+可加载模块<br>优点：清晰易于维护，确定接口即可同时开发 通信效率高 支持动态加载新模块<br>缺点： 模块接口定义未必合理实用 相互依赖更难调试验证</p>
+<h3 id="外核"><a href="#外核" class="headerlink" title="外核"></a>外核</h3><p>负责为用户进程分配<em>未经抽象</em>的硬件资源，并保证资源使用安全<br>减少了虚拟硬件资源的映射层，提高了效率<br>缺点：降低一致性  使系统变得复杂</p>
+<h3 id="操作系统引导（Boot）"><a href="#操作系统引导（Boot）" class="headerlink" title="操作系统引导（Boot）"></a>操作系统引导（Boot）</h3><p>磁盘：主引导记录（MBR）+C盘（引导记录PBR负责找到启动管理器+根目录+其他）+D……</p>
+<h3 id="虚拟机"><a href="#虚拟机" class="headerlink" title="虚拟机"></a>虚拟机</h3><p>使用虚拟化技术，把一台物理机器虚拟化为多台虚拟机器，每个虚拟机器都可以独立运行一个操作系统<br>第一类VMM，直接运行在硬件上。性能更好<br>第二类VMM，运行在宿主操作系统上，易于迁移 </p>
+<h2 id="处理机管理"><a href="#处理机管理" class="headerlink" title="处理机管理"></a>处理机管理</h2><h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><p>程序：静态可执行文件<br>进程：动态，是程序执行过程</p>
+<p>进程被创造初始会被分配一个唯一不重复的PID 用于区分进程<br>记录给进程分配了哪些资源（内存、I&#x2F;O设备、文件）实现资源管理<br>记录运行情况（CPU使用时间、磁盘&#x2F;网络使用情况等）实现进程控制调度<br>这些数据都被保存在一个数据结构——PCB（进程控制块）中<br><strong>进程包括PCB、程序段、数据段</strong><br>程序段： 程序的代码（指令序列）<br>数据段：运行中产生的各种数据</p>
+<p>进程特性：动态性、并发性、独立性、异步性、结构性</p>
+<h4 id="进程的状态"><a href="#进程的状态" class="headerlink" title="进程的状态"></a>进程的状态</h4><p>创建态、就绪态、运行态、阻塞态、终止态</p>
+<h4 id="进程控制"><a href="#进程控制" class="headerlink" title="进程控制"></a>进程控制</h4><p>用原语实现对进程的控制<br>原语的执行具有原子性，即执行过程只能一气呵成，期间不允许被中断<br>可以用关中断指令和开中断指令两个特权指令实现原子性<br>进程的创建：用户登录、作业调度、提供服务、应用请求<br>进程的中止：正常结束、异常结束、外界干预</p>
+
+            </div>
+
+            
+
+
+        </article>
+
+        <aside class="art-sidebar">
+            <div class="fade-up-wait">
+                <div class="art-widget-title">大纲 <span>CONTENTS</span></div>
+                <div class="toc-list" id="art-toc">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84"><span class="toc-text">一、 计算机系统层次结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AE%9A%E4%B9%89"><span class="toc-text">1.1 操作系统定义</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8A%9F%E8%83%BD"><span class="toc-text">二、 操作系统功能</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E4%BD%9C%E4%B8%BA%E7%B3%BB%E7%BB%9F%E8%B5%84%E6%BA%90%E7%9A%84%E7%AE%A1%E7%90%86%E8%80%85"><span class="toc-text">2.1 作为系统资源的管理者</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E5%90%91%E4%B8%8A%E5%B1%82%E6%8F%90%E4%BE%9B%E6%9C%8D%E5%8A%A1"><span class="toc-text">2.2 向上层提供服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E5%AF%B9%E7%A1%AC%E4%BB%B6%E6%9C%BA%E5%99%A8%E7%9A%84%E6%89%A9%E5%B1%95"><span class="toc-text">2.3 对硬件机器的扩展</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%9B%9B%E5%A4%A7%E7%89%B9%E5%BE%81"><span class="toc-text">三、 操作系统的四大特征</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E5%B9%B6%E5%8F%91%EF%BC%88Concurrency%EF%BC%89"><span class="toc-text">3.1 并发（Concurrency）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%85%B1%E4%BA%AB%EF%BC%88Sharing%EF%BC%89"><span class="toc-text">3.2 共享（Sharing）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E8%99%9A%E6%8B%9F%EF%BC%88Virtual%EF%BC%89"><span class="toc-text">3.3 虚拟（Virtual）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E5%BC%82%E6%AD%A5%EF%BC%88Asynchronism%EF%BC%89"><span class="toc-text">3.4 异步（Asynchronism）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%8F%91%E5%B1%95%E5%8E%86%E7%A8%8B"><span class="toc-text">四、 操作系统的发展历程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6%E4%B8%8E%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="toc-text">五、 操作系统的运行机制与体系结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E5%86%85%E6%A0%B8%E4%B8%8E%E6%8C%87%E4%BB%A4%E9%9B%86"><span class="toc-text">5.1 内核与指令集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-CPU-%E7%8A%B6%E6%80%81%EF%BC%88%E5%A4%84%E7%90%86%E5%99%A8%E6%A8%A1%E5%BC%8F%EF%BC%89"><span class="toc-text">5.2 CPU 状态（处理器模式）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E7%8A%B6%E6%80%81%E5%88%87%E6%8D%A2"><span class="toc-text">5.3 状态切换</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81-%E4%B8%AD%E6%96%AD%E5%92%8C%E5%BC%82%E5%B8%B8"><span class="toc-text">六、 中断和异常</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E4%B8%AD%E6%96%AD%E5%88%86%E7%B1%BB"><span class="toc-text">6.1 中断分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E4%B8%AD%E6%96%AD%E5%A4%84%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="toc-text">6.2 中断处理的基本原理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81-%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8"><span class="toc-text">七、 系统调用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-%E6%A6%82%E5%BF%B5"><span class="toc-text">7.1 概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E4%B8%8E%E5%BA%93%E5%87%BD%E6%95%B0%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">7.2 系统调用与库函数的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3-%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E7%9A%84%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B"><span class="toc-text">7.3 系统调用的执行过程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="toc-text">操作系统体系结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%A7%E5%86%85%E6%A0%B8%EF%BC%88%E5%AE%8F%E5%86%85%E6%A0%B8-%E5%8D%95%E5%86%85%E6%A0%B8%EF%BC%89"><span class="toc-text">大内核（宏内核&#x2F;单内核）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%AE%E5%86%85%E6%A0%B8"><span class="toc-text">微内核</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E5%B1%82%E7%BB%93%E6%9E%84"><span class="toc-text">分层结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%9D%97%E5%8C%96"><span class="toc-text">模块化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%96%E6%A0%B8"><span class="toc-text">外核</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%BC%95%E5%AF%BC%EF%BC%88Boot%EF%BC%89"><span class="toc-text">操作系统引导（Boot）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="toc-text">虚拟机</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%84%E7%90%86%E6%9C%BA%E7%AE%A1%E7%90%86"><span class="toc-text">处理机管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B"><span class="toc-text">进程</span></a></li></ol></li></ol>
+                </div>
+            </div>
+
+            <div class="fade-up-wait">
+                <div class="art-widget-title">相关文章 <span>RELATED POSTS</span></div>
+                <div class="related-list" id="art-related">
+                    
+                        <a class="rel-card site_url" href="/2024/12/19/%E5%88%9B%E5%BB%BA%E7%B3%BB%E7%BB%9F%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8%E7%A8%8B%E5%BA%8F/">
+                            <img src="/img/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA.jpg" class="rel-img" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%23444%22><path d=%22M12 2L2 22h20L12 2z%22/></svg>'">
+                            <div class="rel-info">
+                                <div class="rel-title">创建系统开机自启动程序</div>
+                                <div class="rel-meta">
+                                    <span>12-19</span>
+                                    
+                                        <span class="rel-tags">
+                                            
+                                                <span class="rel-tag-item">#日志</span>
+                                            
+                                                <span class="rel-tag-item">#操作系统</span>
+                                            
+                                        </span>
+                                    
+                                </div>
+                            </div>
+                        </a>
+                    
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <div class="post-nav fade-up-wait">
+        
+            <a id="nav-prev" style="opacity: 0.3; pointer-events: none;">< 上一篇：没有了</a>
+        
+        
+        <div class="post-nav-center">— S.Q. —</div>
+        
+        
+            <a id="nav-next" class="site_url" href="/2026/07/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/">下一篇：计算机网络笔记 ></a>
+        
+    </div>
+</div>
+
+
+    
+
+
+        </div>
+        <footer class="app-footer">
+    <div class="footer-left">© 2026 叁七 All Rights Reserved.</div>
+    <div class="footer-logo">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2zm0 4l6 14H6l6-14z"/></svg>
+    </div>
+    <div class="footer-right">POWERED BY HEXO | THEME: TECH</div>
+    
+    <input type="hidden" id="tech_site_word_count" value="167.1k">
+    <div style="display: none">
+        <span id="busuanzi_value_site_uv"></span>
+        <span id="busuanzi_value_site_pv"></span>
+    </div>
+</footer>
+
+    </main>
+</div>
+<script src="/js/jquery.pjax.js?v=" ></script>
+
+<script src="//testingcf.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="//testingcf.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+
+<script src="//testingcf.jsdelivr.net/npm/howler@2.2.3/dist/howler.min.js"></script>
+
+<script src="/js/script.js?v=" ></script>
+<div id="right-toolbar" class="right-toolbar">
+    <div class="toolbar-items">
+        <!-- 1. 回到顶部 -->
+        <div class="toolbar-item" id="tool-totop" data-title="回到顶部">
+            <svg viewBox="0 0 24 24">
+                <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
+            </svg>
+        </div>
+        
+        <!-- 2. 刷新页面 -->
+        <div class="toolbar-item" id="tool-refresh" data-title="刷新页面">
+            <svg viewBox="0 0 24 24">
+                <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+            </svg>
+        </div>
+
+        <!-- 4. 沉浸模式 -->
+        <div class="toolbar-item" id="tool-immersive" data-title="沉浸模式">
+            <svg class="icon-expand" viewBox="0 0 24 24">
+                <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+            </svg>
+            <svg class="icon-shrink" viewBox="0 0 24 24" style="display: none;">
+                <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/>
+            </svg>
+            <svg class="icon-disabled" viewBox="0 0 24 24" style="display: none;">
+                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+            </svg>
+        </div>
+
+        <!-- 5. 静音 -->
+        <div class="toolbar-item" id="tool-mute" data-title="静音">
+            <div class="mute-container">
+                <svg class="icon-music" viewBox="0 0 24 24">
+                    <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+                </svg>
+                <div class="mute-slash"></div>
+            </div>
+        </div>
+
+        <!-- 6. 切换风格 -->
+        <div class="toolbar-item" id="tool-theme" data-title="切换风格">
+            <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9s1.5.67 1.5 1.5S7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5S18.33 12 17.5 12z"/></svg>
+            
+            <div class="theme-palette">
+                
+                <div class="palette-item"
+                     data-theme-style="tech"
+                     data-theme-value="dark"
+                     data-title="机能风">
+                    <img src="/img/feature/tech.svg">
+                </div>
+                
+                <div class="palette-item"
+                     data-theme-style="cassette"
+                     data-theme-value="cassette"
+                     data-title="磁带未来主义">
+                    <img src="/img/feature/cassette.svg">
+                </div>
+                
+                <div class="palette-item"
+                     data-theme-style="fantasy"
+                     data-theme-value="fantasy"
+                     data-title="西幻风">
+                    <img src="/img/feature/fantasy.svg">
+                </div>
+                
+                <div class="palette-item"
+                     data-theme-style="github"
+                     data-theme-value="github"
+                     data-title="GitHub风">
+                    <img src="/img/feature/github.svg">
+                </div>
+                
+                <div class="palette-item"
+                     data-theme-style="manga"
+                     data-theme-value="manga"
+                     data-title="漫画风">
+                    <img src="/img/feature/manga.svg">
+                </div>
+                
+                <div class="palette-item"
+                     data-theme-style="personal"
+                     data-theme-value="personal"
+                     data-title="p5">
+                    <img src="/img/feature/personal.svg">
+                </div>
+                
+                <div class="palette-item"
+                     data-theme-style="post-punk"
+                     data-theme-value="post-punk"
+                     data-title="后朋克风">
+                    <img src="/img/feature/post-punk.svg">
+                </div>
+                
+                <div class="palette-item"
+                     data-theme-style="punk"
+                     data-theme-value="punk"
+                     data-title="朋克风">
+                    <img src="/img/feature/punk.svg">
+                </div>
+                
+                <div class="palette-item"
+                     data-theme-style="simple"
+                     data-theme-value="light"
+                     data-title="液态玻璃">
+                    <img src="/img/feature/simple.svg">
+                </div>
+                
+                <div class="palette-item"
+                     data-theme-style="soviet"
+                     data-theme-value="soviet"
+                     data-title="构成主义">
+                    <img src="/img/feature/soviet.svg">
+                </div>
+                
+                <div class="palette-item"
+                     data-theme-style="street"
+                     data-theme-value="street"
+                     data-title="街头风">
+                    <img src="/img/feature/street.svg">
+                </div>
+                
+                </div>
+        </div>
+
+        <!-- 7. 滚动到底部 -->
+        <div class="toolbar-item" id="tool-tobottom" data-title="滚动到底部">
+            <svg viewBox="0 0 24 24">
+                <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+            </svg>
+        </div>
+    </div>
+    
+    <!-- 侧边指示器/感应区 -->
+    <div class="toolbar-trigger">
+        <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+    </div>
+</div>
+
+<script src="/js/toolbar.js?v=" ></script>
+
+<script>
+    var img_resize = 'photoSwipe';
+    var sound_effect = true;
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*高亮代码块行号*/
+        
+
+        /*访问数量*/
+        
+        $.getScript("https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+
+        // PhotoSwipe
+        $('article').each(function(i){
+            $(this).find('img').each(function(){
+                if ($(this).closest('figure').hasClass('article-gallery-img')) {
+                    return;
+                }
+                var alt = this.alt;
+                $(this)
+                    .wrap('<figure class="article-gallery-img" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject"></figure>')
+                    .wrap('<a href="' + this.src + '" title="' + alt + '"></a>');
+                $(this).after('<div class="img_alt"><span>' + (alt || '') + '</span></div>');
+            });
+        });
+
+        var pswpElement = document.querySelectorAll('.pswp')[0];
+        if (pswpElement) {
+            var gallerySelector = '.article-gallery, article';
+
+            var initPhotoSwipeFromDOM = function(gallerySelector) {
+
+                // parse slide data (url, title, size ...) from DOM elements
+                // (children of gallerySelector)
+                var parseThumbnailElements = function(el) {
+                    var thumbElements = $(el).find('figure.article-gallery-img').toArray(),
+                        numNodes = thumbElements.length,
+                        items = [],
+                        figureEl,
+                        linkEl,
+                        size,
+                        imgEl,
+                        item;
+
+                    for (var i = 0; i < numNodes; i++) {
+
+                        figureEl = thumbElements[i]; // <figure> element
+
+                        // include only element nodes
+                        if (figureEl.nodeType !== 1) {
+                            continue;
+                        }
+
+                        linkEl = figureEl.children[0]; // <a> element
+                        imgEl = linkEl.children[0]; // <img>
+
+                        size = linkEl.getAttribute('data-size');
+                        size = size && size.split('x');
+
+                        // create slide object
+                        item = {
+                            src: linkEl.getAttribute('href'),
+                            w: size && parseInt(size[0], 10) || imgEl.width,
+                            h: size && parseInt(size[1], 10) || imgEl.height
+                        };
+
+                        if (figureEl.children.length > 1) {
+                            // <figcaption> content
+                            item.title = figureEl.children[1].innerHTML;
+                        }
+
+                        if (linkEl.children.length > 0) {
+                            // <img> thumbnail element, retrieving thumbnail url
+                            item.msrc = linkEl.children[0].getAttribute('src');
+                        }
+
+                        item.el = figureEl; // save link to element for getThumbBoundsFn
+                        items.push(item);
+                    }
+
+                    return items;
+                };
+
+                // find nearest parent element
+                var closest = function closest(el, fn) {
+                    return el && (fn(el) ? el : closest(el.parentNode, fn));
+                };
+
+                // triggers when user clicks on thumbnail
+                var onThumbnailsClick = function(e) {
+                    e = e || window.event;
+
+                    var eTarget = e.target || e.srcElement;
+
+                    // find root element of slide
+                    var clickedListItem = closest(eTarget, function(el) {
+                        return (el.tagName && el.tagName.toUpperCase() === 'FIGURE');
+                    });
+
+                    if (!clickedListItem) {
+                        return;
+                    }
+
+                    if (e.preventDefault) {
+                        e.preventDefault();
+                    } else {
+                        e.returnValue = false;
+                    }
+
+                    // find index of clicked item by looping through all child nodes
+                    // alternatively, you may define index via data- attribute
+                    var clickedGallery = $(clickedListItem).closest(gallerySelector)[0],
+                        childNodes = $(clickedGallery).find('figure.article-gallery-img').toArray(),
+                        numChildNodes = childNodes.length,
+                        nodeIndex = 0,
+                        index;
+
+                    for (var i = 0; i < numChildNodes; i++) {
+                        if (childNodes[i].nodeType !== 1) {
+                            continue;
+                        }
+
+                        if (childNodes[i] === clickedListItem) {
+                            index = nodeIndex;
+                            break;
+                        }
+                        nodeIndex++;
+                    }
+
+
+
+                    if (index >= 0) {
+                        // open PhotoSwipe if valid index found
+                        openPhotoSwipe(index, clickedGallery);
+                    }
+                    return false;
+                };
+
+                // parse picture index and gallery index from URL (#&pid=1&gid=2)
+                var photoswipeParseHash = function() {
+                    var hash = window.location.hash.substring(1),
+                        params = {};
+
+                    if (hash.length < 5) {
+                        return params;
+                    }
+
+                    var vars = hash.split('&');
+                    for (var i = 0; i < vars.length; i++) {
+                        if (!vars[i]) {
+                            continue;
+                        }
+                        var pair = vars[i].split('=');
+                        if (pair.length < 2) {
+                            continue;
+                        }
+                        params[pair[0]] = pair[1];
+                    }
+
+                    if (params.gid) {
+                        params.gid = parseInt(params.gid, 10);
+                    }
+
+                    return params;
+                };
+
+                var openPhotoSwipe = function(index, galleryElement, disableAnimation, fromURL) {
+                    var pswpElement = document.querySelectorAll('.pswp')[0],
+                        gallery,
+                        options,
+                        items;
+
+                    items = parseThumbnailElements(galleryElement);
+
+                    // define options (if needed)
+                    options = {
+
+                        // define gallery index (for URL)
+                        galleryUID: galleryElement.getAttribute('data-pswp-uid'),
+
+                        getThumbBoundsFn: function(index) {
+                            // See Options -> getThumbBoundsFn section of documentation for more info
+                            var thumbnail = items[index].el.getElementsByTagName('img')[0], // find thumbnail
+                                pageYScroll = window.pageYOffset || document.documentElement.scrollTop,
+                                rect = thumbnail.getBoundingClientRect();
+
+                            return {
+                                x: rect.left,
+                                y: rect.top + pageYScroll,
+                                w: rect.width
+                            };
+                        }
+                    };
+
+                    // PhotoSwipe opened from URL
+                    if (fromURL) {
+                        if (options.galleryPIDs) {
+                            // parse real index when custom PIDs are used
+                            // http://photoswipe.com/documentation/faq.html#custom-pid-in-url
+                            for (var j = 0; j < items.length; j++) {
+                                if (items[j].pid == index) {
+                                    options.index = j;
+                                    break;
+                                }
+                            }
+                        } else {
+                            // in URL indexes start from 1
+                            options.index = parseInt(index, 10) - 1;
+                        }
+                    } else {
+                        options.index = parseInt(index, 10);
+                    }
+
+                    // exit if index not found
+                    if (isNaN(options.index)) {
+                        return;
+                    }
+
+                    if (disableAnimation) {
+                        options.showAnimationDuration = 0;
+                    }
+
+                    // Pass data to PhotoSwipe and initialize it
+                    gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, options);
+
+                    gallery.listen('imageLoadComplete', function(index, item) {
+                        var linkEl = item.el.children[0];
+                        var img = item.container.children[0];
+                        if (!linkEl.getAttribute('data-size')) {
+                            linkEl.setAttribute('data-size', img.naturalWidth + 'x' + img.naturalHeight);
+                            item.w = img.naturalWidth;
+                            item.h = img.naturalHeight;
+                            gallery.invalidateCurrItems();
+                            gallery.updateSize(true);
+                        }
+                    });
+
+                    gallery.init();
+                };
+
+                // loop through all gallery elements and bind events
+                var galleryElements = document.querySelectorAll(gallerySelector);
+
+                for (var i = 0, l = galleryElements.length; i < l; i++) {
+                    galleryElements[i].setAttribute('data-pswp-uid', i + 1);
+                    galleryElements[i].onclick = onThumbnailsClick;
+                }
+
+                // Parse URL and open gallery if it contains #&pid=3&gid=1
+                var hashData = photoswipeParseHash();
+                if (hashData.pid && hashData.gid) {
+                    openPhotoSwipe(hashData.pid, galleryElements[hashData.gid - 1], true, true);
+                }
+            };
+
+            // execute above function
+            initPhotoSwipeFromDOM(gallerySelector);
+        }
+        
+        
+        /* 渲染*/
+        function HTMLDecode(text) {
+            var temp = document.createElement("div");
+            temp.innerHTML = text;
+            var output = temp.innerText || temp.textContent;
+            temp = null;
+            return output;
+        }
+        if (window.mermaid){
+            window.mermaid = null
+        }
+        $.getScript("//testingcf.jsdelivr.net/npm/mermaid@8.4.2/dist/mermaid.min.js", function () {
+            var mermaidOptions = JSON.parse(HTMLDecode("{&#34;theme&#34;:&#34;default&#34;,&#34;startOnLoad&#34;:true,&#34;flowchart&#34;:{&#34;useMaxWidth&#34;:false,&#34;htmlLabels&#34;:true}}"))
+            if (window.mermaid) {
+                mermaid.initialize(mermaidOptions)
+                mermaid.contentLoaded()
+            }
+        })
+        
+    }
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<!--自定义样式设置-->
+<style>
+
+    /*列表样式*/
+    
+    .pjax article .article-entry>ol, .pjax article .article-entry>ul, .pjax article>ol, .pjax article>ul{
+        border: #e2dede solid 1px;
+        border-radius: 10px;
+        padding: 10px 32px 10px 56px;
+    }
+    .pjax article .article-entry li>ol, .pjax article .article-entry li>ul,.pjax article li>ol, .pjax article li>ul{
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    .pjax article .article-entry>ol>li, .pjax article .article-entry>ul>li,.pjax article>ol>li, .pjax article>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    .pjax article .article-entry li>ol>li, .pjax article .article-entry li>ul>li,.pjax article li>ol>li, .pjax article li>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    
+
+    /* 背景图样式 */
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+
+    
+</style>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+         It's a separate element, as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. PhotoSwipe keeps only 3 slides in DOM to save memory. -->
+        <!-- don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <!-- Preloader demo https://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+<div class="mobile-menus-out" >
+
+</div>
+<div class="mobile-menus">
+    
+    
+    <a class="dynamic-menu "   href="/">首页</a>
+    
+    
+    <a class="dynamic-menu site_url"   href="/photo">相册</a>
+    
+    
+    <a class="dynamic-menu site_url"   href="/novel">小说</a>
+    
+    
+    <a class="dynamic-menu " target="_self"   href="/AI">AI</a>
+    
+    
+</div>
+
+
+</body>
+</html>
